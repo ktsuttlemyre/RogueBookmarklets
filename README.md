@@ -45,10 +45,10 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 </head>
 
 <body>
-  <h1>Index of /</h1>
+  <h1>List of bookmarklets/</h1>
   <ul>
-    {% for url in site.static_files %}
-    <li><a href="{{ site.baseurl | escape }}{{ url.path | escape }}">{{ url.path | escape }}</a> </li>
+    {% for url in site.bookmarklets %}
+    <li><a href="{{ site.baseurl | escape }}{{ url.path | escape }}">{{ url.title | escape }}</a> </li>
     {% endfor %}
   </ul>
 </body>
