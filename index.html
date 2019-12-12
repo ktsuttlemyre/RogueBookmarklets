@@ -8,7 +8,7 @@
 <body>
   <h1>Bookmarlets of /</h1>
   <ul>
-    {% for marklet in site.static_files %}
+    {% for marklet in site.bookmarklets %}
     <li><a href="{{ site.baseurl | escape }}{{ marklet.path | escape }}">{{ marklet.title | escape }}</a> </li>
     {% endfor %}
   </ul>
