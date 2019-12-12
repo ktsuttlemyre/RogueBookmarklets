@@ -2,6 +2,7 @@
 ---
 
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
   <title>RogueBookmarlets/</title>
 </head>
 
@@ -10,13 +11,7 @@
   <ul>    
     {% for marklet in site.data %}
     <li><a href="javascript:{{ marklet[1].javascript | escape }}">{{ marklet[0] | escape }}</a>
-      <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml">source</a>
-      1{{ marklet.javascript }}
-      2{{ marklet.javascript | escape }}
-      3 {{ marklet }}
-      4{{ marklet | escape }}
-      
-      
+      <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"><i class="fas fa-code"></i></a>
     {% endfor %}
   </ul>
   <!--source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>-->
