@@ -9,7 +9,7 @@
   <h1>Bookmarklets 1 /</h1>
   <ul>
     {% for marklet in site.data %}
-    <li><a href="{{ site.baseurl | escape }}{{ marklet | escape }}">{{ marklet | escape }}</a> {{ marklet.javascript }} </li>
+    <li><a href="{{ site.baseurl | escape }}{{ marklet | escape }}">{{ marklet[0] | escape }}</a> {{ marklet[1] }} </li>
     {% endfor %}
   </ul>
 </body>
