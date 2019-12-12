@@ -8,9 +8,8 @@
 <body>
   <h1>Bookmarklets /</h1>
   <ul>
-    {% assign meetup = site.data.roguebookmarklets[page.meetup] %}
     {% for marklet in site.data %}
-    <li><a href="{{ site.baseurl | escape }}{{ marklet.path | escape }}">{{ marklet.title | escape }}</a> {{ marklet.javascript }} </li>
+    <li><a href="{{ site.baseurl | escape }}{{ marklet | escape }}">{{ marklet | escape }}</a> {{ marklet.javascript }} </li>
     {% endfor %}
   </ul>
 </body>
