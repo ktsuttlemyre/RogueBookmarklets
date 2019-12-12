@@ -6,11 +6,11 @@
 </head>
 
 <body>
-  <h1>Bookmarklets 2 /</h1>
+  <h1>Bookmarklets 3 /</h1>
   <ul>
     {% for marklet in site.data %}
-    <li><a href="{{ marklet.javascript | escape }}">{{ marklet[0] | escape }}</a> </li>
-    <li><a href="{{ site.baseurl | escape }}/_data/{{ marklet | escape }}">source</a> {{  }} </li>
+    <li><a href="javscript:{{ marklet.javascript | escape }}">{{ marklet[0] | escape }}</a>
+      source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>
     {% endfor %}
   </ul>
 </body>
