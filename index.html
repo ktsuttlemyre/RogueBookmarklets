@@ -6,10 +6,15 @@
 </head>
 
 <body>
-  <h1>Bookmarklets /</h1>
+  <h1>Bookmarklets s </h1>
   <ul>
+    {% for org_hash in site.data.orgs %}
+{% assign org = org_hash[1] %}
+    
+    
+    
     {% for marklet in site.data %}
-    <li><a href="javascript:{{ marklet.javascript }}">{{ marklet[0] | escape }}</a>
+    <li><a href="javascript:{{ marklet[2] }}">{{ marklet[0] | escape }}</a>
       <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml">source</a>
       1{{ marklet.javascript }}
       2{{ marklet.javascript | escape }}
