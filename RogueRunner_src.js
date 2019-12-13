@@ -94,18 +94,13 @@ domready(function(){
  document.body.appendChild(div);
 });
 
-//https://www.w3schools.com/howto/howto_css_modals.asp
-// Get the modal
-var modal = div// document.getElementById("myModal");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-//btn.onclick = function() {
-  domready(function(){
-   modal.style.display = "block";
-   horsey(document.querySelector('#search_bar'), {
+initSearch=function(){
+ 
+ if(!horsey){
+  return setTimeout(initSearch, 0);
+ }
+ //document.querySelector('#search_bar')
+  horsey(input, {
     source: [{ list: [
       { value: 'banana', text: 'Bananas from Amazon Rainforest' },
       { value: 'apple', text: 'Red apples from New Zealand' },
@@ -115,6 +110,20 @@ var span = document.getElementsByClassName("close")[0];
     getText: 'text',
     getValue: 'value'
   });
+}
+
+//https://www.w3schools.com/howto/howto_css_modals.asp
+// Get the modal
+var modal = div// document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = closeButton; #document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+//btn.onclick = function() {
+  domready(function(){
+   modal.style.display = "block";
+  initSearch(input)
   })
 //}
 
