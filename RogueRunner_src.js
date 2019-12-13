@@ -117,7 +117,7 @@ initSearch=function(){
 var modal = div// document.getElementById("myModal");
 
 // Get the <span> element that closes the modal
-var span = closeButton; #document.getElementsByClassName("close")[0];
+var span = closeButton; //document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 //btn.onclick = function() {
