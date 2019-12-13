@@ -134,6 +134,15 @@ var span = closeButton; //document.getElementsByClassName("close")[0];
   domready(function(){
    modal.style.display = "block";
   initSearch(input)
+   document.onkeydown=function(evt){
+     var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+     if(keyCode == 27)
+     {
+           if (event.target == modal) {
+    modal.style.display = "none";
+  }
+     }
+   }
   })
 //}
 
@@ -148,4 +157,6 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
 
