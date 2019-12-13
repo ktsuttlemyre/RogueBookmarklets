@@ -78,7 +78,7 @@ var innerDiv = document.createElement('div');
 innerDiv.className = 'modal-content';
 
 var closeButton = document.createElement('span')
-closeButton.classname = 'close;';
+closeButton.classname = 'close';
 closeButton.textContent = '&times;';
 
 var paragraph = document.createElement('p')
@@ -99,8 +99,8 @@ initSearch=function(){
  if(!global.horsey){
   return setTimeout(initSearch, 0);
  }
- //document.querySelector('#search_bar')
-  horsey(input, {
+ //input
+  horsey(document.querySelector('#search_bar'), {
     source: [{ list: [
       { value: 'banana', text: 'Bananas from Amazon Rainforest' },
       { value: 'apple', text: 'Red apples from New Zealand' },
