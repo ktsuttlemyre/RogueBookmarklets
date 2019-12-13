@@ -48,6 +48,7 @@
                 url: script.src,
                 async: true,
                 success: function (data){
+                     alert(data)
                     jQuery('#'+script.name).append(jQuery('<a href="javascript:'+data+'"><i class="far fa-play-circle"></i></a>'))
                 }
              });
