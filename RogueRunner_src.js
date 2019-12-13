@@ -130,7 +130,7 @@ initSearch = function() {
         getValue: 'src',
         predictNextSearch: function(info) {
             var script = document.createElement('script');
-            script.setAttribute('src', info.value);
+            script.setAttribute('src', info.selection);
             script.setAttribute('type', 'text/javascript');
             script.setAttribute('crossorigin', "anonymous");
             appendToHead(script);
