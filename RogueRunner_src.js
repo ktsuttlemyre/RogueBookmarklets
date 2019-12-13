@@ -79,7 +79,13 @@ var closeButton = document.createElement('span')
 closeButton.classname = 'close;';
 closeButton.textContent = '&times;';
 
+var paragraph = document.createElement('p')
+var input = document.createElement('input')
+input.id = "search_bar"
+
 // Append the div to the body
+paragraph.append(input);
+innerDiv.append(paragraph);
 innerDiv.append(closeButton);
 div.appendChild(innerDiv);
 document.body.appendChild(div);
@@ -95,6 +101,16 @@ var span = document.getElementsByClassName("close")[0];
 //btn.onclick = function() {
   domready(function(){
    modal.style.display = "block";
+   horsey(document.querySelector('#search_bar'), {
+    source: [{ list: [
+      { value: 'banana', text: 'Bananas from Amazon Rainforest' },
+      { value: 'apple', text: 'Red apples from New Zealand' },
+      { value: 'orange', text: 'Oranges from Moscow' },
+      { value: 'lemon', text: 'Juicy lemons from Amalfitan Coast' }
+    ]}],
+    getText: 'text',
+    getValue: 'value'
+  });
   })
 //}
 
