@@ -1,4 +1,4 @@
-global=globalThis||global||self
+global=global||globalThis||self
 appendToHead=function(el){
  document.getElementsByTagName('head')[0].appendChild(el);
 }
@@ -111,7 +111,13 @@ initSearch=function(){
   horsey(document.querySelector('#search_bar'), {
     source: [{ list:scripts}],
     getText: 'name',
-    getValue: 'src'
+    getValue: 'src',
+    predictNextSearch:function(info){
+     var script = document.createElement('script');
+     script.setAttribute('src', info.value);
+     script.setAttribute('type', 'text/javascript');
+     script.setAttribute('crossorigin',"anonymous")
+     appendToHead(script);
   });
 }
 
