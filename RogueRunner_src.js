@@ -79,7 +79,7 @@ innerDiv.className = 'modal-content';
 
 var closeButton = document.createElement('span')
 closeButton.classname = 'close';
-closeButton.textContent = '&times;';
+closeButton.innerHTML  = '&times;';
 
 var paragraph = document.createElement('p')
 var input = document.createElement('input')
@@ -101,14 +101,9 @@ initSearch=function(){
  }
  //input
   horsey(document.querySelector('#search_bar'), {
-    source: [{ list: [
-      { value: 'banana', text: 'Bananas from Amazon Rainforest' },
-      { value: 'apple', text: 'Red apples from New Zealand' },
-      { value: 'orange', text: 'Oranges from Moscow' },
-      { value: 'lemon', text: 'Juicy lemons from Amalfitan Coast' }
-    ]}],
-    getText: 'text',
-    getValue: 'value'
+    source: [{ list:scripts}],
+    getText: 'name',
+    getValue: 'src'
   });
 }
 
