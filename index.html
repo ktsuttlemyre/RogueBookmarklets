@@ -4,14 +4,33 @@
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
   <title>RogueBookmarlets/</title>
+  <script>
+  scripts=[
+    {% for marklet in site.static_files %}
+      {% if marklet.path contains 'bookmarklets/' %}
+        {
+          href:"javascript:{{ marklet[1].javascript | escape }}",
+          name:"{{ marklet[0] | escape }}"
+          src:"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"
+        },
+      </li>
+      {% endif %}
+    {% endfor %}
+  ]
+  
+  </script>
 </head>
 
 <body>
   <h1>Bookmarklets s </h1>
   <ul>    
-    {% for marklet in site.data %}
-    <li><a href="javascript:{{ marklet[1].javascript | escape }}">{{ marklet[0] | escape }}</a>
-      <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"><i class="fas fa-code"></i></a>
+    {% for marklet in site.static_files %}
+      {% if marklet.path contains 'bookmarklets/' %}
+      <li>
+        <a href="javascript:{{ marklet[1].javascript | escape }}">{{ marklet[0] | escape }}</a>
+        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"><i class="fas fa-code"></i></a>
+      </li>
+      {% endif %}
     {% endfor %}
   </ul>
   <!--source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>-->
