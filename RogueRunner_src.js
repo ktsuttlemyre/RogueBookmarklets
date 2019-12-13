@@ -147,31 +147,8 @@ var RogueBookmarks = (function() {
         document.body.appendChild(div);
     });
 
-    initSearch = function() {
-        if (!window.scripts) {
-            return setTimeout(initSearch, 0);
-        }
-
-
-
-
-        horsey(document.querySelector('#search_bar'), {
-            source: [{
-                list: scripts
-            }],
-            getText: 'name',
-            getValue: 'src',
-            predictNextSearch: function(info) {
-                console.log('loading', info)
-                var script = document.createElement('script');
-                script.setAttribute('src', info.selection.src);
-                script.setAttribute('type', 'text/javascript');
-                script.setAttribute('crossorigin', "anonymous");
-                appendToHead(script);
-            }
-        });
-
-
+    
+    
 
 
         var people = ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan'];
@@ -189,6 +166,15 @@ var RogueBookmarks = (function() {
         }
         var previousCache = ""
 
+        
+        function appendScript(src){
+                console.log('loading', info)
+                var script = document.createElement('script');
+                script.setAttribute('src', src);
+                script.setAttribute('type', 'text/javascript');
+                script.setAttribute('crossorigin', "anonymous");
+                appendToHead(script);
+        }
         function changeInput(val) {
             var autoCompleteResult = matchPeople(val);
 
@@ -198,29 +184,18 @@ var RogueBookmarks = (function() {
                 previousCache = current
             }
 
-
-            document.onkeydown = function(evt) {
-                var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
-                if (keyCode == 13) {
-                    //if (event.target == modal) {
-                    //  modal.style.display = "none";
-                    if (document.activeElement) {
-                        selection = document.activeElement.text
-                    }
-                    alert(selection)
-                    //}
-                }
-            }
-        }
         var selection = '';
 
         function setSelection(slection) {
             selection = slection;
         }
-
-
-
-
+            
+            
+    
+    initSearch = function() {
+        if (!window.scripts) {
+            return setTimeout(initSearch, 0);
+        }        
         document.getElementById("search_bar").focus();
     }
 
@@ -237,14 +212,17 @@ var RogueBookmarks = (function() {
         modal.style.display = "block";
 
         initSearch(input)
-        document.onkeydown = function(evt) {
-            var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
-            if (keyCode == 27) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+            document.onkeydown = function(evt) {
+                var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+                if (keyCode == 27) {
+                      modal.style.display = "none";
+                else if (keyCode == 13) {
+                    if (document.activeElement) {
+                        selection = document.activeElement.text
+                    }
+                    appendScript(selection)
                 }
             }
-        }
     })
     //}
 
