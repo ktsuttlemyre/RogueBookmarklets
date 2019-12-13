@@ -1,28 +1,14 @@
+
+    var RogueBookmarks=(function(){
 appendToHead = function(el) {
     document.getElementsByTagName('head')[0].appendChild(el);
 }
-
 
 var script = document.createElement('script');
 script.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/index.js');
 script.setAttribute('type', 'text/javascript');
 script.setAttribute('crossorigin', "anonymous")
 appendToHead(script);
-
-var script = document.createElement('script');
-script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js');
-script.setAttribute('type', 'text/javascript');
-script.setAttribute('integrity', "sha256-J38IjXBALk7t+VGTss0JmSzOYJ3Y8YBQpB4vjCnwESs=")
-script.setAttribute('crossorigin', "anonymous")
-appendToHead(script);
-
-var link = document.createElement("link");
-link.href = "https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.css";
-link.type = "text/css";
-link.rel = "stylesheet";
-link.setAttribute('integrity', "sha256-R84Ldk4o+RHLjJnR6FuD8R80lBToAgzDvEQ3d0NhDiw=");
-link.setAttribute('crossorigin', "anonymous");
-appendToHead(link);
 
 //https://codebeautify.org/string-builder
 var cssText = '   /* The Modal (background) */  ' +
@@ -62,7 +48,38 @@ var cssText = '   /* The Modal (background) */  ' +
     '     text-decoration: none;  ' +
     '     cursor: pointer;  ' +
     '   }  ' +
-    '    ';
+     '   #RogueRunner{  '  + 
+ '     position: relative;  '  + 
+ '   }  '  + 
+ '     '  + 
+ '   #RogueRunner > #input {  '  + 
+ '     font-size: 1em;  '  + 
+ '     height: 1.5em;  '  + 
+ '     width: 20em;  '  + 
+ '     '  + 
+ '   -webkit-border-radius: 15px;  '  + 
+ '   -moz-border-radius: 15px;  '  + 
+ '   border-radius: 15px;  '  + 
+ '   padding-bottom: 1em;  '  + 
+ '   padding-left: 0.5em;  '  + 
+ '   padding-right: 0.5em;  '  + 
+ '   }  '  + 
+ '     '  + 
+ '   #RogueRunner > .placeholder {  '  + 
+ '     position: absolute;  '  + 
+ '     font-size: 25px;  '  + 
+ '     pointer-events: none;  '  + 
+ '     left: 1em;  '  + 
+ '     bottom: 1px;  '  + 
+ '     transition: 0.1s ease all;  '  + 
+ '   }  '  + 
+ '     '  + 
+ '    #RogueRunner #input:focus ~ .placeholder{  '  + 
+ '     bottom: 1px;  '  + 
+ '     font-size: 13px;  '  + 
+ '   }  '  + 
+ '     '  + 
+ '    ';
 
 var css = document.createElement("style");
 css.type = "text/css";
@@ -104,24 +121,45 @@ closeButton.classname = 'close';
 closeButton.innerHTML = '&times;';
 
 var paragraph = document.createElement('p')
+
+
+
+var wrapper= document.createElement('div')
+wrapper.id='RogueRunner'
+
 var input = document.createElement('input')
-input.id = "search_bar"
+input.id = "input"
+input.type = 'text'
+input.onkeyup = "RogueBookmarks.changeInput(this.value)
+
+var span = document.createElement('span');
+span.id='result'
+span.className='placeholder'
+
+wrapper.appendChild(input)
+wrapper.appendChild(span)
 
 // Append the div to the body
-paragraph.append(input);
-innerDiv.append(paragraph);
-innerDiv.append(closeButton);
+paragraph.appendChild(wrapper);
+innerDiv.appendChild(paragraph);
+innerDiv.appendChild(closeButton);
 div.appendChild(innerDiv);
 domready(function() {
     document.body.appendChild(div);
 });
 
 initSearch = function() {
-
-    if (!window.horsey || !window.scripts) {
+    if ( !window.scripts) {
         return setTimeout(initSearch, 0);
     }
-    //input
+    
+    
+    
+    
+    
+    
+    
+    
     horsey(document.querySelector('#search_bar'), {
         source: [{
             list: scripts
@@ -137,6 +175,56 @@ initSearch = function() {
             appendToHead(script);
         }
     });
+    
+    
+    
+
+var people = ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan'];
+
+function matchPeople(input) {
+  var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
+  var list=[]
+  for(var i=0;i<people.length;i++){
+  	var person = people[i]
+    if (person.match(reg)) {
+      list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\''+person+'\')">'+person+"</a>");
+		}
+  }
+  return list;
+}
+var previousCache=""
+function changeInput(val) {
+  var autoCompleteResult = matchPeople(val);
+  
+  var current = autoCompleteResult.toString()
+  if(previousCache!=current){
+  	document.getElementById("result").innerHTML = autoCompleteResult;
+    previousCache=current
+  }
+  
+  
+  document.onkeydown = function(evt) {
+      var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+      if (keyCode == 13) {
+        //if (event.target == modal) {
+        //  modal.style.display = "none";
+           if (document.activeElement){
+        		selection=document.activeElement.text
+            }
+        		alert(selection)
+      	//}
+    	}
+    }
+}
+var selection='';
+function setSelection(slection){
+	selection=slection;
+}
+
+
+    
+    
+    
     document.getElementById("search_bar").focus();
 }
 
@@ -175,3 +263,6 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+        return {changeInput:changeInput,setSelection:setSelection}
+
+})()
