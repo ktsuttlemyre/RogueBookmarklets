@@ -2,7 +2,14 @@
 ---
 
 <head>
+  <!--search/suggest-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.css" integrity="sha256-R84Ldk4o+RHLjJnR6FuD8R80lBToAgzDvEQ3d0NhDiw=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js" integrity="sha256-J38IjXBALk7t+VGTss0JmSzOYJ3Y8YBQpB4vjCnwESs=" crossorigin="anonymous"></script>
+  
+  <!--symbols-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  
+  <!--jquery-->
   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -34,20 +41,9 @@
     {% endfor %}
   </ul>
 
-  <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/new/master/bookmarklets"><i class="fas fa-plus-circle"></i></a>
- <script>
-  scripts=[
-    {% for marklet in site.static_files %}
-      {% if marklet.path contains 'bookmarklets/' %}
-        {
-          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}",
-          "href":"javascript:{{ marklet.path | escape }}",
-          "name":"{{ marklet.name | escape }}",
-          "src":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}",
-        },
-      {% endif %}
-    {% endfor %}
-  ]
+ <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/new/master/bookmarklets"><i class="fas fa-plus-circle"></i></a>
+ <script src='/index.js'></script>
+
     
    scripts.forEach(function(script,index){  
      console.log('index',index)
