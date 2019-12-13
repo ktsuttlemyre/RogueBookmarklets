@@ -1,4 +1,4 @@
-
+global=globalThis||global||self
 appendToHead=function(el){
  document.getElementsByTagName('head')[0].appendChild(el);
 }
@@ -96,7 +96,7 @@ domready(function(){
 
 initSearch=function(){
  
- if(!horsey){
+ if(!global.horsey){
   return setTimeout(initSearch, 0);
  }
  //document.querySelector('#search_bar')
