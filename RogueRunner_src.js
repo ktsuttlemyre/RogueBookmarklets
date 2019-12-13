@@ -55,13 +55,12 @@ var RogueBookmarks = (function() {
         '     font-size: 1em;  ' +
         '     height: 1.5em;  ' +
         '     width: 20em;  ' +
-        '     ' +
-        '   -webkit-border-radius: 15px;  ' +
-        '   -moz-border-radius: 15px;  ' +
-        '   border-radius: 15px;  ' +
-        '   padding-bottom: 1em;  ' +
-        '   padding-left: 0.5em;  ' +
-        '   padding-right: 0.5em;  ' +
+        '     -webkit-border-radius: 15px;  ' +
+        '     -moz-border-radius: 15px;  ' +
+        '     border-radius: 15px;  ' +
+        '     padding-bottom: 1em;  ' +
+        '     padding-left: 0.5em;  ' +
+        '     padding-right: 0.5em;  ' +
         '   }  ' +
         '     ' +
         '   #RogueRunner > .placeholder {  ' +
@@ -134,6 +133,7 @@ var RogueBookmarks = (function() {
     var span = document.createElement('span');
     span.id = 'result'
     span.className = 'placeholder'
+    span.innerHtml = "placeholder boi"
 
     wrapper.appendChild(input)
     wrapper.appendChild(span)
@@ -177,10 +177,10 @@ var RogueBookmarks = (function() {
         }
         function changeInput(val) {
             var autoCompleteResult = matchPeople(val);
-
+    alert('here')
             var current = autoCompleteResult.toString()
             if (previousCache != current) {
-                document.getElementById("result").innerHTML = autoCompleteResult;
+                document.getElementById("result").innerHTML = current;
                 previousCache = current
             }
         }
