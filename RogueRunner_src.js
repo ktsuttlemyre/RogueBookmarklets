@@ -136,7 +136,7 @@ initSearch = function() {
             appendToHead(script);
         }
     });
-    document.getElementById("mytext").focus();
+    document.getElementById("search_bar").focus();
 }
 
 //https://www.w3schools.com/howto/howto_css_modals.asp
