@@ -2,6 +2,14 @@ global=globalThis||global||self
 appendToHead=function(el){
  document.getElementsByTagName('head')[0].appendChild(el);
 }
+
+
+var script = document.createElement('script');
+script.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/index.js');
+script.setAttribute('type', 'text/javascript');
+script.setAttribute('crossorigin',"anonymous")
+appendToHead(script);
+
 var script = document.createElement('script');
 script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js');
 script.setAttribute('type', 'text/javascript');
@@ -96,7 +104,7 @@ domready(function(){
 
 initSearch=function(){
  
- if(!global.horsey){
+ if(!global.horsey && !global.scripts){
   return setTimeout(initSearch, 0);
  }
  //input
