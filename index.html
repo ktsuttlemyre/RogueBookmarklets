@@ -44,12 +44,10 @@
    scripts.forEach(function(script){
             var li = jQuery('<li><a class="" href='+script.href+'>'+script.name+'</a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <span id="'+script.name+'"></span></li>')
             jQuery('#bookmarks').append(li);
-     alert(script.src)
             $.ajax({
                 url: script.src,
                 async: true,
                 success: function (data){
-                  alert(data)
                     jQuery('#'+script.name).append(jQuery('<a href="javascript:'+data+'"><i class="far fa-play-circle"></i></a>'))
                 }
              });
