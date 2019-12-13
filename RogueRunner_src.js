@@ -217,13 +217,13 @@ var RogueBookmarks = (function() {
             var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
             if (keyCode == 27) {
                   modal.style.display = "none";
-            else if (keyCode == 13) {
+            }else if (keyCode == 13) {
                 if (document.activeElement) {
                     selection = document.activeElement.text
                 }
                 appendScript(selection)
             }
-        }}
+        }
     })
     //}
 
