@@ -33,6 +33,7 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
         {
+          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"
           "href":"javascript:{{ marklet.path | escape }}",
           "name":"{{ marklet.name | escape }}",
           "src":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}",
@@ -49,7 +50,7 @@
                 async: true,
                 success: function (data){
                 var link = $('<a>',{
-                    text: 'source <i class="far fa-play-circle"></i>',
+                    text: 'source <i class="fas fa-play-circle"></i>',
                     title: script.name,
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
