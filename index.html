@@ -26,10 +26,9 @@ forloop.index0
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
         {{ marklet.name | escape }}
-        
-        <div sytle="display:inline-block" id="script_code_{{ forloop.index0 }}"></div> 
-        <div sytle="display:inline-block" id="script_edit_{{ forloop.index0 }}"></div>
-        <div sytle="display:inline-block" id="script_marklet_{{ forloop.index0 }}"></div>
+        <div sytle="display:inline-block" id="script_code_{{ forloop.index }}"></div> 
+        <div sytle="display:inline-block" id="script_edit_{{ forloop.index }}"></div>
+        <div sytle="display:inline-block" id="script_marklet_{{ forloop.index }}"></div>
       </li>
       {% endif %}
     {% endfor %}
@@ -52,7 +51,8 @@ forloop.index0
     {% endfor %}
   ]
     
-   scripts.forEach(function(script,index){     
+   scripts.forEach(function(script,index){  
+     console.log('index',index)
                 $('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
