@@ -42,7 +42,7 @@
   ]
     
    scripts.forEach(function(script){
-            var li = jQuery('<li><a class="mylinks" href='+script.href+'><li>${script.src}</a></li>')
+            var li = jQuery('<li><a class="mylinks" href='+script.href+'>'+script.src+'</a></li>')
             jQuery('#bookmarks').append(li);
             $.ajax({
                 url: script.src,
