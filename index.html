@@ -19,18 +19,21 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        {{ marklet.name | escape }}
-        <div sytle="display:inline-block" id="script_code_{{ index }}"></div> 
-        <div sytle="display:inline-block" id="script_edit_{{ index }}"></div>
-        <div sytle="display:inline-block" id="script_marklet_{{ index }}"></div>
+        <div sytle="display:inline-block" id="script_marklet_{{ index }}">
+            {{ marklet.name | escape }}
+        </div>
+        <div sytle="display:inline-block" id="script_code_{{ index }}">
+          <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
+        </div> 
+        <div sytle="display:inline-block" id="script_edit_{{ index }}">
+          <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+        </div>
       </li>
       {% assign index = index | plus:1 %}
       {% endif %}
     {% endfor %}
   </ul>
-  <!--source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>-->
-  <!--  <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
-        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>-->
+
   
  <script>
   scripts=[
@@ -48,7 +51,7 @@
     
    scripts.forEach(function(script,index){  
      console.log('index',index)
-                $('<a>',{
+                /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
                     href: 'https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name,
@@ -60,19 +63,19 @@
                     title: script.name,
                     href: script.edit,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).appendTo('#script_edit_'+index);
+                }).appendTo('#script_edit_'+index);*/
      
             $.ajax({
                 url: script.src,
                 async: true,
                 success: function (data){
                 var link = $('<a>',{
-                    text: '<i class="fas fa-play-circle"></i>',
+                    text: '',
                     title: script.name,
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).appendTo('#script_marklet_'+index);
-                  alert(data)
+                }).append($('<i class="fas fa-play-circle"></i>'))
+                $('#script_marklet_'+index).replaceWith(link)
                 }
              });
       });   
