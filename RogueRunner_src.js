@@ -129,8 +129,9 @@ initSearch = function() {
         getText: 'name',
         getValue: 'src',
         predictNextSearch: function(info) {
+            console.log('loading',info)
             var script = document.createElement('script');
-            script.setAttribute('src', info.selection);
+            script.setAttribute('src', info.selection.value);
             script.setAttribute('type', 'text/javascript');
             script.setAttribute('crossorigin', "anonymous");
             appendToHead(script);
