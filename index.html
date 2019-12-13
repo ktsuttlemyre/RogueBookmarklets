@@ -13,14 +13,14 @@
 
 <body>
   <h1>Bookmarklets 4 </h1>
-  <div id="bookmarks"></div>
+  <ul id="bookmarks"></ul>
   <ul>    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
         <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
         <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
-        <span id="{{ marklet.name }}"></span>
+        
       </li>
       {% endif %}
     {% endfor %}
@@ -42,12 +42,14 @@
   ]
     
    scripts.forEach(function(script){
-            var li = jQuery('<li><a class="mylinks" href='+script.href+'>'+script.src+'</a></li>')
+            var li = jQuery('<li><a class="mylinks" href='+script.href+'>'+script.name+'</a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <span id="'+script.name+'"></span></li>')
             jQuery('#bookmarks').append(li);
+     alert(script.src)
             $.ajax({
                 url: script.src,
                 async: true,
                 success: function (data){
+                  alert('data')
                     jQuery('#'+script.name).append('<a href="javascript:'+data+'"><i class="far fa-play-circle"></i></a>')
                 }
              });
