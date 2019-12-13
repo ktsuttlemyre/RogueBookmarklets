@@ -9,9 +9,9 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
         {
-          href:"javascript:{{ marklet[1].javascript | escape }}",
-          name:"{{ marklet[0] | escape }}"
-          src:"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"
+          href:"javascript:{{ marklet.path | escape }}",
+          name:"{{ marklet.name | escape }}"
+          src:"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets{{ marklet.name | escape }}.js"
         },
       </li>
       {% endif %}
@@ -22,13 +22,13 @@
 </head>
 
 <body>
-  <h1>Bookmarklets s </h1>
+  <h1>Bookmarklets 4 </h1>
   <ul>    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <a href="javascript:{{ marklet[1].javascript | escape }}">{{ marklet[0] | escape }}</a>
-        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/_data/{{ marklet[0] | escape }}.yml"><i class="fas fa-code"></i></a>
+        <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
+        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}.js"><i class="fas fa-code"></i></a>
       </li>
       {% endif %}
     {% endfor %}
