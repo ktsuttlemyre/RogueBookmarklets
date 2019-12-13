@@ -183,6 +183,7 @@ var RogueBookmarks = (function() {
                 document.getElementById("result").innerHTML = autoCompleteResult;
                 previousCache = current
             }
+        }
 
         var selection = '';
 
@@ -212,17 +213,17 @@ var RogueBookmarks = (function() {
         modal.style.display = "block";
 
         initSearch(input)
-            document.onkeydown = function(evt) {
-                var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
-                if (keyCode == 27) {
-                      modal.style.display = "none";
-                else if (keyCode == 13) {
-                    if (document.activeElement) {
-                        selection = document.activeElement.text
-                    }
-                    appendScript(selection)
+        document.onkeydown = function(evt) {
+            var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+            if (keyCode == 27) {
+                  modal.style.display = "none";
+            else if (keyCode == 13) {
+                if (document.activeElement) {
+                    selection = document.activeElement.text
                 }
+                appendScript(selection)
             }
+        }}
     })
     //}
 
