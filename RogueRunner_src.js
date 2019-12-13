@@ -197,7 +197,7 @@ var RogueBookmarks = (function() {
         if (!window.scripts) {
             return setTimeout(initSearch, 0);
         }        
-        document.getElementById("search_bar").focus();
+        input.focus();
     }
 
     //https://www.w3schools.com/howto/howto_css_modals.asp
