@@ -1,11 +1,13 @@
 
-
+appendToHead=function(el){
+ document.getElementsByTagName('head')[0].appendChild(el);
+}
 var script = document.createElement('script');
 script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js');
 script.setAttribute('type', 'text/javascript');
 script.setAttribute('integrity',"sha256-J38IjXBALk7t+VGTss0JmSzOYJ3Y8YBQpB4vjCnwESs=")
 script.setAttribute('crossorigin',"anonymous")
-document.getElementsByTagName('head')[0].appendChild(script);
+appendToHead(script);
 
 var link = document.createElement("link");
 link.href = "https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.css";
@@ -13,7 +15,7 @@ link.type = "text/css";
 link.rel = "stylesheet";
 link.setAttribute('integrity', "sha256-R84Ldk4o+RHLjJnR6FuD8R80lBToAgzDvEQ3d0NhDiw=");
 link.setAttribute('crossorigin', "anonymous");
-document.getElementsByTagName("head")[0].appendChild(link);
+appendToHead(link);
 
 //https://codebeautify.org/string-builder
 var cssText = '   /* The Modal (background) */  '  + 
@@ -61,7 +63,7 @@ if("textContent" in css)
     css.textContent = cssText;
 else
     css.innerText = cssText;
-document.body.appendChild(css);
+appendToHead(css);
 
 //https://github.com/ded/domready
 !function(e,t){typeof module!="undefined"?module.exports=t():typeof define=="function"&&typeof define.amd=="object"?define(t):this[e]=t()}("domready",function(){var e=[],t,n=typeof document=="object"&&document,r=n&&n.documentElement.doScroll,i="DOMContentLoaded",s=n&&(r?/^loaded|^c/:/^loaded|^i|^c/).test(n.readyState);return!s&&n&&n.addEventListener(i,t=function(){n.removeEventListener(i,t),s=1;while(t=e.shift())t()}),function(t){s?setTimeout(t,0):e.push(t)}})
@@ -88,7 +90,9 @@ paragraph.append(input);
 innerDiv.append(paragraph);
 innerDiv.append(closeButton);
 div.appendChild(innerDiv);
-document.body.appendChild(div);
+domready(function(){
+ document.body.appendChild(div);
+});
 
 //https://www.w3schools.com/howto/howto_css_modals.asp
 // Get the modal
