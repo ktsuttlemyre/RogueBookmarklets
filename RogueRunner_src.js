@@ -1,4 +1,4 @@
-global=this||globalThis||self
+global=globalThis||self
 appendToHead=function(el){
  document.getElementsByTagName('head')[0].appendChild(el);
 }
