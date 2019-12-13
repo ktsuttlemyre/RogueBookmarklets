@@ -11,13 +11,6 @@
 
 </head>
 
-
-
-forloop.index0 
-
-
-
-
 <body>
   <h1>Bookmarklets yeah </h1>
   <ul id="bookmarks"></ul>
@@ -67,10 +60,6 @@ forloop.index0
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }).appendTo('#script_edit_'+index);
      
-     
-     
-            //var li = $('<li>'+script.name+' <a class="" href='+script.edit+'><i class="fas fa-edit"></i></a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <div sytle="display:inline-block" id="script_'+index+'"></div></li>')
-            //jQuery('#bookmarks').append(li);
             $.ajax({
                 url: script.src,
                 async: true,
@@ -84,8 +73,6 @@ forloop.index0
                   alert(data)
                 }
              });
-      });
-   
-   
+      });   
   </script>
 </body>
