@@ -19,13 +19,13 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <div sytle="display:inline-block" id="script_marklet_{{ index }}">
+        <div style="display:inline-block" id="script_marklet_{{ index }}">
             {{ marklet.name | escape }}
         </div>
-        <div sytle="display:inline-block" id="script_code_{{ index }}">
+        <div style="display:inline-block" id="script_code_{{ index }}">
           <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
         </div> 
-        <div sytle="display:inline-block" id="script_edit_{{ index }}">
+        <div style="display:inline-block" id="script_edit_{{ index }}">
           <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
         </div>
       </li>
@@ -70,12 +70,12 @@
                 async: true,
                 success: function (data){
                 var link = $('<a>',{
-                    text: '',
+                    text: script.name,
                     title: script.name,
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).append($('<i class="fas fa-play-circle"></i>'))
-                $('#script_marklet_'+index).replaceWith(link)
+                }) //.append($('<i class="fas fa-play-circle"></i>'))
+                $('#script_marklet_'+index).empty.append(link)
                 }
              });
       });   
