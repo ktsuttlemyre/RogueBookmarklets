@@ -43,7 +43,7 @@
   ]
     
    scripts.forEach(function(script){
-            var li = $('<li>'+script.name+'<a class="" href='+script.edit+'><i class="fas fa-edit"></i></a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <div sytle="display:inline-block" id="'+script.name+'"></div></li>')
+            var li = $('<li>'+script.name+' <a class="" href='+script.edit+'><i class="fas fa-edit"></i></a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <div sytle="display:inline-block" id="'+script.name+'"></div></li>')
             jQuery('#bookmarks').append(li);
             $.ajax({
                 url: script.src,
@@ -55,6 +55,7 @@
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }).appendTo('#'+script.name);
+                  alert(data)
                 }
              });
       });
