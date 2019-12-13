@@ -1,3 +1,5 @@
+
+
 var script = document.createElement('script');
 script.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js');
 script.setAttribute('type', 'text/javascript');
@@ -60,6 +62,9 @@ else
     css.innerText = cssText;
 document.body.appendChild(css);
 
+//https://github.com/ded/domready
+!function(e,t){typeof module!="undefined"?module.exports=t():typeof define=="function"&&typeof define.amd=="object"?define(t):this[e]=t()}("domready",function(){var e=[],t,n=typeof document=="object"&&document,r=n&&n.documentElement.doScroll,i="DOMContentLoaded",s=n&&(r?/^loaded|^c/:/^loaded|^i|^c/).test(n.readyState);return!s&&n&&n.addEventListener(i,t=function(){n.removeEventListener(i,t),s=1;while(t=e.shift())t()}),function(t){s?setTimeout(t,0):e.push(t)}})
+
 
 // Create element; can be whatever you want, e. g. div, h1, p, img...
 var div = document.createElement('div');
@@ -78,7 +83,7 @@ innerDiv.append(closeButton);
 div.appendChild(innerDiv);
 document.body.appendChild(div);
 
-
+//https://www.w3schools.com/howto/howto_css_modals.asp
 // Get the modal
 var modal = div// document.getElementById("myModal");
 
@@ -87,7 +92,9 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 //btn.onclick = function() {
-  modal.style.display = "block";
+  domready(function(){
+   modal.style.display = "block";
+  })
 //}
 
 // When the user clicks on <span> (x), close the modal
