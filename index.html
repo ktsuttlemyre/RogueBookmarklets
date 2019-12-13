@@ -15,14 +15,16 @@
   <h1>Bookmarklets yeah </h1>
   <ul id="bookmarks"></ul>
   <ul>    
+    {% assign index = 0 %}    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
         {{ marklet.name | escape }}
-        <div sytle="display:inline-block" id="script_code_{{ forloop.index }}"></div> 
-        <div sytle="display:inline-block" id="script_edit_{{ forloop.index }}"></div>
-        <div sytle="display:inline-block" id="script_marklet_{{ forloop.index }}"></div>
+        <div sytle="display:inline-block" id="script_code_{{ index }}"></div> 
+        <div sytle="display:inline-block" id="script_edit_{{ index }}"></div>
+        <div sytle="display:inline-block" id="script_marklet_{{ index }}"></div>
       </li>
+      {% assign index = index | plus:1 %}
       {% endif %}
     {% endfor %}
   </ul>
