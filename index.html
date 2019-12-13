@@ -11,22 +11,32 @@
 
 </head>
 
+
+
+forloop.index0 
+
+
+
+
 <body>
-  <h1>Bookmarklets 4 </h1>
+  <h1>Bookmarklets yeah </h1>
   <ul id="bookmarks"></ul>
-  <!--<ul>    
+  <ul>    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
-        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
+        {{ marklet.name | escape }}
         
+        <div sytle="display:inline-block" id="script_code_{{ forloop.index0 }}"></div> 
+        <div sytle="display:inline-block" id="script_edit_{{ forloop.index0 }}"></div>
+        <div sytle="display:inline-block" id="script_marklet_{{ forloop.index0 }}"></div>
       </li>
       {% endif %}
     {% endfor %}
-  </ul>-->
+  </ul>
   <!--source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>-->
-  
+  <!--  <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
+        <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>-->
   
  <script>
   scripts=[
@@ -42,19 +52,35 @@
     {% endfor %}
   ]
     
-   scripts.forEach(function(script){
-            var li = $('<li>'+script.name+' <a class="" href='+script.edit+'><i class="fas fa-edit"></i></a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <div sytle="display:inline-block" id="'+script.name+'"></div></li>')
-            jQuery('#bookmarks').append(li);
+   scripts.forEach(function(script,index){     
+                $('<a>',{
+                    text: '<i class="fas fa-code"></i>',
+                    title: script.name,
+                    href: 'https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name,
+                    //click: function(){ BlahFunc( options.rowId );return false;}
+                }).appendTo('#script_code_'+index);
+     
+                $('<a>',{
+                    text: '<i class="fas fa-edit"></i>',
+                    title: script.name,
+                    href: script.edit,
+                    //click: function(){ BlahFunc( options.rowId );return false;}
+                }).appendTo('#script_edit_'+index);
+     
+     
+     
+            //var li = $('<li>'+script.name+' <a class="" href='+script.edit+'><i class="fas fa-edit"></i></a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <div sytle="display:inline-block" id="script_'+index+'"></div></li>')
+            //jQuery('#bookmarks').append(li);
             $.ajax({
                 url: script.src,
                 async: true,
                 success: function (data){
                 var link = $('<a>',{
-                    text: 'source <i class="fas fa-play-circle"></i>',
+                    text: '<i class="fas fa-play-circle"></i>',
                     title: script.name,
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).appendTo('#'+script.name);
+                }).appendTo('#script_marklet_'+index);
                   alert(data)
                 }
              });
