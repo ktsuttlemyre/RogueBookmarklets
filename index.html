@@ -3,26 +3,17 @@
 
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
   <title>RogueBookmarlets/</title>
-  <script>
-  scripts=[
-    {% for marklet in site.static_files %}
-      {% if marklet.path contains 'bookmarklets/' %}
-        {
-          href:"javascript:{{ marklet.path | escape }}",
-          name:"{{ marklet.name | escape }}"
-          src:"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"
-        },
-      </li>
-      {% endif %}
-    {% endfor %}
-  ]
-  
-  </script>
+
 </head>
 
 <body>
   <h1>Bookmarklets 4 </h1>
+  <div id="bookmarks"></div>
   <ul>    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
@@ -34,4 +25,24 @@
     {% endfor %}
   </ul>
   <!--source = <a href="{{ site.baseurl | escape }}/_data/{{ marklet[0] | escape }}.yml">source</a> </li>-->
+  
+  
+ <script>
+  scripts=[
+    {% for marklet in site.static_files %}
+      {% if marklet.path contains 'bookmarklets/' %}
+        {
+          "href":"javascript:{{ marklet.path | escape }}",
+          "name":"{{ marklet.name | escape }}",
+          "src":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}",
+        },
+      {% endif %}
+    {% endfor %}
+  ]
+    
+        scripts.forEach(function(script){
+   var li = jQuery(`<a class="mylinks" href='script.href'><li>${script.src}</li></a>`)
+            jQuery('#bookmarks').append(li);
+      });
+  </script>
 </body>
