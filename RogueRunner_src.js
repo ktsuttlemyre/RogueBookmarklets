@@ -1,4 +1,4 @@
-global=globalThis||self
+
 appendToHead=function(el){
  document.getElementsByTagName('head')[0].appendChild(el);
 }
@@ -104,11 +104,11 @@ domready(function(){
 
 initSearch=function(){
  
- if(!global.horsey && !global.scripts){
+ if(!window.horsey && !window.scripts){
   return setTimeout(initSearch, 0);
  }
  //input
-  global.horsey(document.querySelector('#search_bar'), {
+  horsey(document.querySelector('#search_bar'), {
     source: [{ list:scripts}],
     getText: 'name',
     getValue: 'src',
