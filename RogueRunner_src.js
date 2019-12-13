@@ -15,6 +15,7 @@ link.setAttribute('integrity', "sha256-R84Ldk4o+RHLjJnR6FuD8R80lBToAgzDvEQ3d0NhD
 link.setAttribute('crossorigin', "anonymous");
 document.getElementsByTagName("head")[0].appendChild(link);
 
+//https://codebeautify.org/string-builder
 var cssText = '   /* The Modal (background) */  '  + 
  '   .modal {  '  + 
  '     display: none; /* Hidden by default */  '  + 
