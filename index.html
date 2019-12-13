@@ -33,7 +33,7 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
         {
-          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"
+          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}",
           "href":"javascript:{{ marklet.path | escape }}",
           "name":"{{ marklet.name | escape }}",
           "src":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}",
@@ -43,7 +43,7 @@
   ]
     
    scripts.forEach(function(script){
-            var li = $('<li><a class="" href='+script.href+'>'+script.name+'</a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <span id="'+script.name+'"></span></li>')
+            var li = $('<li><a class="" href='+script.edit+'>'+script.name+'</a> <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name+'"><i class="fas fa-code"></i></a> <span id="'+script.name+'"></span></li>')
             jQuery('#bookmarks').append(li);
             $.ajax({
                 url: script.src,
