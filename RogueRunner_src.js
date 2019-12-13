@@ -168,7 +168,7 @@ var RogueBookmarks = (function() {
 
         
         function appendScript(src){
-                console.log('loading', info)
+                console.log('loading', src)
                 var script = document.createElement('script');
                 script.setAttribute('src', src);
                 script.setAttribute('type', 'text/javascript');
