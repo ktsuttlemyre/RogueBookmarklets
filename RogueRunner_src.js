@@ -108,7 +108,7 @@ initSearch=function(){
   return setTimeout(initSearch, 0);
  }
  //input
-  horsey(document.querySelector('#search_bar'), {
+  global.horsey(document.querySelector('#search_bar'), {
     source: [{ list:scripts}],
     getText: 'name',
     getValue: 'src',
