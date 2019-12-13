@@ -20,6 +20,7 @@
       <li>
         <a href="{{ marklet.path | escape }}">{{ marklet.name | escape }}</a>
         <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
+        <span id="{{ marklet.name }}"></span>
       </li>
       {% endif %}
     {% endfor %}
@@ -40,9 +41,18 @@
     {% endfor %}
   ]
     
-        scripts.forEach(function(script){
-   var li = jQuery(`<a class="mylinks" href='script.href'><li>${script.src}</li></a>`)
+   scripts.forEach(function(script){
+            var li = jQuery('<li><a class="mylinks" href='script.href'><li>${script.src}</a></li>')
             jQuery('#bookmarks').append(li);
+            $.ajax({
+                url: script.src,
+                async: true,
+                success: function (data){
+                    jQuery('#'+script.name).append('<a href="javascript:'+data+'"><i class="far fa-play-circle"></i></a>')
+                }
+             });
       });
+   
+   
   </script>
 </body>
