@@ -27,10 +27,10 @@
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
         <div style="display:inline-block" id="script_marklet_{{ marklet.basename | escape }}">
-            {{ marklet.name | escape }}
+            {{ marklet.basename | escape }}
         </div>
         <div style="display:inline-block" id="script_code_{{ marklet.basename | escape }}">
-          <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
+          <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>{{ marklet.name | escape }}
         </div> 
         <div style="display:inline-block" id="script_edit_{{ marklet.basename | escape }}">
           <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
