@@ -150,10 +150,11 @@ var RogueBookmarks = (function() {
         function searchScripts(input) {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
             var list = []
+            var keys = Object.keys(scripts)
             for (var i = 0; i < scripts.length; i++) {
-                var script = scripts[i]
+                var script = scripts[keys[i]]
                 if (script.name.match(reg)) {
-                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + script.name + "</a>");
+                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + keys[i] + "</a>");
                 }
             }
             return list;
@@ -212,7 +213,7 @@ var RogueBookmarks = (function() {
                   modal.style.display = "none";
             }else if (keyCode == 13) {
                 if (document.activeElement) {
-                    selection = document.activeElement.text
+                    selection = scripts[document.activeElement.text]
                 }
                 appendScript(selection)
             }
