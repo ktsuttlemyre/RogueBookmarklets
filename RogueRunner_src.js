@@ -155,7 +155,7 @@ var RogueBookmarks = (function() {
                 var key = keys[i]
                 var script = scripts[key]
                 if (script.name.match(reg)) {
-                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + key + "</a>");
+                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + key + '\')">' + key + "</a>");
                 }
             }
             return list;
@@ -182,8 +182,8 @@ var RogueBookmarks = (function() {
 
         var selection = '';
 
-        function setSelection(slection) {
-            selection = slection;
+        function setSelection(selction) {
+            selection = scripts[selction];
         }
             
             
@@ -217,7 +217,7 @@ var RogueBookmarks = (function() {
                 if (document.activeElement) {
                     selection = scripts[document.activeElement.text]
                 }
-                appendScript(selection)
+                appendScript(selection.src)
             }
         }
     })
