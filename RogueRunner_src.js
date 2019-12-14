@@ -134,8 +134,7 @@ var RogueBookmarks = (function() {
     result.id = 'result'
     result.className = 'placeholder'
     result.innerHTML = "placeholder boi"
-
-    runner_wrapper.appendChild(input)
+    runner_wrapper.appendChild(result)
 
     // Append the div to the body
     paragraph.appendChild(runner_wrapper);
