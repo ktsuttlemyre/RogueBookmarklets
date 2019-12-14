@@ -4,7 +4,7 @@
 scripts={
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
-    "{{ marklet.name | escape }}":{
+    "{{ marklet.basename | escape }}":{
           "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}",
           "href":"javascript:{{ marklet.path | escape }}",
           "name":"{{ marklet.name | escape }}",
