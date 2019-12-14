@@ -23,21 +23,19 @@
   <h1>Bookmarklets </h1>
   <ul id="bookmarks"></ul>
   <ul>    
-    {% assign index = 0 %}    
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <div style="display:inline-block" id="script_marklet_{{ index }}">
+        <div style="display:inline-block" id="script_marklet_{{ marklet.basename | escape }}">
             {{ marklet.name | escape }}
         </div>
-        <div style="display:inline-block" id="script_code_{{ index }}">
+        <div style="display:inline-block" id="script_code_{{ marklet.basename | escape }}">
           <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>
         </div> 
-        <div style="display:inline-block" id="script_edit_{{ index }}">
+        <div style="display:inline-block" id="script_edit_{{ marklet.basename | escape }}">
           <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
         </div>
       </li>
-      {% assign index = index | plus:1 %}
       {% endif %}
     {% endfor %}
   </ul>
@@ -46,21 +44,21 @@
  <script src='/RogueBookmarklets/index.js'></script>
 <script>
     
-   Object.keys(scripts).forEach(function(script,index){  
-     console.log('index',index)
+   Object.keys(scripts).forEach(function(key){
+     var script = scripts[key]
                 /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
                     href: 'https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/'+script.name,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).appendTo('#script_code_'+index);
+                }).appendTo('#script_code_'+key);
      
                 $('<a>',{
                     text: '<i class="fas fa-edit"></i>',
                     title: script.name,
                     href: script.edit,
                     //click: function(){ BlahFunc( options.rowId );return false;}
-                }).appendTo('#script_edit_'+index);*/
+                }).appendTo('#script_edit_'+key);*/
      
             $.ajax({
                 url: script.src,
@@ -72,7 +70,7 @@
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $('#script_marklet_'+index).empty().append(link)
+                $('#script_marklet_'+key).empty().append(link)
                 }
              });
       });   
