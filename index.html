@@ -41,6 +41,12 @@
   </ul>
 
  <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/new/master/bookmarklets"><i class="fas fa-plus-circle"></i></a>
+  <br><br><br><br>
+  install runner<br>
+  <div style="display:inline-block" id="runner"></div>
+  
+  
+  
  <script src='/RogueBookmarklets/index.js'></script>
 <script>
     
@@ -73,6 +79,24 @@
                 $('#script_marklet_'+key).empty().append(link)
                 }
              });
+     
+     
       });   
+  
+  
+              $.ajax({
+                url: 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_marklet.js',
+                async: true,
+                success: function (data){
+                 
+                var link = $('<a>',{
+                    text: 'Rogue_Runner',
+                    title: 'Rogue_Runner,
+                    href: data,
+                    //click: function(){ BlahFunc( options.rowId );return false;}
+                }) //.append($('<i class="fas fa-play-circle"></i>'))
+                $('#script_marklet_'+key).empty().append(link)
+                }
+             });
   </script>
 </body>
