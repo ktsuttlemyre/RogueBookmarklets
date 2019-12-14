@@ -15,7 +15,7 @@ var RogueBookmarks = (function() {
 
     //https://codebeautify.org/string-builder
     var cssText = '   /* The Modal (background) */  ' +
-        '   #RogueRunner_backdrop {  ' +
+        '   #RogueRunner {  ' +
         '     display: none; /* Hidden by default */  ' +
         '     position: fixed; /* Stay in place */  ' +
         '     z-index: 1; /* Sit on top */  ' +
@@ -29,7 +29,7 @@ var RogueBookmarks = (function() {
         '   }  ' +
         '     ' +
         '   /* Modal Content/Box */  ' +
-        '   .modal-content {  ' +
+        '   #RogueRunner .modal-content {  ' +
         '     background-color: #fefefe;  ' +
         '     margin: 15% auto; /* 15% from the top and centered */  ' +
         '     padding: 20px;  ' +
@@ -38,24 +38,24 @@ var RogueBookmarks = (function() {
         '   }  ' +
         '     ' +
         '   /* The Close Button */  ' +
-        '   .close {  ' +
+        '   #RogueRunner .close {  ' +
         '     color: #aaa;  ' +
         '     float: right;  ' +
         '     font-size: 28px;  ' +
         '     font-weight: bold;  ' +
         '   }  ' +
         '     ' +
-        '   .close:hover,  ' +
-        '   .close:focus {  ' +
+        '   #RogueRunner .close:hover,  ' +
+        '   #RogueRunner .close:focus {  ' +
         '     color: black;  ' +
         '     text-decoration: none;  ' +
         '     cursor: pointer;  ' +
         '   }  ' +
-        '   #RogueRunner_div{  ' +
+        '   #RogueRunner #RogueRunner_div{  ' +
         '     position: relative;  ' +
         '   }  ' +
         '     ' +
-        '   #RogueRunner_div > #input {  ' +
+        '   #RogueRunner #RogueRunner_div > #input {  ' +
         '     font-size: 1rem;  ' +
         '     height: 1.5rem;  ' +
         '     width: 20rem;  ' +
@@ -67,7 +67,7 @@ var RogueBookmarks = (function() {
         '     padding-right: 0.5rem;  ' +
         '   }  ' +
         '     ' +
-        '   #RogueRunner_div > .placeholder {  ' +
+        '   #RogueRunner #RogueRunner_div > .placeholder {  ' +
         '     position: absolute;  ' +
         '     font-size: 25px;  ' +
         '     pointer-events: none;  ' +
@@ -76,7 +76,7 @@ var RogueBookmarks = (function() {
         '     transition: 0.1s ease all;  ' +
         '   }  ' +
         '     ' +
-        '    #RogueRunner_div #input:focus ~ .placeholder{  ' +
+        '    #RogueRunner #RogueRunner_div #input:focus ~ .placeholder{  ' +
         '     bottom: 1px;  ' +
         '     font-size: 13px;  ' +
         '   }  ' +
@@ -112,7 +112,7 @@ var RogueBookmarks = (function() {
 
     // Create element; 
     var modal_div = document.createElement('div');
-    modal_div.id = 'RogueRunner_backdrop';
+    modal_div.id = 'RogueRunner';
 
     var innerDiv = document.createElement('div');
     innerDiv.className = 'modal-content';
