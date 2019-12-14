@@ -129,6 +129,7 @@ var RogueBookmarks = (function() {
     input.id = "input"
     input.type = 'text'
     input.onkeyup = function(){RogueBookmarks.changeInput(this.value)}
+    runner_wrapper.appendChild(input);
 
     var result = document.createElement('span');
     result.id = 'result'
@@ -175,7 +176,6 @@ var RogueBookmarks = (function() {
         }
         function changeInput(val) {
             var autoCompleteResult = matchPeople(val);
-    alert('here')
             var current = autoCompleteResult.toString()
             if (previousCache != current) {
                 document.getElementById("result").innerHTML = current;
