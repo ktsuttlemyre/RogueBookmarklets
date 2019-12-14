@@ -128,7 +128,7 @@ var RogueBookmarks = (function() {
     var input = document.createElement('input')
     input.id = "input"
     input.type = 'text'
-    input.onkeyup = "RogueBookmarks.changeInput(this.value)"
+    input.onkeyup = function(){RogueBookmarks.changeInput(this.value)}
 
     var span = document.createElement('span');
     span.id = 'result'
