@@ -130,18 +130,17 @@ var RogueBookmarks = (function() {
     input.type = 'text'
     input.onkeyup = function(){RogueBookmarks.changeInput(this.value)}
 
-    var span = document.createElement('span');
-    span.id = 'result'
-    span.className = 'placeholder'
-    span.innerHtml = "placeholder boi"
+    var result = document.createElement('span');
+    result.id = 'result'
+    result.className = 'placeholder'
+    result.innerHTML = "placeholder boi"
 
     wrapper.appendChild(input)
-    wrapper.appendChild(span)
 
     // Append the div to the body
     paragraph.appendChild(wrapper);
-    innerDiv.appendChild(paragraph);
     innerDiv.appendChild(closeButton);
+    innerDiv.appendChild(paragraph);
     div.appendChild(innerDiv);
     domready(function() {
         document.body.appendChild(div);
