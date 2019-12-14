@@ -146,7 +146,7 @@ var RogueBookmarks = (function() {
         document.body.appendChild(div);
     });
 
-    var defaultList=null;
+    var defaultList;
     var keys =[] //init when scripts are loaded
         function searchScripts(input) {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
@@ -161,6 +161,7 @@ var RogueBookmarks = (function() {
             }
             if(list.length==0){ //TODO local storage recover of most used command for this site
                 if (!defaultList || !defaultList.length){
+                    defaultList=[]
                     for(var i=0;i<5;i++){
                         var key = keys[i]
                         //var script=scripts[key] //TODO do weight comparison here
