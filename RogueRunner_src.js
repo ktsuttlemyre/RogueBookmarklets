@@ -151,9 +151,9 @@ var RogueBookmarks = (function() {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
             var list = []
             for (var i = 0; i < scripts.length; i++) {
-                var script = scripts[i].src
-                if (script.match(reg)) {
-                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script + '\')">' + script + "</a>");
+                var script = scripts[i]
+                if (script.name.match(reg)) {
+                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + script.name + "</a>");
                 }
             }
             return list;
