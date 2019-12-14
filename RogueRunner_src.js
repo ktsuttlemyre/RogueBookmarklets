@@ -146,15 +146,16 @@ var RogueBookmarks = (function() {
         document.body.appendChild(div);
     });
 
-    
+    var keys = Object.keys(scripts)
         function searchScripts(input) {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
             var list = []
-            var keys = Object.keys(scripts)
-            for (var i = 0; i < scripts.length; i++) {
-                var script = scripts[keys[i]]
+            
+            for (var i = 0; i < keys.length; i++) {
+                var key = keys[i]
+                var script = scripts[key]
                 if (script.name.match(reg)) {
-                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + keys[i] + "</a>");
+                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script.src + '\')">' + key + "</a>");
                 }
             }
             return list;
