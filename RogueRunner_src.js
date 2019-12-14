@@ -147,18 +147,13 @@ var RogueBookmarks = (function() {
     });
 
     
-    
-
-
-        var people = ['Steven', 'Sean', 'Stefan', 'Sam', 'Nathan'];
-
-        function matchPeople(input) {
+        function searchScripts(input) {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
             var list = []
-            for (var i = 0; i < people.length; i++) {
-                var person = people[i]
-                if (person.match(reg)) {
-                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + person + '\')">' + person + "</a>");
+            for (var i = 0; i < scripts.length; i++) {
+                var script = scripts[i]
+                if (script.match(reg)) {
+                    list.push('<a href="#" onFocus="RogueBookmarks.setSelection(\'' + script + '\')">' + script + "</a>");
                 }
             }
             return list;
@@ -175,7 +170,7 @@ var RogueBookmarks = (function() {
                 appendToHead(script);
         }
         function changeInput(val) {
-            var autoCompleteResult = matchPeople(val);
+            var autoCompleteResult = searchScripts(val);
             var current = autoCompleteResult.toString()
             if (previousCache != current) {
                 document.getElementById("result").innerHTML = current;
