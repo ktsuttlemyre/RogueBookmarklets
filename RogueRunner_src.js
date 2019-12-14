@@ -146,7 +146,7 @@ var RogueBookmarks = (function() {
         document.body.appendChild(div);
     });
 
-    var keys = Object.keys(scripts)
+    var keys =[] //init when scripts are loaded
         function searchScripts(input) {
             var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
             var list = []
@@ -191,7 +191,8 @@ var RogueBookmarks = (function() {
     initSearch = function() {
         if (!window.scripts) {
             return setTimeout(initSearch, 0);
-        }        
+        }
+        keys = Object.keys(scripts)
         input.focus();
     }
 
