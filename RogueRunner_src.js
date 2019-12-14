@@ -1,17 +1,21 @@
 var RogueBookmarks = (function() {
-    appendToHead = function(el) {
+    function appendToHead(el) {
         document.getElementsByTagName('head')[0].appendChild(el);
     }
 
-    var script = document.createElement('script');
-    script.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/index.js');
-    script.setAttribute('type', 'text/javascript');
-    script.setAttribute('crossorigin', "anonymous")
-    appendToHead(script);
+    function appendScript(src){
+        var script = document.createElement('script');
+        script.setAttribute('src', src);
+        script.setAttribute('type', 'text/javascript');
+        script.setAttribute('crossorigin', "anonymous");
+        appendToHead(script);
+    }
+
+    appendScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js');
 
     //https://codebeautify.org/string-builder
     var cssText = '   /* The Modal (background) */  ' +
-        '   .modal {  ' +
+        '   #RogueRunner_backdrop {  ' +
         '     display: none; /* Hidden by default */  ' +
         '     position: fixed; /* Stay in place */  ' +
         '     z-index: 1; /* Sit on top */  ' +
@@ -88,7 +92,7 @@ var RogueBookmarks = (function() {
     appendToHead(css);
 
     //https://github.com/ded/domready
-    ! function(e, t) {
+    function(e, t) {
         typeof module != "undefined" ? module.exports = t() : typeof define == "function" && typeof define.amd == "object" ? define(t) : this[e] = t()
     }("domready", function() {
         var e = [],
@@ -103,13 +107,12 @@ var RogueBookmarks = (function() {
             function(t) {
                 s ? setTimeout(t, 0) : e.push(t)
             }
-    })
+    });
 
 
-    // Create element; can be whatever you want, e. g. div, h1, p, img...
-    var div = document.createElement('div');
-    div.id = 'myModal';
-    div.className = 'modal';
+    // Create element; 
+    var modal_div = document.createElement('div');
+    modal_div.id = 'RogueRunner_backdrop';
 
     var innerDiv = document.createElement('div');
     innerDiv.className = 'modal-content';
@@ -141,9 +144,9 @@ var RogueBookmarks = (function() {
     paragraph.appendChild(runner_wrapper);
     innerDiv.appendChild(closeButton);
     innerDiv.appendChild(paragraph);
-    div.appendChild(innerDiv);
+    modal_div.appendChild(innerDiv);
     domready(function() {
-        document.body.appendChild(div);
+        document.body.appendChild(modal_div);
     });
 
     var defaultList;
@@ -176,14 +179,7 @@ var RogueBookmarks = (function() {
         var previousCache = ""
 
         
-        function appendScript(src){
-                console.log('loading', src)
-                var script = document.createElement('script');
-                script.setAttribute('src', src);
-                script.setAttribute('type', 'text/javascript');
-                script.setAttribute('crossorigin', "anonymous");
-                appendToHead(script);
-        }
+
         function changeInput(val) {
             var autoCompleteResult = searchScripts(val);
             var current = autoCompleteResult.toString()
@@ -210,22 +206,19 @@ var RogueBookmarks = (function() {
     }
 
     //https://www.w3schools.com/howto/howto_css_modals.asp
-    // Get the modal
-    var modal = div // document.getElementById("myModal");
-
     // Get the <span> element that closes the modal
     var span = closeButton; //document.getElementsByClassName("close")[0];
 
     // When the user clicks on the button, open the modal
     //btn.onclick = function() {
     domready(function() {
-        modal.style.display = "block";
+        modal_div.style.display = "block";
 
         initSearch()
         document.onkeydown = function(evt) {
             var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
             if (keyCode == 27) {
-                  modal.style.display = "none";
+                  modal_div.style.display = "none";
             }else if (keyCode == 13) {
                 if (document.activeElement) {
                     selection = scripts[document.activeElement.text]
@@ -238,13 +231,13 @@ var RogueBookmarks = (function() {
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
-        modal.style.display = "none";
+        modal_div.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
+            modal_div.style.display = "none";
         }
     }
     return {
