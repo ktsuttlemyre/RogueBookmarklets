@@ -51,11 +51,11 @@ var RogueBookmarks = (function() {
         '     text-decoration: none;  ' +
         '     cursor: pointer;  ' +
         '   }  ' +
-        '   #RogueRunner{  ' +
+        '   #RogueRunner_div{  ' +
         '     position: relative;  ' +
         '   }  ' +
         '     ' +
-        '   #RogueRunner > #input {  ' +
+        '   #RogueRunner_div > #input {  ' +
         '     font-size: 1rem;  ' +
         '     height: 1.5rem;  ' +
         '     width: 20rem;  ' +
@@ -67,7 +67,7 @@ var RogueBookmarks = (function() {
         '     padding-right: 0.5rem;  ' +
         '   }  ' +
         '     ' +
-        '   #RogueRunner > .placeholder {  ' +
+        '   #RogueRunner_div > .placeholder {  ' +
         '     position: absolute;  ' +
         '     font-size: 25px;  ' +
         '     pointer-events: none;  ' +
@@ -76,7 +76,7 @@ var RogueBookmarks = (function() {
         '     transition: 0.1s ease all;  ' +
         '   }  ' +
         '     ' +
-        '    #RogueRunner #input:focus ~ .placeholder{  ' +
+        '    #RogueRunner_div #input:focus ~ .placeholder{  ' +
         '     bottom: 1px;  ' +
         '     font-size: 13px;  ' +
         '   }  ' +
@@ -126,7 +126,7 @@ var RogueBookmarks = (function() {
 
 
     var runner_wrapper = document.createElement('div')
-    runner_wrapper.id = 'RogueRunner'
+    runner_wrapper.id = 'RogueRunner_div'
 
     var input = document.createElement('input')
     input.id = "input"
