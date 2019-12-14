@@ -52,22 +52,22 @@ var RogueBookmarks = (function() {
         '   }  ' +
         '     ' +
         '   #RogueRunner > #input {  ' +
-        '     font-size: 1em;  ' +
-        '     height: 1.5em;  ' +
-        '     width: 20em;  ' +
+        '     font-size: 1rem;  ' +
+        '     height: 1.5rem;  ' +
+        '     width: 20rem;  ' +
         '     -webkit-border-radius: 15px;  ' +
         '     -moz-border-radius: 15px;  ' +
         '     border-radius: 15px;  ' +
-        '     padding-bottom: 1em;  ' +
-        '     padding-left: 0.5em;  ' +
-        '     padding-right: 0.5em;  ' +
+        '     padding-bottom: 1rem;  ' +
+        '     padding-left: 0.5rem;  ' +
+        '     padding-right: 0.5rem;  ' +
         '   }  ' +
         '     ' +
         '   #RogueRunner > .placeholder {  ' +
         '     position: absolute;  ' +
         '     font-size: 25px;  ' +
         '     pointer-events: none;  ' +
-        '     left: 1em;  ' +
+        '     left: 1rem;  ' +
         '     bottom: 1px;  ' +
         '     transition: 0.1s ease all;  ' +
         '   }  ' +
