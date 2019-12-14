@@ -115,15 +115,15 @@ var RogueBookmarks = (function() {
     innerDiv.className = 'modal-content';
 
     var closeButton = document.createElement('span')
-    closeButton.classname = 'close';
+    closeButton.className = 'close';
     closeButton.innerHTML = '&times;';
 
     var paragraph = document.createElement('p')
 
 
 
-    var wrapper = document.createElement('div')
-    wrapper.id = 'RogueRunner'
+    var runner_wrapper = document.createElement('div')
+    runner_wrapper.id = 'RogueRunner'
 
     var input = document.createElement('input')
     input.id = "input"
@@ -135,10 +135,10 @@ var RogueBookmarks = (function() {
     result.className = 'placeholder'
     result.innerHTML = "placeholder boi"
 
-    wrapper.appendChild(input)
+    runner_wrapper.appendChild(input)
 
     // Append the div to the body
-    paragraph.appendChild(wrapper);
+    paragraph.appendChild(runner_wrapper);
     innerDiv.appendChild(closeButton);
     innerDiv.appendChild(paragraph);
     div.appendChild(innerDiv);
