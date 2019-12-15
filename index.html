@@ -77,7 +77,7 @@
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $('#script_marklet_'+key).empty().append(link)
+                $('#script_marklet_'+key.replace(' ','_').empty().append(link)
                 }
              });
      
