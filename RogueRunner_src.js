@@ -1,4 +1,4 @@
-var RogueBookmarks = (function(user) {
+(function(user) {
     if(window.RogueBookmarks){
         RogueBookmarks.show()
     }
@@ -14,7 +14,6 @@ var RogueBookmarks = (function(user) {
         keys = Object.keys(window.scripts)
     }
     scriptIndexReady()
-
 
     ///////////////////////
     //  helper functions
@@ -36,24 +35,6 @@ var RogueBookmarks = (function(user) {
         return script
     }
 
-    ///////////////////////
-    //  Use this micro framework to see if the dom is ready
-    //some modifications to make it init faster
-    //https://github.com/ded/domready
-    var domready = (function() {
-        var e = [],
-            t, n = typeof document == "object" && document,
-            r = n && n.documentElement.doScroll,
-            i = "DOMContentLoaded",
-            s = n && (r ? /^loaded|^c/ : /^loaded|^i|^c/).test(n.readyState);
-        return !s && n && n.addEventListener(i, t = function() {
-                n.removeEventListener(i, t), s = 1;
-                while (t = e.shift()) t()
-            }),
-            function(t) {
-                s ? setTimeout(t, 0) : e.push(t)
-            }
-    })();
 
     var UUID=Math.floor(Math.random()*9000000000) + 1000000000;
 
@@ -165,7 +146,7 @@ var RogueBookmarks = (function(user) {
     input.id = "input";
     input.type = 'text';
     input.onkeyup = function(evt) {
-        RogueBookmarks.changeInput(this.value)
+        changeInput(this.value)
     }
     runnerWrapper.appendChild(input);
 
@@ -175,11 +156,30 @@ var RogueBookmarks = (function(user) {
     //resultBar.innerHTML = "placeholder boi"
     runnerWrapper.appendChild(resultBar)
 
+
+    //  Use this micro framework to see if the dom is ready
+    //some modifications to make it init faster
+    //https://github.com/ded/domready
+    var domready = (function() {
+        var e = [],
+            t, n = typeof document == "object" && document,
+            r = n && n.documentElement.doScroll,
+            i = "DOMContentLoaded",
+            s = n && (r ? /^loaded|^c/ : /^loaded|^i|^c/).test(n.readyState);
+        return !s && n && n.addEventListener(i, t = function() {
+                n.removeEventListener(i, t), s = 1;
+                while (t = e.shift()) t()
+            }),
+            function(t) {
+                s ? setTimeout(t, 0) : e.push(t)
+            }
+    })();
     /////////////////////////////
     // Append the modal to the body
     // this is done after all html elements are nested
     // and after dom is ready
     // this prevents unnessisisary redraws
+    ///////////////////////
     domready(function() {
         document.body.appendChild(modalBackdropDiv);
         input.focus()
@@ -207,13 +207,10 @@ var RogueBookmarks = (function(user) {
     }
 
     var arraysMatch = function (arr1, arr2) {
-        // Check if the arrays are the same length
         if (arr1.length !== arr2.length) return false;
-        // Check if all items exist and are in the same order
         for (var i = 0; i < arr1.length; i++) {
             if (arr1[i] !== arr2[i]) return false;
         }
-        // Otherwise, return true
         return true;
     };
 
@@ -267,9 +264,14 @@ var RogueBookmarks = (function(user) {
     ///////////////////
     //  load hotkeys
     document.onkeydown = function(evt) {
-        if (keyCode(evt) == 27) { //escape hides the window
+        if(modalBackdropDiv.style.display == "none"){
+            return
+        }
+        if (keycode == 27) { //escape hides the window
             hide()
-        } 
+        }else if(keycode==8){
+            input.focus()
+        }
     }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -288,10 +290,9 @@ var RogueBookmarks = (function(user) {
         //loadJS(script)
         appendToHead(ScriptOBJ(script.src))
     }
-    run.changeInput=changeInput
-    run.show=show
 
-    return run
+    run.show=show
+    window.RogueBookmarks=run
 //usersession
 })("")
 
