@@ -1,6 +1,6 @@
 (function(user,devMode) {
     if(window.RogueBookmarks){
-        RogueBookmarks.show()
+        return RogueBookmarks.show()
     }
 
     ///////////////////////
@@ -331,16 +331,24 @@
     }
 
     function run(key){
-        var script=scripts[key]
-
-        url = script && script.src
-        if(!url){
+        var url=''
+        //no key, then get the first suggestion
+        if(!key){
             url=currentSuggestions[0] && scripts[currentSuggestions[0].title].src
+        }else{
+            var script=scripts[key]
+            if(script){
+                //get the src and set up to download and run the code
+                url = script.src || script
+            }
         }
+
         if(!url){
             statusBar.innerHTML="Nothing to execute";
             return
         }
+        RogueBookmarks.key=key
+        RogueBookmarks.arguments=
         appendToHead(ScriptOBJ(url))
     }
 

@@ -6,11 +6,11 @@
   crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+      //https://plainjs.com/javascript/ajax/send-ajax-get-and-post-requests-47/
         function postAjax(url, data, success) {
           var params = typeof data == 'string' ? data : Object.keys(data).map(
                   function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
               ).join('&');
-          console.log(params)
 
           var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
           xhr.open('POST', url);
