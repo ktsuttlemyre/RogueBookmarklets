@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        function postAjax(url, data, success) {
+          var params = typeof data == 'string' ? data : Object.keys(data).map(
+                  function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+              ).join('&');
+          console.log(params)
+
+          var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+          xhr.open('POST', url);
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
+          };
+          //xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.send(params);
+          return xhr;
+      }
+
+
+      function doLoad(){
+        var args={
+          'js_code':document.getElementById('js_code').value,
+          'compilation_level': 'ADVANCED_OPTIMIZATIONS', // 'ADVANCED_OPTIMIZATIONS', //'WHITESPACE_ONLY',
+          'output_format':'text',
+          'output_info':'compiled_code'
+        }
+        
+        postAjax('https://closure-compiler.appspot.com/compile',args,function(data){document.getElementById('js_code').value=data})
+      }
+    </script>
+  </head>
+  <body>
+    <form action="javascript:doLoad(self)">
+    <textarea id="js_code" name="js_code" cols="50" rows="5">
+    </textarea>
+<!--     <input type="hidden" name="compilation_level" value="WHITESPACE_ONLY">
+    <input type="hidden" name="output_format" value="text">
+    <input type="hidden" name="output_info" value="compiled_code">-->
+    <br><br>
+    <input type="submit" value="Optimize">
+    </form>
+  </body>
+</html>
+
+

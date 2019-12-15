@@ -1,0 +1,1 @@
+(function(b){var a=document.createElement("script");a.setAttribute("src",b);a.setAttribute("type","text/javascript");a.setAttribute("crossorigin","anonymous");a.onerror=function(c){alert("RogueBookmarks:Error loading \n "+c)};document.getElementsByTagName("head")[0].appendChild(a)})("https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js");

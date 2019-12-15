@@ -1,4 +1,4 @@
-(function(user) {
+(function(user,devMode) {
     if(window.RogueBookmarks){
         RogueBookmarks.show()
     }
@@ -26,7 +26,7 @@
         script.setAttribute('src', src);
         script.setAttribute('type', 'text/javascript');
         script.setAttribute('crossorigin', "anonymous");
-        script.onerror = function(a,b,c){alert('RogueBookmarks:Error loading \n '+src)}
+        script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarks:Error loading \n '+src}
         if(callback){
             appendToHead(el)
             script.onload=callback
@@ -36,84 +36,116 @@
     }
 
 
-    var UUID=Math.floor(Math.random()*9000000000) + 1000000000;
+    function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000;}
 
+    var selector={
+        backdrop:UUID(),
+        window:UUID(),
+        content:UUID(),
+        div:UUID(),
+        input:UUID(),
+        statusBar:UUID(),
+        suggestion:UUID(),
+    }
+
+    function getViewportWidth(){
+        var e = window;
+        var a = 'inner';
+        if (!('innerWidth' in window)){
+            a = 'client';
+            e = document.documentElement || document.body;
+        }
+        return e[ a+'Width' ]
+    }
     ///////////////////////////
     // CSS for modal and input
     // use this to create a nice long text block
     //https://codebeautify.org/string-builder
     //modal code came from
     //https://www.w3schools.com/howto/howto_css_modals.asp
-    var cssText = '   /* The Modal (background) */  ' +
-        '   #RogueRunner {  ' +
-        //'     display: none; /* Hidden by default */  ' +
-        '     position: fixed; /* Stay in place */  ' +
-        '     z-index: 1; /* Sit on top */  ' +
-        '     left: 0;  ' +
-        '     top: 0;  ' +
-        '     width: 100%; /* Full width */  ' +
-        '     height: 100%; /* Full height */  ' +
-        '     overflow: auto; /* Enable scroll if needed */  ' +
-        '     background-color: rgb(0,0,0); /* Fallback color */  ' +
-        '     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  ' +
-        '   }  ' +
-        '     ' +
-        '   /* Modal Content/Box */  ' +
-        '   #RogueRunner .modal-content {  ' +
-        '     background-color: #fefefe;  ' +
-        '     margin: 15% auto; /* 15% from the top and centered */  ' +
-        '     padding: 20px;  ' +
-        '     border: 1px solid #888;  ' +
-        '     -webkit-border-radius: 15px;  ' +
-        '     -moz-border-radius: 15px;  ' +
-        '     border-radius: 15px;  ' +
-        '     width: 80%; /* Could be more or less, depending on screen size */  ' +
-        '   }  ' +
-        '     ' +
-        '   /* The Close Button */  ' +
-        '   #RogueRunner .close {  ' +
-        '     color: #aaa;  ' +
-        '     float: right;  ' +
-        '     font-size: 28px;  ' +
-        '     font-weight: bold;  ' +
-        '   }  ' +
-        '     ' +
-        '   #RogueRunner #RogueRunner_div{  ' +
-        '     position: relative;  ' +
-        '   }  ' +
-        '     ' +
-        '   #RogueRunner #RogueRunner_div > #input {  ' +
-        '     outline: none;'+
-        '     font-size: 1rem;  ' +
-        '     height: 1.5rem;  ' +
-        '     width: 20rem;  ' +
-        '     -webkit-border-radius: 15px;  ' +
-        '     -moz-border-radius: 15px;  ' +
-        '     border-radius: 15px;  ' +
-        '     padding-bottom: 1rem;  ' +
-        '     padding-left: 0.5rem;  ' +
-        '     padding-right: 0.5rem;  ' +
-        '   }  ' +
-        '     ' +
-        '   #RogueRunner #RogueRunner_div > .placeholder {  ' +
-        '     position: absolute;  ' +
-        '     font-size: 25px;  ' +
-        //'     pointer-events: none;  ' +
-        '     left: 1rem;  ' +
-        '     bottom: 1px;  ' +
-        '     transition: 0.1s ease all;  ' +
-        '   }  ' +
-        '     ' +
-        '    #RogueRunner #RogueRunner_div #input:focus ~ .placeholder{  ' +
-        '     bottom: 1px;  ' +
-        '     font-size: 13px;  ' +
-        '   }  ' +
-        '     ' +
-        '    .Rogue_suggestion_link{  ' +
-        '     margin: .5em;  ' +
-       // '     font-size: 13px;  ' +
-        '   }  ' +
-        '    ';
+    var cssText = ''+ /* The Modal (background) */
+        '#RogueRunner {'+
+            'position: fixed;'+ /* Stay in place */
+            'z-index: 2147483647;'+ /* Sit on top */
+            'left: 0;'+
+            'top: 0;'+
+            'width: 100%;'+ /* Full width */
+            'height: 100%;'+ /* Full height */
+            'overflow: auto;'+ /* Enable scroll if needed */
+            'background-color: rgb(0,0,0);'+ /* Fallback color */
+            'background-color: rgba(0,0,0,0.4);'+ /* Black w/ opacity */
+        '}'+
+
+        /* Modal Content/Box */
+        '#RogueRunner .modal-content {'+
+            'background-color: #fefefe;'+
+            'margin: 15% auto;'+ /* 15% from the top and centered */
+            'padding: 20px;'+
+            'border: 1px solid #888;'+
+            '-webkit-border-radius: 15px;'+
+            '-moz-border-radius: 15px;'+
+            'border-radius: 15px;'+
+            'width: 80%;'+ /* Could be more or less, depending on screen size */
+        '}'+
+
+        '#RogueRunner #RogueRunner_div{'+
+            'position: relative;'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div > #input {'+
+            'outline: none;'+
+            'font-size: 1em;'+
+            'height: 1.5em;'+
+            'width: 100%;'+
+            '-webkit-border-radius: 15px;'+
+            '-moz-border-radius: 15px;'+
+            'border-radius: 15px;'+
+            'padding: 1em 0em;'+
+            'background:#EEEEEE'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div > .status_bar {'+
+            'color:#000000;'+
+            'position: absolute;'+
+            'font-size: 1.5em;'+
+            'right: '+((getViewportWidth()/2)-125)+'px;'+
+            'bottom: .5em;'+
+            'transition: all 0.1s ease;'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div #input:focus ~ .status_bar{'+
+            'color:#999999;'+
+            'right: 1em;'+
+            'bottom: 0.1em;'+
+            'font-size: .75em;'+
+        '}' +
+        '.RogueRunner_animate{'+
+            '-webkit-transition: all .5s ease;'+
+            '-moz-transition: all .5s ease;'+
+            '-o-transition: all .5s ease;'+
+            'transition: all .5s ease;'+
+        '}'+
+
+        '.RogueRunner_collapsed{'+
+            'max-height:0px !important;'+
+        '}'+
+
+        '#RogueRunner_div > #result_pane{'+
+            'height:auto;'+
+            'max-height:800px'+
+        '}'+
+
+        '.Rogue_suggestion_link{'+
+            'font-size:1em'+
+            'margin: .5em;'+
+            'display: block;'+
+        '}'+
+
+        '.Rogue_suggestion_link:focus{'+
+            'bottom: 1px;'+
+             'font-size: 1.30em;'+
+        '}';
+
     //attach the above text as a style tag to the document head
     var css = document.createElement("style");
     css.type = "text/css";
@@ -133,28 +165,36 @@
     modalBackdropDiv.appendChild(modalPane);
 
 
-    var paragraph = document.createElement('p');
-    modalPane.appendChild(paragraph);
-
     ///////////////////////
     // input for rogue runner
     var runnerWrapper = document.createElement('div');
     runnerWrapper.id = 'RogueRunner_div';
-    paragraph.appendChild(runnerWrapper);
+    modalPane.appendChild(runnerWrapper);
 
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
     input.onkeyup = function(evt) {
-        changeInput(this.value)
+        var keycode = keyCode(evt)
+        statusBar.innerHTML='RogueRunner'
+        if(keycode==13){ //enter will focus again
+            run()
+            return
+        }
+        getSuggestions(this.value)
     }
     runnerWrapper.appendChild(input);
 
-    var resultBar = document.createElement('span');
-    resultBar.id = 'result'
-    resultBar.className = 'placeholder'
-    //resultBar.innerHTML = "placeholder boi"
-    runnerWrapper.appendChild(resultBar)
+    var statusBar = document.createElement('span');
+    //statusBar.id = 'statusBar'
+    statusBar.className = 'status_bar'
+    statusBar.appendChild(document.createTextNode('RogueRunner'));
+    runnerWrapper.appendChild(statusBar)
+
+    var resultPane = document.createElement('p');
+    resultPane.id="result_pane";
+    resultPane.className='RogueRunner_collapsed RogueRunner_animate'
+    runnerWrapper.appendChild(resultPane);
 
 
     //  Use this micro framework to see if the dom is ready
@@ -183,6 +223,7 @@
     domready(function() {
         document.body.appendChild(modalBackdropDiv);
         input.focus()
+        getSuggestions()
     });
 
     function show(){
@@ -200,8 +241,9 @@
         var a = document.createElement('a');
         a.appendChild(document.createTextNode(key));
         a.title = key;
-        a.className = 'Rogue_suggestion_link'
+        a.className = 'Rogue_suggestion_link RogueRunner_animate'
         a.href = "javascript:RogueBookmarks(\'"+key+"\')";
+        a.tabIndex=0;
         //a.onfocus = "RogueBookmarks.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
     }
@@ -218,14 +260,14 @@
     //search logic and interactivity
     var defaultSuggestions;
     function searchScripts(input) {
+        input=input||''
         var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
         var list = [] //new list each time
         var numberOfSuggestions=keys.length
         for(var j=0;j<2;j++){
             for (var i = 0; i < numberOfSuggestions; i++) {
                 var key = keys[i]
-                if (j || key.match(reg)) {
-                    console.log('suggesting',key)
+                if (key && (j || key.match(reg))) {
                     list.push(generateSelectionLink(key));
                 }
             }
@@ -241,54 +283,65 @@
         return list;
     }
 
-    var previousSuggestionsCache = "";
-    function changeInput(val) {
+    var currentSuggestions=[];
+    function getSuggestions(val) {
         var suggestionResult = searchScripts(val);
-        //if they are different lengths then dont check cause they differ
-        if(arraysMatch(suggestionResult,previousSuggestionsCache)){
+        //if the arrays are the same then do nothing
+        if(arraysMatch(suggestionResult,currentSuggestions)){
             return
         }
-        console.log(suggestionResult)
-
-        resultBar.innerHTML="";
+        resultPane.innerHTML="";
+        if(suggestionResult.length){
+            resultPane.className=resultPane.className.replace('RogueRunner_collapsed','')
+            resultPane.append.apply(resultPane,suggestionResult);
+        }else{
+            resultPane.className+=' RogueRunner_collapsed'
+        }
         //for(var i=0;i<suggestionResult.length;i++){
-            resultBar.append.apply(resultBar,suggestionResult);
         //}
-        previousSuggestionsCache = suggestionResult
+        currentSuggestions = suggestionResult
     }
 
     function keyCode(evt){
         return evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     }
 
+    function inputFocus(){input.focus()}
     ///////////////////
     //  load hotkeys
     document.onkeydown = function(evt) {
         if(modalBackdropDiv.style.display == "none"){
             return
         }
+        var keycode=keyCode(evt)
         if (keycode == 27) { //escape hides the window
             hide()
-        }else if(keycode==8){
-            input.focus()
+        }else if(keycode==8){ //delete will force focus on input as well as delete
+            setTimeout(inputFocus)
+        }else if(keycode==13){ //enter will focus again
+            input.focus();
         }
     }
 
         // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modalBackdropDiv) {
+    window.onclick = function(evt) {
+        if (evt.target == modalBackdropDiv) {
             hide()
         }
     }
 
     function run(key){
         var script=scripts[key]
-        if(!script){
-            resultBar.innerHTML="Nothing to execute";
+
+        url = script && script.src
+        if(!url){
+            url=currentSuggestions[0] && scripts[currentSuggestions[0].title].src
+        }
+        if(!url){
+            statusBar.innerHTML="Nothing to execute";
             return
         }
-        //loadJS(script)
-        appendToHead(ScriptOBJ(script.src))
+        appendToHead(ScriptOBJ(url))
     }
 
     run.show=show
