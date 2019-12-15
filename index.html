@@ -27,7 +27,7 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <div style="display:inline-block" id="script_marklet_{{ marklet.basename | escape }}">
+        <div style="display:inline-block" id="script_marklet_{{ marklet.basename | replace: ' ', '_' }}">
             {{ marklet.basename | escape }}
         </div>
         <div style="display:inline-block" id="script_code_{{ marklet.basename | escape }}">
