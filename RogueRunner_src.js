@@ -253,7 +253,7 @@
     var cacheWgetSelection=window.getSelection;
     var cacheDgetSelection=document.getSelection;
     function show(){
-
+        input.value=''
         cacheWgetSelection=window.getSelection;
         cacheDgetSelection=document.getSelection;
 
@@ -281,6 +281,7 @@
         getSuggestions()
     }
     function hide(){
+        
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
@@ -314,34 +315,56 @@
 
     ////////////////////////////////
     //search logic and interactivity
-    var defaultSuggestions;
+    var defaultSuggestions=[];
     function searchScripts(input) {
         input=input||''
         var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
         var list = [] //new list each time
+        
         var numberOfSuggestions=keys.length
-        for(var j=0;j<2;j++){
-            for (var i = 0; i < numberOfSuggestions; i++) {
-                var key = keys[i]
-                if (key && (j || key.match(reg))) {
-                    list.push(generateSelectionLink(key));
-                }
+        if(!input.length){
+            numberOfSuggestions=5
+            if(defaultSuggestions.length){
+                return defaultSuggestions
             }
-            if(list.length){
-                return list
+        }
+        
+        for (var i = 0; i < numberOfSuggestions; i++) {
+            var key = keys[i]
+            if (key && key.match(reg)) {
+                list.push(generateSelectionLink(key));
             }
-            if(!defaultSuggestions||!defaultSuggestions.length){
-                numberOfSuggestions=5
-                continue
-            }
+        }
+
+        if(list.length){
+            return list
+        }
+
+        if(!defaultSuggestions.length){
+            defaultSuggestions=searchScripts('')
             return defaultSuggestions
         }
+
         return list;
     }
 
+    var deferedInput
     var currentSuggestions=[];
-    function getSuggestions(val) {
-        var suggestionResult = searchScripts(val);
+    function getSuggestions(input) {
+        if(input===undefined&&deferedInput){
+            input=deferedInput
+            deferedInput=null
+        }
+        if(!keys.length){
+            deferedInput=input
+            setTimeout(getSuggestions, 0)
+            return
+        }
+
+        var suggestionResult = searchScripts(input);
+        if(!suggestionResult){
+            return
+        }
         //if the arrays are the same then do nothing
         if(arraysMatch(suggestionResult,currentSuggestions)){
             return
