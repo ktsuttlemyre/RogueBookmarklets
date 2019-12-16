@@ -248,10 +248,36 @@
         getSuggestions()
     });
 
-    function show(){
-        modalBackdropDiv.style.display = "block";
+    var selectedTextCache=''
+    function cacheSelection(){
+        //try to get selection from document and then window
+        var selectedTextCache=document.getSelection()||window.getSelection();
+        //try to get from frames
+        for(i=0;i<frames.length;i++){
+            if(selectedTextCache){
+                break;
+            }
+            selectedTextCache=frames[i].document.getSelection()||frames[i].window.getSelection();
+        }
     }
+    function getSelectionPatch(){
+        return selectedText||prompt('Enter parameter','');
+    }
+
+    var cacheWgetSelection=window.getSelection
+    var cacheDgetSelection=document.getSelection
+    function show(){
+        //Patch the getselection function
+        cacheSelection()
+        window.getSelection=document.getSelection=getSelectionPatch;
+
+        modalBackdropDiv.style.display = "block";
     function hide(){
+        //unpatch
+        document.getSelection=cacheDgetSelection
+        window.getSelection=cacheWgetSelection
+        selectedTextCache=''
+
         modalBackdropDiv.style.display = "none";
     }
 
