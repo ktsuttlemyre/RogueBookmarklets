@@ -23,7 +23,7 @@ function popUp(o){
 	var newWindow = window.open("","Test","width=300,height=300,scrollbars=1,resizable=1")
 
 	newWindow .document.open()
-	newWindow .document.write('<pre>'+JSON.stringify(o,null,2)+'</pre>')
+	newWindow .document.write('<textarea style="width:100%;height:100%">'+JSON.stringify(o,null,2)+'</textarea>')
 	newWindow .document.close()
 
 }
