@@ -243,9 +243,10 @@
     // this prevents unnessisisary redraws
     ///////////////////////
     domready(function() {
+        //add interface to dom
         document.body.appendChild(modalBackdropDiv);
-        input.focus()
-        getSuggestions()
+        //make sure to show it and run any patching of the environment
+        show();
     });
 
     var selectedTextCache=''
@@ -261,17 +262,24 @@
         }
     }
     function getSelectionPatch(){
-        return selectedText||prompt('Enter parameter','');
+        return selectedTextCache||prompt('Enter parameter','');
     }
 
-    var cacheWgetSelection=window.getSelection
-    var cacheDgetSelection=document.getSelection
+    var cacheWgetSelection=window.getSelection;
+    var cacheDgetSelection=document.getSelection;
     function show(){
+
         //Patch the getselection function
         cacheSelection()
         window.getSelection=document.getSelection=getSelectionPatch;
 
         modalBackdropDiv.style.display = "block";
+
+        //make the input active so we can type without anymore inputs
+        input.focus()
+        //go ahead and prepopulate suggestions
+        getSuggestions()
+    }
     function hide(){
         //unpatch
         document.getSelection=cacheDgetSelection
@@ -279,6 +287,7 @@
         selectedTextCache=''
 
         modalBackdropDiv.style.display = "none";
+        input.value='';
     }
 
     var linkCache={};
@@ -358,6 +367,7 @@
     ///////////////////
     //  load hotkeys
     document.onkeydown = function(evt) {
+        //TODO handle this with show hide possibly? to leave the environment as it was before roguerunner ran
         if(modalBackdropDiv.style.display == "none"){
             return
         }
@@ -373,6 +383,7 @@
 
         // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(evt) {
+        //TODO handle this with show hide possibly? to leave the environment as it was before roguerunner ran
         if (evt.target == modalBackdropDiv) {
             hide()
         }
