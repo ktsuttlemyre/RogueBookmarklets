@@ -17,22 +17,22 @@
 
     ///////////////////////
     //  helper functions
-    function appendToHead(el) {
+    function appendToHead(el,callback) {
         document.getElementsByTagName('head')[0].appendChild(el);
+        if(callback){
+            el.onload=callback
+        }
     }
 
-    function ScriptOBJ(src,code,callback) { //callback might not work
+    function ScriptOBJ(src,code) { //callback might not work
         var script = document.createElement('script');
-        script.setAttribute('src', src);
         script.setAttribute('type', 'text/javascript');
         script.setAttribute('crossorigin', "anonymous");
         script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarks:Error loading \n '+src}
-        if(callback){
-            appendToHead(el)
-            script.onload=callback
-            return
-        }
-        if(code){
+
+        if(src){
+            script.setAttribute('src',src);
+        }else{
             try {
                 script.appendChild(document.createTextNode(code));
             } catch (e) {
