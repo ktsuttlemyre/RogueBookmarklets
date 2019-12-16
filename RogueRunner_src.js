@@ -27,11 +27,10 @@
     function ScriptOBJ(src,code) { //callback might not work
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('crossorigin', "anonymous");
-        script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarks:Error loading \n '+src}
-
         if(src){
             script.setAttribute('src',src);
+            script.setAttribute('crossorigin', "anonymous");
+            script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarks:Error loading \n '+src}
         }else{
             try {
                 script.appendChild(document.createTextNode(code));
@@ -370,7 +369,7 @@
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
-            appendToHead(ScriptOBJ('',script))
+            appendToHead(ScriptOBJ('',unescape(script)))
         }
     }
 
