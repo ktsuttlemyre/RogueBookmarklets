@@ -204,7 +204,7 @@ scripts={
                   "src":"https://cdn.jsdelivr.net/gh/theus/instantgram/dist/main.js",
                   },
 
-https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
+//https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
 
     }
 
