@@ -15,4 +15,18 @@ if (!window.jQuery) {
 }
 
 
-var o={};$('a').each(function(){o[$(this).text()]=($(this).attr('href'))});document.write('<textarea>'+JSON.stringify(o,null,2)+'</textarea>')
+var o={};$('a').each(function(){o[$(this).text()]=($(this).attr('href'))});
+
+
+function popUp(o){
+
+	var newWindow = window.open("","Test","width=300,height=300,scrollbars=1,resizable=1")
+
+	newWindow .document.open()
+	newWindow .document.write('<textarea>'+JSON.stringify(o,null,2)+'</textarea>')
+	newWindow .document.close()
+
+}
+if(Object.keys(o).length){
+	popUp(o)
+}

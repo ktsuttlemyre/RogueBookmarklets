@@ -195,6 +195,17 @@ scripts={
 
  //TODO link bookmarks https://www.squarefree.com/bookmarklets/pagelinks.html
 
+//https://www.online-tech-tips.com/cool-websites/the-12-best-bookmarklets-every-browser-should-have/
+  "bugmenot":"(function() { var url = ('http://www.bugmenot.com/view/' + escape(location.hostname)); w = open(url, 'w', 'location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400,modal=yes,dependent=yes'); if (w) { setTimeout('w.focus()', 1000) } else { location = url } })();",
+
+
+  "instantgram": {"Author":"theus",
+                  "website":"https://theus.github.io/instantgram/",
+                  "src":"https://cdn.jsdelivr.net/gh/theus/instantgram/dist/main.js",
+                  },
+
+https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
+
     }
 
 
