@@ -369,7 +369,7 @@
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
-            appendToHead(ScriptOBJ('',unescape(script)))
+            appendToHead(ScriptOBJ('',script))
         }
     }
 
