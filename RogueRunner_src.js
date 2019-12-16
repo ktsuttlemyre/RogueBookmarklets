@@ -21,7 +21,7 @@
         document.getElementsByTagName('head')[0].appendChild(el);
     }
 
-    function ScriptOBJ(src,callback) { //callback might not work
+    function ScriptOBJ(src,code,callback) { //callback might not work
         var script = document.createElement('script');
         script.setAttribute('src', src);
         script.setAttribute('type', 'text/javascript');
@@ -31,6 +31,13 @@
             appendToHead(el)
             script.onload=callback
             return
+        }
+        if(code){
+            try {
+                script.appendChild(document.createTextNode(code));
+            } catch (e) {
+                script.text = code;
+            }
         }
         return script
     }
@@ -155,6 +162,8 @@
         css.innerText = cssText;
     appendToHead(css);
 
+
+
     ///////////////////////
     // Create modal; 
     var modalBackdropDiv = document.createElement('div');
@@ -176,7 +185,10 @@
     input.type = 'text';
     input.onkeyup = function(evt) {
         var keycode = keyCode(evt)
-        statusBar.innerHTML='RogueRunner'
+        if(!statusBar_isLink){
+            statusBar.innerHTML='';
+            statusBar.appendChild(rogueLink)
+        }
         if(keycode==13){ //enter will focus again
             run()
             return
@@ -185,10 +197,21 @@
     }
     runnerWrapper.appendChild(input);
 
+
+    var statusBar_isLink=true;
+    var rogueLink= document.createElement('a');
+        rogueLink.appendChild(document.createTextNode('RogueRunner'));
+        rogueLink.title = 'RogueRunner';
+        //a.className = 'Rogue_suggestion_link RogueRunner_animate'
+        rogueLink.href = "https://ktsuttlemyre.github.io/RogueBookmarklets/";
+        rogueLink.tabIndex=-1;
+
+
     var statusBar = document.createElement('span');
     //statusBar.id = 'statusBar'
     statusBar.className = 'status_bar'
-    statusBar.appendChild(document.createTextNode('RogueRunner'));
+    statusBar.appendChild(rogueLink)
+    //statusBar.appendChild(document.createTextNode('RogueRunner'));
     runnerWrapper.appendChild(statusBar)
 
     var resultPane = document.createElement('p');
@@ -331,25 +354,24 @@
     }
 
     function run(key){
-        var url=''
-        //no key, then get the first suggestion
-        if(!key){
-            url=currentSuggestions[0] && scripts[currentSuggestions[0].title].src
-        }else{
-            var script=scripts[key]
-            if(script){
-                //get the src and set up to download and run the code
-                url = script.src || script
-            }
-        }
+        //no key, then get the first suggestion script obj
+        var script=scripts[key] || (url=currentSuggestions[0] && scripts[currentSuggestions[0].title])
 
-        if(!url){
+        //now we have a script obj or string
+        //download the src if it exists OR run the string
+        if(!script){
+            statusBar_isLink=false
             statusBar.innerHTML="Nothing to execute";
             return
         }
+
         RogueBookmarks.key=key
-        RogueBookmarks.arguments=
-        appendToHead(ScriptOBJ(url))
+        RogueBookmarks.arguments=[]
+        if(script.src){
+            appendToHead(ScriptOBJ(script.src))
+        }else{
+            appendToHead(ScriptOBJ('',script))
+        }
     }
 
     run.show=show
