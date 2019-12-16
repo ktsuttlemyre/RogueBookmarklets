@@ -249,29 +249,29 @@
         show();
     });
 
-    var selectedTextCache=''
-    function cacheSelection(){
-        //try to get selection from document and then window
-        var selectedTextCache=document.getSelection()||window.getSelection();
-        //try to get from frames
-        for(i=0;i<frames.length;i++){
-            if(selectedTextCache){
-                break;
-            }
-            selectedTextCache=frames[i].document.getSelection()||frames[i].window.getSelection();
-        }
-    }
-    function getSelectionPatch(){
-        return selectedTextCache||prompt('Enter parameter','');
-    }
 
     var cacheWgetSelection=window.getSelection;
     var cacheDgetSelection=document.getSelection;
     function show(){
 
+        cacheWgetSelection=window.getSelection;
+        cacheDgetSelection=document.getSelection;
+
         //Patch the getselection function
-        cacheSelection()
-        window.getSelection=document.getSelection=getSelectionPatch;
+        //try to get selection from document and then window
+        var selectedTextCache=document.getSelection() || window.getSelection();
+
+        //try to get from frames
+        for(i=0;i<frames.length;i++){
+            if(selectedTextCache){
+                break;
+            }
+            selectedTextCache=frames[i].document.getSelection() || frames[i].window.getSelection();
+        }
+
+        window.getSelection=document.getSelection=function(){
+            return selectedTextCache || prompt('Enter parameter','');
+        }
 
         modalBackdropDiv.style.display = "block";
 
@@ -284,7 +284,6 @@
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
-        selectedTextCache=''
 
         modalBackdropDiv.style.display = "none";
         input.value='';
