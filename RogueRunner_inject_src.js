@@ -138,9 +138,10 @@
 			return allowedOrigins.includes(origin);
 		}
 
-		var getScript = this.getScript = function(handler){
+		var getScript = this.getScript = function(url,handler){
 			var messageData = {
 				method: 'getScript',
+				url:url,
 			}
 			postMessage(messageData,handler);
 		}

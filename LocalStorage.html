@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="theme-color" content="#222531">
 		<script type="type="text/template" id="RogueRunner"></script>
-		<script type="type="text/template" src="/tests/load.js"></script>
+		<script type="type="text/javascript" src="/tests/load.js"></script>
 	</head>
 
 	<body>
@@ -58,8 +58,8 @@
 							returnPayload.data=localStorage.removeItem(payload.key);
 							break;
 						}
-				}catch(e){
-					returnPayload.error=e
+				}catch(err){
+					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
 
 				parent.postMessage(JSON.stringify(returnPayload), '*');
