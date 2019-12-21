@@ -18,8 +18,10 @@
 	})();
 
 
-
-	CrossOriginLocalStorage = function(currentWindow, iframe, allowedOrigins, onMessage) {
+/**
+ * @constructor
+ */
+	var CrossOriginLocalStorage = function(currentWindow, iframe, allowedOrigins, onMessage) {
 		this.allowedOrigins = allowedOrigins;
 
 		var childWindow;
@@ -104,5 +106,5 @@
 	s.setAttribute('crossorigin', "anonymous");
 	s.onerror = function(a){alert('RogueBookmarks:Error loading \n '+a)}
 	document.getElementsByTagName('head')[0].appendChild(s);
-	self.RogueBookmarks=self.RogueBookmarks || {}
+	self['RogueBookmarks']=self['RogueBookmarks'] || {} //in block notation so closure compiler will 'export' the vairable
 })(window,'anonymous')

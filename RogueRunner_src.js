@@ -1,5 +1,5 @@
 (function(user,devMode) {
-    if(window.RogueBookmarks){
+    if(window['RogueBookmarks']&&window['RogueBookmarks'].show){
         return RogueBookmarks.show()
     }
 
@@ -432,7 +432,7 @@
         }
     }
 
-    window.RogueBookmarks=window.RogueBookmarks||{run:run,show:show}
+    window['RogueBookmarks']=window['RogueBookmarks']||{run:run,show:show} //in block notation so closure compiler will 'export' the vairable
 //usersession
 })("")
 
