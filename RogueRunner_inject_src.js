@@ -10,7 +10,7 @@
 	}
 	function loadFromIframe(){
 		//start the injection
-		xDomainStorage.getRunner(function(payload){
+		xDomainStorage.getScript('https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js',function(payload){
 			var s = document.createElement('script');
 			s.setAttribute('type', 'text/javascript');
 			s.appendChild(document.createTextNode(payload.data)); 
@@ -18,13 +18,17 @@
 		})
 	}
 
+
 	//start the injection
-	var s = document.createElement('script');
+	/*var s = document.createElement('script');
 	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
 	s.setAttribute('type', 'text/javascript');
 	s.setAttribute('crossorigin', "anonymous");
 	s.onerror = loadFromIframe
 	document.getElementsByTagName('head')[0].appendChild(s);
+	*/
+	// use this to test script injection failures to load
+	setTimeout(function(){loadFromIframe()},1);
 
 	//  Use this micro framework to see if the dom is ready
 	//some modifications to make it init faster
@@ -134,9 +138,9 @@
 			return allowedOrigins.includes(origin);
 		}
 
-		var getRunner = this.getRunner function(handler){
+		var getScript = this.getScript = function(handler){
 			var messageData = {
-				method: 'getRunner',
+				method: 'getScript',
 			}
 			postMessage(messageData,handler);
 		}

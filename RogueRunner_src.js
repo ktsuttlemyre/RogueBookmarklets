@@ -423,6 +423,7 @@
             return
         }
 
+        //potential api to send arguments to roguebookmarks
         RogueBookmarklets.key=key
         RogueBookmarklets.arguments=[]
         if(script.src){
@@ -432,7 +433,10 @@
         }
     }
 
-    window['RogueBookmarklets']=window['RogueBookmarklets']||{run:run,show:show} //in block notation so closure compiler will 'export' the vairable
+    //in block notation so closure compiler will 'export' the vairable
+    window['RogueBookmarklets']['show']=show
+    window['RogueBookmarklets']['run']=run
+
 //usersessions
 })("")
 
