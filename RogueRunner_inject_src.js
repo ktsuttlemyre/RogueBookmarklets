@@ -26,11 +26,20 @@
 			}
 	})();
 
+function uuidv4(format) {
+	if(!format){
+		format='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+	}
+	return format.replace(/[xy]/g, function(c) {
+		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+	return v.toString(16);
+	});
+}
 
 /**
  * @constructor
  */
-	var CrossOriginLocalStorage = function(currentWindow, iframe, allowedOrigins, onMessage) {
+	var CrossOriginLocalStorage = function(currentWindow, iframe, allowedOrigins) {
 
 		var childWindow;
 		// some browser (don't remember which one) throw exception when you try to access
@@ -41,12 +50,28 @@
 			childWindow = iframe.contentWindow;
 		}
 
+		var messageQueue={};
+
 		var _listener=this._listener = function (event) {
 			if (!isAllowedOrigin(event.origin)) {
+				console.error('Injector rejected post message from',event.origin,'Allowed origins are',allowedOrigins)
 				return;
 			}
 
-			return onMessage(JSON.parse(event.data), event);
+			var data=JSON.parse(event.data)
+			var handler=messageQueue[data.messageID]
+			if(handler){
+				if(handler.method!=handler.method){
+					console.error('methods do not match. Possible security risk')
+					return
+				}
+
+				handler.fn(data, event);
+				messageQueue[data.messageID]=null
+				delete messageQueue[data.messageID]
+			}else{
+				console.error('no handler found for ',event.messageID)
+			}
 		};
 
 		// Support IE8 with attachEvent
@@ -61,11 +86,14 @@
 			return allowedOrigins.includes(origin);
 		}
 
-		var getData=this.getData = function (key) {
+		var getData = this.getData = function (key,handler) {
+			var id=uuidv4()
 			messageData = {
 				key: key,
 				method: 'get',
+				messageID:id
 			}
+			messageQueue[id]={fn:handler,method:messageData.method}
 			postMessage(messageData);
 		}
 
@@ -75,6 +103,7 @@
 				method: 'set',
 				data: data,
 			}
+			messageQueue[id]={fn:handler,method:messageData.method}
 			postMessage(messageData);
 		}
 
@@ -84,26 +113,32 @@
 	};
 
 
-	var allowedOrigins = ['https://ktsuttlemyre.github.io/RogueBookmarklets/'];
+	var allowedOrigins = ['https://ktsuttlemyre.github.io'];
 	domready(function() {
 		var iframe = document.createElement('iframe');
 		iframe.style.display = "none";
+
+		iframe.addEventListener("load", function() {
+			var onMessage = function(payload, event) {
+				console.log('inject got',payload,event)
+				var data = payload.data;
+				switch (payload.method) {
+					case 'storage#get':
+						console.log('message data', payload);
+						break;
+					default:
+						console.error('Unknown method "' + payload.method + '"', payload);
+					}
+			};
+			var cross = self['RogueBookmarklets']['cross'] = new CrossOriginLocalStorage(self, iframe, allowedOrigins);
+			cross.setData('name', 'buren')
+			cross.getData('name',onMessage)
+		});
+
 		iframe.src = 'https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html' 
 		document.body.appendChild(iframe);
 
-		var onMessage = function(payload, event) {
-			var data = payload.data;
-			switch (payload.method) {
-			case 'storage#get':
-				console.log('message data', payload);
-				break;
-			default:
-				console.error('Unknown method "' + payload.method + '"', payload);
-			}
-		};
-		var cross = self['RogueBookmarklets']['cross'] = new CrossOriginLocalStorage(self, iframe, allowedOrigins, onMessage);
-		cross.setData('name', 'buren')
-		alert(cross.getData('name'))
+
 	});
 
 	self['RogueBookmarklets']=self['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
