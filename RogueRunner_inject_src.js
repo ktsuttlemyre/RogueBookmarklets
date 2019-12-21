@@ -1,12 +1,30 @@
 (function (self,user) {
+	self['RogueBookmarklets']=self['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
+	if(window['RogueBookmarklets']['show']){
+		return window['RogueBookmarklets']['show']()
+	}
+	if (!Date.now) {
+		Date.now = function now() {
+			return new Date().getTime();
+		};
+	}
+	function loadFromIframe(){
+		//start the injection
+		xDomainStorage.getRunner(function(payload){
+			var s = document.createElement('script');
+			s.setAttribute('type', 'text/javascript');
+			s.appendChild(document.createTextNode(payload.data)); 
+			document.getElementsByTagName('head')[0].appendChild(s);
+		})
+	}
+
 	//start the injection
 	var s = document.createElement('script');
 	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
 	s.setAttribute('type', 'text/javascript');
 	s.setAttribute('crossorigin', "anonymous");
-	s.onerror = function(a){alert('RogueBookmarks:Error loading \n '+a)}
+	s.onerror = loadFromIframe
 	document.getElementsByTagName('head')[0].appendChild(s);
-
 
 	//  Use this micro framework to see if the dom is ready
 	//some modifications to make it init faster
@@ -26,29 +44,51 @@
 			}
 	})();
 
-function uuidv4(format) {
-	if(!format){
-		format='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+	function uniqueID() {
+		var str=new Array(17)
+		for(var i=0;i<15;i++){
+			var r = Math.random() * 16 | 0;
+			//v = c == 'x' ? r : (r & 0x3 | 0x8);
+			str[i]=r.toString(16);
+		}
+		str[15]='-'
+		str[16]=Date.now() //put the date on the end to speed up 
+		return str.join('')
 	}
-	return format.replace(/[xy]/g, function(c) {
-		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-	return v.toString(16);
-	});
-}
 
-/**
- * @constructor
- */
-	var CrossOriginLocalStorage = function(currentWindow, iframe, allowedOrigins) {
+	/**
+	 * @constructor
+	 */
+	var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
 
 		var childWindow;
-		// some browser (don't remember which one) throw exception when you try to access
-		// contentWindow for the first time, it works when you do that second time
-		try {
-			childWindow = iframe.contentWindow;
-		} catch(e) {
-			childWindow = iframe.contentWindow;
+
+		var preloadQueue=[]
+		var doPreloadHandlers = function(){
+			for(var i=0;i<preloadQueue.length;i++){
+				childWindow.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
+			}
+			preloadQueue=null
 		}
+
+		domready(function(){
+			var iframe = document.createElement('iframe');
+			iframe.style.display = "none";
+			iframe.style.position = 'absolute'; //ensure no reflow
+			iframe.addEventListener("load",doPreloadHandlers)
+			iframe.src = url;
+			document.body.appendChild(iframe);
+
+			// some browser (don't remember which one) throw exception when you try to access
+			// contentWindow for the first time, it works when you do that second time
+			try {
+				childWindow = iframe.contentWindow;
+			} catch(e) {
+				childWindow = iframe.contentWindow;
+			}
+
+		})
+
 
 		var messageQueue={};
 
@@ -57,13 +97,18 @@ function uuidv4(format) {
 				console.error('Injector rejected post message from',event.origin,'Allowed origins are',allowedOrigins)
 				return;
 			}
-			var data=JSON.parse(event.data)
-			var handler=messageQueue[data.messageID]
 
+			var data=JSON.parse(event.data)
 			if(data.error){
 				console.error(data.error)
 			}
 
+			if(data.messageID==null){
+				console.error('need data.messageID for callbacks to function',event)
+				return
+			}
+
+			var handler=messageQueue[data.messageID]
 			if(handler){
 				if(handler.method!=handler.method){
 					console.error('methods do not match. Possible security risk')
@@ -73,7 +118,7 @@ function uuidv4(format) {
 				messageQueue[data.messageID]=null
 				delete messageQueue[data.messageID]
 			}else{
-				console.error('no handler found for ',event.messageID)
+				console.error('no handler found for ',event.messageID,event)
 			}
 		};
 
@@ -89,60 +134,56 @@ function uuidv4(format) {
 			return allowedOrigins.includes(origin);
 		}
 
+		var getRunner = this.getRunner function(handler){
+			var messageData = {
+				method: 'getRunner',
+			}
+			postMessage(messageData,handler);
+		}
 		var getData = this.getData = function (key,handler) {
-			var id=uuidv4()
-			messageData = {
+			var messageData = {
 				key: key,
 				method: 'get',
-				messageID:id
 			}
-			messageQueue[id]={fn:handler,method:messageData.method}
-			postMessage(messageData);
+			postMessage(messageData,handler);
 		}
 
 		var setData = this.setData = function(key, data, handler) {
-			messageData = {
+			var messageData = {
 				key: key,
 				method: 'set',
 				data: data,
 			}
-			messageQueue[id]={fn:handler,method:messageData.method}
-			postMessage(messageData);
+			postMessage(messageData,handler);
 		}
 
-		var postMessage=this.postMessage = function(messageData) {
+		var postMessage=this.postMessage = function(messageData,handler) {
+			var id=uniqueID()
+			messageData.messageID=id
+			messageQueue[id]={fn:handler,method:messageData.method}
+			if(preloadQueue != null){
+				preloadQueue.push(messageData)
+				return
+			}
 			childWindow.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
 		}
 	};
 
-
 	var allowedOrigins = ['https://ktsuttlemyre.github.io'];
-	domready(function() {
-		var iframe = document.createElement('iframe');
-		iframe.style.display = "none";
+	
+	var xDomainStorage=self['RogueBookmarklets']['xDomainStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html' , allowedOrigins);
+	xDomainStorage.setData('name', 'buren')
+	var onMessage = function(payload, event) {
+		//console.log('inject got',payload,event)
+		var data = payload.data;
+		switch (payload.method) {
+			case 'get':
+				alert('message data'+ JSON.stringify(payload));
+				break;
+			default:
+				console.error('Unknown method "' + payload.method + '"', payload);
+			}
+		};
+	xDomainStorage.getData('name',onMessage);
 
-		iframe.addEventListener("load", function() {
-			var onMessage = function(payload, event) {
-				console.log('inject got',payload,event)
-				var data = payload.data;
-				switch (payload.method) {
-					case 'storage#get':
-						console.log('message data', payload);
-						break;
-					default:
-						console.error('Unknown method "' + payload.method + '"', payload);
-					}
-			};
-			var cross = self['RogueBookmarklets']['cross'] = new CrossOriginLocalStorage(self, iframe, allowedOrigins);
-			cross.setData('name', 'buren')
-			cross.getData('name',onMessage)
-		});
-
-		iframe.src = 'https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html' 
-		document.body.appendChild(iframe);
-
-
-	});
-
-	self['RogueBookmarklets']=self['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
 })(window,'anonymous')

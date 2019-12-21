@@ -1,8 +1,8 @@
 (function(user,devMode) {
-    if(window['RogueBookmarklets']&&window['RogueBookmarklets'].show){
-        return RogueBookmarklets.show()
+    window['RogueBookmarklets']=window['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
+    if(window['RogueBookmarklets']['show']){
+        return window['RogueBookmarklets']['show']()
     }
-
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
