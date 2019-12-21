@@ -41,10 +41,10 @@
 				};
 
 			// Support IE8 with attachEvent
-			if (currentWindow.addEventListener) {
-				currentWindow.addEventListener('message', this._listener, false);
+			if (window.addEventListener) {
+				window.addEventListener('message', this._listener, false);
 			} else {
-				currentWindow.attachEvent('onmessage', this._listener);
+				window.attachEvent('onmessage', this._listener);
 			}
 		</script>
 	</body>
