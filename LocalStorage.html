@@ -25,7 +25,7 @@
 				var parent = window.parent;
 				var data = localStorage.getItem(payload.key);
 				var returnPayload={
-					method=payload.method,
+					method:payload.method,
 					messageID:payload.messageID
 				}
 				switch(payload.method) {

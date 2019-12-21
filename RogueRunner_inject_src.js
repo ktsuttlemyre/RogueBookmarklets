@@ -57,16 +57,19 @@ function uuidv4(format) {
 				console.error('Injector rejected post message from',event.origin,'Allowed origins are',allowedOrigins)
 				return;
 			}
-
 			var data=JSON.parse(event.data)
 			var handler=messageQueue[data.messageID]
+
+			if(data.error){
+				console.error(data.error)
+			}
+
 			if(handler){
 				if(handler.method!=handler.method){
 					console.error('methods do not match. Possible security risk')
 					return
 				}
-
-				handler.fn(data, event);
+				handler.fn && handler.fn(data, event);
 				messageQueue[data.messageID]=null
 				delete messageQueue[data.messageID]
 			}else{
@@ -97,7 +100,7 @@ function uuidv4(format) {
 			postMessage(messageData);
 		}
 
-		var setData = this.setData = function(key, data) {
+		var setData = this.setData = function(key, data, handler) {
 			messageData = {
 				key: key,
 				method: 'set',
@@ -108,7 +111,7 @@ function uuidv4(format) {
 		}
 
 		var postMessage=this.postMessage = function(messageData) {
-			childWindow.postMessage(JSON.stringify(messageData), '*');
+			childWindow.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
 		}
 	};
 
