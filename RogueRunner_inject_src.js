@@ -1,4 +1,13 @@
 (function (self,user) {
+	//start the injection
+	var s = document.createElement('script');
+	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
+	s.setAttribute('type', 'text/javascript');
+	s.setAttribute('crossorigin', "anonymous");
+	s.onerror = function(a){alert('RogueBookmarks:Error loading \n '+a)}
+	document.getElementsByTagName('head')[0].appendChild(s);
+
+
 	//  Use this micro framework to see if the dom is ready
 	//some modifications to make it init faster
 	//https://github.com/ded/domready
@@ -96,15 +105,8 @@
 		var cross = new CrossOriginLocalStorage(window, iframe, allowedOrigins, onMessage);
 		cross.setData('name', 'buren')
 		cross.getData('name')
+		RogueBookmarklets.cross=cross;
 	});
 
-
-
-	var s = document.createElement('script');
-	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
-	s.setAttribute('type', 'text/javascript');
-	s.setAttribute('crossorigin', "anonymous");
-	s.onerror = function(a){alert('RogueBookmarks:Error loading \n '+a)}
-	document.getElementsByTagName('head')[0].appendChild(s);
-	self['RogueBookmarks']=self['RogueBookmarks'] || {} //in block notation so closure compiler will 'export' the vairable
+	self['RogueBookmarklets']=self['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
 })(window,'anonymous')

@@ -1,6 +1,6 @@
 (function(user,devMode) {
-    if(window['RogueBookmarks']&&window['RogueBookmarks'].show){
-        return RogueBookmarks.show()
+    if(window['RogueBookmarklets']&&window['RogueBookmarklets'].show){
+        return RogueBookmarklets.show()
     }
 
     ///////////////////////
@@ -30,7 +30,7 @@
         if(src){
             script.setAttribute('src',src);
             script.setAttribute('crossorigin', "anonymous");
-            script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarks:Error loading \n '+src}
+            script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarklets:Error loading \n '+src}
         }else{
             try {
                 script.appendChild(document.createTextNode(code));
@@ -299,9 +299,9 @@
         a.appendChild(document.createTextNode(key));
         a.title = key;
         a.className = 'Rogue_suggestion_link RogueRunner_animate'
-        a.href = "javascript:RogueBookmarks.run(\'"+key+"\')";
+        a.href = "javascript:RogueBookmarklets.run(\'"+key+"\')";
         a.tabIndex=0;
-        //a.onfocus = "RogueBookmarks.setSelection(\'"+key+"\')";
+        //a.onfocus = "RogueBookmarklets.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
     }
 
@@ -423,8 +423,8 @@
             return
         }
 
-        RogueBookmarks.key=key
-        RogueBookmarks.arguments=[]
+        RogueBookmarklets.key=key
+        RogueBookmarklets.arguments=[]
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
@@ -432,7 +432,7 @@
         }
     }
 
-    window['RogueBookmarks']=window['RogueBookmarks']||{run:run,show:show} //in block notation so closure compiler will 'export' the vairable
-//usersession
+    window['RogueBookmarklets']=window['RogueBookmarklets']||{run:run,show:show} //in block notation so closure compiler will 'export' the vairable
+//usersessions
 })("")
 
