@@ -48,6 +48,7 @@
 
 							load(payload.url,function(e,data){
 								returnPayload.data=data
+								console.log('iframe got data',data)
 								parent.postMessage(JSON.stringify(returnPayload), '*');
 							})
 							return
