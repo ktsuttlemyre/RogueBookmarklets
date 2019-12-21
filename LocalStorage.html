@@ -20,6 +20,7 @@
 				//if (!allowedOrigins.includes(e.origin)) {
 				//    return;
 				//}
+				console.log('iframe got message',e)
 				var payload = JSON.parse(e.data);
 				switch(payload.method) {
 					case 'set':
@@ -42,9 +43,9 @@
 
 			// Support IE8 with attachEvent
 			if (window.addEventListener) {
-				window.addEventListener('message', this._listener, false);
+				window.addEventListener('message', _listener, false);
 			} else {
-				window.attachEvent('onmessage', this._listener);
+				window.attachEvent('onmessage', _listener);
 			}
 		</script>
 	</body>
