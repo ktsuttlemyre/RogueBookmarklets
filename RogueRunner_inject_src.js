@@ -104,7 +104,7 @@
 
 			var data=JSON.parse(event.data)
 			if(data.error){
-				console.error(data.error)
+				console.error(data.error,event)
 			}
 
 			if(data.messageID==null){
