@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#222531">
+		<script>
+			
+		</script>
+	</head>
+
+	<body>
+		<h1>RogueRunner</h1>
+		<script type="text/javascript">
+			var allowedOrigins = [
+			];
+
+			var _listener = function (e) {
+				//if (!allowedOrigins.includes(e.origin)) {
+				//    return;
+				//}
+				var payload = JSON.parse(e.data);
+				switch(payload.method) {
+					case 'set':
+						localStorage.setItem(payload.key, JSON.stringify(payload.data));
+						break;
+					case 'get':
+						var parent = window.parent;
+						var data = localStorage.getItem(payload.key);
+						var returnPayload = {
+							method: 'storage#get',
+							data: data
+						}
+						parent.postMessage(JSON.stringify(returnPayload), '*');
+						break;
+					case 'remove':
+						localStorage.removeItem(payload.key);
+						break;
+					}
+				};
+
+			// Support IE8 with attachEvent
+			if (currentWindow.addEventListener) {
+				currentWindow.addEventListener('message', this._listener, false);
+			} else {
+				currentWindow.attachEvent('onmessage', this._listener);
+			}
+		</script>
+	</body>
+</html>

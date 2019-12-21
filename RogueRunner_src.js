@@ -281,7 +281,7 @@
         getSuggestions()
     }
     function hide(){
-        
+
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
@@ -299,7 +299,7 @@
         a.appendChild(document.createTextNode(key));
         a.title = key;
         a.className = 'Rogue_suggestion_link RogueRunner_animate'
-        a.href = "javascript:RogueBookmarks(\'"+key+"\')";
+        a.href = "javascript:RogueBookmarks.run(\'"+key+"\')";
         a.tabIndex=0;
         //a.onfocus = "RogueBookmarks.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
@@ -432,8 +432,7 @@
         }
     }
 
-    run.show=show
-    window.RogueBookmarks=run
+    window.RogueBookmarks=window.RogueBookmarks||{run:run,show:show}
 //usersession
 })("")
 
