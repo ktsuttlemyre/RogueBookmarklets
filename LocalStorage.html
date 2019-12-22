@@ -7,15 +7,25 @@
 		<meta name="theme-color" content="#222531">
 		<script type="text/template" id="RogueRunner"></script>
 		<script type="text/javascript" src="/RogueBookmarklets/tests/load.js"></script>
+		<script type="text/javascript" src="/RogueBookmarklets/index_stringFormat.js"></script>
 	</head>
 
 	<body>
 		<script type="text/javascript">
+
+
+
 			var allowedOrigins = [
 			];
 			var allowedScriptSources=[
 				'https://ktsuttlemyre.github.io'
 			]
+
+			var keys=Object.keys(RogueBookmarklets.scriptEndpoints)
+			for(var i=0;i<keys.length;i++){
+				allowedScriptSources.push(RogueBookmarklets.stringFormat(RogueBookmarklets.scriptEndpoints[keys[i]],{path:''}))
+			}
+
 
 			var _listener = function (e) {
 				//if (!allowedOrigins.includes(e.origin)) {
@@ -46,12 +56,17 @@
 							//var element = document.getElementById('RogueRunner')
 							//returnPayload.data=element.innerText || element.textContent;
 							//console.log('iframe payload=',payload)
-							load(payload.url,function(e,data){
-								//console.log('load returned something',e,data)
-								returnPayload.data=data
-								//console.log('iframe got data',data)
-								parent.postMessage(JSON.stringify(returnPayload), '*');
-							})
+							var fn=function(item){
+								return (payload.url.indexOf(item) == 0)
+							}
+							if(allowedScriptSources.some(fn)){
+								load(payload.url,function(e,data){
+									//console.log('load returned something',e,data)
+									returnPayload.data=data
+									//console.log('iframe got data',data)
+									parent.postMessage(JSON.stringify(returnPayload), '*');
+								})
+							}
 							return
 							break;
 						case 'remove':
