@@ -59,14 +59,17 @@
 							var fn=function(item){
 								return (payload.url.indexOf(item) == 0)
 							}
-							if(allowedScriptSources.some(fn)){
-								load(payload.url,function(e,data){
-									//console.log('load returned something',e,data)
-									returnPayload.data=data
-									//console.log('iframe got data',data)
-									parent.postMessage(JSON.stringify(returnPayload), '*');
-								})
+							if(!allowedScriptSources.some(fn)){
+								console.warn('RogueBookmarklets localStorage refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
+								return
 							}
+							load(payload.url,function(e,data){
+								//console.log('load returned something',e,data)
+								returnPayload.data=data
+								//console.log('iframe got data',data)
+								parent.postMessage(JSON.stringify(returnPayload), '*');
+							})
+						
 							return
 							break;
 						case 'remove':
