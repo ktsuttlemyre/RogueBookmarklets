@@ -24,13 +24,23 @@
         }
     }
 
+    function loadFromIframe(url){
+        //start the injection
+        self['RogueBookmarklets']['xDomainStorage'].getScript(url,function(payload){
+            var s = document.createElement('script');
+            s.setAttribute('type', 'text/javascript');
+            s.appendChild(document.createTextNode(payload.data)); 
+            document.getElementsByTagName('head')[0].appendChild(s);
+        })
+    }
+
     function ScriptOBJ(src,code) { //callback might not work
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
         if(src){
             script.setAttribute('src',src);
             script.setAttribute('crossorigin', "anonymous");
-            script.onerror = function(a,b,c){statusBar.innerHTML='RogueBookmarklets:Error loading \n '+src}
+            script.onerror = function(){loadFromIframe(src)} //function(a,b,c){statusBar.innerHTML='RogueBookmarklets:Error loading \n '+src}
         }else{
             try {
                 script.appendChild(document.createTextNode(code));

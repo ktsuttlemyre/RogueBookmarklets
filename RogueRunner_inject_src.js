@@ -14,9 +14,9 @@
 	}
 
 
-	function loadFromIframe(){
+	function loadFromIframe(url){
 		//start the injection
-		self['RogueBookmarklets']['xDomainStorage'].getScript('https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js',function(payload){
+		self['RogueBookmarklets']['xDomainStorage'].getScript(url,function(payload){
 			var s = document.createElement('script');
 			s.setAttribute('type', 'text/javascript');
 			s.appendChild(document.createTextNode(payload.data)); 
@@ -29,7 +29,7 @@
 	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
 	s.setAttribute('type', 'text/javascript');
 	s.setAttribute('crossorigin', "anonymous");
-	s.onerror = loadFromIframe
+	s.onerror = function(){loadFromIframe(s.src)}
 	document.getElementsByTagName('head')[0].appendChild(s);
 	
 	// use this to test script injection failures to load
