@@ -455,7 +455,7 @@
         //TODO inject CrossOriginLocalStorage via injection script
         alert('CrossOriginLocalStorage not loaded!')
     }
-    var extendCrossOriginLocalStorage(CrossOriginLocalStorage){
+    var extendCrossOriginLocalStorage= function(CrossOriginLocalStorage){
         CrossOriginLocalStorage.prototype.getData = function (key,handler) {
             var messageData = {
                 key: key,
