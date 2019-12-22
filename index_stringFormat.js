@@ -1,8 +1,8 @@
 ---
 ---
-window.RogueBookmarklets=window.RogueBookmarklets||{}
+window.RogueBM=window.RogueBM||{}
 
-RogueBookmarklets.scripts={
+RogueBM.scripts={
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
     "{{ marklet.basename }}":{
@@ -18,7 +18,7 @@ RogueBookmarklets.scripts={
     {% endfor %}
     }
 
-RogueBookmarklets.scriptEndpoints={
+RogueBM.scriptEndpoints={
   "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{path}",
   "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
   "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
@@ -26,8 +26,8 @@ RogueBookmarklets.scriptEndpoints={
 
 }
 
-//encodeURI(RogueBookmarklets.stringFormat(RogueBookmarklets.scriptEndpoints.edit,RogueBookmarklets.scripts['to_qr']))
-RogueBookmarklets.stringFormat=function(format, args1, args2){
+//encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
+RogueBM.stringFormat=function(format, args1, args2){
     return format.replace(/{(\w+)}/g, function(match, word) {
       var sub = args1[word];
 

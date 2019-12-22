@@ -12,7 +12,12 @@
 
 	<body>
 		<script type="text/javascript">
-
+		    function showError(message){
+		            //statusBar.innerHTML=message
+		            var args = Array.prototype.slice.call( arguments );
+		            args.unshift("RogueBM[xDLStorageiFrame]: ");
+		            console.error.apply(console, args);
+		    }
 
 
 			var allowedOrigins = [
@@ -21,9 +26,9 @@
 				'https://ktsuttlemyre.github.io'
 			]
 
-			var keys=Object.keys(RogueBookmarklets.scriptEndpoints)
+			var keys=Object.keys(RogueBM.scriptEndpoints)
 			for(var i=0;i<keys.length;i++){
-				allowedScriptSources.push(RogueBookmarklets.stringFormat(RogueBookmarklets.scriptEndpoints[keys[i]],{path:''}))
+				allowedScriptSources.push(RogueBM.stringFormat(RogueBM.scriptEndpoints[keys[i]],{path:''}))
 			}
 
 
@@ -60,7 +65,7 @@
 								return (payload.url.indexOf(item) == 0)
 							}
 							if(!allowedScriptSources.some(fn)){
-								console.warn('RogueBookmarklets localStorage refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
+								showError('refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
 								return
 							}
 							load(payload.url,function(e,data){
@@ -77,6 +82,7 @@
 							break;
 						}
 				}catch(err){
+					showError()
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
 

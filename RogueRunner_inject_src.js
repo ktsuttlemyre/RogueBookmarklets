@@ -1,5 +1,5 @@
 (function (self,user) {
-	var NotLoadedRogueBookmarklets=!self['RogueBookmarklets'];
+	var NotLoadedRogueBM=!self['RogueBM'];
 
 	if (!Date.now) {
 		Date.now = function now() {
@@ -7,29 +7,41 @@
 		};
 	}
 
-	self['RogueBookmarklets']=self['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
-	if(window['RogueBookmarklets']['show']){
-		!self['RogueBookmarklets']['CrossOriginLocalStorage'] && loadCrossOriginLocalStorage()
-		return window['RogueBookmarklets']['show']()
+	self['RogueBM']=self['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
+	if(window['RogueBM']['show']){
+		!self['RogueBM']['CrossOriginLocalStorage'] && loadCrossOriginLocalStorage()
+		return window['RogueBM']['show']()
 	}
 
 
-	function loadFromIframe(url){
-		//start the injection
-		self['RogueBookmarklets']['xDomainStorage'].getScript(url,function(payload){
-			var s = document.createElement('script');
-			s.setAttribute('type', 'text/javascript');
-			s.appendChild(document.createTextNode(payload.data)); 
-			document.getElementsByTagName('head')[0].appendChild(s);
-		})
-	}
+
+    function showError(message){
+            //statusBar.innerHTML=message
+            var args = Array.prototype.slice.call( arguments );
+            args.unshift("RogueBM[injection]: ");
+            console.error.apply(console, args);
+    }
+    function loadFromIframe(url,err){
+        //start the injection
+        var xDLStorage=self['RogueBM']['xDLStorage']
+        if(!xDLStorage){
+            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
+        }
+       xDLStorage.getScript(url,function(payload){
+            payload.error && showError("Error loading script from xDLStorage",payload.error)
+            var s = document.createElement('script');
+            s.setAttribute('type', 'text/javascript');
+            s.appendChild(document.createTextNode(payload.data)); 
+            document.getElementsByTagName('head')[0].appendChild(s);
+        })
+    }
 
 	//start the injection
 	var s = document.createElement('script');
 	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
 	s.setAttribute('type', 'text/javascript');
 	s.setAttribute('crossorigin', "anonymous");
-	s.onerror = function(){loadFromIframe(s.src)}
+	s.onerror = function(err){loadFromIframe(s.src,err)}
 	document.getElementsByTagName('head')[0].appendChild(s);
 	
 	// use this to test script injection failures to load
@@ -89,7 +101,7 @@
 				// contentWindow for the first time, it works when you do that second time
 				try {
 					childWindow = iframe.contentWindow;
-				} catch(e) {
+				} catch(e) { //silent error, fallback for browsers
 					childWindow = iframe.contentWindow;
 				}
 
@@ -102,31 +114,31 @@
 			}
 			var _listener = function (event) {
 				if (!isAllowedOrigin(event.origin)) {
-					console.error('Injector rejected post message from',event.origin,'Allowed origins are',allowedOrigins)
+					showError('rejected post message from',event.origin,'Allowed origins are',allowedOrigins)
 					return;
 				}
 
 				var data=JSON.parse(event.data)
 				if(data.error){
-					console.error(data.error,event)
+					showError(data.error,event)
 				}
 
 				if(data.messageID==null){
-					console.error('need data.messageID for callbacks to function',event)
+					showError('need data.messageID for callbacks to function',event)
 					return
 				}
 
 				var handler=messageQueue[data.messageID]
 				if(handler){
 					if(handler.method!=handler.method){
-						console.error('methods do not match. Possible security risk')
+						showError('methods do not match. Possible security risk')
 						return
 					}
 					handler.fn && handler.fn(data, event);
 					messageQueue[data.messageID]=null
 					delete messageQueue[data.messageID]
 				}else{
-					console.error('no handler found for ',event.messageID,event)
+					showError('no handler found for ',event.messageID,event)
 				}
 			};
 
@@ -165,10 +177,10 @@
 				childWindow.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
 			}
 		};
-		self['RogueBookmarklets']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
+		self['RogueBM']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
 
 		var allowedOrigins = ['https://ktsuttlemyre.github.io'];
-		self['RogueBookmarklets']['xDomainStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html' , allowedOrigins);
+		self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html' , allowedOrigins);
 	}
 	loadCrossOriginLocalStorage()
 

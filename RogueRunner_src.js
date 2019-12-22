@@ -1,7 +1,7 @@
 (function(user,devMode) {
-    window['RogueBookmarklets']=window['RogueBookmarklets'] || {} //in block notation so closure compiler will 'export' the vairable
-    if(window['RogueBookmarklets']['show']){
-        return window['RogueBookmarklets']['show']()
+    window['RogueBM']=window['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
+    if(window['RogueBM']['show']){
+        return window['RogueBM']['show']()
     }
     ///////////////////////
     // start the index download asap
@@ -24,9 +24,20 @@
         }
     }
 
-    function loadFromIframe(url){
+    function showError(message){
+            statusBar.innerHTML=message
+            var args = Array.prototype.slice.call( arguments );
+            args.unshift("RogueBM[runner]: ");
+            console.error.apply(console, args);
+    }
+    function loadFromIframe(url,err){
         //start the injection
-        self['RogueBookmarklets']['xDomainStorage'].getScript(url,function(payload){
+        var xDLStorage=self['RogueBM']['xDLStorage']
+        if(!xDLStorage){
+            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
+        }
+       xDLStorage.getScript(url,function(payload){
+            payload.error && showError("Error loading script from xDLStorage",payload.error)
             var s = document.createElement('script');
             s.setAttribute('type', 'text/javascript');
             s.appendChild(document.createTextNode(payload.data)); 
@@ -40,11 +51,11 @@
         if(src){
             script.setAttribute('src',src);
             script.setAttribute('crossorigin', "anonymous");
-            script.onerror = function(){loadFromIframe(src)} //function(a,b,c){statusBar.innerHTML='RogueBookmarklets:Error loading \n '+src}
+            script.onerror = function(err){loadFromIframe(src,err)}
         }else{
             try {
                 script.appendChild(document.createTextNode(code));
-            } catch (e) {
+            } catch (err) { //silent error fallback for shitty browsers
                 script.text = code;
             }
         }
@@ -81,10 +92,13 @@
     //https://www.w3schools.com/howto/howto_css_modals.asp
     var cssText = ''+ /* The Modal (background) */
 
+        // '#RogueRunner {'+
+        //     'all:initial;'+
+        // '}'+
 
-
-
-
+        // '#RogueRunner *{'+
+        //     'all:unset'+
+        // '}'+
         /* Modal Content/Box */
         '#RogueRunner .modal-content {'+
             'background-color: #fefefe;'+
@@ -154,7 +168,7 @@
             'bottom: 1px;'+
              'font-size: 1.30em;'+
         '}'+
-        
+
 
         '#RogueRunner {'+
             'position: fixed;'+ /* Stay in place */
@@ -167,289 +181,289 @@
             'background-color: rgb(0,0,0);'+ /* Fallback color */
             'background-color: rgba(0,0,0,0.4);'+ /* Black w/ opacity */
 
-'align-content:normal;'+
-'align-items:normal;'+
-'align-self:auto;'+
-'alignment-baseline:auto;'+
-'animation-delay:0s;'+
-'animation-direction:normal;'+
-'animation-duration:0s;'+
-'animation-fill-mode:none;'+
-'animation-iteration-count:1;'+
-'animation-name:none;'+
-'animation-play-state:running;'+
-'animation-timing-function:ease;'+
-'backdrop-filter:none;'+
-'backface-visibility:visible;'+
-'background-attachment:scroll;'+
-'background-blend-mode:normal;'+
-'background-clip:border-box;'+
+// 'align-content:normal;'+
+// 'align-items:normal;'+
+// 'align-self:auto;'+
+// 'alignment-baseline:auto;'+
+// 'animation-delay:0s;'+
+// 'animation-direction:normal;'+
+// 'animation-duration:0s;'+
+// 'animation-fill-mode:none;'+
+// 'animation-iteration-count:1;'+
+// 'animation-name:none;'+
+// 'animation-play-state:running;'+
+// 'animation-timing-function:ease;'+
+// 'backdrop-filter:none;'+
+// 'backface-visibility:visible;'+
+// 'background-attachment:scroll;'+
+// 'background-blend-mode:normal;'+
+// 'background-clip:border-box;'+
 
-'background-image:none;'+
-'background-origin:padding-box;'+
-'background-position-x:0%;'+
-'background-position-y:0%;'+
-'background-size:auto;'+
-'baseline-shift:0px;'+
-'block-size:666px;'+
-'border-block-end-color:rgb(0, 0, 0);'+
-'border-block-end-style:none;'+
-'border-block-end-width:0px;'+
-'border-block-start-color:rgb(0, 0, 0);'+
-'border-block-start-style:none;'+
-'border-block-start-width:0px;'+
-'border-bottom-color:rgb(0, 0, 0);'+
-'border-bottom-left-radius:0px;'+
-'border-bottom-right-radius:0px;'+
-'border-bottom-style:none;'+
-'border-bottom-width:0px;'+
-'border-collapse:separate;'+
-'border-image-outset:0px;'+
-'border-image-repeat:stretch;'+
-'border-image-slice:100%;'+
-'border-image-source:none;'+
-'border-image-width:1;'+
-'border-inline-end-color:rgb(0, 0, 0);'+
-'border-inline-end-style:none;'+
-'border-inline-end-width:0px;'+
-'border-inline-start-color:rgb(0, 0, 0);'+
-'border-inline-start-style:none;'+
-'border-inline-start-width:0px;'+
-'border-left-color:rgb(0, 0, 0);'+
-'border-left-style:none;'+
-'border-left-width:0px;'+
-'border-right-color:rgb(0, 0, 0);'+
-'border-right-style:none;'+
-'border-right-width:0px;'+
-'border-top-color:rgb(0, 0, 0);'+
-'border-top-left-radius:0px;'+
-'border-top-right-radius:0px;'+
-'border-top-style:none;'+
-'border-top-width:0px;'+
-'bottom:0px;'+
-'box-shadow:none;'+
-'box-sizing:content-box;'+
-'break-after:auto;'+
-'break-before:auto;'+
-'break-inside:auto;'+
-'buffered-rendering:auto;'+
-'caption-side:top;'+
-'caret-color:rgb(0, 0, 0);'+
-'clear:none;'+
-'clip:auto;'+
-'clip-path:none;'+
-'clip-rule:nonzero;'+
-'color:rgb(0, 0, 0);'+
-'color-interpolation:srgb;'+
-'color-interpolation-filters:linearrgb;'+
-'color-rendering:auto;'+
-'column-count:auto;'+
-'column-fill:balance;'+
-'column-gap:normal;'+
-'column-rule-color:rgb(0, 0, 0);'+
-'column-rule-style:none;'+
-'column-rule-width:0px;'+
-'column-span:none;'+
-'column-width:auto;'+
-'contain:none;'+
-'content:normal;'+
-'counter-increment:none;'+
-'counter-reset:none;'+
-'cursor:auto;'+
-'cx:0px;'+
-'cy:0px;'+
-'d:none;'+
-'direction:ltr;'+
-'dominant-baseline:auto;'+
-'empty-cells:show;'+
-'fill:rgb(0, 0, 0);'+
-'fill-opacity:1;'+
-'fill-rule:nonzero;'+
-'filter:none;'+
-'flex-basis:auto;'+
-'flex-direction:row;'+
-'flex-grow:0;'+
-'flex-shrink:1;'+
-'flex-wrap:nowrap;'+
-'float:none;'+
-'flood-color:rgb(0, 0, 0);'+
-'flood-opacity:1;'+
-'font-family:Times;'+
-'font-feature-settings:normal;'+
-'font-kerning:auto;'+
-'font-optical-sizing:auto;'+
-'font-size:16px;'+
-'font-stretch:100%;'+
-'font-style:normal;'+
-'font-variant-caps:normal;'+
-'font-variant-east-asian:normal;'+
-'font-variant-ligatures:normal;'+
-'font-variant-numeric:normal;'+
-'font-variation-settings:normal;'+
-'font-weight:400;'+
-'grid-auto-columns:auto;'+
-'grid-auto-flow:row;'+
-'grid-auto-rows:auto;'+
-'grid-column-end:auto;'+
-'grid-column-start:auto;'+
-'grid-row-end:auto;'+
-'grid-row-start:auto;'+
-'grid-template-areas:none;'+
-'grid-template-columns:none;'+
-'grid-template-rows:none;'+
-'hyphens:manual;'+
-'image-rendering:auto;'+
-'inline-size:602px;'+
-'isolation:auto;'+
-'justify-content:normal;'+
-'justify-items:normal;'+
-'justify-self:auto;'+
+// 'background-image:none;'+
+// 'background-origin:padding-box;'+
+// 'background-position-x:0%;'+
+// 'background-position-y:0%;'+
+// 'background-size:auto;'+
+// 'baseline-shift:0px;'+
+// 'block-size:666px;'+
+// 'border-block-end-color:rgb(0, 0, 0);'+
+// 'border-block-end-style:none;'+
+// 'border-block-end-width:0px;'+
+// 'border-block-start-color:rgb(0, 0, 0);'+
+// 'border-block-start-style:none;'+
+// 'border-block-start-width:0px;'+
+// 'border-bottom-color:rgb(0, 0, 0);'+
+// 'border-bottom-left-radius:0px;'+
+// 'border-bottom-right-radius:0px;'+
+// 'border-bottom-style:none;'+
+// 'border-bottom-width:0px;'+
+// 'border-collapse:separate;'+
+// 'border-image-outset:0px;'+
+// 'border-image-repeat:stretch;'+
+// 'border-image-slice:100%;'+
+// 'border-image-source:none;'+
+// 'border-image-width:1;'+
+// 'border-inline-end-color:rgb(0, 0, 0);'+
+// 'border-inline-end-style:none;'+
+// 'border-inline-end-width:0px;'+
+// 'border-inline-start-color:rgb(0, 0, 0);'+
+// 'border-inline-start-style:none;'+
+// 'border-inline-start-width:0px;'+
+// 'border-left-color:rgb(0, 0, 0);'+
+// 'border-left-style:none;'+
+// 'border-left-width:0px;'+
+// 'border-right-color:rgb(0, 0, 0);'+
+// 'border-right-style:none;'+
+// 'border-right-width:0px;'+
+// 'border-top-color:rgb(0, 0, 0);'+
+// 'border-top-left-radius:0px;'+
+// 'border-top-right-radius:0px;'+
+// 'border-top-style:none;'+
+// 'border-top-width:0px;'+
+// 'bottom:0px;'+
+// 'box-shadow:none;'+
+// 'box-sizing:content-box;'+
+// 'break-after:auto;'+
+// 'break-before:auto;'+
+// 'break-inside:auto;'+
+// 'buffered-rendering:auto;'+
+// 'caption-side:top;'+
+// 'caret-color:rgb(0, 0, 0);'+
+// 'clear:none;'+
+// 'clip:auto;'+
+// 'clip-path:none;'+
+// 'clip-rule:nonzero;'+
+// 'color:rgb(0, 0, 0);'+
+// 'color-interpolation:srgb;'+
+// 'color-interpolation-filters:linearrgb;'+
+// 'color-rendering:auto;'+
+// 'column-count:auto;'+
+// 'column-fill:balance;'+
+// 'column-gap:normal;'+
+// 'column-rule-color:rgb(0, 0, 0);'+
+// 'column-rule-style:none;'+
+// 'column-rule-width:0px;'+
+// 'column-span:none;'+
+// 'column-width:auto;'+
+// 'contain:none;'+
+// 'content:normal;'+
+// 'counter-increment:none;'+
+// 'counter-reset:none;'+
+// 'cursor:auto;'+
+// 'cx:0px;'+
+// 'cy:0px;'+
+// 'd:none;'+
+// 'direction:ltr;'+
+// 'dominant-baseline:auto;'+
+// 'empty-cells:show;'+
+// 'fill:rgb(0, 0, 0);'+
+// 'fill-opacity:1;'+
+// 'fill-rule:nonzero;'+
+// 'filter:none;'+
+// 'flex-basis:auto;'+
+// 'flex-direction:row;'+
+// 'flex-grow:0;'+
+// 'flex-shrink:1;'+
+// 'flex-wrap:nowrap;'+
+// 'float:none;'+
+// 'flood-color:rgb(0, 0, 0);'+
+// 'flood-opacity:1;'+
+// 'font-family:Times;'+
+// 'font-feature-settings:normal;'+
+// 'font-kerning:auto;'+
+// 'font-optical-sizing:auto;'+
+// 'font-size:16px;'+
+// 'font-stretch:100%;'+
+// 'font-style:normal;'+
+// 'font-variant-caps:normal;'+
+// 'font-variant-east-asian:normal;'+
+// 'font-variant-ligatures:normal;'+
+// 'font-variant-numeric:normal;'+
+// 'font-variation-settings:normal;'+
+// 'font-weight:400;'+
+// 'grid-auto-columns:auto;'+
+// 'grid-auto-flow:row;'+
+// 'grid-auto-rows:auto;'+
+// 'grid-column-end:auto;'+
+// 'grid-column-start:auto;'+
+// 'grid-row-end:auto;'+
+// 'grid-row-start:auto;'+
+// 'grid-template-areas:none;'+
+// 'grid-template-columns:none;'+
+// 'grid-template-rows:none;'+
+// 'hyphens:manual;'+
+// 'image-rendering:auto;'+
+// 'inline-size:602px;'+
+// 'isolation:auto;'+
+// 'justify-content:normal;'+
+// 'justify-items:normal;'+
+// 'justify-self:auto;'+
 
-'letter-spacing:normal;'+
-'lighting-color:rgb(255, 255, 255);'+
-'line-break:auto;'+
-'line-height:normal;'+
-'list-style-image:none;'+
-'list-style-position:outside;'+
-'list-style-type:disc;'+
-'margin-block-end:0px;'+
-'margin-block-start:0px;'+
-'margin-bottom:0px;'+
-'margin-inline-end:0px;'+
-'margin-inline-start:0px;'+
-'margin-left:0px;'+
-'margin-right:0px;'+
-'margin-top:0px;'+
-'marker-end:none;'+
-'marker-mid:none;'+
-'marker-start:none;'+
-'mask:none;'+
-'mask-type:luminance;'+
-'max-block-size:none;'+
-'max-height:none;'+
-'max-inline-size:none;'+
-'max-width:none;'+
-'min-block-size:0px;'+
-'min-height:0px;'+
-'min-inline-size:0px;'+
-'min-width:0px;'+
-'mix-blend-mode:normal;'+
-'object-fit:fill;'+
-'object-position:50% 50%;'+
-'offset-distance:0px;'+
-'offset-path:none;'+
-'offset-rotate:auto 0deg;'+
-'opacity:1;'+
-'order:0;'+
-'orphans:2;'+
-'outline-color:rgb(0, 0, 0);'+
-'outline-offset:0px;'+
-'outline-style:none;'+
-'outline-width:0px;'+
-'overflow-wrap:normal;'+
-'overscroll-behavior-block:auto;'+
-'overscroll-behavior-inline:auto;'+
-'overscroll-behavior-x:auto;'+
-'overscroll-behavior-y:auto;'+
-'padding-block-end:0px;'+
-'padding-block-start:0px;'+
-'padding-bottom:0px;'+
-'padding-inline-end:0px;'+
-'padding-inline-start:0px;'+
-'padding-left:0px;'+
-'padding-right:0px;'+
-'padding-top:0px;'+
+// 'letter-spacing:normal;'+
+// 'lighting-color:rgb(255, 255, 255);'+
+// 'line-break:auto;'+
+// 'line-height:normal;'+
+// 'list-style-image:none;'+
+// 'list-style-position:outside;'+
+// 'list-style-type:disc;'+
+// 'margin-block-end:0px;'+
+// 'margin-block-start:0px;'+
+// 'margin-bottom:0px;'+
+// 'margin-inline-end:0px;'+
+// 'margin-inline-start:0px;'+
+// 'margin-left:0px;'+
+// 'margin-right:0px;'+
+// 'margin-top:0px;'+
+// 'marker-end:none;'+
+// 'marker-mid:none;'+
+// 'marker-start:none;'+
+// 'mask:none;'+
+// 'mask-type:luminance;'+
+// 'max-block-size:none;'+
+// 'max-height:none;'+
+// 'max-inline-size:none;'+
+// 'max-width:none;'+
+// 'min-block-size:0px;'+
+// 'min-height:0px;'+
+// 'min-inline-size:0px;'+
+// 'min-width:0px;'+
+// 'mix-blend-mode:normal;'+
+// 'object-fit:fill;'+
+// 'object-position:50% 50%;'+
+// 'offset-distance:0px;'+
+// 'offset-path:none;'+
+// 'offset-rotate:auto 0deg;'+
+// 'opacity:1;'+
+// 'order:0;'+
+// 'orphans:2;'+
+// 'outline-color:rgb(0, 0, 0);'+
+// 'outline-offset:0px;'+
+// 'outline-style:none;'+
+// 'outline-width:0px;'+
+// 'overflow-wrap:normal;'+
+// 'overscroll-behavior-block:auto;'+
+// 'overscroll-behavior-inline:auto;'+
+// 'overscroll-behavior-x:auto;'+
+// 'overscroll-behavior-y:auto;'+
+// 'padding-block-end:0px;'+
+// 'padding-block-start:0px;'+
+// 'padding-bottom:0px;'+
+// 'padding-inline-end:0px;'+
+// 'padding-inline-start:0px;'+
+// 'padding-left:0px;'+
+// 'padding-right:0px;'+
+// 'padding-top:0px;'+
 
-'paint-order:normal;'+
-'perspective:none;'+
-'perspective-origin:301px 333px;'+
-'pointer-events:auto;'+
+// 'paint-order:normal;'+
+// 'perspective:none;'+
+// 'perspective-origin:301px 333px;'+
+// 'pointer-events:auto;'+
 
-'r:0px;'+
-'resize:none;'+
-'right:0px;'+
-'row-gap:normal;'+
-'rx:auto;'+
-'ry:auto;'+
-'scroll-behavior:auto;'+
-'scroll-margin-block-end:0px;'+
-'scroll-margin-block-start:0px;'+
-'scroll-margin-bottom:0px;'+
-'scroll-margin-inline-end:0px;'+
-'scroll-margin-inline-start:0px;'+
-'scroll-margin-left:0px;'+
-'scroll-margin-right:0px;'+
-'scroll-margin-top:0px;'+
-'scroll-padding-block-end:auto;'+
-'scroll-padding-block-start:auto;'+
-'scroll-padding-bottom:auto;'+
-'scroll-padding-inline-end:auto;'+
-'scroll-padding-inline-start:auto;'+
-'scroll-padding-left:auto;'+
-'scroll-padding-right:auto;'+
-'scroll-padding-top:auto;'+
-'scroll-snap-align:none;'+
-'scroll-snap-stop:normal;'+
-'scroll-snap-type:none;'+
-'shape-image-threshold:0;'+
-'shape-margin:0px;'+
-'shape-outside:none;'+
-'shape-rendering:auto;'+
+// 'r:0px;'+
+// 'resize:none;'+
+// 'right:0px;'+
+// 'row-gap:normal;'+
+// 'rx:auto;'+
+// 'ry:auto;'+
+// 'scroll-behavior:auto;'+
+// 'scroll-margin-block-end:0px;'+
+// 'scroll-margin-block-start:0px;'+
+// 'scroll-margin-bottom:0px;'+
+// 'scroll-margin-inline-end:0px;'+
+// 'scroll-margin-inline-start:0px;'+
+// 'scroll-margin-left:0px;'+
+// 'scroll-margin-right:0px;'+
+// 'scroll-margin-top:0px;'+
+// 'scroll-padding-block-end:auto;'+
+// 'scroll-padding-block-start:auto;'+
+// 'scroll-padding-bottom:auto;'+
+// 'scroll-padding-inline-end:auto;'+
+// 'scroll-padding-inline-start:auto;'+
+// 'scroll-padding-left:auto;'+
+// 'scroll-padding-right:auto;'+
+// 'scroll-padding-top:auto;'+
+// 'scroll-snap-align:none;'+
+// 'scroll-snap-stop:normal;'+
+// 'scroll-snap-type:none;'+
+// 'shape-image-threshold:0;'+
+// 'shape-margin:0px;'+
+// 'shape-outside:none;'+
+// 'shape-rendering:auto;'+
 
-'speak:normal;'+
-'stop-color:rgb(0, 0, 0);'+
-'stop-opacity:1;'+
-'stroke:none;'+
-'stroke-dasharray:none;'+
-'stroke-dashoffset:0px;'+
-'stroke-linecap:butt;'+
-'stroke-linejoin:miter;'+
-'stroke-miterlimit:4;'+
-'stroke-opacity:1;'+
-'stroke-width:1px;'+
-'tab-size:8;'+
-'table-layout:auto;'+
-'text-align:start;'+
-'text-align-last:auto;'+
-'text-anchor:start;'+
-'text-combine-upright:none;'+
-'text-decoration-color:rgb(0, 0, 0);'+
-'text-decoration-line:none;'+
-'text-decoration-skip-ink:auto;'+
-'text-decoration-style:solid;'+
-'text-indent:0px;'+
-'text-orientation:mixed;'+
-'text-overflow:clip;'+
-'text-rendering:auto;'+
-'text-shadow:none;'+
-'text-size-adjust:auto;'+
-'text-transform:none;'+
-'text-underline-position:auto;'+
+// 'speak:normal;'+
+// 'stop-color:rgb(0, 0, 0);'+
+// 'stop-opacity:1;'+
+// 'stroke:none;'+
+// 'stroke-dasharray:none;'+
+// 'stroke-dashoffset:0px;'+
+// 'stroke-linecap:butt;'+
+// 'stroke-linejoin:miter;'+
+// 'stroke-miterlimit:4;'+
+// 'stroke-opacity:1;'+
+// 'stroke-width:1px;'+
+// 'tab-size:8;'+
+// 'table-layout:auto;'+
+// 'text-align:start;'+
+// 'text-align-last:auto;'+
+// 'text-anchor:start;'+
+// 'text-combine-upright:none;'+
+// 'text-decoration-color:rgb(0, 0, 0);'+
+// 'text-decoration-line:none;'+
+// 'text-decoration-skip-ink:auto;'+
+// 'text-decoration-style:solid;'+
+// 'text-indent:0px;'+
+// 'text-orientation:mixed;'+
+// 'text-overflow:clip;'+
+// 'text-rendering:auto;'+
+// 'text-shadow:none;'+
+// 'text-size-adjust:auto;'+
+// 'text-transform:none;'+
+// 'text-underline-position:auto;'+
 
-'touch-action:auto;'+
-'transform:none;'+
-'transform-box:view-box;'+
-'transform-origin:301px 333px;'+
-'transform-style:flat;'+
-'transition-delay:0s;'+
-'transition-duration:0s;'+
-'transition-property:all;'+
-'transition-timing-function:ease;'+
-'unicode-bidi:normal;'+
-'user-select:auto;'+
-'vector-effect:none;'+
-'vertical-align:baseline;'+
-'visibility:visible;'+
-'white-space:normal;'+
-'widows:2;'+
-'will-change:auto;'+
-'word-break:normal;'+
-'word-spacing:0px;'+
-'writing-mode:horizontal-tb;'+
-'x:0px;'+
-'y:0px;'+
-'zoom:1;'+
-''+
+// 'touch-action:auto;'+
+// 'transform:none;'+
+// 'transform-box:view-box;'+
+// 'transform-origin:301px 333px;'+
+// 'transform-style:flat;'+
+// 'transition-delay:0s;'+
+// 'transition-duration:0s;'+
+// 'transition-property:all;'+
+// 'transition-timing-function:ease;'+
+// 'unicode-bidi:normal;'+
+// 'user-select:auto;'+
+// 'vector-effect:none;'+
+// 'vertical-align:baseline;'+
+// 'visibility:visible;'+
+// 'white-space:normal;'+
+// 'widows:2;'+
+// 'will-change:auto;'+
+// 'word-break:normal;'+
+// 'word-spacing:0px;'+
+// 'writing-mode:horizontal-tb;'+
+// 'x:0px;'+
+// 'y:0px;'+
+// 'zoom:1;'+
+// ''+
 
 
         '}'+
@@ -617,9 +631,9 @@
         a.appendChild(document.createTextNode(key));
         a.title = key;
         a.className = 'Rogue_suggestion_link RogueRunner_animate'
-        a.href = "javascript:RogueBookmarklets.run(\'"+key+"\')";
+        a.href = "javascript:RogueBM.run(\'"+key+"\')";
         a.tabIndex=0;
-        //a.onfocus = "RogueBookmarklets.setSelection(\'"+key+"\')";
+        //a.onfocus = "RogueBM.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
     }
 
@@ -746,8 +760,8 @@
         }
 
         //potential api to send arguments to roguebookmarks
-        RogueBookmarklets.key=key
-        RogueBookmarklets.arguments=[]
+        RogueBM.key=key
+        RogueBM.arguments=[]
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
@@ -755,12 +769,14 @@
         }
     }
 
-    var CrossOriginLocalStorage = window['RogueBookmarklets']['CrossOriginLocalStorage']
+    var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
     if(!CrossOriginLocalStorage){
         //TODO inject CrossOriginLocalStorage via injection script
         alert('CrossOriginLocalStorage not loaded!')
+    }else{
+        extendCrossOriginLocalStorage(CrossOriginLocalStorage)
     }
-    var extendCrossOriginLocalStorage= function(CrossOriginLocalStorage){
+    function extendCrossOriginLocalStorage(CrossOriginLocalStorage){
         CrossOriginLocalStorage.prototype.getData = function (key,handler) {
             var messageData = {
                 key: key,
@@ -778,10 +794,9 @@
             this.postMessage(messageData,handler);
         }
     }
-    extendCrossOriginLocalStorage(window['RogueBookmarklets']['CrossOriginLocalStorage'])
 
     //Playground
-    // self['RogueBookmarklets']['xDomainStorage'].setData('name', 'buren')
+    // self['RogueBM']['xDLStorage'].setData('name', 'buren')
     // var onMessage = function(payload, event) {
     //  //console.log('inject got',payload,event)
     //  var data = payload.data;
@@ -793,15 +808,15 @@
     //          console.error('Unknown method "' + payload.method + '"', payload);
     //      }
     //  };
-    // self['RogueBookmarklets']['xDomainStorage'].getData('name',onMessage);
+    // self['RogueBM']['xDLStorage'].getData('name',onMessage);
 
 
 
 
 
     //in block notation so closure compiler will 'export' the vairable
-    window['RogueBookmarklets']['show']=show
-    window['RogueBookmarklets']['run']=run
+    window['RogueBM']['show']=show
+    window['RogueBM']['run']=run
 
 //usersessions
 })("")
