@@ -80,12 +80,88 @@
     //modal code came from
     //https://www.w3schools.com/howto/howto_css_modals.asp
     var cssText = ''+ /* The Modal (background) */
+
+
+
+
+
+        /* Modal Content/Box */
+        '#RogueRunner .modal-content {'+
+            'background-color: #fefefe;'+
+            'margin: 15% auto;'+ /* 15% from the top and centered */
+            'padding: 20px;'+
+            'border: 1px solid #888;'+
+            '-webkit-border-radius: 15px;'+
+            '-moz-border-radius: 15px;'+
+            'border-radius: 15px;'+
+            'width: 80%;'+ /* Could be more or less, depending on screen size */
+        '}'+
+
+        '#RogueRunner #RogueRunner_div{'+
+            'position: relative;'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div > #input {'+
+            'outline: none;'+
+            'font-size: 1em;'+
+            'height: 1.5em;'+
+            'width: 100%;'+
+            '-webkit-border-radius: 15px;'+
+            '-moz-border-radius: 15px;'+
+            'border-radius: 15px;'+
+            'padding: 1em 0em;'+
+            'background:#EEEEEE'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div > .status_bar {'+
+            'color:#000000;'+
+            'position: absolute;'+
+            'font-size: 1.5em;'+
+            'right: '+((getViewportWidth()/2)-125)+'px;'+
+            'bottom: .5em;'+
+            'transition: all 0.1s ease;'+
+        '}'+
+
+        '#RogueRunner #RogueRunner_div #input:focus ~ .status_bar{'+
+            'color:#999999;'+
+            'right: 1em;'+
+            'bottom: 0.1em;'+
+            'font-size: .75em;'+
+        '}' +
+        '.RogueRunner_animate{'+
+            '-webkit-transition: all .5s ease;'+
+            '-moz-transition: all .5s ease;'+
+            '-o-transition: all .5s ease;'+
+            'transition: all .5s ease;'+
+        '}'+
+
+        '.RogueRunner_collapsed{'+
+            'max-height:0px !important;'+
+        '}'+
+
+        '#RogueRunner_div > #result_pane{'+
+            'height:auto;'+
+            'max-height:800px'+
+        '}'+
+
+        '.Rogue_suggestion_link{'+
+            'font-size:1em'+
+            'margin: .5em;'+
+            'display: block;'+
+        '}'+
+
+        '.Rogue_suggestion_link:focus{'+
+            'bottom: 1px;'+
+             'font-size: 1.30em;'+
+        '}'+
+        
+
         '#RogueRunner {'+
             'position: fixed;'+ /* Stay in place */
             'z-index: 2147483647;'+ /* Sit on top */
             'left: 0px;'+
             'top: 0px;'+
-            'width: 100%;'+ /* Full width */
+            'width: 100%;'+
             'height: 100%;'+ /* Full height */
             'overflow: auto;'+ /* Enable scroll if needed */
             'background-color: rgb(0,0,0);'+ /* Fallback color */
@@ -376,81 +452,10 @@
 ''+
 
 
-
-
-
-
         '}'+
 
-        /* Modal Content/Box */
-        '#RogueRunner .modal-content {'+
-            'background-color: #fefefe;'+
-            'margin: 15% auto;'+ /* 15% from the top and centered */
-            'padding: 20px;'+
-            'border: 1px solid #888;'+
-            '-webkit-border-radius: 15px;'+
-            '-moz-border-radius: 15px;'+
-            'border-radius: 15px;'+
-            'width: 80%;'+ /* Could be more or less, depending on screen size */
-        '}'+
 
-        '#RogueRunner #RogueRunner_div{'+
-            'position: relative;'+
-        '}'+
-
-        '#RogueRunner #RogueRunner_div > #input {'+
-            'outline: none;'+
-            'font-size: 1em;'+
-            'height: 1.5em;'+
-            'width: 100%;'+
-            '-webkit-border-radius: 15px;'+
-            '-moz-border-radius: 15px;'+
-            'border-radius: 15px;'+
-            'padding: 1em 0em;'+
-            'background:#EEEEEE'+
-        '}'+
-
-        '#RogueRunner #RogueRunner_div > .status_bar {'+
-            'color:#000000;'+
-            'position: absolute;'+
-            'font-size: 1.5em;'+
-            'right: '+((getViewportWidth()/2)-125)+'px;'+
-            'bottom: .5em;'+
-            'transition: all 0.1s ease;'+
-        '}'+
-
-        '#RogueRunner #RogueRunner_div #input:focus ~ .status_bar{'+
-            'color:#999999;'+
-            'right: 1em;'+
-            'bottom: 0.1em;'+
-            'font-size: .75em;'+
-        '}' +
-        '.RogueRunner_animate{'+
-            '-webkit-transition: all .5s ease;'+
-            '-moz-transition: all .5s ease;'+
-            '-o-transition: all .5s ease;'+
-            'transition: all .5s ease;'+
-        '}'+
-
-        '.RogueRunner_collapsed{'+
-            'max-height:0px !important;'+
-        '}'+
-
-        '#RogueRunner_div > #result_pane{'+
-            'height:auto;'+
-            'max-height:800px'+
-        '}'+
-
-        '.Rogue_suggestion_link{'+
-            'font-size:1em'+
-            'margin: .5em;'+
-            'display: block;'+
-        '}'+
-
-        '.Rogue_suggestion_link:focus{'+
-            'bottom: 1px;'+
-             'font-size: 1.30em;'+
-        '}';
+        '';
 
     //attach the above text as a style tag to the document head
     var css = document.createElement("style");
