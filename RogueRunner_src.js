@@ -189,6 +189,11 @@
             statusBar.appendChild(rogueLink)
         }
         if(keycode==13){ //enter will focus again
+            
+            var focused = getFocusedElement();
+            if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
+                run(focused.title)
+            }
             run()
             return
         }
@@ -279,6 +284,14 @@
         input.focus()
         //go ahead and prepopulate suggestions
         getSuggestions()
+    }
+    function getFocusedElement(){
+        var focused = document.activeElement;
+        if (!focused || focused == document.body)
+            focused = null;
+        else if (document.querySelector)
+            focused = document.querySelector(":focus");
+        return focused
     }
     function hide(){
 
@@ -388,7 +401,7 @@
     function inputFocus(){input.focus()}
     ///////////////////
     //  load hotkeys
-    document.onkeydown = function(evt) {
+    document.onkeyup = function(evt) {
         //TODO handle this with show hide possibly? to leave the environment as it was before roguerunner ran
         if(modalBackdropDiv.style.display == "none"){
             return
@@ -397,9 +410,9 @@
         if (keycode == 27) { //escape hides the window
             hide()
         }else if(keycode==8){ //delete will force focus on input as well as delete
-            setTimeout(inputFocus)
+            setTimeout(inputFocus);
         }else if(keycode==13){ //enter will focus again
-            input.focus();
+            setTimeout(inputFocus);
         }
     }
 
@@ -413,7 +426,11 @@
 
     function run(key){
         //no key, then get the first suggestion script obj
-        var script=scripts[key] || (url=currentSuggestions[0] && scripts[currentSuggestions[0].title])
+        var script=scripts[key] 
+
+        if(!script){
+            script = (url=currentSuggestions[0] && scripts[currentSuggestions[0].title])
+        }
 
         //now we have a script obj or string
         //download the src if it exists OR run the string
@@ -432,6 +449,50 @@
             appendToHead(ScriptOBJ('',script))
         }
     }
+
+    var CrossOriginLocalStorage = window['RogueBookmarklets']['CrossOriginLocalStorage']
+    if(!CrossOriginLocalStorage){
+        //TODO inject CrossOriginLocalStorage via injection script
+        alert('CrossOriginLocalStorage not loaded!')
+    }
+    var extendCrossOriginLocalStorage(CrossOriginLocalStorage){
+        CrossOriginLocalStorage.prototype.getData = function (key,handler) {
+            var messageData = {
+                key: key,
+                method: 'get',
+            }
+            this.postMessage(messageData,handler);
+        }
+
+        CrossOriginLocalStorage.prototype.setData = function(key, data, handler) {
+            var messageData = {
+                key: key,
+                method: 'set',
+                data: data,
+            }
+            this.postMessage(messageData,handler);
+        }
+    }
+    extendCrossOriginLocalStorage(window['RogueBookmarklets']['CrossOriginLocalStorage'])
+
+    //Playground
+    // self['RogueBookmarklets']['xDomainStorage'].setData('name', 'buren')
+    // var onMessage = function(payload, event) {
+    //  //console.log('inject got',payload,event)
+    //  var data = payload.data;
+    //  switch (payload.method) {
+    //      case 'get':
+    //          alert('message data'+ JSON.stringify(payload));
+    //          break;
+    //      default:
+    //          console.error('Unknown method "' + payload.method + '"', payload);
+    //      }
+    //  };
+    // self['RogueBookmarklets']['xDomainStorage'].getData('name',onMessage);
+
+
+
+
 
     //in block notation so closure compiler will 'export' the vairable
     window['RogueBookmarklets']['show']=show

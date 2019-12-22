@@ -45,11 +45,11 @@
 							//l.path
 							//var element = document.getElementById('RogueRunner')
 							//returnPayload.data=element.innerText || element.textContent;
-							console.log('iframe payload=',payload)
+							//console.log('iframe payload=',payload)
 							load(payload.url,function(e,data){
-								console.log('load returned something',e,data)
+								//console.log('load returned something',e,data)
 								returnPayload.data=data
-								console.log('iframe got data',data)
+								//console.log('iframe got data',data)
 								parent.postMessage(JSON.stringify(returnPayload), '*');
 							})
 							return
