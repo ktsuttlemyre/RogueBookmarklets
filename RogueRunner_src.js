@@ -597,15 +597,7 @@
         window.getSelection=document.getSelection=function(){
             return selectedTextCache || prompt('Enter parameter','');
         }
-        //TODO capture prompt
-        var params=input.value.split('<')
-        params.shift() //remove the first one
-        window.prompt=function(arg1,arg2){
-            if(params.length){
-                return params.shift()
-            }
-            cachePrompt(arg1,arg2)
-        }
+
 
         modalBackdropDiv.style.display = "block";
 
@@ -659,9 +651,17 @@
     ////////////////////////////////
     //search logic and interactivity
     var defaultSuggestions=[];
+    var lastSearch=''
     function searchScripts(input) {
         input=input||''
-        var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
+        //https://stackoverflow.com/questions/11404855/javascript-autocomplete-without-external-library
+        input=input.split(promptChar)[0]
+        if(input == lastSearch){
+            return
+        }
+        lastSearch=input
+        var reg = new RegExp(input.replace(/\B/g,'\\S*?'), 'i');
+        console.log(reg.toString())
         var list = [] //new list each time
         
         var numberOfSuggestions=keys.length
@@ -717,7 +717,7 @@
             resultPane.className=resultPane.className.replace('RogueRunner_collapsed','')
             resultPane.append.apply(resultPane,suggestionResult);
         }else{
-            resultPane.className+=' RogueRunner_collapsed'
+            resultPane.className+=' RogueRunner_collapsed';
         }
         //for(var i=0;i<suggestionResult.length;i++){
         //}
@@ -758,6 +758,7 @@
         }
     }
 
+    var promptChar='<'
     function run(key){
         //no key, then get the first suggestion script obj
         var script=scripts[key] 
@@ -774,11 +775,21 @@
             return
         }
 
+
+
+        var params=input.value.split(promptChar)
+        params.shift() //remove the first one
+        window.prompt=function(arg1,arg2){
+            console.log('using it')
+            if(params.length){
+                return params.shift()
+            }
+            cachePrompt(arg1,arg2)
+        }
         input.value='';
         //potential api to send arguments to roguebookmarks
         RogueBM.key=key
         RogueBM.arguments=[]
-
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
