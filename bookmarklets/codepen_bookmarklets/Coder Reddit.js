@@ -1,0 +1,7 @@
+/**
+ *  @author https://codepen.io/bookmarklets
+ *  @file Coder Reddit puts green text on a black background. Looks like you are working on code!<br><i>Shrinks title and removes flairs and thumbnails for surfing Reddit at work! (OLD Reddit Only!)</i>
+ *  Original Source {@link https://cdpn.io/bookmarklets/fullpage/NobJbq#}
+ */
+
+javascript:(function(){var newcss=".midcol, .thumbnail, .rank,  .flairichtext, .flaircolordark, .linkflairlabel, .flaircolorlight, .res-flairSearch {display:none} .title {color:green !important} .title{font-size:120% !important} body {background-color:black}";if("\v"=="v"){document.createStyleSheet().cssText=newcss}else{var tag=document.createElement("style");tag.type="text/css";document.getElementsByTagName("head")[0].appendChild(tag);tag[(typeof document.body.style.WebkitAppearance=="string")?"innerText":"innerHTML"]=newcss}})();document.getElementsByClassName("side")[0].remove();document.getElementById("header").remove();document.getElementsByClassName("panestack-title")[0].remove();document.getElementsByClassName("menuarea")[0].remove();document.getElementsByClassName("usertext cloneable")[0].remove();document.getElementsByName("content")[0].remove();document.getElementsByClassName("footer-parent")[0].remove();

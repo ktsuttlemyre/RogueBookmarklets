@@ -726,12 +726,16 @@
             return
         }
         var keycode=keyCode(evt)
-        if (keycode == 27) { //escape hides the window
-            hide()
-        }else if(keycode==8){ //delete will force focus on input as well as delete
-            setTimeout(inputFocus);
-        }else if(keycode==13){ //enter will focus again
-            setTimeout(inputFocus);
+        switch(){
+            case 27: //escape hides the window
+                hide()
+            break;
+            case 8: //delete will force focus on input as well as delete
+            case 13: // enter refocus 
+                setTimeout(inputFocus,1)
+            break;
+            case 32: //space [action=select] if a link is highlighted autofill then focus for more input
+                setTimeout(inputFocus,1)
         }
     }
 
@@ -759,6 +763,7 @@
             return
         }
 
+        input.value('')
         //potential api to send arguments to roguebookmarks
         RogueBM.key=key
         RogueBM.arguments=[]
