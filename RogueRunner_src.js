@@ -763,7 +763,7 @@
             return
         }
 
-        input.value('')
+        input.value='';
         //potential api to send arguments to roguebookmarks
         RogueBM.key=key
         RogueBM.arguments=[]
