@@ -726,7 +726,7 @@
             return
         }
         var keycode=keyCode(evt)
-        switch(){
+        switch(keycode){
             case 27: //escape hides the window
                 hide()
             break;
