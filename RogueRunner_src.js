@@ -576,6 +576,7 @@
 
     var cacheWgetSelection=window.getSelection;
     var cacheDgetSelection=document.getSelection;
+    var cachePrompt=window.prompt;
     function show(){
         input.value=''
         cacheWgetSelection=window.getSelection;
@@ -595,6 +596,15 @@
 
         window.getSelection=document.getSelection=function(){
             return selectedTextCache || prompt('Enter parameter','');
+        }
+        //TODO capture prompt
+        var params=input.value.split('<')
+        params.shift() //remove the first one
+        window.prompt=function(arg1,arg2){
+            if(params.length){
+                return params.shift()
+            }
+            cachePrompt(arg1,arg2)
         }
 
         modalBackdropDiv.style.display = "block";
@@ -617,6 +627,7 @@
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
+        window.prompt=cachePrompt
 
         modalBackdropDiv.style.display = "none";
         input.value='';
@@ -767,6 +778,7 @@
         //potential api to send arguments to roguebookmarks
         RogueBM.key=key
         RogueBM.arguments=[]
+
         if(script.src){
             appendToHead(ScriptOBJ(script.src))
         }else{
