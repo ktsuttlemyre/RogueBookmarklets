@@ -6,14 +6,14 @@
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
-    appendToHead(ScriptOBJ('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user));
+    appendToHead(ScriptOBJ('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user,null,function(err){loadFromIframe(src,err)}));
     function scriptIndexReady(){
         if (!window.scripts) {
             return setTimeout(scriptIndexReady, 0);
         }
-        keys = Object.keys(window.scripts)
+        keys = Object.keys(window.scripts);
     }
-    scriptIndexReady()
+    scriptIndexReady();
 
     ///////////////////////
     //  helper functions
@@ -52,11 +52,11 @@
 
         // Puts focus on the newWindow
         if (window.focus) newWindow.focus();
-        return newWindow
+        return newWindow;
     }
 
     function loadInExternalWindow(){
-        var newWindow = PopupCenter("","RogueRunner",500,200,1)
+        var newWindow = PopupCenter("","RogueRunner",500,200,1);
 
         if(!newWindow || newWindow.closed || typeof newWindow.closed=='undefined'){
             alert('RogueRunner popup blocked')
@@ -75,30 +75,29 @@
         newWindow.document.write(html)
         newWindow.document.close()
     }
-    setTimeout(function(){loadInExternalWindow()},5000)
+    //setTimeout(function(){loadInExternalWindow()},5000)
 
     function loadFromIframe(url,err){
         //start the injection
         var xDLStorage=self['RogueBM']['xDLStorage']
         if(!xDLStorage){
-            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
+            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either', err);
+            loadInExternalWindow();
         }
+
        xDLStorage.getScript(url,function(payload){
-            payload.error && showError("Error loading script from xDLStorage",payload.error)
-            var s = document.createElement('script');
-            s.setAttribute('type', 'text/javascript');
-            s.appendChild(document.createTextNode(payload.data)); 
-            document.getElementsByTagName('head')[0].appendChild(s);
+            payload.error && showError("Error loading script from xDLStorage", payload.error);
+            appendToHead(ScriptOBJ(null,payload.data));
         })
     }
 
-    function ScriptOBJ(src,code) { //callback might not work
+    function ScriptOBJ(src,code,err) { //callback might not work
         var script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
         if(src){
             script.setAttribute('src',src);
             script.setAttribute('crossorigin', "anonymous");
-            script.onerror = function(err){loadFromIframe(src,err)}
+            script.onerror = err;
         }else{
             try {
                 script.appendChild(document.createTextNode(code));
@@ -528,7 +527,6 @@
     appendToHead(css);
 
 
-
     ///////////////////////
     // Create modal; 
     var modalBackdropDiv = document.createElement('div');
@@ -555,7 +553,6 @@
             statusBar.appendChild(rogueLink)
         }
         if(keycode==13){ //enter will focus again
-            
             var focused = getFocusedElement();
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title)
@@ -567,7 +564,6 @@
     }
     runnerWrapper.appendChild(input);
 
-
     var statusBar_isLink=true;
     var rogueLink= document.createElement('a');
         rogueLink.appendChild(document.createTextNode('RogueRunner'));
@@ -576,22 +572,20 @@
         rogueLink.href = "https://ktsuttlemyre.github.io/RogueBookmarklets/";
         rogueLink.tabIndex=-1;
 
-
     var statusBar = document.createElement('span');
     //statusBar.id = 'statusBar'
-    statusBar.className = 'status_bar'
-    statusBar.appendChild(rogueLink)
+    statusBar.className = 'status_bar';
+    statusBar.appendChild(rogueLink);
     //statusBar.appendChild(document.createTextNode('RogueRunner'));
-    runnerWrapper.appendChild(statusBar)
+    runnerWrapper.appendChild(statusBar);
 
     var resultPane = document.createElement('p');
     resultPane.id="result_pane";
     resultPane.className='RogueRunner_collapsed RogueRunner_animate'
     runnerWrapper.appendChild(resultPane);
 
-
     //  Use this micro framework to see if the dom is ready
-    //some modifications to make it init faster
+    // some modifications to make it init faster
     //https://github.com/ded/domready
     var domready = (function() {
         var e = [],
@@ -607,19 +601,17 @@
                 s ? setTimeout(t, 0) : e.push(t)
             }
     })();
+
     /////////////////////////////
-    // Append the modal to the body
-    // this is done after all html elements are nested
-    // and after dom is ready
-    // this prevents unnessisisary redraws
+    // Append the modal to the body this is done after all html elements
+    // are nested and after dom is ready this prevents unnessisisary redraws
     ///////////////////////
-    domready(function() {
+    domready(function(){
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
         //make sure to show it and run any patching of the environment
         show();
     });
-
 
     var cacheWgetSelection=window.getSelection;
     var cacheDgetSelection=document.getSelection;
@@ -653,6 +645,7 @@
         //go ahead and prepopulate suggestions
         getSuggestions()
     }
+
     function getFocusedElement(){
         var focused = document.activeElement;
         if (!focused || focused == document.body)
@@ -661,8 +654,8 @@
             focused = document.querySelector(":focus");
         return focused
     }
-    function hide(){
 
+    function hide(){
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
@@ -775,7 +768,7 @@
         return evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     }
 
-    function inputFocus(){input.focus()}
+    function inputFocus(){input.focus()};
     ///////////////////
     //  load hotkeys
     document.onkeyup = function(evt) {
@@ -822,8 +815,6 @@
             return
         }
 
-
-
         var params=input.value.split(promptChar)
         params.shift() //remove the first one
         window.prompt=function(arg1,arg2){
@@ -847,10 +838,11 @@
     var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
     if(!CrossOriginLocalStorage){
         //TODO inject CrossOriginLocalStorage via injection script
-        alert('CrossOriginLocalStorage not loaded!')
+        showError('CrossOriginLocalStorage not loaded!')
     }else{
         extendCrossOriginLocalStorage(CrossOriginLocalStorage)
     }
+
     function extendCrossOriginLocalStorage(CrossOriginLocalStorage){
         CrossOriginLocalStorage.prototype.getData = function (key,handler) {
             var messageData = {
