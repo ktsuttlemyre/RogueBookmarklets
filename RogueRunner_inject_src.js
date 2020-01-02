@@ -21,6 +21,28 @@
 		args.unshift("RogueBM[injection]: ");
 		console.error.apply(console, args);
 	}
+
+    function appendToHead(el,callback) {
+        document.getElementsByTagName('head')[0].appendChild(el);
+    }
+
+    function ScriptOBJ(src,code,err) { //callback might not work
+        var script = document.createElement('script');
+        script.setAttribute('type', 'text/javascript');
+        if(src){
+            script.setAttribute('src',src);
+            script.setAttribute('crossorigin', "anonymous");
+            script.onerror = err;
+        }else{
+            try {
+                script.appendChild(document.createTextNode(code));
+            } catch (err) { //silent error fallback for shitty browsers
+                script.text = code;
+            }
+        }
+        return script
+    }
+
 	function loadFromIframe(url,err){
 		//start the injection
 		var xDLStorage=self['RogueBM']['xDLStorage']
@@ -29,20 +51,13 @@
 		}
 		xDLStorage.getScript(url,function(payload){
 			payload.error && showError("Error loading script from xDLStorage",payload.error)
-			var s = document.createElement('script');
-			s.setAttribute('type', 'text/javascript');
-			s.appendChild(document.createTextNode(payload.data)); 
-			document.getElementsByTagName('head')[0].appendChild(s);
+		
+			appendToHead(ScriptOBJ(null,payload.data));
 		})
 	}
 
 	//start the injection
-	var s = document.createElement('script');
-	s.setAttribute('src', 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user);
-	s.setAttribute('type', 'text/javascript');
-	s.setAttribute('crossorigin', "anonymous");
-	s.onerror = function(err){loadFromIframe(s.src,err)}
-	document.getElementsByTagName('head')[0].appendChild(s);
+	appendToHead(ScriptOBJ('https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user,null,function(err){loadFromIframe(s.src,err)}))
 	
 	// use this to test script injection failures to load
 	//setTimeout(function(){loadFromIframe()},1);
