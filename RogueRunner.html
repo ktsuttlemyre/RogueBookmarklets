@@ -11,17 +11,29 @@
 	</head>
 
 	<body>
+		<button type="button" id="InjectRogueRunner">InjectRogueRunner</button>
+
+
 		<script type="text/javascript">
-		    function showError(message){
-		            //statusBar.innerHTML=message
-		            var args = Array.prototype.slice.call( arguments );
-		            args.unshift("RogueBM[xDLStorageiFrame]: ");
-		            console.error.apply(console, args);
-		    }
+			function ScriptOBJ(src) { //callback might not work
+				var script = document.createElement('script');
+				script.setAttribute('type', 'text/javascript');
+				script.setAttribute('src',src);
+				script.setAttribute('crossorigin', "anonymous");
+				return script
+			}
+			document.getElementById('InjectRogueRunner').onclick=function(){ScriptOBJ('/RogueRunner_src.js')};
 
 
-			var allowedOrigins = [
-			];
+			function showError(message){
+				//statusBar.innerHTML=message
+				var args = Array.prototype.slice.call( arguments );
+				args.unshift("RogueBM[xDLStorageiFrame]: ");
+				console.error.apply(console, args);
+			}
+
+
+			var allowedOrigins = [];
 			var allowedScriptSources=[
 				'https://ktsuttlemyre.github.io'
 			]

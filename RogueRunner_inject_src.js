@@ -15,26 +15,26 @@
 
 
 
-    function showError(message){
-            //statusBar.innerHTML=message
-            var args = Array.prototype.slice.call( arguments );
-            args.unshift("RogueBM[injection]: ");
-            console.error.apply(console, args);
-    }
-    function loadFromIframe(url,err){
-        //start the injection
-        var xDLStorage=self['RogueBM']['xDLStorage']
-        if(!xDLStorage){
-            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
-        }
-       xDLStorage.getScript(url,function(payload){
-            payload.error && showError("Error loading script from xDLStorage",payload.error)
-            var s = document.createElement('script');
-            s.setAttribute('type', 'text/javascript');
-            s.appendChild(document.createTextNode(payload.data)); 
-            document.getElementsByTagName('head')[0].appendChild(s);
-        })
-    }
+	function showError(message){
+		//statusBar.innerHTML=message
+		var args = Array.prototype.slice.call( arguments );
+		args.unshift("RogueBM[injection]: ");
+		console.error.apply(console, args);
+	}
+	function loadFromIframe(url,err){
+		//start the injection
+		var xDLStorage=self['RogueBM']['xDLStorage']
+		if(!xDLStorage){
+			showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
+		}
+		xDLStorage.getScript(url,function(payload){
+			payload.error && showError("Error loading script from xDLStorage",payload.error)
+			var s = document.createElement('script');
+			s.setAttribute('type', 'text/javascript');
+			s.appendChild(document.createTextNode(payload.data)); 
+			document.getElementsByTagName('head')[0].appendChild(s);
+		})
+	}
 
 	//start the injection
 	var s = document.createElement('script');

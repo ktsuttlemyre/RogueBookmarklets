@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#222531">
+	</head>
+
+	<body>
+		<button type="button" id="SuspendTab">Toggle Suspend Tab</button>
+
+
+		<script type="text/javascript">
+			function ScriptOBJ(src) { //callback might not work
+				var script = document.createElement('script');
+				script.setAttribute('type', 'text/javascript');
+				script.setAttribute('src',src);
+				script.setAttribute('crossorigin', "anonymous");
+				return script
+			}
+			document.getElementById('SuspendTab').onclick=function(){document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('./bookmarklets/suspend tab.js'))}
+
+
+			function showError(message){
+				//statusBar.innerHTML=message
+				var args = Array.prototype.slice.call( arguments );
+				args.unshift("RogueBM[xDLStorageiFrame]: ");
+				console.error.apply(console, args);
+			}
+		</script>
+	</body>
+</html>
