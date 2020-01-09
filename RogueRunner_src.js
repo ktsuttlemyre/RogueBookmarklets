@@ -47,33 +47,40 @@
         var left = (width - w) / 2 / systemZoom + dualScreenLeft
         var top = 0 //(height - h) / 2 / systemZoom + dualScreenTop
 
-        var newWindow = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+        var rogueRunnerPopup = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
         //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
 
-        // Puts focus on the newWindow
-        if (window.focus) newWindow.focus();
-        return newWindow;
+        // Puts focus on the rogueRunnerPopup
+        if (window.focus) rogueRunnerPopup.focus();
+        return rogueRunnerPopup;
     }
 
     function loadInExternalWindow(){
-        var newWindow = PopupCenter("","RogueRunner",500,200,1);
+        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html',"RogueRunner",500,200,1);
 
-        if(!newWindow || newWindow.closed || typeof newWindow.closed=='undefined'){
+        if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
             alert('RogueRunner popup blocked')
         }
         
+        /*
         var html = ''+
             '<html>'+
                 '<head>'+
                     '<script src="https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js"></script>'+
+                    '<script>'+
+                    'parent.postMessage("a message you didn\'t expect","*");'+
+                    '</script>'+
                 '</head>'+
                 '<body>'+
                 '</body>'+
             '</html>';
 
-        newWindow.document.open()
-        newWindow.document.write(html)
-        newWindow.document.close()
+        
+        rogueRunnerPopup.document.open()
+        rogueRunnerPopup.document.write(html)
+        rogueRunnerPopup.document.close()
+        */
+        
     }
     //setTimeout(function(){loadInExternalWindow()},5000)
 

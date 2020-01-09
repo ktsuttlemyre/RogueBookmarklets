@@ -24,7 +24,6 @@
 			}
 			document.getElementById('InjectRogueRunner').onclick=function(){ScriptOBJ('/RogueRunner_src.js')};
 
-
 			function showError(message){
 				//statusBar.innerHTML=message
 				var args = Array.prototype.slice.call( arguments );
@@ -94,7 +93,7 @@
 							break;
 						}
 				}catch(err){
-					showError()
+					showError(err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
 
