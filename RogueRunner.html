@@ -96,7 +96,7 @@
 					showError(err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
-
+				window.opener && window.opener.postMessage(JSON.stringify(returnPayload), '*');
 				parent.postMessage(JSON.stringify(returnPayload), '*');
 				};
 

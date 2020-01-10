@@ -113,7 +113,7 @@
 				iframe.src = url;
 				iframe.style.display = "none";
 				iframe.style.position = 'absolute'; //ensure no reflow
-				document.body.appendChild(iframe);
+				//document.body.appendChild(iframe);
 
 				// some browser (don't remember which one) throw exception when you try to access
 				// contentWindow for the first time, it works when you do that second time
@@ -133,6 +133,7 @@
 				return allowedOrigins.includes(origin);
 			}
 			var _listener = function (event) {
+				alert('got it')
 				if (!isAllowedOrigin(event.origin)) {
 					console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event)
 					return;
