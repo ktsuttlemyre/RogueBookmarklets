@@ -110,7 +110,7 @@
 			} else {
 				window.attachEvent('onmessage', _listener);
 			}
-			post('{"ready":true}','*')
+			post(JSON.stringify({ready:true}),'*')
 		</script>
 	</body>
 </html>

@@ -146,15 +146,16 @@
 					showError(data.error,event)
 				}
 
+				if(data.ready){
+					doPreloadHandlers()
+					return
+				}
+				
 				if(data.messageID==null){
 					showError('need data.messageID for callbacks to function',event)
 					return
 				}
 
-				if(data.ready){
-					doPreloadHandlers()
-					return
-				}
 
 				var handler=messageQueue[data.messageID]
 				if(handler){
