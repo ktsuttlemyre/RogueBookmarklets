@@ -42,6 +42,11 @@
 				allowedScriptSources.push(RogueBM.stringFormat(RogueBM.scriptEndpoints[keys[i]],{path:''}))
 			}
 
+			var post=function(json,domain){
+				window.opener && window.opener.postMessage(json,domain);
+				parent.postMessage(json,domain);
+			}
+
 
 			var _listener = function (e) {
 				//if (!allowedOrigins.includes(e.origin)) {
@@ -96,8 +101,7 @@
 					showError(err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
-				window.opener && window.opener.postMessage(JSON.stringify(returnPayload), '*');
-				parent.postMessage(JSON.stringify(returnPayload), '*');
+				post(JSON.stringify(returnPayload), '*');
 				};
 
 			// Support IE8 with attachEvent
@@ -106,6 +110,7 @@
 			} else {
 				window.attachEvent('onmessage', _listener);
 			}
+			post('{"ready":true}','*')
 		</script>
 	</body>
 </html>

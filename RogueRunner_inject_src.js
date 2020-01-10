@@ -108,22 +108,24 @@
 			// }
 
 			domready(function(){
-				var iframe = document.createElement('iframe');
-				iframe.addEventListener("load",doPreloadHandlers)
-				iframe.src = url;
-				iframe.style.display = "none";
-				iframe.style.position = 'absolute'; //ensure no reflow
+				// var iframe = document.createElement('iframe');
+				// iframe.addEventListener("load",doPreloadHandlers)
+				// iframe.src = url;
+				// iframe.style.display = "none";
+				// iframe.style.position = 'absolute'; //ensure no reflow
 				//document.body.appendChild(iframe);
 
 				// some browser (don't remember which one) throw exception when you try to access
 				// contentWindow for the first time, it works when you do that second time
-				try {
-					childWindow = iframe.contentWindow;
-				} catch(e) { //silent error, fallback for browsers
-					childWindow = iframe.contentWindow;
-				}
+				// try {
+				// 	childWindow = iframe.contentWindow;
+				// } catch(e) { //silent error, fallback for browsers
+				// 	childWindow = iframe.contentWindow;
+				// }
 				if(!childWindow){
 					childWindow = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+					//childWindow[childWindow.addEventListener ? 'addEventListener' : 'attachEvent'](
+  					//(childWindow.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
 					childWindow.blur()
 				}
 			})
@@ -146,6 +148,11 @@
 
 				if(data.messageID==null){
 					showError('need data.messageID for callbacks to function',event)
+					return
+				}
+
+				if(data.ready){
+					doPreloadHandlers()
 					return
 				}
 
