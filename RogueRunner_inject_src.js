@@ -1,18 +1,22 @@
 (function (self,user) {
 	var NotLoadedRogueBM=!self['RogueBM'];
 
+	// pollyfill for date.now
 	if (!Date.now) {
 		Date.now = function now() {
 			return new Date().getTime();
 		};
 	}
 
+	// set the RogueBM object
 	self['RogueBM']=self['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
 	if(window['RogueBM']['show']){
+		//if crossorignlocal storage not loaded then load it
 		!self['RogueBM']['CrossOriginLocalStorage'] && loadCrossOriginLocalStorage()
 		return window['RogueBM']['show']()
 	}
 
+	// show err
 	function showError(message){
 		//statusBar.innerHTML=message
 		var args = Array.prototype.slice.call( arguments );
@@ -41,26 +45,27 @@
 		return script
 	}
 
-	function loadFromIframe(url,err){
+	function getScriptFromLocalStorageIframe(url,err){
 		//start the injection
 		var xDLStorage=self['RogueBM']['xDLStorage']
 		if(!xDLStorage){
 			showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
 		}
+
 		xDLStorage.getScript(url,function(payload){
 			payload.error && showError("Error loading script from xDLStorage",payload.error)
 			appendToHead(ScriptOBJ(null,payload.data));
 		})
 	}
 
-	var testIframe=false
-	//start the injection
+	var forceIframe=true
+	//inject the rogue runner dialog
 	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user
-	if(!testIframe){
-		appendToHead(ScriptOBJ(src,null,function(err){loadFromIframe(src,err)}))
-	}else{
+	if(forceIframe){
 		// use this to test script injection failures to load
-		setTimeout(function(){loadFromIframe(src)},1);
+		setTimeout(function(){getScriptFromLocalStorageIframe(src)},1);
+	}else{
+		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err)}))
 	}
 
 	function loadCrossOriginLocalStorage(){
@@ -86,9 +91,7 @@
 		 * @constructor
 		 */
 		var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
-
 			var childWindow;
-
 			var preloadQueue=[]
 			var doPreloadHandlers = function(){
 				for(var i=0;i<preloadQueue.length;i++){
@@ -105,16 +108,12 @@
 			// }
 
 			domready(function(){
-				var iframe;
-				if(url.src){
-					iframe=url
-				}else{
-					iframe = document.createElement('iframe');
-					iframe.addEventListener("load",doPreloadHandlers)
-					iframe.src = url;
-				}
+				var iframe = document.createElement('iframe');
+				iframe.addEventListener("load",doPreloadHandlers)
+				iframe.src = url;
 				iframe.style.display = "none";
 				iframe.style.position = 'absolute'; //ensure no reflow
+				document.body.appendChild(iframe);
 
 				// some browser (don't remember which one) throw exception when you try to access
 				// contentWindow for the first time, it works when you do that second time
@@ -124,21 +123,18 @@
 					childWindow = iframe.contentWindow;
 				}
 				if(!childWindow){
-					var win = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
-					win.blur()
+					childWindow = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+					childWindow.blur()
 				}
-
-
 			})
 
 			var messageQueue={};
-
 			var isAllowedOrigin = function (origin) {
 				return allowedOrigins.includes(origin);
 			}
 			var _listener = function (event) {
 				if (!isAllowedOrigin(event.origin)) {
-					showError('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event)
+					console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event)
 					return;
 				}
 
