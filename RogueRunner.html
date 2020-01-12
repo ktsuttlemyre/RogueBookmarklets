@@ -84,6 +84,10 @@
 							//var element = document.getElementById('RogueRunner')
 							//returnPayload.data=element.innerText || element.textContent;
 							//console.log('iframe payload=',payload)
+							if(!payload.url){
+								console.log('no url for payload',payload)
+								return
+							}
 							var fn=function(item){
 								return (payload.url.indexOf(item) == 0)
 							}
