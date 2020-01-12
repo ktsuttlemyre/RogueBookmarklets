@@ -31,22 +31,29 @@
 				console.error.apply(console, args);
 			}
 
-
+			//a comment
 			var allowedOrigins = [];
 			var allowedScriptSources=[
 				'https://ktsuttlemyre.github.io'
 			]
 
-			var keys=Object.keys(RogueBM.scriptEndpoints)
+			var keys=Object.keys(RogueBM.scriptEndpoints),
+				key;
 			for(var i=0;i<keys.length;i++){
-				allowedScriptSources.push(RogueBM.stringFormat(RogueBM.scriptEndpoints[keys[i]],{path:''}))
+				key= RogueBM.stringFormat(RogueBM.scriptEndpoints[keys[i]],{path:''})
+				console.log('keys',key)
+				if(key==null){
+					continue
+				}
+				allowedScriptSources.push(key)
 			}
 
 			var post=function(json,domain){
-				window.opener && window.opener.postMessage(json,domain);
-				parent.postMessage(json,domain);
+				if(typeof json == 'object'){
+					json = JSON.stringify(json)
+				}
+				window.opener && (window.opener.postMessage(json,domain) || parent.postMessage(json,domain));
 			}
-
 
 			var _listener = function (e) {
 				//if (!allowedOrigins.includes(e.origin)) {
@@ -88,7 +95,7 @@
 								//console.log('load returned something',e,data)
 								returnPayload.data=data
 								//console.log('iframe got data',data)
-								parent.postMessage(	JSON.stringify(returnPayload), '*');
+								post(returnPayload, '*');
 							})
 						
 							return
@@ -101,7 +108,7 @@
 					showError(err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
-				post(JSON.stringify(returnPayload), '*');
+				post(returnPayload, '*');
 				};
 
 			// Support IE8 with attachEvent
@@ -110,7 +117,7 @@
 			} else {
 				window.attachEvent('onmessage', _listener);
 			}
-			post(JSON.stringify({ready:true}),'*')
+			post({ready:true},'*');
 		</script>
 	</body>
 </html>

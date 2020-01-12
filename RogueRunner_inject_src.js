@@ -135,7 +135,7 @@
 				return allowedOrigins.includes(origin);
 			}
 			var _listener = function (event) {
-				alert('got it')
+				console.log('got message',event)
 				if (!isAllowedOrigin(event.origin)) {
 					console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event)
 					return;
@@ -147,12 +147,13 @@
 				}
 
 				if(data.ready){
-					doPreloadHandlers()
+					console.log('doing proload handlers')
+					doPreloadHandlers();
 					return
 				}
-				
+
 				if(data.messageID==null){
-					showError('need data.messageID for callbacks to function',event)
+					console.error('need data.messageID for callbacks to function',event)
 					return
 				}
 
