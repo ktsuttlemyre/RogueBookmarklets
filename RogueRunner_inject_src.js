@@ -145,7 +145,7 @@
 				if(data.error){
 					showError(data.error,event)
 				}
-
+				debugger
 				if(data.ready){
 					console.log('doing proload handlers')
 					doPreloadHandlers();
@@ -158,7 +158,7 @@
 				}
 
 
-				var handler=messageQueue[data.messageID]
+				var handler=messageQueue[data.messageID];
 				if(handler){
 					if(handler.method!=handler.method){
 						showError('methods do not match. Possible security risk')
