@@ -157,6 +157,9 @@
 		}
 
 		speakIt(0)
+		window.addEventListener("beforeunload", function(e){
+			window.speechSynthesis.cancel()
+		}, false);
 	}
 	domready(setTimeout(main,1000))
 })()
