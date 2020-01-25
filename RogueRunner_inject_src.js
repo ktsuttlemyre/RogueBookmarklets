@@ -147,7 +147,7 @@
 				}
 				debugger
 				if(data.ready){
-					console.log('doing proload handlers')
+					console.log('doing preload handlers')
 					doPreloadHandlers();
 					return
 				}
