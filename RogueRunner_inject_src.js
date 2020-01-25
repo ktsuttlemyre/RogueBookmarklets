@@ -7,6 +7,7 @@
 			return new Date().getTime();
 		};
 	}
+	function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
 
 	// set the RogueBM object
 	self['RogueBM']=self['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
@@ -188,14 +189,16 @@
 			}
 
 			this.postMessage = function(messageData,handler) {
-				var str=new Array(17);
-				for(var i=0;i<15;i++){
-					var r = Math.random() * 16 | 0;
-					//v = c == 'x' ? r : (r & 0x3 | 0x8);
-					str[i]=r.toString(16);
-				}
-				str[15]='-'+Date.now() //put the date on the end to speed up 
-				var id=str.join('')
+				// var str=new Array(17);
+				// for(var i=0;i<15;i++){
+				// 	var r = Math.random() * 16 | 0;
+				// 	//v = c == 'x' ? r : (r & 0x3 | 0x8);
+				// 	str[i]=r.toString(16);
+				// }
+				// str[15]='-'+Date.now() //put the date on the end to speed up
+				//var id=str.join('')
+
+				var id=UUID();
 
 				messageData.messageID=id
 				messageQueue[id]={fn:handler,method:messageData.method}

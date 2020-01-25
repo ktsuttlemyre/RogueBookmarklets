@@ -1,4 +1,11 @@
 (function(user,devMode) {
+        // pollyfill for date.now
+    if (!Date.now) {
+        Date.now = function now() {
+            return new Date().getTime();
+        };
+    }
+
     window['RogueBM']=window['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
         return window['RogueBM']['show']()
@@ -80,7 +87,7 @@
         rogueRunnerPopup.document.write(html)
         rogueRunnerPopup.document.close()
         */
-        
+
     }
     //setTimeout(function(){loadInExternalWindow()},5000)
 
@@ -116,7 +123,7 @@
     }
 
 
-    function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000;}
+    function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
 
     var selector={
         backdrop:UUID(),

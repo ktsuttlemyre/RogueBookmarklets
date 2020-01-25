@@ -1,6 +1,16 @@
 //https://github.com/ejucovy/readability
 
 (function() {
+
+	// pollyfill for date.now
+	if (!Date.now) {
+		Date.now = function now() {
+			return new Date().getTime();
+		};
+	}
+	
+	function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
+
 	var voice={}
 
 	var domready=(function(){var e=[],t,n=typeof document=="object"&&document,r=n&&n.documentElement.doScroll,i="DOMContentLoaded",s=n&&(r?/^loaded|^c/:/^loaded|^i|^c/).test(n.readyState);return!s&&n&&n.addEventListener(i,t=function(){n.removeEventListener(i,t),s=1;while(t=e.shift())t()}),function(t){s?setTimeout(t,0):e.push(t)}})()
@@ -149,6 +159,14 @@
 				  }
 				});
 				p.style.backgroundColor = "#fff3d7";
+				if(p..scrollIntoView){
+					p.scrollIntoView();
+				}else{
+					var id=UUID()
+					p.id=id
+					location.href = "#";
+					location.href = "#"+id;
+				}
 				window.speechSynthesis.cancel()
 				window.speechSynthesis.speak(to_speak);
 			}else{
