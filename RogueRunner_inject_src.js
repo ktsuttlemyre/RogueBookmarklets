@@ -95,6 +95,9 @@
 			var xOriginElement; //could be an iframe or a window
 			var preloadQueue=[]
 			var doPreloadHandlers = function(){
+				if(!preloadQueue){
+					return
+				}
 				for(var i=0;i<preloadQueue.length;i++){
 					xOriginElement.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
 				}
@@ -157,7 +160,7 @@
 				if(data.error){
 					showError(data.error,event)
 				}
-				debugger
+				//debugger
 				if(data.ready){
 					console.log('doing preload handlers')
 					doPreloadHandlers();
