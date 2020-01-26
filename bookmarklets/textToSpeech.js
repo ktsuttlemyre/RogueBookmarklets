@@ -160,14 +160,20 @@
 					}
 				});
 				p.style.backgroundColor = "#fff3d7";
-				if(p.scrollIntoView){
-					p.scrollIntoView(true);
-				}else{
-					var id=UUID()
-					p.id=id
-					location.href = "#";
-					location.href = "#"+id;
-				}
+
+				const elementRect = p.getBoundingClientRect();
+				const absoluteElementTop = elementRect.top + window.pageYOffset;
+				const middle = absoluteElementTop - (window.innerHeight / 2);
+				window.scrollTo(0, middle);
+
+				// if(p.scrollIntoView){
+				// 	p.scrollIntoView(true);
+				// }else{
+				// 	var id=UUID()
+				// 	p.id=id
+				// 	location.href = "#";
+				// 	location.href = "#"+id;
+				// }
 				window.speechSynthesis.cancel()
 				window.speechSynthesis.speak(to_speak);
 			}else{
