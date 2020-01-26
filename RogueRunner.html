@@ -52,7 +52,12 @@
 				if(typeof json == 'object'){
 					json = JSON.stringify(json)
 				}
-				window.opener && (window.opener.postMessage(json,domain) || parent.postMessage(json,domain));
+				if(window.opener && window.opener !== window){
+					window.opener.postMessage(json,domain)
+				}
+				if(parent && parent !== window){
+					parent.postMessage(json,domain);
+				}
 			}
 
 			var _listener = function (e) {
