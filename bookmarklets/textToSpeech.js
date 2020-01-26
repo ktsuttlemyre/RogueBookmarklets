@@ -146,6 +146,7 @@
 				to_speak.addEventListener('end',voice.onEnd);
 
 				to_speak.addEventListener('boundary', function(event) { 
+					console.log('boundry',event.name,event)
 					if(event.name != 'word' ) {
 						return
 					}
