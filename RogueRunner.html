@@ -66,6 +66,7 @@
 					method:payload.method,
 					messageID:payload.messageID
 				}
+				var err;
 				try{
 					switch(payload.method) {
 						case 'get':
@@ -86,8 +87,11 @@
 							//console.log('iframe payload=',payload)
 							debugger
 							if(!payload.url){
-								console.log('no url for payload',payload)
-								return
+								err='no url for payload'
+								showError(err,payload)
+								returnPayload.error=err+':  '+JSON.stringify(payload)
+								console.log()
+
 							}
 							var fn=function(item){
 								return (payload.url.indexOf(item) == 0)
@@ -109,13 +113,15 @@
 							returnPayload.data=localStorage.removeItem(payload.key);
 							break;
 						default:
-							console.log('no method on message payload ', payload)
+							err='No method on message payload '
+							showError(err,payload)
+							returnPayload.error=err+':  '+JSON.stringify(payload)
 							return
 						
 						}
 
 				}catch(err){
-					showError(err)
+					showError('Error:',err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
 				}
 				post(returnPayload, '*');
