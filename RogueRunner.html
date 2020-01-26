@@ -62,7 +62,6 @@
 				//console.log('iframe got message',e)
 				var payload = JSON.parse(e.data);
 				var parent = window.parent;
-				var data = localStorage.getItem(payload.key);
 				var returnPayload={
 					method:payload.method,
 					messageID:payload.messageID
@@ -70,6 +69,7 @@
 				try{
 					switch(payload.method) {
 						case 'get':
+							var data = localStorage.getItem(payload.key);
 							returnPayload.data= data;
 							break;
 						case 'set':
@@ -108,7 +108,12 @@
 						case 'remove':
 							returnPayload.data=localStorage.removeItem(payload.key);
 							break;
+						default:
+							console.log('no method on message payload ', payload)
+							return
+						
 						}
+
 				}catch(err){
 					showError(err)
 					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
