@@ -107,11 +107,14 @@
 			  return {spans:spans,text:text}
 		}
 
-		var i;
+		var readibleElements,i;
 		function speakIt(p){
+			if(!readibleElements){
+				readibleElements=document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li')
+			}
 			if(typeof p == 'number'){
 				i=p;
-				p=document.querySelectorAll('p,li')[i++]
+				p=readibleElements[i++]
 			}
 			console.log('reading',p)
 			if(!p){return}
@@ -130,7 +133,7 @@
 				p.style.backgroundColor = "";
 
 
-				var item = document.querySelectorAll('p,li')[i++]
+				var item = readibleElements[i++]
 			  	speakIt(item)
 			}
 
