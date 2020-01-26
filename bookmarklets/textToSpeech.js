@@ -159,7 +159,7 @@
 					}
 				});
 				p.style.backgroundColor = "#fff3d7";
-				if(p..scrollIntoView){
+				if(p.scrollIntoView){
 					p.scrollIntoView(true);
 				}else{
 					var id=UUID()
