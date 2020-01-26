@@ -74,11 +74,14 @@
 		function makeSpans(text){
 			var o={html:'',text:''}
 			//first replace removes nbsp; second replace creates spans
-			text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s*)([a-zA-Z0-9À-ÖØ-öø-ÿ’]+)/g, function(match, $1, $2, offset, string){
-				o.html+=$1+'<span class="word">'+$2+'</span>'
+			var raw=text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s*)([a-zA-Z0-9À-ÖØ-öø-ÿ’]+)/g, function(match, $1, $2, offset, string){
+				var html=$1+'<span class="word">'+$2+'</span>'
+				o.html+=html
 				o.text+=$1+$2
+				return html
 			});
 				//'$1<span class="word">$2</span>');
+			o.raw=raw
 			return o
 		}
 
@@ -105,8 +108,8 @@
 
 				var o=makeSpans(n.nodeValue)
 				
-				text+=o.text //n.nodeValue
-				frag = document.createRange().createContextualFragment(o.html);
+				text+=n.nodeValue
+				frag = document.createRange().createContextualFragment(o.raw);
 				console.warn(frag.children)
 				spans.push.apply(spans,frag.children);
 				n.parentNode.insertBefore(frag,n)
