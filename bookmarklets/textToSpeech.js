@@ -77,16 +77,16 @@
 
 
 		function textNodeArray(node){
-		    var A= [];
-		    if(node){
-		        node= node.firstChild;
-		        while(node!= null){
-		            if(node.nodeType== 3) A[A.length]=node;
-		            else A= A.concat(textNodeArray(node));
-		            node= node.nextSibling;
-		        }
-		    }
-		    return A;
+			var A= [];
+			if(node){
+				node= node.firstChild;
+				while(node!= null){
+					if(node.nodeType== 3) A[A.length]=node;
+					else A= A.concat(textNodeArray(node));
+					node= node.nextSibling;
+				}
+			}
+			return A;
 		}
 
 
@@ -146,21 +146,21 @@
 				to_speak.addEventListener('end',voice.onEnd);
 
 				to_speak.addEventListener('boundary', function(event) { 
-				  if(event.name != 'word' ) {
-				  	return
-				  }
-				  node=spans[j]
-				  if(node){
-				  	(node.style.backgroundColor='')
-				  }
-				  node=spans[++j]
-				  if(node){
-				  	node.style.backgroundColor='#f6b73c'
-				  }
+					if(event.name != 'word' ) {
+						return
+					}
+					node=spans[j]
+					if(node){
+						(node.style.backgroundColor='')
+					}
+					node=spans[++j]
+					if(node){
+						node.style.backgroundColor='#f6b73c'
+					}
 				});
 				p.style.backgroundColor = "#fff3d7";
 				if(p..scrollIntoView){
-					p.scrollIntoView();
+					p.scrollIntoView(true);
 				}else{
 					var id=UUID()
 					p.id=id
