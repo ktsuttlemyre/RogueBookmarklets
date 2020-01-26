@@ -72,7 +72,14 @@
 		theDiv.appendChild(link);
 
 		function makeSpans(text){
-			return text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s*)([^\s\W<]+)/g, '$1<span class="word">$2</span>');
+			var o={html:'',text:''}
+			//first replace removes nbsp; second replace creates spans
+			text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s*)([a-zA-Z0-9À-ÖØ-öø-ÿ’]+)/g, function(match, $1, $2, offset, string){
+				o.html+=$1+'<span class="word">'+$2+'</span>'
+				o.text+=$1+$2
+			});
+				//'$1<span class="word">$2</span>');
+			return 0
 		}
 
 
@@ -91,20 +98,22 @@
 
 
 		function wrapTextInSpans(el){
-			  var spans=[],text=''
-			  var n, nodeList=textNodeArray(el)
-			  for(var i=0;i<nodeList.length;i++){
-			  	n=nodeList[i]
-			  	text+=n.nodeValue
+			var spans=[],text=''
+			var n, nodeList=textNodeArray(el)
+			for(var i=0;i<nodeList.length;i++){
+				n=nodeList[i]
 
-			  	frag = document.createRange().createContextualFragment(makeSpans(n.nodeValue));
-			  	console.warn(frag.children)
-			  	spans.push.apply(spans,frag.children);
-			  	n.parentNode.insertBefore(frag,n)
-			  	
-			  	n.parentNode.removeChild(n)
-			  }
-			  return {spans:spans,text:text}
+				var o=makeSpans(n.nodeValue)
+				
+				text+=o.text //n.nodeValue
+				frag = document.createRange().createContextualFragment(o.html);
+				console.warn(frag.children)
+				spans.push.apply(spans,frag.children);
+				n.parentNode.insertBefore(frag,n)
+				
+				n.parentNode.removeChild(n)
+			}
+			return {spans:spans,text:text}
 		}
 
 		var readibleElements,i;
