@@ -72,7 +72,7 @@
 		theDiv.appendChild(link);
 
 		function makeSpans(text){
-			return text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s+)([^\s\.\,<]+)/g, '$1<span class="word">$2</span>');
+			return text.replace(/\u00a0/g, " ").replace(/(^|<\/?[^>]+>|\s*)([^\s\W<]+)/g, '$1<span class="word">$2</span>');
 		}
 
 
@@ -160,7 +160,7 @@
 					}
 				});
 				p.style.backgroundColor = "#fff3d7";
-
+				//https://stackoverflow.com/questions/8922107/javascript-scrollintoview-middle-alignment
 				const elementRect = p.getBoundingClientRect();
 				const absoluteElementTop = elementRect.top + window.pageYOffset;
 				const middle = absoluteElementTop - (window.innerHeight / 2);
