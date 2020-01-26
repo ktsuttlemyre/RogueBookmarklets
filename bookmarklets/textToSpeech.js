@@ -79,7 +79,7 @@
 				o.text+=$1+$2
 			});
 				//'$1<span class="word">$2</span>');
-			return 0
+			return o
 		}
 
 
