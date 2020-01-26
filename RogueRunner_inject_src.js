@@ -92,11 +92,11 @@
 		 * @constructor
 		 */
 		var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
-			var childWindow;
+			var xOriginElement; //could be an iframe or a window
 			var preloadQueue=[]
 			var doPreloadHandlers = function(){
 				for(var i=0;i<preloadQueue.length;i++){
-					childWindow.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
+					xOriginElement.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
 				}
 				preloadQueue=null
 			}
@@ -109,25 +109,36 @@
 			// }
 
 			domready(function(){
-				// var iframe = document.createElement('iframe');
-				// iframe.addEventListener("load",doPreloadHandlers)
-				// iframe.src = url;
-				// iframe.style.display = "none";
-				// iframe.style.position = 'absolute'; //ensure no reflow
-				//document.body.appendChild(iframe);
+				var forcePopOut=false
+				if(!forcePopOut){
+					var iframe = document.createElement('iframe');
+					iframe.addEventListener("load",doPreloadHandlers)
+					iframe.onerror=function(){alert('yeeeet')}
+					iframe.src = url;
+					iframe.style.display = "none";
+					iframe.style.position = 'absolute'; //ensure no reflow
+					document.body.appendChild(iframe);
 
-				// some browser (don't remember which one) throw exception when you try to access
-				// contentWindow for the first time, it works when you do that second time
-				// try {
-				// 	childWindow = iframe.contentWindow;
-				// } catch(e) { //silent error, fallback for browsers
-				// 	childWindow = iframe.contentWindow;
-				// }
-				if(!childWindow){
-					childWindow = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
-					//childWindow[childWindow.addEventListener ? 'addEventListener' : 'attachEvent'](
-  					//(childWindow.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
-					childWindow.blur()
+					//some browser (don't remember which one) throw exception when you try to access
+					//contentWindow for the first time, it works when you do that second time
+					try {
+						xOriginElement = iframe.contentWindow;
+					} catch(e) { //silent error, fallback for browsers
+						xOriginElement = iframe.contentWindow;
+					}
+				}
+				//TODO
+				//use a webworker?
+				//https://stackoverflow.com/questions/20410119/cross-domain-web-worker
+				//use a socket?
+				//use XMLHttpRequest?
+				
+				//if the iframe fails use a window
+				if(!iframe.contentDocument||!xOriginElement){
+					xOriginElement = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+					//xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
+					//(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
+					xOriginElement.blur()
 				}
 			})
 
@@ -206,7 +217,7 @@
 					preloadQueue.push(messageData)
 					return
 				}
-				childWindow.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
+				xOriginElement.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
 			}
 		};
 		self['RogueBM']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
