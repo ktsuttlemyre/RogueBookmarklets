@@ -1,4 +1,4 @@
-(function (self,user) {
+(function (self,user,interface) {
 	var NotLoadedRogueBM=!self['RogueBM'];
 
 	// pollyfill for date.now
@@ -61,7 +61,10 @@
 
 	var forceIframe=true
 	//inject the rogue runner dialog
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user
+	var doc=document.documentElement;
+	interface=(interface != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+interface:'';
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+interface+'.js?user='+user
+	
 	if(forceIframe){
 		// use this to test script injection failures to load
 		setTimeout(function(){getScriptFromLocalStorageIframe(src)},1);
@@ -230,4 +233,4 @@
 	}
 	loadCrossOriginLocalStorage()
 
-})(window,'anonymous')
+})(window,'anonymous','alpha')
