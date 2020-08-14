@@ -1,4 +1,4 @@
-(function (self,user) {
+(function (self,user,interface,cmd) {
 	var NotLoadedRogueBM=!self['RogueBM'];
 
 	// pollyfill for date.now
@@ -11,10 +11,14 @@
 
 	// set the RogueBM object
 	self['RogueBM']=self['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
+	self['RogueBM'].cmd=cmd;
 	if(window['RogueBM']['show']){
 		//if crossorignlocal storage not loaded then load it
 		!self['RogueBM']['CrossOriginLocalStorage'] && loadCrossOriginLocalStorage()
-		return window['RogueBM']['show']()
+			if(!cmd){
+				window['RogueBM']['show']()
+			}
+
 	}
 
 	// show err
@@ -55,13 +59,20 @@
 
 		xDLStorage.getScript(url,function(payload){
 			payload.error && showError("Error loading script from xDLStorage",payload.error)
-			appendToHead(ScriptOBJ(null,payload.data));
+			try{
+				appendToHead(ScriptOBJ(null,payload.data));
+			}catch(e){
+				eval(payload)
+			}
 		})
 	}
 
 	var forceIframe=true
 	//inject the rogue runner dialog
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js?user='+user
+	var doc=document.documentElement;
+	interface=(interface != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+interface:'';
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+interface+'.js?user='+user+'&cmd='+cmd
+	
 	if(forceIframe){
 		// use this to test script injection failures to load
 		setTimeout(function(){getScriptFromLocalStorageIframe(src)},1);
@@ -95,6 +106,9 @@
 			var xOriginElement; //could be an iframe or a window
 			var preloadQueue=[]
 			var doPreloadHandlers = function(){
+				if(!preloadQueue){
+					return
+				}
 				for(var i=0;i<preloadQueue.length;i++){
 					xOriginElement.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
 				}
@@ -157,7 +171,7 @@
 				if(data.error){
 					showError(data.error,event)
 				}
-				debugger
+				//debugger
 				if(data.ready){
 					console.log('doing preload handlers')
 					doPreloadHandlers();
@@ -227,4 +241,4 @@
 	}
 	loadCrossOriginLocalStorage()
 
-})(window,'anonymous')
+})(window,'anonymous','experimental')
