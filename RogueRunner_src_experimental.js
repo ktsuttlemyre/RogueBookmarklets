@@ -10,6 +10,56 @@
     if(window['RogueBM']['show']){
         return window['RogueBM']['show']()
     }
+
+    var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
+	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
+	function inject(str,mime,callback){ //callback must be true if external
+		var ext=str.substr(str.lastIndexOf('.') + 1);
+		var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
+		mime=(mime.indexOf('/')<0)?'text/'+mime:mime
+		var obj=document.createElement(tag)
+		obj.setAttribute('type', mime);
+		switch(mime){
+			case "javascript":
+				if(callback){
+					obj.setAttribute('src',str);
+					obj.setAttribute('crossorigin', "anonymous");
+					obj.onerror = callback;
+				}else{
+					try {
+						obj.appendChild(document.createTextNode(str));
+					} catch (err) { //silent error fallback for shitty browsers
+						obj.text = str;
+					}
+				}
+			case "css":
+				if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
+					obj = document.createElement( "link" );
+					obj.href = str
+					obj.rel = "stylesheet";
+					obj.media = "screen,print";
+				}else{
+					if ("textContent" in obj){
+					    obj.textContent = str;
+					}else if(obj.styleSheet){
+						obj.styleSheet.cssText =str
+					}else{
+					    obj.innerText = str;
+					}
+				}
+			default:
+				throw Error('unknown mime injection',mime)
+		}
+
+    	document.getElementsByTagName('head')[0].appendChild(obj);
+        if(callback){
+            obj.onload=callback
+        }
+
+	}
+
+
+	
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
@@ -100,52 +150,7 @@
 
 
 
-	var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'} //omit text/ Registries as it is assumed default
-	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
-	function inject(str,mime,callback){ //callback must be true if external
-		var ext=str.substr(str.lastIndexOf('.') + 1);
-		var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
-		mime=(mime.indexOf('/')<0)?'text/'+mime:mime
-		var obj=document.createElement(tag)
-		obj.setAttribute('type', mime);
-		switch(mime){
-			case "javascript":
-				if(callback){
-					obj.setAttribute('src',str);
-					obj.setAttribute('crossorigin', "anonymous");
-					obj.onerror = callback;
-				}else{
-					try {
-						obj.appendChild(document.createTextNode(str));
-					} catch (err) { //silent error fallback for shitty browsers
-						obj.text = str;
-					}
-				}
-			case "css":
-				if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
-					obj = document.createElement( "link" );
-					obj.href = str
-					obj.rel = "stylesheet";
-					obj.media = "screen,print";
-				}else{
-					if ("textContent" in obj){
-					    obj.textContent = str;
-					}else if(obj.styleSheet){
-						obj.styleSheet.cssText =str
-					}else{
-					    obj.innerText = str;
-					}
-				}
-			default:
-				throw Error('unknown mime injection',mime)
-		}
-
-    	document.getElementsByTagName('head')[0].appendChild(obj);
-        if(callback){
-            obj.onload=callback
-        }
-
-	}
+	
 
 
 
@@ -934,7 +939,7 @@
     }else if(args.cmd){	
         window['RogueBM']['run'](args.cmd);	
     }
-    
+
 //usersessions
 })("")
 
