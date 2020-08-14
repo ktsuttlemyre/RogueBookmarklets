@@ -13,24 +13,17 @@
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
-    appendToHead(ScriptOBJ('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user,null,function(err){loadFromIframe(src,err)}));
+    inject('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user,'javascript',function(err){loadFromIframe(src,err)});
     function scriptIndexReady(){
-        if (!window.RogueBM.scripts) {
-            return setTimeout(scriptIndexReady, 0);
-        }
+		if (!window.RogueBM.scripts) {	
+            return setTimeout(scriptIndexReady, 0);	
+        }	
         keys = Object.keys(window.RogueBM.scripts);
     }
     scriptIndexReady();
 
     ///////////////////////
     //  helper functions
-    function appendToHead(el,callback) {
-        document.getElementsByTagName('head')[0].appendChild(el);
-        if(callback){
-            el.onload=callback
-        }
-    }
-
     function showError(message){
             statusBar.innerHTML=message
             var args = Array.prototype.slice.call( arguments );
@@ -101,26 +94,60 @@
 
        xDLStorage.getScript(url,function(payload){
             payload.error && showError("Error loading script from xDLStorage", payload.error);
-            appendToHead(ScriptOBJ(null,payload.data));
+            inject(payload.data,'javascript');
         })
     }
 
-    function ScriptOBJ(src,code,err) { //callback might not work
-        var script = document.createElement('script');
-        script.setAttribute('type', 'text/javascript');
-        if(src){
-            script.setAttribute('src',src);
-            script.setAttribute('crossorigin', "anonymous");
-            script.onerror = err;
-        }else{
-            try {
-                script.appendChild(document.createTextNode(code));
-            } catch (err) { //silent error fallback for shitty browsers
-                script.text = code;
-            }
+
+
+	var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'} //omit text/ Registries as it is assumed default
+	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
+	function inject(str,mime,callback){ //callback must be true if external
+		var ext=str.substr(str.lastIndexOf('.') + 1);
+		var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
+		mime=(mime.indexOf('/')<0)?'text/'+mime:mime
+		var obj=document.createElement(tag)
+		obj.setAttribute('type', mime);
+		switch(mime){
+			case "javascript":
+				if(callback){
+					obj.setAttribute('src',str);
+					obj.setAttribute('crossorigin', "anonymous");
+					obj.onerror = callback;
+				}else{
+					try {
+						obj.appendChild(document.createTextNode(str));
+					} catch (err) { //silent error fallback for shitty browsers
+						obj.text = str;
+					}
+				}
+			case "css":
+				if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
+					obj = document.createElement( "link" );
+					obj.href = str
+					obj.rel = "stylesheet";
+					obj.media = "screen,print";
+				}else{
+					if ("textContent" in obj){
+					    obj.textContent = str;
+					}else if(obj.styleSheet){
+						obj.styleSheet.cssText =str
+					}else{
+					    obj.innerText = str;
+					}
+				}
+			default:
+				throw Error('unknown mime injection',mime)
+		}
+
+    	document.getElementsByTagName('head')[0].appendChild(obj);
+        if(callback){
+            obj.onload=callback
         }
-        return script
-    }
+
+	}
+
+
 
 
     function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
@@ -532,14 +559,7 @@
         '';
 
     //attach the above text as a style tag to the document head
-    var css = document.createElement("style");
-    css.type = "text/css";
-    if ("textContent" in css)
-        css.textContent = cssText;
-    else
-        css.innerText = cssText;
-    appendToHead(css);
-
+    inject(cssText,'css')
 
     ///////////////////////
     // Create modal; 
@@ -814,10 +834,9 @@
 
     var promptChar='<'
     function run(key){
-        //no key, then get the first suggestion script obj
-        var script=window.RogueBM.scripts[key] 
-
-        if(!script){
+	        //no key, then get the first suggestion script obj	
+        var script=window.RogueBM.scripts[key] 	
+        if(!script){	
             script = (url=currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
         }
 
@@ -843,9 +862,9 @@
         RogueBM.key=key
         RogueBM.arguments=[]
         if(script.src){
-            appendToHead(ScriptOBJ(script.src))
+            inject(script.src,'javascript',true)
         }else{
-            appendToHead(ScriptOBJ('',script))
+            inject(script,'javascript')
         }
     }
 
@@ -891,30 +910,31 @@
     //  };
     // self['RogueBM']['xDLStorage'].getData('name',onMessage);
 
-    function getArgs(url){
-        if(!url){ //get this scripts url
-            var scripts = document.getElementsByTagName('script');
-            var index = scripts.length - 1;
-            url = scripts[index].src;
-        }
-        var args = {};
-        url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-            args[decodeURIComponent(key)] = decodeURIComponent(value);
-        }); 
-        return args;
+
+
+
+   function getArgs(url){	
+        if(!url){ //get this scripts url	
+            var scripts = document.getElementsByTagName('script');	
+            var index = scripts.length - 1;	
+            url = scripts[index].src;	
+        }	
+        var args = {};	
+        url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {	
+            args[decodeURIComponent(key)] = decodeURIComponent(value);	
+        }); 	
+        return args;	
+    }	
+    var args=getArgs();	
+    //in block notation so closure compiler will 'export' the vairable	
+    window['RogueBM']['show']=show;	
+    window['RogueBM']['run']=run;	
+    if(window['RogueBM']['cmd']){	
+        window['RogueBM']['run'](window['RogueBM']['cmd']);	
+    }else if(args.cmd){	
+        window['RogueBM']['run'](args.cmd);	
     }
-    var args=getArgs();
-
-    //in block notation so closure compiler will 'export' the vairable
-    window['RogueBM']['show']=show;
-    window['RogueBM']['run']=run;
-
-    if(window['RogueBM']['cmd']){
-        window['RogueBM']['run'](window['RogueBM']['cmd']);
-    }else if(args.cmd){
-        window['RogueBM']['run'](args.cmd);
-    }
-
+    
 //usersessions
 })("")
 
