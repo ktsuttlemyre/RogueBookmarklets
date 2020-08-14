@@ -11,6 +11,7 @@
         return window['RogueBM']['show']()
     }
 
+
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
 	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
 	function inject(str,mime,callback){ //callback must be true if external
@@ -690,6 +691,10 @@
         getSuggestions()
     }
 
+    function isShown(){ //idk if i need this?
+    	return modalBackdropDiv.style.display == "block";
+    }
+
     function getFocusedElement(){
         var focused = document.activeElement;
         if (!focused || focused == document.body)
@@ -944,6 +949,15 @@
     }else if(args.cmd){	
         window['RogueBM']['run'](args.cmd);	
     }
+
+    //set up hotkey to show/hide
+	document.addEventListener('keyup', function doc_keyUp(e) {
+	    // this would test for ~ and the ctrl key at the same time
+	    if (e.ctrlKey && e.keyCode == 192) {
+	        // call your function to do the thing
+	       	show()
+	    }
+	}, false);
 
 //usersessions
 })("")
