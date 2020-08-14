@@ -1,4 +1,10 @@
-(function (self,user,interface,cmd) {
+// ==ClosureCompiler==
+// @output_file_name default.js
+// @compilation_level ADVANCED_OPTIMIZATIONS
+// ==/ClosureCompiler==
+
+
+(function (self,user,skin,cmd) {
 	var NotLoadedRogueBM=!self['RogueBM'];
 
 	// pollyfill for date.now
@@ -7,17 +13,19 @@
 			return new Date().getTime();
 		};
 	}
-	function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
+	function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();}
 
 	// set the RogueBM object
-	self['RogueBM']=self['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
+	self['RogueBM']=self['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
 	self['RogueBM'].cmd=cmd;
 	if(window['RogueBM']['show']){
 		//if crossorignlocal storage not loaded then load it
-		!self['RogueBM']['CrossOriginLocalStorage'] && loadCrossOriginLocalStorage()
-			if(!cmd){
-				window['RogueBM']['show']()
-			}
+    if(!self['RogueBM']['CrossOriginLocalStorage']){
+      loadCrossOriginLocalStorage();
+    }
+    if(!cmd){
+      window['RogueBM']['show']();
+    }
 
 	}
 
@@ -43,41 +51,41 @@
 		}else{
 			try {
 				script.appendChild(document.createTextNode(code));
-			} catch (err) { //silent error fallback for shitty browsers
+			} catch (e) { //silent error fallback for shitty browsers
 				script.text = code;
 			}
 		}
-		return script
+		return script;
 	}
 
 	function getScriptFromLocalStorageIframe(url,err){
 		//start the injection
-		var xDLStorage=self['RogueBM']['xDLStorage']
+		var xDLStorage=self['RogueBM']['xDLStorage'];
 		if(!xDLStorage){
-			showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err)
+			showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err);
 		}
 
-		xDLStorage.getScript(url,function(payload){
-			payload.error && showError("Error loading script from xDLStorage",payload.error)
+		xDLStorage['getScript'](url,function(payload){
+			payload.error && showError("Error loading script from xDLStorage",payload.error);
 			try{
 				appendToHead(ScriptOBJ(null,payload.data));
 			}catch(e){
-				eval(payload)
+				eval(payload);
 			}
-		})
+		});
 	}
 
-	var forceIframe=true
+	var forceIframe=true;
 	//inject the rogue runner dialog
 	var doc=document.documentElement;
-	interface=(interface != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+interface:'';
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+interface+'.js?user='+user+'&cmd='+cmd
-	
+	skin=(skin != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+skin:'';
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+user+'&cmd='+cmd;
+
 	if(forceIframe){
 		// use this to test script injection failures to load
-		setTimeout(function(){getScriptFromLocalStorageIframe(src)},1);
+		setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
 	}else{
-		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err)}))
+		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
 	}
 
 	function loadCrossOriginLocalStorage(){
@@ -92,11 +100,11 @@
 				s = n && (r ? /^loaded|^c/ : /^loaded|^i|^c/).test(n.readyState);
 			return !s && n && n.addEventListener(i, t = function() {
 					n.removeEventListener(i, t), s = 1;
-					while (t = e.shift()) t()
+					while (t = e.shift()) t();
 				}),
 				function(t) {
-					s ? setTimeout(t, 0) : e.push(t)
-				}
+					s ? setTimeout(t, 0) : e.push(t);
+				};
 		})();
 
 		/**
@@ -104,16 +112,16 @@
 		 */
 		var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
 			var xOriginElement; //could be an iframe or a window
-			var preloadQueue=[]
+			var preloadQueue=[];
 			var doPreloadHandlers = function(){
 				if(!preloadQueue){
-					return
+					return;
 				}
 				for(var i=0;i<preloadQueue.length;i++){
 					xOriginElement.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
 				}
-				preloadQueue=null
-			}
+				preloadQueue=null;
+			};
 
 			// var url,iframe;
 			// if(typeof url == 'string'){
@@ -123,11 +131,12 @@
 			// }
 
 			domready(function(){
-				var forcePopOut=false
+				var forcePopOut=false;
+        var iframe;
 				if(!forcePopOut){
-					var iframe = document.createElement('iframe');
-					iframe.addEventListener("load",doPreloadHandlers)
-					iframe.onerror=function(){alert('yeeeet')}
+					iframe = document.createElement('iframe');
+					iframe.addEventListener("load",doPreloadHandlers);
+					iframe.onerror=function(){alert('yeeeet');};
 					iframe.src = url;
 					iframe.style.display = "none";
 					iframe.style.position = 'absolute'; //ensure no reflow
@@ -146,55 +155,55 @@
 				//https://stackoverflow.com/questions/20410119/cross-domain-web-worker
 				//use a socket?
 				//use XMLHttpRequest?
-				
+
 				//if the iframe fails use a window
-				if(!iframe.contentDocument||!xOriginElement){
+				if(!iframe || !iframe.contentDocument || !xOriginElement){
 					xOriginElement = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
 					//xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
 					//(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
-					xOriginElement.blur()
+					xOriginElement.blur();
 				}
-			})
+			});
 
 			var messageQueue={};
 			var isAllowedOrigin = function (origin) {
 				return allowedOrigins.includes(origin);
-			}
+			};
 			var _listener = function (event) {
-				console.log('got message',event)
+				console.log('got message',event);
 				if (!isAllowedOrigin(event.origin)) {
-					console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event)
+					console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event);
 					return;
 				}
 
-				var data=JSON.parse(event.data)
+				var data=JSON.parse(event.data);
 				if(data.error){
-					showError(data.error,event)
+					showError(data.error,event);
 				}
 				//debugger
 				if(data.ready){
-					console.log('doing preload handlers')
+					console.log('doing preload handlers');
 					doPreloadHandlers();
-					return
+					return;
 				}
 
-				if(data.messageID==null){
-					console.error('need data.messageID for callbacks to function',event)
-					return
+				if(data['messageID']==null){
+					console.error('need data.messageID for callbacks to function',event);
+					return;
 				}
 
 
-				var handler=messageQueue[data.messageID];
+				var handler=messageQueue[data['messageID']];
 				if(handler){
 					if(handler.method!=handler.method){
-						showError('methods do not match. Possible security risk')
-						return
+						showError('methods do not match. Possible security risk');
+						return;
 					}
 					handler.fn && handler.fn(data, event);
-					messageQueue[data.messageID]=null
-					delete messageQueue[data.messageID]
+					messageQueue[data.messageID]=null;
+					delete messageQueue[data.messageID];
 				}else{
-					showError('no handler found for ',event.messageID,event)
+					showError('no handler found for ',event['messageID'],event);
 				}
 			};
 
@@ -205,15 +214,15 @@
 				currentWindow.attachEvent('onmessage', _listener);
 			}
 
-			this.getScript = function(url,handler){
+			this['getScript'] = function(url,handler){
 				var messageData = {
 					method: 'getScript',
 					url:url,
-				}
+				};
 				this.postMessage(messageData,handler);
-			}
+			};
 
-			this.postMessage = function(messageData,handler) {
+			this['postMessage'] = function(messageData,handler) {
 				// var str=new Array(17);
 				// for(var i=0;i<15;i++){
 				// 	var r = Math.random() * 16 | 0;
@@ -225,20 +234,20 @@
 
 				var id=UUID();
 
-				messageData.messageID=id
-				messageQueue[id]={fn:handler,method:messageData.method}
+				messageData['messageID']=id;
+				messageQueue[id]={fn:handler,method:messageData.method};
 				if(preloadQueue != null){
-					preloadQueue.push(messageData)
-					return
+					preloadQueue.push(messageData);
+					return;
 				}
 				xOriginElement.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
-			}
+			};
 		};
 		self['RogueBM']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
 
 		var allowedOrigins = ['https://ktsuttlemyre.github.io'];
 		self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html' , allowedOrigins);
 	}
-	loadCrossOriginLocalStorage()
+	loadCrossOriginLocalStorage();
 
-})(window,'anonymous','experimental')
+})(window,'anonymous','experimental');
