@@ -14,11 +14,13 @@
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
 	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
 	function inject(str,mime,callback){ //callback must be true if external
+		if(mime.indexOf('text/')==0){
+			mime=mime.substring(5);
+		}
 		var ext=str.substr(str.lastIndexOf('.') + 1);
 		var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
-		mime=(mime.indexOf('/')<0)?'text/'+mime:mime
 		var obj=document.createElement(tag)
-		obj.setAttribute('type', mime);
+		obj.setAttribute('type', (mime.indexOf('/')<0)?'text/'+mime:mime);
 		switch(mime){
 			case "javascript":
 				if(callback){
@@ -32,6 +34,7 @@
 						obj.text = str;
 					}
 				}
+			break;
 			case "css":
 				if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
 					obj = document.createElement( "link" );
@@ -47,6 +50,7 @@
 					    obj.innerText = str;
 					}
 				}
+			break;
 			default:
 				throw Error('unknown mime injection',mime)
 		}
@@ -59,11 +63,12 @@
 	}
 
 
-	
+
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
-    inject('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user,'javascript',function(err){loadFromIframe(src,err)});
+    var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
+    inject(sourceIndex,'javascript',function(err){if(err){loadFromIframe(sourceIndex,err)}});
     function scriptIndexReady(){
 		if (!window.RogueBM.scripts) {	
             return setTimeout(scriptIndexReady, 0);	
