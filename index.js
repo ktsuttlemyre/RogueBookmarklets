@@ -1,7 +1,8 @@
 ---
 ---
 //touch
-scripts={
+window.RogueBM=window.RogueBM||{}
+window.RogueBM.scripts={
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
     "{{ marklet.basename | escape }}":{

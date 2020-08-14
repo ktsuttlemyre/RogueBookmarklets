@@ -15,10 +15,10 @@
     var keys = [] //init when scripts are loaded
     appendToHead(ScriptOBJ('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user,null,function(err){loadFromIframe(src,err)}));
     function scriptIndexReady(){
-        if (!window.scripts) {
+        if (!window.RogueBM.scripts) {
             return setTimeout(scriptIndexReady, 0);
         }
-        keys = Object.keys(window.scripts);
+        keys = Object.keys(window.RogueBM.scripts);
     }
     scriptIndexReady();
 
@@ -815,10 +815,10 @@
     var promptChar='<'
     function run(key){
         //no key, then get the first suggestion script obj
-        var script=scripts[key] 
+        var script=window.RogueBM.scripts[key] 
 
         if(!script){
-            script = (url=currentSuggestions[0] && scripts[currentSuggestions[0].title])
+            script = (url=currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
         }
 
         //now we have a script obj or string
@@ -891,13 +891,29 @@
     //  };
     // self['RogueBM']['xDLStorage'].getData('name',onMessage);
 
-
-
-
+    function getArgs(url){
+        if(!url){ //get this scripts url
+            var scripts = document.getElementsByTagName('script');
+            var index = scripts.length - 1;
+            url = scripts[index].src;
+        }
+        var args = {};
+        url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+            args[decodeURIComponent(key)] = decodeURIComponent(value);
+        }); 
+        return args;
+    }
+    var args=getArgs();
 
     //in block notation so closure compiler will 'export' the vairable
-    window['RogueBM']['show']=show
-    window['RogueBM']['run']=run
+    window['RogueBM']['show']=show;
+    window['RogueBM']['run']=run;
+
+    if(window['RogueBM']['cmd']){
+        window['RogueBM']['run'](window['RogueBM']['cmd']);
+    }else if(args.cmd){
+        window['RogueBM']['run'](args.cmd);
+    }
 
 //usersessions
 })("")
