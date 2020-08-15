@@ -34,10 +34,10 @@
             {{ marklet.basename }}
         </span>
         <span id="script_code_{{ marklet.basename | escape }}">
-          <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>{{ marklet.path | escape }}
+          <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
         </span> 
         <span>
-          <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+          <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
         </span>
       </li>
       {% endif %}
