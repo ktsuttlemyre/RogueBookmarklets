@@ -30,6 +30,26 @@
     newScript.src = "/RogueBookmarklets/RogueRunner_inject.js?autoshow=false";
     document.head.appendChild(newScript);
   }
+var text = 'This is not a comment\n/*this is a comment*/\nNot a comment/*Another comment*/';
+
+function getComments(text) {
+    var comments,
+    regex,
+    match;
+    comments = [];
+    regex = /\/\*.*?\*\//g
+    
+    while ((match = regex.exec(text)) != null) {
+        comments.push(match);
+    }
+    comments = (comments[0])?comments[0]:comments
+    comments = (comments[0])?comments[0]:comments
+    return comments;
+}
+
+
+    
+    
   </script>
   <style>
   
@@ -122,7 +142,7 @@
             <div class="card-body">
               <ul>
                 <li>
-                  Description:Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  Description:<div class="description"></div>
                 </li>
               </ul>
             </div>
@@ -184,6 +204,7 @@
                 //    //click: function(){ BlahFunc( options.rowId );return false;}
                // }) //.append($('<i class="fas fa-play-circle"></i>'))
                 $("#bookmarklet"+index).text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
+                $("description"+index).text(getComments(data).replace("*","\n"))  
                   
                 var objLink = $('<a>',{
                     text:  '',
