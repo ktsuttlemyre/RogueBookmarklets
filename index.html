@@ -39,6 +39,9 @@
         <span>
           <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
         </span>
+        <span class='script_marklet_json'>
+          
+        </span>
       </li>
       {% endif %}
     {% endfor %}
@@ -86,6 +89,15 @@
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 $(".script_marklet_name:contains('"+$.trim(name)+"')").empty().append(link)
+                  
+                var link = $('<a>',{
+                    text:  <i class="far fa-file-code"></i>,
+                    title: JSON.stringify(script),
+                    href: 'javascript:document.write(JSON.stringify(script))', //'javascript:'+data,
+                    //click: function(){ BlahFunc( options.rowId );return false;}
+                }) //.append($('<i class="fas fa-play-circle"></i>'))
+                $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(link)
+               
 
                   
                
