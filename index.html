@@ -85,7 +85,8 @@
                     href: '#', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                domElements.find(".script_marklet_name:contains('"+$.trim(name)+"')").empty().append(link)
+                $(".script_marklet_name:contains('"+$.trim(name)+"')").empty().append(link)
+
                   
                
                 }
