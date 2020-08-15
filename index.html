@@ -35,11 +35,11 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container my-2">
   <h1>RogueBookmarklets</h1>
   
     
- <div class="row">
+ <div class="row my-2">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
@@ -61,10 +61,7 @@
 </div>
     
     
-   
-  
-  <br><br><br><br>
-  <h1>RogueBookmarklets </h1>
+  <h1 class="my-2">RogueBookmarklets </h1>
   
   
   <div class="accordion" id="bookmarklets">
@@ -72,7 +69,7 @@
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
         
-        <div class="card" id="bookmarklet_card{% increment index %}">
+        <div class="card my-1" id="bookmarklet_card{% increment index %}">
           <div class="card-header">
             
               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
