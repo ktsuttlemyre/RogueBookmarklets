@@ -77,14 +77,15 @@
                 dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
                                                 console.log('script',script)
-
+                var name=script.basename||'undefined'
+                
                 var link = $('<a>',{
-                    text: $.trim(script.basename),
-                    title: $.trim(script.basename),
-                    href: script.modified_time, //'javascript:'+data,
+                    text: $.trim(name),
+                    title: $.trim(script.modified_time),
+                    href: '#', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                domElements.find(":contains('"+$.trim(script.basename)+"')").empty().append(link)
+                domElements.find(":contains('"+$.trim(name)+"')").empty().append(link)
                   
                
                 }
