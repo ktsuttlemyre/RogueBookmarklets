@@ -73,6 +73,8 @@
       {% if path[1] contains 'bookmarklets' %}
         {% assign index = marklet.index %}
         index={{index}}
+    marklet={{marklet}}
+    marklet.index={{marklet.index}}
         
         <div class="card" id="bookmarklet_card{{index}}">
           <div class="card-header">
