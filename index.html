@@ -205,7 +205,7 @@ function getComments(text) {
                 //    //click: function(){ BlahFunc( options.rowId );return false;}
                // }) //.append($('<i class="fas fa-play-circle"></i>'))
                 $("#bookmarklet"+index).text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                $("description"+index).text(getComments(data).replace("*","\n"))  
+                $("#description"+index).text(getComments(data).replace("*","\n"))  
                   
                 var objLink = $('<a>',{
                     text:  '',
