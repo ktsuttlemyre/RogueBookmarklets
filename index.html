@@ -77,8 +77,8 @@
                 success: function (data){
 
                 var link = $('<a>',{
-                    text: script.name,
-                    title: script.name,
+                    text: $.trim(script.name),
+                    title: $.trim(script.name),
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
