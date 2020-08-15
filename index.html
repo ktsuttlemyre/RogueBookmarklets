@@ -143,7 +143,7 @@ function getComments(text) {
             <div class="card-body">
               <ul>
                 <li>
-                  Description:<div class="description{{ bookmarkletIndex }}"></div>
+                  Description:<div class="description"></div>
                 </li>
               </ul>
             </div>
@@ -176,6 +176,7 @@ function getComments(text) {
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
      var index= script.index;
+     var card=domElements.find('bookmarklet_card"+index)
                 /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
@@ -209,7 +210,7 @@ function getComments(text) {
                   console.warn('possible name index missalignment')
                 }
                 link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                $("#description"+index).text(getComments(data).replace("*","\n"))  
+                card.find(".description").text(getComments(data).replace("*","\n")) 
                   
                 var objLink = $('<a>',{
                     text:  '',
