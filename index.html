@@ -75,6 +75,7 @@
                 async: true,
                 dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
+                                                console.log('script.name',script)
 
                 var link = $('<a>',{
                     text: $.trim(script.name),
