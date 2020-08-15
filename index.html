@@ -95,7 +95,7 @@
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
         
-        <div class="card my-1" id="bookmarklet_card{% increment bookmarkletIndex %}">
+        <div class="card my-1" id="bookmarklet_card{{ bookmarkletIndex }}">
           <div class="card-header">
             
             <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ bookmarkletIndex }}" aria-controls="collapse{{ bookmarkletIndex }}" aria-expanded="false">
@@ -127,7 +127,7 @@
           </div>
         </div>
        
-      
+      <!--{% increment bookmarkletIndex %}-->
       {% endif %}
     {% endfor %}
 
