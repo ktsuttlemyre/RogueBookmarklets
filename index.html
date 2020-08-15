@@ -42,8 +42,10 @@ function getComments(text) {
     while ((match = regex.exec(text)) != null) {
         comments.push(match);
     }
+    comments=comments||''
     comments = (comments[0])?comments[0]:comments
     comments = (comments[0])?comments[0]:comments
+    
     return comments;
 }
 
