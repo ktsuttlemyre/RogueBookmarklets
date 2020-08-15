@@ -94,13 +94,13 @@
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 $(".script_marklet_name:contains('"+$.trim(name)+"')").empty().append(link)
                   
-                var link = $('<a>',{
+                var objLink = $('<a>',{
                     text:  '<i class="far fa-file-code"></i>',
                     title: JSON.stringify(script,null,2),
                     href: 'javascript:codeWindow(script)', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(link)
+                $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(objLink)
                
 
                   
