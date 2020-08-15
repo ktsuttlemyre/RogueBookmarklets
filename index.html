@@ -56,6 +56,10 @@
   
  <script src='/RogueBookmarklets/index.js'></script>
 <script>
+  var codeWindow=function(script){
+    var win = window.open("", script.basename, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
+    win.document.body.innerHTML = '<html><head><title>'+script.basename+'</title></head><body><textara>'+JSON.stringify(script,null,2)+'</textarea></body></html>';
+  }
     var domElements=$("#bookmarks");
     var scripts=RogueBM.scripts
    Object.keys(scripts).forEach(function(key){
@@ -92,8 +96,8 @@
                   
                 var link = $('<a>',{
                     text:  <i class="far fa-file-code"></i>,
-                    title: JSON.stringify(script),
-                    href: 'javascript:document.write(JSON.stringify(script))', //'javascript:'+data,
+                    title: JSON.stringify(script,null,2),
+                    href: 'javascript:codeWindow(script)', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(link)
