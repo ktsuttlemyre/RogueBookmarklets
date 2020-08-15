@@ -74,11 +74,11 @@
         <div class="card my-1" id="bookmarklet_card{% increment index %}">
           <div class="card-header">
             
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
-                <h2 class="mb-0">
-                  <a id="bookmarklet{{index}}" href="#"></a>
-                </h2>
-
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
+              <h3 class="mb-0">
+                <a id="bookmarklet{{index}}" href="#"></a>
+              </h3>
+              <span class="float-right">
                 <span id="script_code_{{ marklet.basename | escape }}">
                   <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
                 </span> 
@@ -88,6 +88,7 @@
                 <span class='script_marklet_json'>
                   {{ marklet.basename }}
                 </span>
+              </span>
             </button>
           </div>
 
