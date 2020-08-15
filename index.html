@@ -98,9 +98,9 @@
         <div class="card my-1" id="bookmarklet_card{% increment bookmarkletIndex %}">
           <div class="card-header">
             
-            <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{bookmarkletIndex}}" aria-controls="collapse{{bookmarkletIndex}}" aria-expanded="false">
+            <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ bookmarkletIndex }}" aria-controls="collapse{{ bookmarkletIndex }}" aria-expanded="false">
               <h3 class="mb-0 float-left">
-                <a href="#" id="bookmarklet{{bookmarkletIndex}}" class="btn btn-primary bookmark"></a>
+                <a href="#" id="bookmarklet{{ bookmarkletIndex }}" class="btn btn-primary bookmark"></a>
               </h3>
               <span class="float-right">
                 <span id="script_code_{{ marklet.basename | escape }}">
@@ -116,7 +116,7 @@
             </button>
           </div>
 
-          <div id="collapse{{bookmarkletIndex}}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
+          <div id="collapse{{ bookmarkletIndex }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
             <div class="card-body">
               <ul>
                 <li>
