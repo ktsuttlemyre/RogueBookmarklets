@@ -52,6 +52,7 @@
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
         {% assign index = marklet.index %}
+        index={{index}}
         
         <div class="card" id="bookmarklet_card{{index}}">
           <div class="card-header">
