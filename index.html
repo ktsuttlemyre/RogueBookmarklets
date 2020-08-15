@@ -85,7 +85,7 @@
                     href: '#', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                domElements.find(":contains('"+$.trim(name)+"')").empty().append(link)
+                domElements.closest(":contains('"+$.trim(name)+"')").last().empty().append(link)
                   
                
                 }
