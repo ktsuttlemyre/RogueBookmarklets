@@ -48,10 +48,9 @@
   
   
   <div class="accordion" id="bookmarklets">
-    {% assign index = 0 %}
     {% for marklet in site.static_files %}
-
       {% if marklet.path contains 'bookmarklets/' %}
+        {% increment index %}
         <div class="card" id="bookmarklet{{index}}">
           <div class="card-header">
             <h2 class="mb-0">
@@ -86,7 +85,7 @@
           </div>
         </div>
        
-      {% increment index %}
+      
       {% endif %}
     {% endfor %}
 
