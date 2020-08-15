@@ -53,7 +53,7 @@
   
  <script src='/RogueBookmarklets/index.js'></script>
 <script>
-    var domElements=$(".script_marklet_name");
+    var domElements=$("#bookmarks");
     var scripts=RogueBM.scripts
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
@@ -85,7 +85,7 @@
                     href: '#', //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                domElements.closest(":contains('"+$.trim(name)+"')").last().empty().append(link)
+                domElements.closest(".script_marklet_name:contains('"+$.trim(name)+"')").last().empty().append(link)
                   
                
                 }
