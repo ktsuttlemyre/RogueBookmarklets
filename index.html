@@ -7,7 +7,7 @@
   <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.css" integrity="sha256-R84Ldk4o+RHLjJnR6FuD8R80lBToAgzDvEQ3d0NhDiw=" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/horsey/4.2.2/horsey.js" integrity="sha256-J38IjXBALk7t+VGTss0JmSzOYJ3Y8YBQpB4vjCnwESs=" crossorigin="anonymous"></script>-->
   <!--<script src="/RogueBookmarklets/RogueRunner_src.js"></script>-->
-  <script src="/RogueBookmarklets/RogueRunner_inject.js?autoshow=false"></script>
+  <!--<script src="/RogueBookmarklets/RogueRunner_inject.js?autoshow=false"></script>-->
   
   
   
@@ -20,11 +20,20 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
   <title>RogueBookmarlets/</title>
-
+  <script>
+  function injectRogueRunner(){
+    var newScript = document.createElement("script");
+    newScript.src = "/RogueBookmarklets/RogueRunner_inject.js?autoshow=false";
+    document.head.appendChild(newScript);
+    
+  </script>
+  
 </head>
 
 <body>
   <h1>Bookmarklets </h1>
+  
+  <a href="#" click="injectRogueRunner()"><h2>RogueRunner</h2></a>
   <ul id="bookmarks"></ul>
   <ul>    
     {% for marklet in site.static_files %}
