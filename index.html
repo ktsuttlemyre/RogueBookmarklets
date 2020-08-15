@@ -49,26 +49,28 @@
   
   <div class="accordion" id="bookmarklets">
     {% for marklet in site.static_files %}
-      {% assign index = marklet.index %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
+        {% assign index = marklet.index %}
         
         <div class="card" id="bookmarklet_card{{index}}">
           <div class="card-header">
-            <h2 class="mb-0">
-              <a id="bookmarklet{{index}}" class="btn btn-primary collapsed" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapse{{index}}" data-target="#collapse{{index}}></a>
+            
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
+                <h2 class="mb-0">
+                  <a id="bookmarklet{{index}}" class="btn btn-primary collapsed" data-toggle="collapse" href="#" role="button" aria-expanded="false"  data-target="#collapse{{index}}></a>
+                </h2>
 
-            </h2>
-                      <span id="script_code_{{ marklet.basename | escape }}">
-                        <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
-                      </span> 
-                      <span>
-                        <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
-                      </span>
-                      <span class='script_marklet_json'>
-                        {{ marklet.basename }}
-                      </span>
-
+                <span id="script_code_{{ marklet.basename | escape }}">
+                  <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
+                </span> 
+                <span>
+                  <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+                </span>
+                <span class='script_marklet_json'>
+                  {{ marklet.basename }}
+                </span>
+            </button>
           </div>
 
           <div id="collapse{{index}}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
