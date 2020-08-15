@@ -30,14 +30,14 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <div style="display:inline-block" id="script_marklet_{{ marklet.basename | strip | url_encode | replace: '+', '_' | replace: '%', '_' | replace: '.', '_' }}">
-            {{ marklet.basename | escape }}
+        <div style="display:inline-block" class="script_marklet_name">
+            {{ marklet.basename | strip | escape }}
         </div>
-        <div style="display:inline-block" id="script_code_{{ marklet.basename | escape }}">
+        <div style="display:inline-block id="script_code_{{ marklet.basename | escape }}">
           <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{{ marklet.name | escape }}"><i class="fas fa-code"></i></a>{{ marklet.name | escape }}
         </div> 
-        <div style="display:inline-block" id="script_edit_{{ marklet.basename | escape }}">
-          <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+        <div style="display:inline-block">
+          <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
         </div>
       </li>
       {% endif %}
@@ -81,7 +81,7 @@
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $('#script_marklet_'+$.trim(key).replace('+','_').replace('%','_').replace('.','_')).empty().append(link)
+                $(".script_marklet_name:contains('"+$.trim(key)+"')").empty().append(link)
                   
                
                 }
