@@ -174,7 +174,7 @@ function getComments(text) {
     async: true,
     dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
     success: function (data){
-      $('#roguerunner_bookmarklet).attr('href',data).addClass('btn-primary')
+      $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary')
     }})
   
   
