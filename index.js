@@ -4,7 +4,6 @@
 window.RogueBM=window.RogueBM||{}
 window.RogueBM.scripts={
     {% for marklet in site.static_files %}
-      {% assign index = marklet.index %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
     "{{ marklet.basename | escape }}":{
@@ -17,7 +16,7 @@ window.RogueBM.scripts={
           "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
           "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
           "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-          "index":{{index}}
+          "index":{% increment index %}
         },
       {% endif %}
     {% endfor %}
