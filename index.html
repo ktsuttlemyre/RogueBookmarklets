@@ -193,6 +193,9 @@
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 objLink.html('<i class="fas fa-file-code"></i>')
                 $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(objLink)
+                  if(!index){
+                    $("#bookmarklet"+index).closest("button").click()
+                  }
                
 
                   
