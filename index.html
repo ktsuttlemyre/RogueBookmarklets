@@ -30,15 +30,15 @@
     {% for marklet in site.static_files %}
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
-        <div style="display:inline-block" class="script_marklet_name">
+        <span class="script_marklet_name">
             {{ marklet.basename }}
-        </div>
-        <div style="display:inline-block id="script_code_{{ marklet.basename | escape }}">
+        </span>
+        <span id="script_code_{{ marklet.basename | escape }}">
           <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>{{ marklet.name | escape }}
-        </div> 
-        <div style="display:inline-block">
+        </span> 
+        <span>
           <a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
-        </div>
+        </span>
       </li>
       {% endif %}
     {% endfor %}
