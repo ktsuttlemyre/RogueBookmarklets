@@ -103,7 +103,7 @@ function getComments(text) {
       <div class="card-body">
         
         <p class="card-text">Take the RogueRunner with you!</p><p class="card-text">Install in your browser by dragging and dropping the link below into your bookmarks, bookmark bar, or copy and paste as a url</p>
-        <a id="roguerunner_bookmarklet" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/RogueRunner_inject.js" draggable="true" class="btn bookmark">Click and Drag me to Bookmarks to install</a>
+        <a id="roguerunner_bookmarklet" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/RogueRunner_inject.js" draggable="true" class="btn bookmark">Loading...</a>
       </div>
     </div>
   </div>
@@ -174,7 +174,7 @@ function getComments(text) {
     async: true,
     dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
     success: function (data){
-      $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary')
+      $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary').text('Click and Drag me to Bookmarks to install')
       .on('dragstart', function(ev) {
         $(this).text("keep dragging me to your bookmarks!");
       }).on('dragstop', function(ev) {
