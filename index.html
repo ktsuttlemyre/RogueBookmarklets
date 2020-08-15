@@ -49,20 +49,16 @@
   
   <div class="accordion" id="bookmarklets">
     {% for marklet in site.static_files %}
+      {% assign index = marklet.index %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
         
-        <div class="card" id="bookmarklet{% increment index %}">
+        <div class="card" id="bookmarklet_card{{index}}">
           <div class="card-header">
             <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="false">
-                ###
-              </button>
-            </h2>
+              <a id="bookmarklet{{index}}" class="btn btn-primary collapsed" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapse{{index}}" data-target="#collapse{{index}}></a>
 
-                      <span class="script_marklet_name">
-                          {{ marklet.basename }}
-                      </span>
+            </h2>
                       <span id="script_code_{{ marklet.basename | escape }}">
                         <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
                       </span> 
@@ -109,7 +105,7 @@
   }
     var domElements=$("#bookmarklets");
     var scripts=RogueBM.scripts
-   Object.keys(scripts).forEach(function(key){
+   Object.keys(scripts).forEach(function(key,index){
      var script = scripts[key]
                 /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
@@ -133,13 +129,13 @@
                                                 console.log('script',script)
                 var name=script.basename||'undefined'
                 
-                var link = $('<a>',{
-                    text: $.trim(name),
-                    title: $.trim(script.modified_time),
-                    href: '#', //'javascript:'+data,
-                    //click: function(){ BlahFunc( options.rowId );return false;}
-                }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $(".script_marklet_name:contains('"+$.trim(name)+"')").empty().append(link)
+               // var link = $('<a>',{
+               //     text: $.trim(name),
+               //     title: $.trim(script.modified_time),
+               //     href: '#', //'javascript:'+data,
+                //    //click: function(){ BlahFunc( options.rowId );return false;}
+               // }) //.append($('<i class="fas fa-play-circle"></i>'))
+                $("#bookmarklet"+index).text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
                   
                 var objLink = $('<a>',{
                     text:  '',
