@@ -47,47 +47,50 @@
   
   
   
-  <div class="accordion" id="bookmarks">
-        {% for marklet in site.static_files %}
+  <div class="accordion" id="bookmarklets">
+    {% assign index = 0 %}
+    {% for marklet in site.static_files %}
+
       {% if marklet.path contains 'bookmarklets/' %}
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false">
-          ###
-        </button>
-      </h2>
+        <div class="card" id="bookmarklet{{index}}">
+          <div class="card-header">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-expanded="false">
+                ###
+              </button>
+            </h2>
 
-                <span class="script_marklet_name">
-                    {{ marklet.basename }}
-                </span>
-                <span id="script_code_{{ marklet.basename | escape }}">
-                  <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
-                </span> 
-                <span>
-                  <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
-                </span>
-                <span class='script_marklet_json'>
-                  {{ marklet.basename }}
-                </span>
+                      <span class="script_marklet_name">
+                          {{ marklet.basename }}
+                      </span>
+                      <span id="script_code_{{ marklet.basename | escape }}">
+                        <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
+                      </span> 
+                      <span>
+                        <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+                      </span>
+                      <span class='script_marklet_json'>
+                        {{ marklet.basename }}
+                      </span>
 
-    </div>
+          </div>
 
-    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        <ul>
-          <li>
-            Description:Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          <div id="collapse{{index}}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
+            <div class="card-body">
+              <ul>
+                <li>
+                  Description:Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-        {% endif %}
+      {% endif %}
+      {% increment index %}
     {% endfor %}
 
-</div>
+  </div>
 
 
 
@@ -104,7 +107,7 @@
     var win = window.open("", script.basename, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300));
     win.document.body.innerHTML = '<html><head><title>'+script.basename+'</title></head><body><textarea>'+JSON.stringify(script,null,2)+'</textarea></body></html>';
   }
-    var domElements=$("#bookmarks");
+    var domElements=$("#bookmarklets");
     var scripts=RogueBM.scripts
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
