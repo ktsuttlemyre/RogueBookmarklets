@@ -45,6 +45,9 @@
     font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f007";
   }
 
+  .bookmark::before {
+    font-family: "Font Awesome 5 Free"; content: "\f02e";
+  }
   .tps::before {
     font-family: "Font Awesome 5 Free"; font-weight: 400; content: "\f1ea";
   }
@@ -97,7 +100,7 @@
             
             <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
               <h3 class="mb-0 float-left">
-                <a href="#" id="bookmarklet{{index}}" class="btn btn-primary login"></a>
+                <a href="#" id="bookmarklet{{index}}" class="btn btn-primary bookmark"></a>
               </h3>
               <span class="float-right">
                 <span id="script_code_{{ marklet.basename | escape }}">
