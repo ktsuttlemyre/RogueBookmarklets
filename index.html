@@ -70,6 +70,7 @@
             $.ajax({
                 url: script.src,
                 async: true,
+                dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
                 var link = $('<a>',{
                     text: script.name,
