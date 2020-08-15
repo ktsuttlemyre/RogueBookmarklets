@@ -31,7 +31,7 @@
       {% if marklet.path contains 'bookmarklets/' %}
       <li>
         <div style="display:inline-block" class="script_marklet_name">
-            {{ marklet.basename | strip }}
+            {{ marklet.basename }}
         </div>
         <div style="display:inline-block id="script_code_{{ marklet.basename | escape }}">
           <a href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>{{ marklet.name | escape }}
@@ -53,6 +53,7 @@
   
  <script src='/RogueBookmarklets/index.js'></script>
 <script>
+    var domElements=$(".script_marklet_name");
     var scripts=RogueBM.scripts
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
@@ -83,7 +84,7 @@
                     href: script.modified_time, //'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $(".script_marklet_name:contains('"+$.trim(script.basename)+"')").empty().append(link)
+                domElements.find(":contains('"+$.trim(script.basename)+"')").empty().append(link)
                   
                
                 }
