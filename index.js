@@ -3,6 +3,11 @@
 //touch
 window.RogueBM=window.RogueBM||{}
 window.RogueBM.scripts={
+    '':{
+        'owner_name':{{ site.github.owner_name }},
+        'owner_url':{{ site.github.owner_url }},
+        'build_revision':{{ site.github.build_revision }}
+       },
     {% for marklet in site.static_files %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
@@ -16,7 +21,7 @@ window.RogueBM.scripts={
           "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
           "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
           "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-          "index":{% increment bookmarkIndex %}
+          "index":{{ index }}
         },
       {% endif %}
     {% endfor %}
