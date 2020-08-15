@@ -75,15 +75,15 @@
                 async: true,
                 dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
-                                                console.log('script.name',script)
+                                                console.log('script',script)
 
                 var link = $('<a>',{
-                    text: $.trim(script.name),
-                    title: $.trim(script.name),
+                    text: $.trim(script.basename),
+                    title: $.trim(script.basename),
                     href: 'javascript:'+data,
                     //click: function(){ BlahFunc( options.rowId );return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $(".script_marklet_name:contains('"+$.trim(script.name)+"')").empty().append(link)
+                $(".script_marklet_name:contains('"+$.trim(script.basename)+"')").empty().append(link)
                   
                
                 }
