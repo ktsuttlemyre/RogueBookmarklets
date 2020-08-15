@@ -71,12 +71,8 @@
     {% for marklet in site.static_files %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
-        {% assign index = marklet.index %}
-        index={{index}}
-    marklet={{marklet}}
-    marklet.index={{marklet.index}}
         
-        <div class="card" id="bookmarklet_card{{index}}">
+        <div class="card" id="bookmarklet_card{% increment index %}">
           <div class="card-header">
             
               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse{{index}}" aria-controls="collapse{{index}}" aria-expanded="false">
