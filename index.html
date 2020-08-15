@@ -123,7 +123,7 @@ function getComments(text) {
             
             <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ bookmarkletIndex }}" aria-controls="collapse{{ bookmarkletIndex }}" aria-expanded="false">
               <h3 class="mb-0 float-left">
-                <a href="#" id="bookmarklet{{ bookmarkletIndex }}" class="btn btn-primary bookmark"></a>
+                <a href="#" id="bookmarklet{{ bookmarkletIndex }}" class="btn btn-primary bookmark">{{ marklet.basename }}</a>
               </h3>
               <span class="float-right">
                 <span id="script_code_{{ marklet.basename | escape }}">
@@ -204,7 +204,11 @@ function getComments(text) {
                //     href: '#', //'javascript:'+data,
                 //    //click: function(){ BlahFunc( options.rowId );return false;}
                // }) //.append($('<i class="fas fa-play-circle"></i>'))
-                $("#bookmarklet"+index).text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
+                var link=$("#bookmarklet"+index)
+                if(link.text()!=name){
+                  console.warn('possible name index missalignment')
+                }
+                link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
                 $("#description"+index).text(getComments(data).replace("*","\n"))  
                   
                 var objLink = $('<a>',{
