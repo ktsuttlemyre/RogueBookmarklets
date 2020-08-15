@@ -3,10 +3,10 @@
 //touch
 window.RogueBM=window.RogueBM||{}
 window.RogueBM.scripts={
-    '':{
-        'owner_name':{{ site.github.owner_name }},
-        'owner_url':{{ site.github.owner_url }},
-        'build_revision':{{ site.github.build_revision }}
+    "":{
+        "owner_name":"{{ site.github.owner_name }}",
+        "owner_url":"{{ site.github.owner_url }}",
+        "build_revision":"{{ site.github.build_revision }}"
        },
     {% for marklet in site.static_files %}
       {% assign path = marklet.path | split: "/" %}
