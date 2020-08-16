@@ -54,7 +54,6 @@ function getComments(text) {
     regex = /.*\*.*\@(.*?)\s(.+)/g
     
     while ((match = regex.exec(text)) != null) {
-      console.log(match)
         commentObj[match[1]]=match[2];
     }
   
@@ -244,11 +243,11 @@ function getComments(text) {
                 async: true,
                 dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
-
+                  
                   var name=script.basename||'undefined'
                   var link=$("#bookmarklet"+index)
                   if(link.text()!=name){
-                    console.warn('possible name index missalignment',link.text(),name)
+                    console.warn('possible name index missalignment',link.text(),name,script)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
                   card.find(".description").empty().html('<pre>'+JSON.stringify(getComments(data),null,2)+'</pre>') 
@@ -276,20 +275,6 @@ function getComments(text) {
       });   
   
   
-//               $.ajax({
-//                 url: 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_marklet.js',
-//                 async: true,
-//                 success: function (data){
-//                   alert(data)
-// //                 var link = $('<a>',{
-// //                     text: 'Rogue_Runner',
-// //                     title: 'Rogue_Runner',
-// //                     href: data,
-// //                     //click: function(){ BlahFunc( options.rowId );return false;}
-// //                 }) //.append($('<i class="fas fa-play-circle"></i>'))
-//                 //$('#runner').empty().append(link)
-//                 }
-//              });
   </script>
   </div>
 </body>
