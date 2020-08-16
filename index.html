@@ -128,10 +128,10 @@ function getComments(text) {
               </h3>
               <span class="float-right">
                 <span id="script_code_{{ marklet.basename | escape }}">
-                  <a title="{{ marklet.path | escape }}" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
+                  <a title="{{ marklet.path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
                 </span> 
                 <span>
-                  <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
+                  <a title="{{ marklet.path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
                 </span>
                 <span class='script_marklet_json'>
                 </span>
@@ -194,9 +194,12 @@ function getComments(text) {
 //       })
     }})
   
-  
+  var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300)
+  var externalWindow=function(url){
+    var win = window.open(url, _blank, externalWindowString);
+  }
   var codeWindow=function(script){
-    var win = window.open("", script.basename, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300));
+    var win = window.open("", script.basename, externalWindowString);
     win.document.body.innerHTML = '<html><head><style>html, body {margin:0;padding:0;}</style><title>'+script.basename+'</title></head><body><textarea style="width:100%;height:100%">'+JSON.stringify(script,null,2)+'</textarea></body></html>';
   }
     var cards=$("#bookmarklets");
