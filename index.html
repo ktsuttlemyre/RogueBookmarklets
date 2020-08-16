@@ -251,7 +251,7 @@ function getComments(text) {
                   var commentBlock=getComments(data)
                   Object.keys(commentBlock).forEach(function(key){
                     var value=commentBlock[key]
-                    infoDom.append($('li').text(key).append($('ul').append('li').text(value)))
+                    infoDOM.append($('li').text(key).append($('ul').append('li').text(value)))
                   })
                   
                   card.find(".description").empty().html(infoDOM) 
