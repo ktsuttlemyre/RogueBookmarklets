@@ -200,12 +200,15 @@ function getComments(text) {
     var win = window.open("", script.basename, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300));
     win.document.body.innerHTML = '<html><head><style>html, body {margin:0;padding:0;}</style><title>'+script.basename+'</title></head><body><textarea style="width:100%;height:100%">'+JSON.stringify(script,null,2)+'</textarea></body></html>';
   }
-    var domElements=$("#bookmarklets");
+    var cards=$("#bookmarklets");
     var scripts=RogueBM.scripts
+    
+    
+  //iterate
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
      var index= script.index;
-     var card=domElements.find('#bookmarklet_card'+index)
+     var card=cards.find('#bookmarklet_card'+index)
                 /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
@@ -243,12 +246,12 @@ function getComments(text) {
                       click: function(){ codeWindow(jsonString); return false;},
                       html:'<i class="fas fa-file-code"></i>'   
                   })
-                  $(".script_marklet_json").empty().append(objLink)
+                  card.find(".script_marklet_json").empty().append(objLink)
 
 
                   //if first bookmarklet then open description
                   if(!index){
-                    $("#bookmarklet"+index).closest("button").click()
+                    card.find("#bookmarklet"+index).closest("button").click()
                   }
                 }
              });
