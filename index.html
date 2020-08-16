@@ -135,7 +135,6 @@ function getComments(text) {
                   <a title="{{ marklet.path | escape }}" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
                 </span>
                 <span class='script_marklet_json'>
-                  {{ marklet.basename }}
                 </span>
               </span>
             </button>
@@ -175,24 +174,25 @@ function getComments(text) {
     async: true,
     dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
     success: function (data){
-      $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary').text('Click and Drag me to Bookmarks to install')
-      .on('dragstart', function(ev) {
-        var self=$(this)
-        $(document).mouseleave(function () {
-            self.text('RogueBookmarks')
-        }).mouseenter(function () {
-            self.text('No no, take me to the bookmarks bar!')
-        });
-        self.text("keep dragging me to your bookmarks!");
-      }).on('dragstop', function(ev) {
-        $(document).off('mouseleave')
-        $(document).off('mouseenter')
-        $(this).text("Click and Drag me to Bookmarks to install");
-      }).on('click', function(ev){
+      $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary').text('RogueRunner').on('click', function(ev){
         ev.preventDefault();
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
         return false;
-      });
+      })
+//       .on('dragstart', function(ev) {
+//         var self=$(this)
+//         $(document).mouseleave(function () {
+//             self.text('RogueBookmarks')
+//         }).mouseenter(function () {
+//             self.text('No no, take me to the bookmarks bar!')
+//         });
+//         self.text("keep dragging me to your bookmarks!");
+//       })
+//         .on('dragstop', function(ev) {
+//         $(document).off('mouseleave')
+//         $(document).off('mouseenter')
+//         $(this).text("Click and Drag me to Bookmarks to install");
+//       })
     }})
   
   
@@ -205,7 +205,7 @@ function getComments(text) {
    Object.keys(scripts).forEach(function(key){
      var script = scripts[key]
      var index= script.index;
-     var card=domElements.find('bookmarklet_card'+index)
+     var card=domElements.find('#bookmarklet_card'+index)
                 /*$('<a>',{
                     text: '<i class="fas fa-code"></i>',
                     title: script.name,
@@ -248,10 +248,11 @@ function getComments(text) {
                     click: function(){ codeWindow(script); return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 objLink.html('<i class="fas fa-file-code"></i>')
-                $(".script_marklet_json:contains('"+$.trim(name)+"')").empty().append(objLink)
-                  if(!index){
-                    $("#bookmarklet"+index).closest("button").click()
-                  }
+                $(".script_marklet_json).empty().append(objLink)
+                //if first bookmarklet then open description
+                if(!index){
+                  $("#bookmarklet"+index).closest("button").click()
+                }
                
 
                   
