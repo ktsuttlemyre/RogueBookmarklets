@@ -55,7 +55,7 @@ function getComments(text) {
     
     while ((match = regex.exec(text)) != null) {
       console.log(match)
-        commentObj[match[0]]=match[1];
+        commentObj[match[1]]=match[2];
     }
   
    
@@ -251,7 +251,7 @@ function getComments(text) {
                     console.warn('possible name index missalignment',link.text(),name)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                  card.find(".description").empty().text(JSON.stringify(getComments(data))) 
+                  card.find(".description").empty().text(JSON.stringify(getComments(data),null,2)) 
 
 
                   var jsonString=JSON.stringify(script,null,2)
