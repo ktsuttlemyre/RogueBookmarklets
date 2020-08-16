@@ -251,7 +251,7 @@ function getComments(text) {
                     console.warn('possible name index missalignment',link.text(),name)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                  card.find(".description").empty().text(JSON.stringify(getComments(data),null,2)) 
+                  card.find(".description").empty().html('<pre>'+JSON.stringify(getComments(data),null,2)+'</pre>') 
 
 
                   var jsonString=JSON.stringify(script,null,2)
