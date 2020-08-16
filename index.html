@@ -154,11 +154,7 @@ function getComments(text) {
 
           <div id="collapse{{ bookmarkletIndex }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
             <div class="card-body">
-              <ul>
-                <li>
-                  Description:<div class="description"></div>
-                </li>
-              </ul>
+              <div class="description"></div>
             </div>
           </div>
         </div>
@@ -250,7 +246,15 @@ function getComments(text) {
                     console.warn('possible name index missalignment',link.text(),name,script)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                  card.find(".description").empty().html('<pre>'+JSON.stringify(getComments(data),null,2)+'</pre>') 
+                  
+                  var infoDOM=$('ul');
+                  var commentBlock=getComments(data),null,2)
+                  Object.keys(commentBlock).forEach(function(key){
+                    var value=commentBlock[key]
+                    infoDom.append($('li').text(key).append($('ul').append('li').text(value)))
+                  })
+                  
+                  card.find(".description").empty().html(infoDOM) 
 
 
                   var jsonString=JSON.stringify(script,null,2)
