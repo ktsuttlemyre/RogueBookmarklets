@@ -248,7 +248,7 @@ function getComments(text) {
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
                   
                   var infoDOM=$('ul');
-                  var commentBlock=getComments(data),null,2)
+                  var commentBlock=getComments(data)
                   Object.keys(commentBlock).forEach(function(key){
                     var value=commentBlock[key]
                     infoDom.append($('li').text(key).append($('ul').append('li').text(value)))
