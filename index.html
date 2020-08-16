@@ -169,6 +169,7 @@ function getComments(text) {
   
 
 <script>
+
   $.ajax({
     url: 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_inject.js',
     async: true,
@@ -176,9 +177,17 @@ function getComments(text) {
     success: function (data){
       $('#roguerunner_bookmarklet').attr('href',data).addClass('btn-primary').text('Click and Drag me to Bookmarks to install')
       .on('dragstart', function(ev) {
-        $(this).text("keep dragging me to your bookmarks!");
+        var self=$(this)
+        $(document).mouseleave(function () {
+            self.text('RogueBookmarks')
+        }).mouseenter(function () {
+            self.text('No no, take me to the bookmarks bar!')
+        });
+        self.text("keep dragging me to your bookmarks!");
       }).on('dragstop', function(ev) {
-        $(this).text("RogueRunner");
+        $(document).off('mouseleave')
+        $(document).off('mouseenter')
+        $(this).text("Click and Drag me to Bookmarks to install");
       }).on('click', function(ev){
         ev.preventDefault();
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
@@ -227,7 +236,7 @@ function getComments(text) {
                // }) //.append($('<i class="fas fa-play-circle"></i>'))
                 var link=$("#bookmarklet"+index)
                 if(link.text()!=name){
-                  console.warn('possible name index missalignment')
+                  console.warn('possible name index missalignment',link.text(),name)
                 }
                 link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
                 card.find(".description").text(getComments(data).replace("*","\n")) 
