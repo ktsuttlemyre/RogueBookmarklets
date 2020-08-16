@@ -246,8 +246,7 @@ function getComments(text) {
                     console.warn('possible name index missalignment',link.text(),name,script)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                  
-                  debugger
+ 
                   var infoDOM=$('<ul/>');
                   var commentBlock=getComments(data)
                   Object.keys(commentBlock).forEach(function(key){
