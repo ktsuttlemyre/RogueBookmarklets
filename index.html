@@ -239,7 +239,7 @@ function getComments(text) {
                   console.warn('possible name index missalignment',link.text(),name)
                 }
                 link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                card.find(".description").text(getComments(data).replace("*","\n")) 
+                card.find(".description").empty().text(getComments(data).replace("*","\n")) 
                   
                 var objLink = $('<a>',{
                     text:  '',
