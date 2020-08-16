@@ -226,37 +226,30 @@ function getComments(text) {
                 dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                 success: function (data){
 
-                var name=script.basename||'undefined'
-                
-               // var link = $('<a>',{
-               //     text: $.trim(name),
-               //     title: $.trim(script.modified_time),
-               //     href: '#', //'javascript:'+data,
-                //    //click: function(){ BlahFunc( options.rowId );return false;}
-               // }) //.append($('<i class="fas fa-play-circle"></i>'))
-                var link=$("#bookmarklet"+index)
-                if(link.text()!=name){
-                  console.warn('possible name index missalignment',link.text(),name)
-                }
-                link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                card.find(".description").empty().text(data)//getComments(data).replace("*","\n")) 
-                  
-                var objLink = $('<a>',{
-                    text:  '',
-                    title: JSON.stringify(script,null,2),
-                    href: '#', //'javascript:'+data,
-                    click: function(){ codeWindow(script); return false;}
-                }) //.append($('<i class="fas fa-play-circle"></i>'))
-                objLink.html('<i class="fas fa-file-code"></i>')
-                $(".script_marklet_json").empty().append(objLink)
-                //if first bookmarklet then open description
-                if(!index){
-                  $("#bookmarklet"+index).closest("button").click()
-                }
-               
+                  var name=script.basename||'undefined'
+                  var link=$("#bookmarklet"+index)
+                  if(link.text()!=name){
+                    console.warn('possible name index missalignment',link.text(),name)
+                  }
+                  link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
+                  card.find(".description").empty().text(data)//getComments(data).replace("*","\n")) 
 
-                  
-               
+
+                  var jsonString=JSON.stringify(script,null,2)
+                  var objLink = $('<a>',{
+                      text:  '',
+                      title: jsonString,
+                      href: '#', //'javascript:'+data,
+                      click: function(){ codeWindow(jsonString); return false;},
+                      html:'<i class="fas fa-file-code"></i>'   
+                  })
+                  $(".script_marklet_json").empty().append(objLink)
+
+
+                  //if first bookmarklet then open description
+                  if(!index){
+                    $("#bookmarklet"+index).closest("button").click()
+                  }
                 }
              });
      
