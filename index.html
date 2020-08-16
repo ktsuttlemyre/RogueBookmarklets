@@ -235,7 +235,7 @@ function getComments(text) {
                     console.warn('possible name index missalignment',link.text(),name)
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
-                  card.find(".description").empty().text(data)//getComments(data).replace("*","\n")) 
+                  card.find(".description").empty().text(getComments(data).replace("*","\n")) 
 
 
                   var jsonString=JSON.stringify(script,null,2)
@@ -243,7 +243,7 @@ function getComments(text) {
                       text:  '',
                       title: jsonString,
                       href: '#', //'javascript:'+data,
-                      click: function(){ codeWindow(jsonString); return false;},
+                      click: function(){ codeWindow(script); return false;},
                       html:'<i class="fas fa-file-code"></i>'   
                   })
                   card.find(".script_marklet_json").empty().append(objLink)
