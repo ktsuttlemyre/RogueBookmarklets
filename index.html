@@ -248,7 +248,7 @@ function getComments(text) {
                     click: function(){ codeWindow(script); return false;}
                 }) //.append($('<i class="fas fa-play-circle"></i>'))
                 objLink.html('<i class="fas fa-file-code"></i>')
-                $(".script_marklet_json).empty().append(objLink)
+                $(".script_marklet_json").empty().append(objLink)
                 //if first bookmarklet then open description
                 if(!index){
                   $("#bookmarklet"+index).closest("button").click()
