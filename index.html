@@ -247,11 +247,11 @@ function getComments(text) {
                   }
                   link.text($.trim(name)).attr('title',$.trim(script.modified_time)).attr('href','javascript:'+data)
  
-                  var infoDOM=$('<ul/>');
+                  var infoDOM=$('<div/>');
                   var commentBlock=getComments(data)
                   Object.keys(commentBlock).forEach(function(key){
                     var value=commentBlock[key]
-                    infoDOM.append($('<li/>').html(key).append($('<ul/>').append($('<li/>').html(value))))
+                    infoDOM.append($('<div/>').html(key).append($('<ul/>').append($('<li/>').html(value))))
                   })
                   
                   card.find(".description").empty().append(infoDOM) 
