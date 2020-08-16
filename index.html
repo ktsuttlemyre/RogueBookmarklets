@@ -32,9 +32,9 @@
     newScript.src = "/RogueBookmarklets/RogueRunner_inject.js?autoshow=false";
     document.head.appendChild(newScript);
   }
-var text = 'This is not a comment\n/*this is a comment*/\nNot a comment/*Another comment*/';
 
 function getComments(text) {
+  //https://stackoverflow.com/questions/27113509/how-to-extract-block-comments-from-a-string-using-regular-expressions
     var comments,
     regex,
     match;
