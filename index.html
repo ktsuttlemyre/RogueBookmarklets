@@ -254,7 +254,7 @@ function getComments(text) {
                     infoDOM.append($('li').text(key).append($('ul').append('li').text(value)))
                   })
                   
-                  card.find(".description").empty().html(infoDOM) 
+                  card.find(".description").empty().append(infoDOM) 
 
 
                   var jsonString=JSON.stringify(script,null,2)
