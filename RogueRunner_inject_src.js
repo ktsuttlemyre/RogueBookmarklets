@@ -278,7 +278,7 @@
 
 	window['RogueBM']['injectScript']=injectScript //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
 	window['RogueBM']['getSessionID']=function(){prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID)}
-	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}'}}
+	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':version}}
 	
 	if(forceIframe){
 		// use this to test script injection failures to load
