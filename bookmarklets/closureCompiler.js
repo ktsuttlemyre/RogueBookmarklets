@@ -1,3 +1,12 @@
+/*
+Closure compiler api which exposes a function with the signature
+code = string
+opts= options object
+callback function expecting to recive (err,Compiled) where Compiled is an object with the methods 'compiled','oneLine',closure','bookmarklet'
+
+calls are cached in order to reduce calls to the compiler
+*/
+//Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
 var closureCompiler=(function(){
 	var cache={}
 
