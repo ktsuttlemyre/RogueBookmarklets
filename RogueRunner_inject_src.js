@@ -256,11 +256,11 @@
 	}
 
 
-	function injectScript(src,session){
+	function injectScript(src,token){
 		/*low level injection script. 
 		Use RogueBookmarklet.loadScript for more reliable script loading
 		*/
-		if(sessionID!=session){
+		if(sessionID!=token){
 			console.error('sessionID either not correct or not provided. Will not load this url',src)
 			return 1
 		}
