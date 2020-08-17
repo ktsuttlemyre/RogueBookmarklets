@@ -1,13 +1,22 @@
 ---
 ---
 //touch
-window.RogueBM=window.RogueBM||{}
-window.RogueBM.scripts={
-    "":{
+window.RogueBM=window.RogueBM||{};
+window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
+window.RogueBM.about.scripts={
         "owner_name":"{{ site.github.owner_name }}",
         "owner_url":"{{ site.github.owner_url }}",
-        "build_revision":"{{ site.github.build_revision }}"
-       },
+        "build_revision":"{{ site.github.build_revision }}",
+        "version":"0.0.5"
+       }
+// window.RogueBM.about.RogueRunner={
+//         "latest":"{{ site.github.owner_name }}",
+//         "current":"",
+//         "modified_time":"{{ marklet.modified_time }}",
+//         "src":"{{ marklet.modified_time }}",
+//         "build_revision":"{{ site.github.build_revision }}"
+//        }
+window.RogueBM.scripts={
     {% for marklet in site.static_files %}
       {% assign path = marklet.path | split: "/" %}
       {% if path[1] contains 'bookmarklets' %}
