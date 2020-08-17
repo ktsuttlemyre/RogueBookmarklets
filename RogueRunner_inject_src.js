@@ -9,8 +9,7 @@
    Troubleshooting: if you get errors use JSHint to fix any errors (EXCEPT BRACKET NOTATION!)
    You must use braket notation for objects crated outside the scope of this script
 2) Remove line breaks that occure every 500 characters or so. See https://stackoverflow.com/questions/3018049/why-does-googles-closure-compiler-leave-a-few-unnecessary-spaces-or-line-breaks
-3) add 'javascript:' in front of code
-4) save in RogueRunner_inect.js
+3)  save in RogueRunner_inject.js
 */
 
 
