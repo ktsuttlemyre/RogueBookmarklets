@@ -13,7 +13,7 @@
 */
 
 
-(function (version,self,user,skin,cmd) {
+(function (vers,self,user,skin,cmd) {
 	function UUID(){
 		return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
 	}
@@ -278,7 +278,7 @@
 
 	window['RogueBM']['injectScript']=injectScript //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
 	window['RogueBM']['getSessionID']=function(){prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID)}
-	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':version}}
+	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}}
 	
 	if(forceIframe){
 		// use this to test script injection failures to load
