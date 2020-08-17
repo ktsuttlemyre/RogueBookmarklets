@@ -14,7 +14,7 @@
 */
 
 
-(function (self,user,skin,cmd) {
+(function (version,self,user,skin,cmd) {
 	function UUID(){
 		return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
 	}
@@ -288,5 +288,4 @@
 		injectScript(src,forceIframe,sessionID);
 	}
 	loadCrossOriginLocalStorage();
-
-})(window,'anonymous','experimental');
+})('0.0.1',window,'anonymous','experimental');
