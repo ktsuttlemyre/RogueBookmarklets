@@ -4,6 +4,17 @@ code = string
 opts= options object
 callback function expecting to recive (err,Compiled) where Compiled is an object with the methods 'compiled','oneLine',closure','bookmarklet'
 
+
+All options the compiler accepts are aviable but here are a few
+compilation_level 'WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS'
+output_file_name default.js
+formatting pretty_print,print_input_delimiter
+
+//more flags can be found here https://developers.google.com/closure/compiler/docs/api-ref
+
+This will also accept compilation_level strings as opts. This also includes "pretty_print"
+which will auto set formatting to pretty_print and compliation_level to WHITESPACE_ONLY
+
 calls are cached in order to reduce calls to the compiler
 */
 //Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
@@ -46,11 +57,30 @@ var closureCompiler=(function(){
 			callback=opts;
 			opts=null;
 		}
-		opts=jQuery.extend({}, opts);
+		var compileLevels=['WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS'];
+
+		var optsType=typeof opts
+		if(optsType=='string'){
+			opts={'compilation_level':opts}
+		}else if(optsType=='number'){
+			opts={'compilation_level':compileLevels[optsType]}
+		}else if(optsType=='object'){
+			opts=jQuery.extend({}, opts);
+		}else{
+			console.error('wrong opts typeof ',optsType)
+		}
+
 		opts['js_code']=code
 		opts['compilation_level']=opts['compilation_level']||'ADVANCED_OPTIMIZATIONS'
 		opts['output_format']=opts['output_format']||'text'
 		opts['output_info']=opts['output_info']||'compiled_code'
+
+		//if user has set the compilation to pretty_print which isn't a compile mode but a format mode
+		//assume whitespace only and set format to pretty_print
+		if(opts['compilation_level']=="pretty_print"){
+			opts['compilation_level']='WHITESPACE_ONLY'
+			opts['formatting']='pretty_print';
+		}
 
 		callback=callback||function(e,obj){console.log(obj.compiled())}
 		var cachedResponse=cache[JSON.stringify(opts)]
@@ -81,4 +111,3 @@ var closureCompiler=(function(){
 	}
 	return closureCompiler
 })()
-
