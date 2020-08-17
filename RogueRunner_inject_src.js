@@ -15,29 +15,10 @@
 
 
 (function (self,user,skin,cmd) {
-	var NotLoadedRogueBM=!self['RogueBM'];
-
-	// pollyfill for date.now
-	if (!Date.now) {
-		Date.now = function now() {
-			return new Date().getTime();
-		};
+	function UUID(){
+		return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
 	}
-	function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();}
 
-	// set the RogueBM object
-	self['RogueBM']=self['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
-	self['RogueBM'].cmd=cmd;
-	if(window['RogueBM']['show']){
-		//if crossorignlocal storage not loaded then load it
-    if(!self['RogueBM']['CrossOriginLocalStorage']){
-      loadCrossOriginLocalStorage();
-    }
-    if(!cmd){
-      window['RogueBM']['show']();
-    }
-
-	}
 
 	// show err
 	function showError(message){
@@ -85,18 +66,6 @@
 		});
 	}
 
-	var forceIframe=true;
-	//inject the rogue runner dialog
-	var doc=document.documentElement;
-	skin=(skin != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+skin:'';
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+user+'&cmd='+cmd;
-
-	if(forceIframe){
-		// use this to test script injection failures to load
-		setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
-	}else{
-		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
-	}
 
 	function loadCrossOriginLocalStorage(){
 		//  Use this micro framework to see if the dom is ready
@@ -257,6 +226,65 @@
 
 		var allowedOrigins = ['https://ktsuttlemyre.github.io'];
 		self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html' , allowedOrigins);
+	}
+
+	
+
+
+
+	var NotLoadedRogueBM=!self['RogueBM'];
+
+	// pollyfill for date.now
+	if (!Date.now) {
+		Date.now = function now() {
+			return new Date().getTime();
+		};
+	}
+
+		// set the RogueBM object
+	self['RogueBM']=self['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
+	self['RogueBM'].cmd=cmd;
+	if(window['RogueBM']['show']){
+		//if crossorignlocal storage not loaded then load it
+    if(!self['RogueBM']['CrossOriginLocalStorage']){
+      loadCrossOriginLocalStorage();
+    }
+    if(!cmd){
+      window['RogueBM']['show']();
+    }
+
+	}
+
+
+	function injectScript(src,session){
+		/*low level injection script. 
+		Use RogueBookmarklet.loadScript for more reliable script loading
+		*/
+		if(sessionID!=session){
+			console.error('sessionID either not correct or not provided. Will not load this url',src)
+			return 1
+		}
+		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
+		return 0
+	}
+
+	//a bit of security 
+	var sessionID=UUID();
+	var forceIframe=true;
+	//inject the rogue runner dialog
+	var doc=document.documentElement;
+	skin=(skin != null && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+skin:'';
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+user+'&cmd='+cmd;
+
+
+	window['RogueBM']['injectScript']=injectScript //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
+	window['RogueBM']['getSessionID']=function(){prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID)}
+	
+	if(forceIframe){
+		// use this to test script injection failures to load
+		setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
+	}else{
+		injectScript(src,forceIframe,sessionID);
 	}
 	loadCrossOriginLocalStorage();
 
