@@ -1,12 +1,12 @@
 /*
 Closure compiler api which exposes a function with the signature
-code = string
-opts= options object
+code = string (can be 'clear_cache' to clear cache)
+opts[optional] = options object
 callback function expecting to recive (err,Compiled) where Compiled is an object with the methods 'compiled','oneLine',closure','bookmarklet'
 
 
 All options the compiler accepts are aviable but here are a few
-compilation_level 'WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS'
+compilation_level 'WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS' or 0,1,2 or pretty_print
 output_file_name default.js
 formatting pretty_print,print_input_delimiter
 
@@ -16,11 +16,11 @@ This will also accept compilation_level strings as opts. This also includes "pre
 which will auto set formatting to pretty_print and compliation_level to WHITESPACE_ONLY
 
 calls are cached in order to reduce calls to the compiler
+cache can be cleared by calling closureCompiler('cache_clear') or disabled by closureCompiler('cache_off')
 */
 //Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
 var closureCompiler=(function(){
-	var cache={}
-
+	var cache={};
 	function Compiled(compiled){
 		this.data=$.trim(compiled)
 	}
@@ -35,24 +35,39 @@ var closureCompiler=(function(){
     	return this.compiledOneLine=this.compiled().replace(/\r?\n|\r/gm,''); //remove breaks
 	};
 
-	Compiled.prototype.closure = function() {
+	Compiled.prototype.closure = function(force) {
 		if(this.compiledClosure){
 			return this.compiledClosure
 		}
 		var oneLine=this.oneLine()
 		//simple check to see if it is a closure. if not make it a closure
-		return this.compiledClosure=(oneLine.indexOf('(function(')==0 &&  oneLie.lastIndexOf('})(')>-1 && oneLine.lastIndexOf(')'==oneLine.length-1))?oneLine:'(function(){'+oneLine+'})();';
+		if(force || !(oneLine.indexOf('(function(')==0 &&  oneLine.lastIndexOf('})(')>-1 && oneLine.lastIndexOf(')'==oneLine.length-1))){
+			oneLine='(function(){'+oneLine+'})();'
+		}
+		return this.compiledClosure=oneLine;
 	};
-	Compiled.prototype.bookmarklet = function() {
+	Compiled.prototype.bookmarklet = function(force) {
 		if(this.compiledBookmarklet){
 			return this.compiledBookmarklet
 		}
 		var closure=this.closure()
 		//add the javascript: protocol to make it a bookmarklet
-		return this.compiledBookmarklet=(closure.indexOf('javascript:')!=0)?'javascript:'+closure:closure;
+		if(force || !(closure.indexOf('javascript:')==0)){
+			closure='javascript:'+closure
+		}
+		return this.compiledBookmarklet=closure;
 	};
 
 	function closureCompiler(code,opts,callback){
+		//clear cache if needed
+		if(code=='cache_clear'){
+			cache={};
+			return
+		}else if(code=='cache_off'){
+			cache=null;
+			return
+		}
+
 		if(typeof opts == 'function'){
 			callback=opts;
 			opts=null;
@@ -83,7 +98,7 @@ var closureCompiler=(function(){
 		}
 
 		callback=callback||function(e,obj){console.log(obj.compiled())}
-		var cachedResponse=cache[JSON.stringify(opts)]
+		var cachedResponse=cache && cache[JSON.stringify(opts)]
 		if(cachedResponse){
 			setTimeout(function(){
 				callback(null,cachedResponse)
@@ -99,7 +114,7 @@ var closureCompiler=(function(){
 		    dataType:'text', 
 		    success: function (compiled){
 		    	var obj=new Compiled(compiled);
-		    	cache[JSON.stringify(opts)]=obj;
+		    	cache && cache[JSON.stringify(opts)]=obj;
 		    	callback(null,obj);
 		    },
 		    error: function(jqXHR,textStatus,errorThrown ){
