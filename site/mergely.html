@@ -99,10 +99,34 @@ $(document).ready(function() {
         editor_height: '100%',
         //load left and right file
         lhs: function(setValue) {
-            downloadJSON($("#file1").attr('href'), setValue);
+          $.ajax({
+                url: $("#file1").attr('href'),
+                async: true,
+                dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
+                success: function (data){
+                  setValue(data)
+                },
+                error: function(jqXHR,textStatus,errorThrown ){
+                  console.log(textStatus,errorThrown,jqXHR)
+                  callback(errorThrown)
+                }
+              })
+            //downloadJSON($("#file1").attr('href'), setValue);
         },
         rhs: function(setValue) {
-            downloadJSON($("#file2").attr('href'), setValue);
+              $.ajax({
+                url: $("#file2").attr('href'),
+                async: true,
+                dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
+                success: function (data){
+                  setValue(data)
+                },
+                error: function(jqXHR,textStatus,errorThrown ){
+                  console.log(textStatus,errorThrown,jqXHR)
+                  callback(errorThrown)
+                }
+              })
+            //downloadJSON($("#file2").attr('href'), setValue);
         }
     });
     
