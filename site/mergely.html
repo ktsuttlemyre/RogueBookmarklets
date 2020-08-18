@@ -98,12 +98,12 @@ $(document).ready(function() {
         editor_width: 'calc(50% - 25px)',
         editor_height: '100%',
         //load left and right file
-//         lhs: function(setValue) {
-//             downloadJSON($("#file1").attr('href'), setValue);
-//         },
-//         rhs: function(setValue) {
-//             downloadJSON($("#file2").attr('href'), setValue);
-//         }
+        lhs: function(setValue) {
+            downloadJSON($("#file1").attr('href'), setValue);
+        },
+        rhs: function(setValue) {
+            downloadJSON($("#file2").attr('href'), setValue);
+        }
     });
     
     function changeOptions(changer) {
@@ -140,8 +140,8 @@ $(document).ready(function() {
 <!--     <div class="sources">
         <h1>Source files</h1>
         <ul>
-            <li><a id="file1" href="https://gist.githubusercontent.com/quotient/c426a69bfa550d1a43a0/raw/645d996d8d23e48dc9b691a10238d690df845f4f/gistfile1.txt">File 1</a></li>
-            <li><a id="file2" href="https://gist.githubusercontent.com/quotient/a9baf2c58972aa22c621/raw/c8f6caf22d330cb34fc6f70ece44699312b2b7b4/gistfile1.txt">File 2</a></li>
+            <li><a id="file1" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/cfd32a301d5431ed9f78bc78858b08444cef7c69/bookmarklets/closureCompiler.js">File 1</a></li>
+            <li><a id="file2" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/closureCompiler.js">File 2</a></li>
         </ul>
     </div> -->
 
