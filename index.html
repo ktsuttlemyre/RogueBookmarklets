@@ -203,7 +203,13 @@ function getComments(text) {
 //         $(document).off('mouseenter')
 //         $(this).text("Click and Drag me to Bookmarks to install");
 //       })
-    }})
+    },
+    error: function(jqXHR,textStatus,errorThrown ){
+      console.error(textStatus,errorThrown,jqXHR)
+      alert(textStatus)
+    }
+  
+  })
   
   var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300)
   var externalWindow=function(url){
@@ -274,11 +280,15 @@ function getComments(text) {
                   if(!index){
                     card.find("#bookmarklet"+index).closest("button").click()
                   }
+                },
+              error: function(jqXHR,textStatus,errorThrown ){
+                  console.error(textStatus,errorThrown,jqXHR)
+                  alert(textStatus)
                 }
-             });
+             }); //end ajax
      
      
-      });   
+      });   //end scripts foreach
   
   
   </script>
