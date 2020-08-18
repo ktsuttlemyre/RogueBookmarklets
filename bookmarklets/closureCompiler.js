@@ -118,7 +118,7 @@ var closureCompiler=(function(){
 		    	callback(null,obj);
 		    },
 		    error: function(jqXHR,textStatus,errorThrown ){
-		    	console.log(textStatus,errorThrown,jqXHR)
+		    	console.error(textStatus,errorThrown,jqXHR)
 		    	callback(errorThrown)
 		    }
 		})
