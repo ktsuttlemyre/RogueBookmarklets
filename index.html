@@ -188,7 +188,7 @@ function getComments(text) {
         ev.preventDefault();
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
         return false;
-      })
+      }) //end on click
 //       .on('dragstart', function(ev) {
 //         var self=$(this)
 //         $(document).mouseleave(function () {
@@ -206,7 +206,7 @@ function getComments(text) {
     },
     error: function(jqXHR,textStatus,errorThrown ){
       console.error(textStatus,errorThrown,jqXHR)
-      alert(textStatus)
+      
     }
   
   })
@@ -280,10 +280,9 @@ function getComments(text) {
                   if(!index){
                     card.find("#bookmarklet"+index).closest("button").click()
                   }
-                },
+                }, //end success ajax callback
               error: function(jqXHR,textStatus,errorThrown ){
                   console.error(textStatus,errorThrown,jqXHR)
-                  alert(textStatus)
                 }
              }); //end ajax
      
