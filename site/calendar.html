@@ -1,0 +1,155 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <style type="text/css">
+
+  html, body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  display: table;
+  margin: 0;
+}
+#top, #bottom {
+  width: 100%;
+  background: yellow;
+  display: table-row;
+}
+#top {
+  height: 50px;
+}
+.maxHeight{
+	    margin: 0 auto;
+}
+.responsiveCal {
+
+ 
+	position: relative; padding:0 0 75% 0; margin:0; height: 0; overflow: hidden;
+	 
+	}
+
+	 
+	.responsiveCal iframe {
+
+	position: absolute; top:0; left: 0; width: 100%; height: 100%; margin:20;
+	 
+	}
+
+
+  </style>
+</head>
+
+<body>
+	<div class='top'>asd<br>
+	fa<br>
+af<br>
+aaa<br>
+asdf<br>
+adsf<br>
+adfs</div>
+	<div class="maxHeight">
+	<div class="responsiveCal">
+<iframe src="https://calendar.google.com/calendar/embed?wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=a3RzdXR0bGVteXJlQGdtYWlsLmNvbQ&amp;src=ZW4uY2hyaXN0aWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uanVkYWlzbSNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4uaXNsYW1pYyNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=ZW4ub3J0aG9kb3hfY2hyaXN0aWFuaXR5I2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZHdza2F1QGdtYWlsLmNvbQ&amp;color=%2322AA99&amp;color=%231F753C&amp;color=%23336699&amp;color=%231F753C&amp;color=%231F753C&amp;color=%231F753C&amp;color=%2370237F&amp;showTitle=0" frameborder="0" scrolling="no"></iframe>
+</div></div>
+  <script>
+
+// Returns a function, that, when invoked, will only be triggered at most once
+// during a given window of time. Normally, the throttled function will run
+// as much as it can, without ever going more than once per `wait` duration;
+// but if you'd like to disable the execution on the leading edge, pass
+// `{leading: false}`. To disable execution on the trailing edge, ditto.
+var dummyOptions={}
+function throttle(func, wait, options) {
+  var context, args, result;
+  var timeout = null;
+  var previous = 0;
+  if (!options) options = dummyOptions;
+  var later = function() {
+    previous = options.leading === false ? 0 : Date.now();
+    timeout = null;
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+  return function() {
+    var now = Date.now();
+    if (!previous && options.leading === false) previous = now;
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+};
+
+var margin=20
+
+  var responsiveCal=null;
+  var maxHeight=null;
+  var topDiv=null
+ var win=$(window)
+ var autoWidth=null
+ var aspectratio=null
+ var resizeFn= function() {
+		windowWidth = win.width();
+		windowHeight = win.height()-topDiv.outerHeight(true);
+
+		windowHeight-=100
+		windowWidth+=100
+		var height=maxHeight.outerHeight(true)+3//margin of error
+		var width=maxHeight.outerWidth(true)-3//margin of error
+		//console.log(height)
+		if(windowHeight < height){
+			//console.log('max')
+			maxHeight.width(windowHeight*aspectratio)
+
+				console.log('autoWidth off')
+				autoWidth=false
+				if(windowWidth < width){
+					maxHeight.width('90%')
+				}
+		}else{ //} if(!autoWidth){
+			maxHeight.width('90%')
+			console.log('autoWidth on')
+			autoWidth=true	
+		}
+
+	};
+  	
+ $(window).resize(throttle(resizeFn,200))
+
+ $(document).ready(function() {
+ 		topDiv=$('.top')
+ 		maxHeight=$('.maxHeight')
+ 		responsiveCal=$('.responsiveCal')
+ 		aspectratio=responsiveCal.outerWidth(true)/responsiveCal.outerHeight(true)
+    	resizeFn()
+  });
+
+  </script>
+</body>
+</html>
