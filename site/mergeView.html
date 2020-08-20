@@ -57,18 +57,19 @@
     </style>
   </head>
   <body>
-    <div class="container-fluid h-100" style="position:relative">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:absolute; top:0; right:0; width:100%; z-index:50;">
-        <ul class="navbar-nav mr-auto mt-lg-0">
+    <div class="container-fluid h-100 position-relative">
+      <nav class="navbar navbar-expand-md navbar-light bg-light position-absolute w-100" style="top:0; right:0; z-index:50;">
+        <ul class="navbar-nav" >
           <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle navbar-brand" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">MergeView</a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu position-absolute">
+              <a class="dropdown-item" href="#"><i class="fas fa-info"></i> About</a>
+              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
               <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#"><i class="fas fa-info"></i> About</a>
+              
             </div>
           </li>
         </ul>
