@@ -55,7 +55,7 @@
   <div class="container-fluid h-100">
      <ul class="nav float-right w-100">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Active</a>
+        <a class="nav-link active" href="#">MergeView</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -68,10 +68,14 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i>Show Diffs</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :
+        'align'; setOpts()">align</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)">collapse</a>
       </li>
     </ul>
     <!--<div class="float-right w-100">
@@ -90,7 +94,7 @@
         library to compute the diffs.</p>
       </div>
     </div>-->
-    <div class="h-100 w-100" style="padding-top:10em;">
+    <div class="h-100 w-100" style="padding-top:2.5em;">
       <div id="view" class=""></div>
     </div> <!--row-->
   </div> <!--container-->
