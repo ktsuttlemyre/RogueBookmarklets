@@ -56,57 +56,42 @@
 </head>
 <body>
   <div class="container-fluid h-100">
-     <ul class="nav float-right w-100">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">MergeView</a>
-      </li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light float-right">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-       
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
-      </li>
-      <li class="nav-item"> <!--https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
-        <a class="nav-link" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :'align'; setOpts()"><span style="font-weight:700">&hArr;</span> Align</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
-      </li>
-      <li class="nav-item dropdown float-right">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
-          <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
-        </div>
-      </li>
-    </ul>
-    <!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
--->
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">MergeView</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
+          </li>
+          <li class="nav-item"> <!--https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
+            <a class="nav-link" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :'align'; setOpts()"><span style="font-weight:700">&hArr;</span> Align</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
+          </li>
+          <li class="nav-item dropdown float-right">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
+              <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
     
     <!--<div class="float-right w-100">
       <div class="">
