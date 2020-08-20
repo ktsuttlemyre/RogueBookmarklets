@@ -49,19 +49,23 @@
         right: 1.5rem;
         z-index: 10;
         padding: .2em .4em;
+        pointer-events: none;
       }
       .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):after{
         display: block;
         content: '\00a0';
         color: #fff !important;
         background-color: black;
-        opacity:.3;
+        opacity: .3;
         position: absolute;
         top: .0;
+        width: 100%;
+        height: 100%;
         right: 0;
         z-index: 200;
         padding: 0;
-        margin: 0
+        margin: 0;
+        pointer-events: none;
       }
       
       html, body{
