@@ -60,16 +60,8 @@
       <li class="nav-item">
         <a class="nav-link active" href="#">MergeView</a>
       </li>
-      <li class="nav-item dropdown d-none">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </li>
+
+       
       <li class="nav-item">
         <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
       </li>
@@ -79,7 +71,17 @@
        <li class="nav-item">
         <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
       </li>
+      <li class="nav-item dropdown float-right">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
+          <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
+        </div>
+      </li>
     </ul>
+    
     <!--<div class="float-right w-100">
       <div class="">
         <h2>MergeView</h2>
