@@ -140,30 +140,39 @@
     var codeViews=codeMirrorDoc.querySelectorAll('.CodeMirror-merge-pane')
     Array.prototype.slice.call(codeViews).forEach(function(item,index){
       var corner=item.querySelectorAll('.CodeMirror-scrollbar-filler')[0]
+      var a=$('<a/>').attr('href','#')
       if(index==0){
-        var a=$('<a/>').attr('href','#').html('<i class="far fa-window-maximize"></i>').click(function(e){
-            e.preventDefault()
-            currentOpts.panes = 3; setOpts();
-            return false;
-          })
-          $(corner).append(a);
+        if(codeViews.length==1){
+           a.html('<i class="far fa-window-columns"></i>').click(function(e){
+              e.preventDefault()
+              alert("NEED TO IMPLEMENT")
+              return false;
+            })
+        }else{
+            a.html('<i class="far fa-window-maximize"></i>').click(function(e){
+                e.preventDefault()
+                alert("NEED TO IMPLEMENT")
+                return false;
+              })
+        }
       }else if(index==1){
         if(codeViews.length<=2){
-          var a=$('<a/>').attr('href','#').html('<i class="fas fa-plus-circle"></i>').click(function(e){
+          a.html('<i class="fas fa-plus-circle"></i>').click(function(e){
             e.preventDefault()
             currentOpts.panes = 3; setOpts();
             return false;
           })
-          $(corner).append(a);
+
         }
       }else if (index==2){
-          var a=$('<a/>').attr('href','#').html('<i class="fas fa-minus-circle"></i>').click(function(e){
+          a.html('<i class="fas fa-minus-circle"></i>').click(function(e){
             e.preventDefault()
             currentOpts.panes = 2; setOpts();
             return false;
           })
-          $(corner).append(a);
+          
       }
+        $(corner).append(a);
     });
 
   }
