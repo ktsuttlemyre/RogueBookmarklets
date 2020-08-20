@@ -237,6 +237,12 @@
         mergeView.wrap.style.height = height + "px";
       }
       //window.addEventListener("resize", function(){resize(dv);}, true);
+      $(window).load(function() {
+        setTimeout(function(){
+            // This hides the address bar:
+            window.scrollTo(0, 1);
+        }, 0);
+    });
     </script>
   </body>
 </html>
