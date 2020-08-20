@@ -56,8 +56,18 @@
 </head>
 <body>
   <div class="container-fluid h-100" style="position:relative">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:absolute; width:100%">
-      <a class="navbar-brand" href="#">MergeView</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:absolute; top:0; right:0; width:100%;">
+      <ul>
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle navbar-brand" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">MergeView</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
+            <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
+          </div>
+        </li>
+      </ul>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -72,15 +82,6 @@
           </li>
            <li class="nav-item">
             <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
-          </li>
-          <li class="nav-item dropdown float-right">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Actions</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
-              <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Delete</a>
-            </div>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
