@@ -118,6 +118,29 @@
       allowEditingOriginals:true,
       collapseIdentical: opts.collapseIdentical
     });
+    
+    var codeMirrorDoc=document.querySelectorAll('.CodeMirror-merge')[0]
+    var codeViews=codeMirrorDoc.querySelectorAll('.CodeMirror-merge-pane ')
+    Array.prototype.slice.call(codeViews).forEach(function(item,index){
+      var corner=item.querySelectorAll('.CodeMirror-scrollbar-filler')[0]
+      if(index==1){
+        if(codeViews.length<=2){
+          var a=$('a').attr('href','#').html('<i class="fas fa-plus-circle"></i>').click(function(e){
+            e.preventDefault()
+            currentOpts.panes = 3; setOpts();
+            return false;
+          })
+          $(corner).append(a)
+        }
+      }else if (index==2){
+          var a=$('a').attr('href','#').html('<i class="fas fa-minus-circle"></i>').click(function(e){
+            e.preventDefault()
+            currentOpts.panes = 2; setOpts();
+            return false;
+          })
+          $(corner).append(a)
+      }
+    });
 
   }
 
