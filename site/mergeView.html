@@ -56,10 +56,6 @@
     <div class="float-right w-100">
       <div class="">
         <h2>MergeView</h2>
-
-        <span class=clicky onclick="currentOpts.panes = 2; setOpts()"><i class="fas fa-columns"></i>two-way</span>
-        or <span class=clicky onclick="currentOpts.panes = 3; setOpts()"><i class="fas fa-columns"></i>three-way</span>The left (or center) pane is editable
-
         <span class=clicky onclick="toggleDifferences()"><i class="fas fa-highlighter"></i>Show Diffs</span>
 
         In the two-way configuration, there are also options to pad changed
@@ -122,12 +118,9 @@
     var codeMirrorDoc=document.querySelectorAll('.CodeMirror-merge')[0]
     var codeViews=codeMirrorDoc.querySelectorAll('.CodeMirror-merge-pane')
     Array.prototype.slice.call(codeViews).forEach(function(item,index){
-      debugger
-console.log(item,index)
       var corner=item.querySelectorAll('.CodeMirror-scrollbar-filler')[0]
       if(index==1){
         if(codeViews.length<=2){
-          console.log(corner,'first')
           var a=$('<a/>').attr('href','#').html('<i class="fas fa-plus-circle"></i>').click(function(e){
             e.preventDefault()
             currentOpts.panes = 3; setOpts();
@@ -136,7 +129,6 @@ console.log(item,index)
           $(corner).append(a)
         }
       }else if (index==2){
-        console.log(corner,'second')
           var a=$('<a/>').attr('href','#').html('<i class="fas fa-minus-circle"></i>').click(function(e){
             e.preventDefault()
             currentOpts.panes = 2; setOpts();
