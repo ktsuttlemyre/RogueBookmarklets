@@ -33,7 +33,7 @@
 
     <style>
       .CodeMirror-merge-pane{position:relative}
-      .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):before{
+      .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):before{ /*lock icon*/
         display: inline-block;
         font-style: normal;
         font-variant: normal;
@@ -46,13 +46,13 @@
         background-color: rgba(0,0,0,0.3);
         border-radius: .5em;
         position: absolute;
-        top: .5rem;
-        right: 1.5rem;
+        top: .25rem;
+        left: .125rem;
         z-index: 10;
         padding: .2em .4em;
         pointer-events: none;
       }
-      .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):after{
+      .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):after{ /*blackout locked panel*/
         display: block;
         content: '\00a0';
         color: #fff !important;
@@ -68,7 +68,9 @@
         margin: 0;
         pointer-events: none;
       }
-      
+      .CodeMirror-merge-gap{
+        min-width:32px;
+      }
       html, body{
         margin:0;
         padding:0;
