@@ -33,20 +33,35 @@
 
     <style>
       .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):before{
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free"; font-weight: 900; content: '\f023';
-    color: #fff !important;
-        background-color:rgba(0,0,0,0.3);
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 700;
+        content: '\f023';
+        color: #fff !important;
+        background-color: rgba(0,0,0,0.3);
         border-radius: .5em;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0;
-    
+        position: absolute;
+        top: .5rem;
+        right: 1.5rem;
+        z-index: 10;
+        padding: .2em .4em;
+      }
+      .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):after{
+        display: block;
+        content: '\00a0';
+        color: #fff !important;
+        background-color: black;
+        opacity:.3;
+        position: absolute;
+        top: .0;
+        right: 0;
+        z-index: 200;
+        padding: 0;
+        margin: 0
       }
       
       html, body{
