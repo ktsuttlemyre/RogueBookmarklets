@@ -145,17 +145,20 @@
             <div class="dropdown-menu position-absolute">
               <a class="dropdown-item" href="#"><i class="fas fa-info"></i> About</a>
               <div class="dropdown-divider"></div>
-              <div class="btn-group dropright">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropright
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
-                    <a class="dropdown-item" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :'align'; setOpts()"><span style="font-weight:700">&hArr;</span> Align</a>
-                    <a class="dropdown-item" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
-                  
-                </div>
-              </div>
+
+                        <a class="dropdown-toggle" id="dropdown1-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown1.1</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown1-1" style="top: 5px; left: 157.297px;">
+                          <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
+                          </li>
+                          <li class="nav-item"> <!--https://www.w3schools.com/charsets/ref_utf_arrows.asp-->
+                            <a class="nav-link" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :'align'; setOpts()"><span style="font-weight:700">&hArr;</span> Align</a>
+                          </li>
+                           <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
+                          </li>
+                        </ul>
+        
               <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
               <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
               <div class="dropdown-divider"></div>
