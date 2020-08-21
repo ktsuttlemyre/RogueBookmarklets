@@ -32,6 +32,27 @@
 
 
     <style>
+      /*replace ugly arrows*/
+      .CodeMirror-merge-copy, .CodeMirror-merge-copy-reverse  {
+          visibility: hidden;
+          position: relative;
+      }
+      .CodeMirror-merge-copy:after {
+          font-family: "Font Awesome 5 Free";
+          visibility: visible;
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "\f100";
+      }
+      .CodeMirror-merge-copy-reverse:after {
+          font-family: "Font Awesome 5 Free";
+          visibility: visible;
+          position: absolute;
+          top: 0;
+          left: 0;
+          content: "\f101";
+      }
       .CodeMirror-merge-pane{position:relative}
       .CodeMirror-merge-pane:not(.CodeMirror-merge-editor):before{ /*lock icon*/
         display: inline-block;
