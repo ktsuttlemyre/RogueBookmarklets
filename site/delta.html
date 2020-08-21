@@ -145,6 +145,17 @@
             <div class="dropdown-menu position-absolute">
               <a class="dropdown-item" href="#"><i class="fas fa-info"></i> About</a>
               <div class="dropdown-divider"></div>
+              <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropright
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
+                    <a class="dropdown-item" href="#" onclick="currentOpts.connect = currentOpts.connect ? null :'align'; setOpts()"><span style="font-weight:700">&hArr;</span> Align</a>
+                    <a class="dropdown-item" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
+                  
+                </div>
+              </div>
               <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> Export</a>
               <a class="dropdown-item" href="#" onclick="toggleDifferences()"><i class="fas fa-share-square"></i> Share</a>
               <div class="dropdown-divider"></div>
@@ -153,11 +164,11 @@
             </div>
           </li>
         </ul>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler display-none" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <!--<div class="collapse navbar-collapse" id="navbarTogglerDemo02"></div>-->
           <ul class="navbar-nav mr-auto mt-0">
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="toggleDifferences()"><i class="fas fa-highlighter"></i> Show Diffs</a>
@@ -169,11 +180,11 @@
               <a class="nav-link" href="#" onclick="currentOpts.collapseIdentical = !currentOpts.collapseIdentical; setOpts(currentOpts)"><span style="font-weight:700">&Delta;</span> Collapse</a>
             </li>
           </ul>
-          <form class="form-inline my-0">
+
+           <form class="form-inline my-0">
             <input class="form-control mr-sm-2 disabled" type="search" placeholder="Doesn't work currently">
-            <button class="btn btn-outline-success my-0" type="submit"><i class="fas fa-search" disabled></i></button>
+            <button class="btn btn-outline-success my-0" type="submit" disabled><i class="fas fa-search" ></i></button>
           </form>
-        </div>
       </nav>
 
       <!--<div class="float-right w-100">
