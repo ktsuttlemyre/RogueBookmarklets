@@ -1,5 +1,5 @@
 (function(user,devMode) {
-        // pollyfill for date.now
+     // pollyfill for date.now
     if (!Date.now) {
         Date.now = function now() {
             return new Date().getTime();
@@ -58,7 +58,7 @@
 
     	document.getElementsByTagName('head')[0].appendChild(obj);
         if(callback){
-            obj.onload=callback
+            obj.onload=function(err){var args=Array.prototype.slice.call(arguments);args.unshift(null);callback.apply(callback, args)}
         }
 
 	}
@@ -591,6 +591,7 @@
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
+    input.autocomplete="off";
     input.onkeyup = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
