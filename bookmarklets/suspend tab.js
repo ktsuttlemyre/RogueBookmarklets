@@ -5,8 +5,8 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 	 }
 	
 	
-	function setURL(title,location,image){
-		var str=redirectURL+'#?t='+encodeURIComponent(title)+'&l='+encodeURIComponent(location)+'&i='+encodeURIComponent(image);
+	function setURL(title,location,image,e){
+		var str=redirectURL+'#?t='+encodeURIComponent(title)+'&l='+encodeURIComponent(location)+'&i='+encodeURIComponent(image)+'&e='+encodeURIComponent(e);
 		window.location.href=str;
 	}
 	var options={showPreview:true};
@@ -59,8 +59,12 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				//window.location.href=saved; // it will save locally
 				setURL(document.title,l,tempCanvas.toDataURL("image/png"))
 			}).catch(function(e) {
-				setURL(document.title,l);
 				console.log(e);
+				var obj={}
+				obj.name=e.name;
+				obj.stack=e.stack;
+				obj.message=e.message;
+				setURL(document.title,l,null,JSON.stringify(obj));
 			});
 			return;
 		}
