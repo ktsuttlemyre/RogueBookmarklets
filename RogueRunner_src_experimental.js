@@ -57,7 +57,7 @@
 		}
 
     	document.getElementsByTagName('head')[0].appendChild(obj);
-        if(callback){
+        if(typeof callback == 'function'){
             obj.onload=function(err){
 		    debugger
 		    var args=Array.prototype.slice.call(arguments);
