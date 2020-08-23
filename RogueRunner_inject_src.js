@@ -272,7 +272,7 @@
 	var forceIframe=true;
 	//inject the rogue runner dialog
 	var doc=document.documentElement;
-	skin=(!!skin && (("all" in doc.style) || ("cssall" in doc.style)) )?'_'+skin:'';
+	skin=((("all" in doc.style) || ("cssall" in doc.style)) && !!skin !=false )?'_'+skin:'';
 	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+user+'&cmd='+cmd;
 
 
