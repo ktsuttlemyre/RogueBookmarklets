@@ -47,8 +47,9 @@
 			SuspendTab.unsuspend=function(){
 				window.location.href=q.l;
 			}
-
-			document.title=q.t
+			
+			//set title
+			document.title=q.t+'[Suspended]';
 			
 			var image = new Image();
 			image.src=q.i;
@@ -56,9 +57,15 @@
 			image.onclick=(function(){
 				SuspendTab.unsuspend();
 			})
-			image.style.width="%100"
-			//document.addEventListener("focus", SuspendTab.unsuspend, true);
-			//document.body.onmousemove = SuspendTab.unsuspend;
+			image.style.width="%100";
+			
+			//actions
+			if(q.onfocus){
+				document.addEventListener("focus", SuspendTab.unsuspend, true);
+			}
+			if(q.onmousemove){
+				document.body.onmousemove = SuspendTab.unsuspend;
+			}
 			
 		</script>
 	</body>
