@@ -13,10 +13,11 @@
 
 		<script type="text/javascript">
 			var SuspendTab={};
+			
+			var l=window.location.href;
+			var hashQuery=l.substring(l.indexOf("#?") + 2);		
+			var q=queryString(hashQuery);
 			SuspendTab.unsuspend=function(){
-				var l=window.location.href;
-				var hashQuery=l.substring(l.indexOf("#?") + 2);		
-				var q=queryString(hashQuery);
 				window.location.href=q.l;
 			}
 			//('./bookmarklets/suspend tab.js')
@@ -39,8 +40,12 @@
 				args.unshift("RogueBM[xDLStorageiFrame]: ");
 				console.error.apply(console, args);
 			}
-			document.addEventListener("focus", SuspendTab.unsuspend, true);
-			document.body.onmousemove = SuspendTab.unsuspend;
+			
+			var image = new Image()
+			img.src=q.i
+			document.body.appendChild(img)
+			//document.addEventListener("focus", SuspendTab.unsuspend, true);
+			//document.body.onmousemove = SuspendTab.unsuspend;
 			
 		</script>
 	</body>
