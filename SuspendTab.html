@@ -17,7 +17,7 @@
 				var l=window.location.href;
 				var hashQuery=l.substring(l.indexOf("#?") + 2);		
 				var q=queryString(hashQuery);
-				alert(q.l);
+				window.location.href=q.l;
 			}
 			//('./bookmarklets/suspend tab.js')
 			document.getElementById('SuspendTab').onclick=(function(){
