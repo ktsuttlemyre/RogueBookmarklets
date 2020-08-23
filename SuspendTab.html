@@ -12,15 +12,26 @@
 
 
 		<script type="text/javascript">
-			function ScriptOBJ(src) { //callback might not work
-				var script = document.createElement('script');
-				script.setAttribute('type', 'text/javascript');
-				script.setAttribute('src',src);
-				script.setAttribute('crossorigin', "anonymous");
-				return script
+			var SuspendTab={};
+			SuspendTab.unsuspend=function(){
+				var l=window.location;
+				var hash=l.substring(l.indexOf("/") + 1);
+				var q=queryString(hash);
+				window.location=q.l;
 			}
-			document.getElementById('SuspendTab').onclick=function(){document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('./bookmarklets/suspend tab.js'))}
-
+			//('./bookmarklets/suspend tab.js')
+			document.getElementById('SuspendTab').onclick=(function(){
+				SuspendTab.unsuspend();
+			})
+			
+			//https://johnresig.com/blog/search-and-dont-replace/
+			function queryString(data){
+			    var q = {}, ret = “”;
+			    data.replace(/([^=&]+)=([^&]*)/g, function(m, key, value){
+				q[key] = (q[key] ? q[key] + “,” : “”) + value;
+			    });
+			    return q
+			}
 
 			function showError(message){
 				//statusBar.innerHTML=message
