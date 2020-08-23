@@ -26,11 +26,11 @@
 			
 			//https://johnresig.com/blog/search-and-dont-replace/
 			function queryString(data){
-			    var q = {}, ret = “”;
+			    var q = {}, ret = '';
 			    data.replace(/([^=&]+)=([^&]*)/g, function(m, key, value){
-				q[key] = (q[key] ? q[key] + “,” : “”) + value;
+				q[key] = (q[key] ? q[key] + ',' : '') + value;
 			    });
-			    return q
+			    return q;
 			}
 
 			function showError(message){
