@@ -591,6 +591,7 @@
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
+    input.autocomplete="off";
     input.onkeyup = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
