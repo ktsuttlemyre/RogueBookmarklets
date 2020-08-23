@@ -1,4 +1,8 @@
-(function(){
+window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js','javascript',function(err){
+	 if(err){
+	   console.error(err)
+	   return
+	 }
 	var options={showPreview:true};
 	var storageURL=/^http.?:\/\/(ktsuttlemyre\.github\.io|rogueware\.com)\/RogueBookmarklets\/SuspendTab/g;
 	var l=window.location.href; //'https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab.html';
@@ -51,4 +55,4 @@
 	}else{
 		window['SuspendTab']['unsuspend']();
 	}
-})();
+});
