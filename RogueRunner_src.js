@@ -1,5 +1,5 @@
 (function(user,devMode) {
-        // pollyfill for date.now
+     // pollyfill for date.now
     if (!Date.now) {
         Date.now = function now() {
             return new Date().getTime();
@@ -943,7 +943,8 @@
     var args=getArgs();	
     //in block notation so closure compiler will 'export' the vairable	
     window['RogueBM']['show']=show;	
-    window['RogueBM']['run']=run;	
+    window['RogueBM']['run']=run;
+    window['RogueBM']['loadScript']=inject;
     if(window['RogueBM']['cmd']){	
         window['RogueBM']['run'](window['RogueBM']['cmd']);	
     }else if(args.cmd){	
