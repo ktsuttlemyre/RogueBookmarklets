@@ -28,3 +28,8 @@ Head over to the main page to check it out https://ktsuttlemyre.github.io/RogueB
  - Use a - as a space in file names. Because Google and jQuery said so.
     - https://stackoverflow.com/questions/119312/urls-dash-vs-underscore
     - https://stackoverflow.com/questions/7273316/what-is-the-javascript-filename-naming-convention
+    Must be in self calling closure
+  - Can use Rogue Runner API
+    - Ex: Window.RogueRunner.load()
+  -  Call window.prompt multiple times to get required arguments
+
