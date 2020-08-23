@@ -14,7 +14,15 @@
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
 	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
-	function inject(str,mime,callback){ //callback must be true if external
+	function inject(str,mime,callback){ 
+		/*
+		str = url or embeded code
+		mime = mimetype 
+		callback must be true if external source (aka str is a url
+		 - given the arguments (error,data)
+		
+		mime prefix assumed to be 'text/'
+		*/
 		if(mime.indexOf('text/')==0){
 			mime=mime.substring(5);
 		}
