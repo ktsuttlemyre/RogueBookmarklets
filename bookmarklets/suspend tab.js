@@ -17,6 +17,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 
 	if(!storageURL.test(l)){ //if this isn't the suspend page then suspend this page
 		if(options.showPreview){
+			window['RogueBM'] && window['RogueBM']['hide'] && window['RogueBM']['hide']();
 			//TODO scale image down to "compress"
 			//https://stackoverflow.com/questions/26015497/how-to-resize-then-crop-an-image-with-canvas
 			html2canvas(document.body).then(function(canvas) {
