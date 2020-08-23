@@ -27,11 +27,7 @@
 			SuspendTab.unsuspend=function(){
 				window.location.href=q.l;
 			}
-			//('./bookmarklets/suspend tab.js')
-			document.getElementById('SuspendTab').onclick=(function(){
-				SuspendTab.unsuspend();
-			})
-			
+
 			//https://johnresig.com/blog/search-and-dont-replace/
 			function queryString(data){
 			    var q = {}, ret = '';
@@ -51,6 +47,9 @@
 			var image = new Image();
 			image.src=q.i;
 			document.body.appendChild(image);
+			image.onclick=(function(){
+				SuspendTab.unsuspend();
+			})
 			//document.addEventListener("focus", SuspendTab.unsuspend, true);
 			//document.body.onmousemove = SuspendTab.unsuspend;
 			
