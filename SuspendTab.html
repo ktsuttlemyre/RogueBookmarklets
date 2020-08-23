@@ -5,13 +5,17 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="theme-color" content="#222531">
+		<script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
 	</head>
 
 	<body>
 		<button type="button" id="SuspendTab">Toggle Suspend Tab</button>
 
 
-		<script type="text/javascript">			
+		<script type="text/javascript">
+			html2canvas(document.body).then(function(canvas) {
+			    document.body.appendChild(canvas);
+			  });
 			var SuspendTab={};
 			SuspendTab.unsuspend=function(){
 				var l=window.location.href;
@@ -41,6 +45,7 @@
 			}
 			document.addEventListener("focus", SuspendTab.unsuspend, true);
 			document.body.onmousemove = SuspendTab.unsuspend;
+			
 		</script>
 	</body>
 </html>
