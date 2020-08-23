@@ -17,7 +17,7 @@
 				var l=window.location.href;
 				var hash=l.substring(l.indexOf("/") + 1);
 				var q=queryString(hash);
-				alert(decodeURIComponent(q.l));
+				alert(q.l);
 			}
 			//('./bookmarklets/suspend tab.js')
 			document.getElementById('SuspendTab').onclick=(function(){
@@ -28,7 +28,7 @@
 			function queryString(data){
 			    var q = {}, ret = '';
 			    data.replace(/([^=&]+)=([^&]*)/g, function(m, key, value){
-				q[key] = (q[key] ? q[key] + ',' : '') + value;
+				q[key] = (q[key] ? q[key] + ',' : '') + decodeURIComponent(value);
 			    });
 			    return q;
 			}
