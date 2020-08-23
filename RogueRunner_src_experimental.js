@@ -58,9 +58,12 @@
 
     	document.getElementsByTagName('head')[0].appendChild(obj);
         if(callback){
-            obj.onload=function(err){var args=Array.prototype.slice.call(arguments);args.unshift(null);callback.apply(callback, args)}
-        }
-
+            obj.onload=function(err){
+		    debugger
+		    var args=Array.prototype.slice.call(arguments);
+		    args.unshift(null);
+		    callback.apply(callback, args)}
+        	}
 	}
 
 
