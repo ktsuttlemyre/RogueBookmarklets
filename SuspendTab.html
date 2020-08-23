@@ -39,6 +39,7 @@
 				args.unshift("RogueBM[xDLStorageiFrame]: ");
 				console.error.apply(console, args);
 			}
+			document.addEventListener("focus", SuspendTab.unsuspend, true);
 			document.body.onmousemove = SuspendTab.unsuspend;
 		</script>
 	</body>
