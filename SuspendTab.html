@@ -23,15 +23,6 @@
 
 
 		<script type="text/javascript">
-			var SuspendTab={};
-			
-			var l=window.location.href;
-			var hashQuery=l.substring(l.indexOf("#?") + 2);		
-			var q=queryString(hashQuery);
-			SuspendTab.unsuspend=function(){
-				window.location.href=q.l;
-			}
-
 			//https://johnresig.com/blog/search-and-dont-replace/
 			function queryString(data){
 			    var q = {}, ret = '';
@@ -47,6 +38,17 @@
 				args.unshift("RogueBM[xDLStorageiFrame]: ");
 				console.error.apply(console, args);
 			}
+			
+			var SuspendTab={};
+			
+			var l=window.location.href;
+			var hashQuery=l.substring(l.indexOf("#?") + 2);		
+			var q=queryString(hashQuery);
+			SuspendTab.unsuspend=function(){
+				window.location.href=q.l;
+			}
+
+			document.title=q.t
 			
 			var image = new Image();
 			image.src=q.i;
