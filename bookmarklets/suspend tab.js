@@ -27,9 +27,9 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 			window['RogueBM'] && window['RogueBM']['hide'] && window['RogueBM']['hide']();
 			//TODO scale image down to "compress"
 			//https://stackoverflow.com/questions/26015497/how-to-resize-then-crop-an-image-with-canvas
-			html2canvas(document.body,ignoreElements: function (node) {
+			html2canvas(document.body,{ignoreElements: function (node) {
 				return node.nodeName === 'IFRAME';
-			    }).then(function(canvas) {
+			    }}).then(function(canvas) {
 				//document.body.appendChild(canvas);
 				//crop html2canvas
 				//https://stackoverflow.com/questions/13073647/crop-canvas-export-html5-canvas-with-certain-width-and-height
