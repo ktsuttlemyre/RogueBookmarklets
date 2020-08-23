@@ -14,7 +14,7 @@
 		<script type="text/javascript">			
 			var SuspendTab={};
 			SuspendTab.unsuspend=function(){
-				var l=window.location;
+				var l=window.location.href;
 				var hash=l.substring(l.indexOf("/") + 1);
 				var q=queryString(hash);
 				window.location=q.l;
