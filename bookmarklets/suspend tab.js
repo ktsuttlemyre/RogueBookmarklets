@@ -1,7 +1,8 @@
-var storageURL="https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab.html#"
-
-if(window.location.href.indexOf(storageURL) == 0){
+var storageURL=/^http.?:\/\/(ktsuttlemyre\.github\.io|rogueware\.com)\/RogueBookmarklets\/SuspendTab/g;
+var l=window.location; //'https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab.html';
+var redirectURL='https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab';
+if(storageURL.test(l)){
 	window['SuspendTab']['unsuspend']();
 }else{
-	window.location=storageURL+'#?l='+window.location
+	window.location=redirectURL+'#?l='+encodeURIComponent(window.location);
 }
