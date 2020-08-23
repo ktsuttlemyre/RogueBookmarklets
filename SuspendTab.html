@@ -55,6 +55,10 @@
 			var l=window.location.href;
 			var hashQuery=l.substring(l.indexOf("#?") + 2);		
 			var q=queryString(hashQuery);
+			if(q.e){
+				console.warn("There was an error on the suspended page")
+				console.error(q.e)
+			}
 			SuspendTab.unsuspend=function(){
 				window.location.href=q.l;
 			}
@@ -94,6 +98,7 @@
 			if(q.onmousemove){
 				document.body.onmousemove = SuspendTab.unsuspend;
 			}
+			
 			
 		</script>
 	</body>
