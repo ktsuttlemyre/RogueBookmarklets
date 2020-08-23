@@ -17,7 +17,7 @@
 				var l=window.location.href;
 				var hash=l.substring(l.indexOf("/") + 1);
 				var q=queryString(hash);
-				window.location.href=q.l;
+				alert(q.l);
 			}
 			//('./bookmarklets/suspend tab.js')
 			document.getElementById('SuspendTab').onclick=(function(){
@@ -39,7 +39,7 @@
 				args.unshift("RogueBM[xDLStorageiFrame]: ");
 				console.error.apply(console, args);
 			}
-			document.body.onmousemove = SuspendTab.unsuspend
+			//document.body.onmousemove = SuspendTab.unsuspend
 		</script>
 	</body>
 </html>
