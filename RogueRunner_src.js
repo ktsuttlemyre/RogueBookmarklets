@@ -57,8 +57,12 @@
 		}
 
     	document.getElementsByTagName('head')[0].appendChild(obj);
-        if(callback){
-            obj.onload=function(err){var args=Array.prototype.slice.call(arguments);args.unshift(null);callback.apply(callback, args)}
+        if(typeof callback == 'function'){
+            obj.onload=function(err){
+		    var args=Array.prototype.slice.call(arguments);
+		    args.unshift(null);
+		    callback.apply(callback, args)
+	    }
         }
 
 	}
