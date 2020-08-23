@@ -3,6 +3,12 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 	   console.error(err)
 	   return
 	 }
+	
+	
+	function setURL(title,location,image){
+		var str=redirectURL+'#?t='+encodeURIComponent(title)+'&l='+encodeURIComponent(location)+'&i='+encodeURIComponent(image);
+		window.location.href=str;
+	}
 	var options={showPreview:true};
 	var storageURL=/^http.?:\/\/(ktsuttlemyre\.github\.io|rogueware\.com)\/RogueBookmarklets\/SuspendTab/g;
 	var l=window.location.href; //'https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab.html';
@@ -17,10 +23,13 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 
 	if(!storageURL.test(l)){ //if this isn't the suspend page then suspend this page
 		if(options.showPreview){
+			//hide RogueBM if it exists
 			window['RogueBM'] && window['RogueBM']['hide'] && window['RogueBM']['hide']();
 			//TODO scale image down to "compress"
 			//https://stackoverflow.com/questions/26015497/how-to-resize-then-crop-an-image-with-canvas
-			html2canvas(document.body).then(function(canvas) {
+			html2canvas(document.body,ignoreElements: function (node) {
+				return node.nodeName === 'IFRAME';
+			    }).then(function(canvas) {
 				//document.body.appendChild(canvas);
 				//crop html2canvas
 				//https://stackoverflow.com/questions/13073647/crop-canvas-export-html5-canvas-with-certain-width-and-height
@@ -48,11 +57,14 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				//https://stackoverflow.com/questions/10673122/how-to-save-canvas-as-an-image-with-canvas-todataurl
 				//var saved = tempCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 				//window.location.href=saved; // it will save locally
-				window.location.href=redirectURL+'#?t='+encodeURIComponent(document.title)+'&l='+encodeURIComponent(l)+'&i='+encodeURIComponent(tempCanvas.toDataURL("image/png"));
+				setURL(document.title,l,tempCanvas.toDataURL("image/png"))
+			}).catch(function(e) {
+				setURL(document.title,l);
+				console.log(e);
 			});
 			return;
 		}
-		window.location.href=redirectURL+'#?l='+encodeURIComponent(l);
+		setURL(document.title,l);
 	}else{
 		window['SuspendTab']['unsuspend']();
 	}
