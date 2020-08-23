@@ -945,7 +945,8 @@
     }	
     var args=getArgs();	
     //in block notation so closure compiler will 'export' the vairable	
-    window['RogueBM']['show']=show;	
+    window['RogueBM']['show']=show;
+    window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
     window['RogueBM']['loadScript']=inject;
     if(window['RogueBM']['cmd']){	
