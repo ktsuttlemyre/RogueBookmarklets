@@ -6,6 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="theme-color" content="#222531">
 		<style>
+		html, body{
+			margins:0;
+			padding:0;
+		}
 		.center {
 		  display: block;
 		  margin-left: auto;
@@ -50,6 +54,7 @@
 			image.onclick=(function(){
 				SuspendTab.unsuspend();
 			})
+			image.style.width="%100"
 			//document.addEventListener("focus", SuspendTab.unsuspend, true);
 			//document.body.onmousemove = SuspendTab.unsuspend;
 			
