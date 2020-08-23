@@ -47,7 +47,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				//https://stackoverflow.com/questions/10673122/how-to-save-canvas-as-an-image-with-canvas-todataurl
 				//var saved = tempCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 				//window.location.href=saved; // it will save locally
-				window.location.href=redirectURL+'#?t='document.title+'&l='+encodeURIComponent(l)+'&i='+tempCanvas.toDataURL("image/png");
+				window.location.href=redirectURL+'#?t='+encodeURIComponent(document.title)+'&l='+encodeURIComponent(l)+'&i='+encodeURIComponent(tempCanvas.toDataURL("image/png"));
 			});
 			return;
 		}
