@@ -15,7 +15,7 @@
 			var SuspendTab={};
 			SuspendTab.unsuspend=function(){
 				var l=window.location.href;
-				var hash=l.substring(l.indexOf("/") + 1);
+				var hash=l.substring(l.indexOf("#") + 1);
 				var q=queryString(hash);
 				alert(q.l);
 			}
