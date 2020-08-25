@@ -98,7 +98,14 @@ var closureCompiler=(function(){
 			opts['formatting']='pretty_print';
 		}
 
-		callback=callback||function(e,obj){console.log(obj.compiled())}
+		callback=callback||function(e,obj){
+			if(e){
+				return console.error(e);
+			}
+			console.log(obj.compiled())
+			console.log('Response obj can be found on closureCompiler.lastResponse for DEBUG PURPOSES ONLY!');
+			closureCompiler.lastResponse=obj;
+		}
 		var cachedResponse=cache && cache[JSON.stringify(opts)]
 		if(cachedResponse){
 			setTimeout(function(){
