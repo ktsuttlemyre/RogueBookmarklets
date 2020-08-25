@@ -59,6 +59,7 @@ var closureCompiler=(function(){
 	};
 
 	function closureCompiler(code,opts,callback){
+		opts=opts||{};
 		//clear cache if needed
 		if(code=='cache_clear'){
 			cache={};
