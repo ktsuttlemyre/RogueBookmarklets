@@ -114,7 +114,7 @@ var closureCompiler=(function(){
 		    dataType:'text', 
 		    success: function (compiled){
 		    	var obj=new Compiled(compiled);
-		    	cache && cache[JSON.stringify(opts)]=obj;
+		    	cache && (cache[JSON.stringify(opts)]=obj);
 		    	callback(null,obj);
 		    },
 		    error: function(jqXHR,textStatus,errorThrown ){
