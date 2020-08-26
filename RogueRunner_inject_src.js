@@ -255,15 +255,20 @@
 	}
 
 
-	function injectScript(src,token){
+	function injectScript(src,forceIframe,token){
 		/*low level injection script. 
 		Use RogueBookmarklet.loadScript for more reliable script loading
 		*/
-		if(sessionID!=token){
-			console.error('sessionID either not correct or not provided. Will not load this url',src)
+		if(token != sessionID){
+			console.error('RogueRunner[injector]: sessionID either not correct or not provided. Will not load this url',src)
 			return 1
 		}
-		appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
+		if(forceIframe){
+			// use this to test script injection failures to load
+			setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
+		}else{
+			appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
+		}
 		return 0
 	}
 
@@ -280,11 +285,7 @@
 	window['RogueBM']['getSessionID']=function(){prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID)}
 	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}}
 	
-	if(forceIframe){
-		// use this to test script injection failures to load
-		setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
-	}else{
-		injectScript(src,forceIframe,sessionID);
-	}
+	injectScript(src,forceIframe,sessionID);
+	
 	loadCrossOriginLocalStorage();
 })('0.0.1',window,'anonymous','experimental');
