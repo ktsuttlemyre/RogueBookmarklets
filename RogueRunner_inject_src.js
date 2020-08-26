@@ -269,7 +269,7 @@
 
 	//a bit of security 
 	var sessionID=UUID();
-	var forceIframe=true;
+	var forceIframe=false;
 	//inject the rogue runner dialog
 	var doc=document.documentElement;
 	skin=( (("all" in doc.style) || ("cssall" in doc.style)) && (!!skin != false) )?'_'+skin:'';
