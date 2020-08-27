@@ -257,7 +257,7 @@
 
 	function injectScript(src,token,forceIframe){
 		if(forceIframe == null){
-			forceIframe=options.forceIframeInjecting;
+			forceIframe=options['forceIframeInjecting'];
 		}
 		/*low level injection script. 
 		Use RogueBookmarklet.loadScript for more reliable script loading
@@ -279,9 +279,9 @@
 	var sessionID=UUID();
 	//inject the rogue runner dialog
 	var doc=document.documentElement;
-	var skin=options.skin;
+	var skin=options['skin'];
 	skin=( (("all" in doc.style) || ("cssall" in doc.style)) && (!!skin != false) )?'_'+skin:'';
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options.user+'&cmd='+cmd;
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user']+'&cmd='+cmd;
 
 
 	window['RogueBM']['injectScript']=injectScript //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
