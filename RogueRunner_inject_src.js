@@ -13,7 +13,7 @@
 */
 
 
-(function (vers,self,user,skin,cmd) {
+(function (vers,self,options,cmd) {
 	function UUID(){
 		return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
 	}
@@ -242,20 +242,23 @@
 
 		// set the RogueBM object
 	self['RogueBM']=self['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
-	self['RogueBM'].cmd=cmd;
+	self['RogueBM'].lastCMD=function(){return cmd};
 	if(window['RogueBM']['show']){
 		//if crossorignlocal storage not loaded then load it
     if(!self['RogueBM']['CrossOriginLocalStorage']){
       loadCrossOriginLocalStorage();
     }
-    if(!cmd){
+    if(!cmd){ //if we have a command then don't show the interface just do the command
       window['RogueBM']['show']();
     }
 
 	}
 
 
-	function injectScript(src,forceIframe,token){
+	function injectScript(src,token,forceIframe){
+		if(forceIframe == null){
+			forceIframe=options.forceIframeInjecting;
+		}
 		/*low level injection script. 
 		Use RogueBookmarklet.loadScript for more reliable script loading
 		*/
@@ -274,18 +277,18 @@
 
 	//a bit of security 
 	var sessionID=UUID();
-	var forceIframe=false;
 	//inject the rogue runner dialog
 	var doc=document.documentElement;
+	var skin=options.skin;
 	skin=( (("all" in doc.style) || ("cssall" in doc.style)) && (!!skin != false) )?'_'+skin:'';
-	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+user+'&cmd='+cmd;
+	var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options.user+'&cmd='+cmd;
 
 
 	window['RogueBM']['injectScript']=injectScript //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
 	window['RogueBM']['getSessionID']=function(){prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID)}
 	window['RogueBM']['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}}
 	
-	injectScript(src,forceIframe,sessionID);
+	injectScript(src,sessionID);
 	
 	loadCrossOriginLocalStorage();
-})('0.0.1',window,'anonymous','experimental');
+})('0.0.1',window,{user:'anonymous',skin:'experimental',forceIframeInjecting:false} /*,cmd*/);
