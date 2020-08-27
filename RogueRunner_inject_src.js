@@ -291,4 +291,4 @@
 	injectScript(src,sessionID);
 	
 	loadCrossOriginLocalStorage();
-})('0.0.1',window,{user:'anonymous',skin:'experimental',forceIframeInjecting:false} /*,cmd*/);
+})('0.0.1',window,{'user':'anonymous','skin':'experimental','forceIframeInjecting':false} /*,cmd*/);
