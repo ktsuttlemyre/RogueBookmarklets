@@ -79,7 +79,12 @@
     // start the index download asap
     var keys = [] //init when scripts are loaded
     var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
-    inject(sourceIndex,'javascript',function(err){if(err){loadFromIframe(sourceIndex,err)}});
+    inject(sourceIndex,'javascript',function(err){
+        if(err){
+            showError('Error injecting '+url,err);
+            loadFromIframe(sourceIndex);
+        }
+    });
     function scriptIndexReady(){
 		if (!window.RogueBM.scripts) {	
             return setTimeout(scriptIndexReady, 0);	
@@ -125,7 +130,7 @@
         var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html',"RogueRunner",500,200,1);
 
         if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
-            alert('RogueRunner popup blocked')
+            alert('RogueRunner external window popup blocked')
         }
         
         /*
@@ -150,11 +155,11 @@
     }
     //setTimeout(function(){loadInExternalWindow()},5000)
 
-    function loadFromIframe(url,err){
+    function loadFromIframe(url){
         //start the injection
         var xDLStorage=self['RogueBM']['xDLStorage']
         if(!xDLStorage){
-            showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either', err);
+            showError("xDLStorage isn't loaded and can't fetch "+ url);
             loadInExternalWindow();
         }
 
@@ -163,12 +168,6 @@
             inject(payload.data,'javascript');
         })
     }
-
-
-
-	
-
-
 
 
     function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
@@ -887,9 +886,9 @@
         //potential api to send arguments to roguebookmarks
         RogueBM.key=key
         RogueBM.arguments=[]
-        if(script.src){
+        if(script.src){ //if we get a script obj use the src attribute
             inject(script.src,'javascript',true)
-        }else{
+        }else{ //if it is a string assume its code
             inject(script,'javascript')
         }
     }
