@@ -4,6 +4,7 @@
   <style>
     html, body, #player { margin:0; padding:0; width:100%; height:100%; }
   </style>
+  <script src='https://gitcdn.link/repo/bevacqua/local-storage/master/dist/local-storage.js'></script>
 </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -66,61 +67,17 @@
         player.stopVideo();
       }
 
-      function queue(id){
-      var validateID=/^[A-Za-z0-9_-]{11}$/
-      //player.cueVideoById(videoId:String,
-      //              startSeconds:Number):Void
+      function queue(videoId){
+        var validateID=/^[A-Za-z0-9_-]{11}$/
+        player.cueVideoById(videoId);
       }
 
-      //https://coderwall.com/p/bmzw8g/cross-tab-communication-using-localstorage
-      var crosstab= function(require) {
-          var Events = require('durandal/events');
 
-          var crosstab = {}
-          Events.includeIn(crosstab);
-
-          var key = "crossTabRelay";
-
-          // listen to storage events
-          window.addEventListener('storage', function(e) {
-              if(e.key == key) {
-                  var relay = JSON.parse(e.newValue);
-                  crosstab.trigger("relay", relay.message);
-              }
-          });
-
-          // send a message to all open tabs; including this tab
-          crosstab.relay = function(message) {
-              // wrap the message in a relay object
-              var relay = {
-                  message: message,
-                  timestamp: Date.now()
-              }
-
-              try {
-                  localStorage[key] = JSON.stringify(relay);
-              } catch(e) {
-                  console.error("Tried to cross-tab relay non-json-able message:", message);
-                  throw e;
-              }
-
-              // fire the event locally
-              crosstab.trigger("relay", message);
-          }
-
-          crosstab.listen = function(callback) {
-              return crosstab.on("relay").then(callback);
-          }
-
-          return crosstab;
-      };
-
-      crosstab.listen(function(message) {
-          console.log("Received cross-tab message:", message);
-          queue(message)
+      //https://github.com/bevacqua/local-storage
+      //message across local storage
+      ls.on('YoutubePlayer', function(value, old, url){
+        queue(value)
       })
-
-
 
 
     </script>
