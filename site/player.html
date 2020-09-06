@@ -70,6 +70,7 @@
 
       function queue(videoId){
         //var validateID=/^[A-Za-z0-9_-]{11}$/
+        console.log('queing',videoId)
         player.cueVideoById(videoId);
       }
 
@@ -81,6 +82,7 @@
 
     function updateLogon (event) {
       if (event.key === 'youtubePlayer') {
+        console.log('got message',event)
         queue(JSON.parse(event.newValue).videoId);
       }
     }
