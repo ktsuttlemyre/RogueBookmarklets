@@ -76,7 +76,7 @@
            }
         }else if(event.data==-1 && lastState==3){ //video is ready. lets autoplay (start point)
           console.log('playing')
-          autoplayInterval=setInterval(function(){player.playVideo()},1000)
+          autoplayInterval=setInterval(function(){window.focus();player.playVideo();},1000)
         }
         lastState=event.data
       }
