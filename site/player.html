@@ -73,7 +73,7 @@
            }
         }else if(event.data==-1 && lastState==3){ //video is ready. lets autoplay (start point)
           console.log('playing')
-          setTimeout(function(){player.playVideo()},1)
+          setTimeout(function(){player.playVideo()},10000)
         }
         lastState=event.data
       }
