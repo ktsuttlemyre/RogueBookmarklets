@@ -165,7 +165,7 @@
     window.addEventListener("beforeunload", function(e){
       disableLSPipeHandler=true
       localStorage.removeItem('youtubePlayer:status')
-      localStorage.setItem('youtubePlayer:pipe', JSON.stringify({refreshStatus:true,state:statetimestamp:new Date().getTime(),origin:window.location.href}));
+      localStorage.setItem('youtubePlayer:pipe', JSON.stringify({refreshStatus:true,state:state,timestamp:new Date().getTime(),origin:window.location.href}));
     }, false);
 
     </script>
