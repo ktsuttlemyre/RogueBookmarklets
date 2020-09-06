@@ -62,8 +62,13 @@
       var autoAdvance=true
       var lastState=null
       var done = false;
+      var autoplayInterval;
       function onPlayerStateChange(event) {
         console.info('player state=',event)
+        if(event.data==YT.PlayerState.PLAYING){
+          console.log('clearing interval')
+          clearInterval(autoplayInterval)
+        }
         if(event.data==YT.PlayerState.ENDED){
            player.cueVideoById(queue.pop());
            if(autoAdvance){
@@ -71,7 +76,7 @@
            }
         }else if(event.data==-1 && lastState==3){ //video is ready. lets autoplay (start point)
           console.log('playing')
-          setTimeout(function(){player.playVideo()},1)
+          autoplayInterval=setInterval(function(){player.playVideo()},1000)
         }
         lastState=event.data
       }
