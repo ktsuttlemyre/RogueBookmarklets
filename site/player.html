@@ -76,7 +76,6 @@
 
       
       function onPlayerStateChange(event) {
-
         console.info('player state=',event)
         if(event.data==YT.PlayerState.PLAYING){
           console.log('clearing interval')
@@ -84,6 +83,8 @@
           clearInterval(autoplayInterval)
         }
         if(event.data==YT.PlayerState.ENDED){
+            var isActive=JSON.parse(localStorage.getItem('youtubePlayer:status'))
+            // TODO proper handoff off instance
             if(state.isPlaylistMode){
               return
             }
