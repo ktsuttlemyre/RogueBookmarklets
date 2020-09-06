@@ -4,7 +4,6 @@
   <style>
     html, body, #player { margin:0; padding:0; width:100%; height:100%; }
   </style>
-  <script src='https://gitcdn.link/repo/bevacqua/local-storage/master/dist/local-storage.js'></script>
 </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -69,17 +68,21 @@
       }
 
       function queue(videoId){
-        var validateID=/^[A-Za-z0-9_-]{11}$/
+        //var validateID=/^[A-Za-z0-9_-]{11}$/
         player.cueVideoById(videoId);
       }
 
 
-      //https://github.com/bevacqua/local-storage
-      //message across local storage
-      ls.on('YoutubePlayer', function(value, old, url){
-        queue(value)
-      })
+    //use local storage to send message
+    //Example:
+    // localStorage.setItem('youtubePlayer', JSON.stringify({videoId:'DJ5SnYg7tFI',timestamp:new Date().getTime(),origin:window.location.href}));
+    window.addEventListener('storage', updateLogon);
 
+    function updateLogon (event) {
+      if (event.key === 'youtubePlayer') {
+        queue(JSON.parse(event.newValue).videoId);
+      }
+    }
 
     </script>
   </body>
