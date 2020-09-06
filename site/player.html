@@ -61,12 +61,16 @@
       }
 
       var queue=[]
+      var autoAdvance=true
       var lastState=null
       var done = false;
       function onPlayerStateChange(event) {
         lastState=event.data
         if(event.data==YT.PlayerState.ENDED){
            player.cueVideoById(queue.pop());
+           if(autoAdvance){
+            player.playVideo()
+           }
         }
       }
 
@@ -75,10 +79,9 @@
         console.log('queing',videoId)
         queue.push(videoId);
 
-        if(lastState==YT.PlayerState.ENDED){
-          player.playVideo()
-        }
       }
+
+
 
 
     //use local storage to send message
