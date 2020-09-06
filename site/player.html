@@ -18,7 +18,19 @@
 
       // 2. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
+      //https://stackoverflow.com/questions/8869372/how-do-i-automatically-play-a-youtube-video-iframe-api-muted
       var player;
+      var videoId='oHg5SJYRHA0';
+      var hash=window.location.hash;
+      if(hash){
+        if(hash.indexOf('=')<0){
+          videoId=hash.substring(1);
+        }else{
+          alert('page does not support hashtag arguments yet')
+        }
+      }
+      //TODO get playlist
+      //https://stackoverflow.com/questions/30653208/retrieve-video-ids-contained-in-a-playlist-youtube-api-v3
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: '100%',
@@ -31,7 +43,7 @@
                     autohide: 1,
                     modestbranding: 1,
                     vq: 'hd1080'},
-          videoId: window.location.hash||'oHg5SJYRHA0',
+          videoId: videoId,
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
