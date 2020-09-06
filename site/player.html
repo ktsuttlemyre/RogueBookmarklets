@@ -45,10 +45,19 @@
                     vq: 'hd1080'},
           videoId: videoId,
           events: {
-            'onReady': function(){player.setVolume(100)},
+            'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
+      }
+
+            // 3. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+        //player.mute();
+        player.setVolume(100)
+        //player.playVideo()
+        //setTimeout(function(){event.target.playVideo();player.playVideo();},1000)
       }
 
       var queue=[]
