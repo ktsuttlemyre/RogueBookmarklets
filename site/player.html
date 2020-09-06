@@ -65,6 +65,7 @@
       var lastState=null
       var done = false;
       function onPlayerStateChange(event) {
+        console.info('player state=',event)
         lastState=event.data
         if(event.data==YT.PlayerState.ENDED){
            player.cueVideoById(queue.pop());
@@ -78,7 +79,6 @@
         //var validateID=/^[A-Za-z0-9_-]{11}$/
         console.log('queing',videoId)
         queue.push(videoId);
-
       }
 
 
