@@ -44,7 +44,7 @@
           videoId: videoId,
           events: {
             'onReady': onPlayerReady
-           // 'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange
           }
         });
       }
@@ -58,11 +58,13 @@
         //setTimeout(function(){event.target.playVideo();player.playVideo();},1000)
       }
 
-      var queue=[]
+      var queue=[] //local controlled queue
       var autoAdvance=true
       var lastState=null
+      var isPlaylistMode=false //if there is a playlist or search in the native youtube queue then let it go
       var done = false;
       var autoplayInterval;
+      var init=false
       function onPlayerStateChange(event) {
         console.info('player state=',event)
         if(event.data==YT.PlayerState.PLAYING){
@@ -70,12 +72,16 @@
           clearInterval(autoplayInterval)
         }
         if(event.data==YT.PlayerState.ENDED){
+            if(isPlaylistMode){
+              return
+            }
            player.cueVideoById(queue.pop());
            if(autoAdvance){
             window.focus()
             player.playVideo()
            }
-        }else if(event.data==-1 && lastState==3){ //video is ready. lets autoplay (start point)
+        }else if(event.data==-1 && lastState==3 && !init){ //video is ready. lets autoplay (start point)
+          init=true
           console.log('playing')
           window.focus()
           player.playVideo()
@@ -86,8 +92,20 @@
 
       function addToQueue(videoId){
         //var validateID=/^[A-Za-z0-9_-]{11}$/
+        isPlaylistMode=false
         console.log('queing',videoId)
         queue.push(videoId);
+      }
+
+      function addSearch(search){
+        isPlaylistMode=true
+        player.loadPlaylist({list:search,
+                     listType:'search'})
+      }
+      function addPlaylist(playlist){
+        isPlaylistMode=true
+        player.loadPlaylist({list:playlist,
+                     listType:'playlist'})
       }
 
 
@@ -101,7 +119,16 @@
     function updateLogon (event) {
       if (event.key === 'youtubePlayer') {
         console.log('got message',event)
-        addToQueue(JSON.parse(event.newValue).videoId);
+        var data=JSON.parse(event.newValue);
+        if(data.videoId){
+          addToQueue(data.videoId);
+        }
+        if(data.search){
+          addSearch(data.search)
+        }
+        if(data.playlist){
+          addPlaylist(data.playlist)
+        }
       }
     }
 
