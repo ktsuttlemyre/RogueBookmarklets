@@ -71,6 +71,58 @@
       //player.cueVideoById(videoId:String,
       //              startSeconds:Number):Void
       }
+
+      //https://coderwall.com/p/bmzw8g/cross-tab-communication-using-localstorage
+      var crosstab= function(require) {
+          var Events = require('durandal/events');
+
+          var crosstab = {}
+          Events.includeIn(crosstab);
+
+          var key = "crossTabRelay";
+
+          // listen to storage events
+          window.addEventListener('storage', function(e) {
+              if(e.key == key) {
+                  var relay = JSON.parse(e.newValue);
+                  crosstab.trigger("relay", relay.message);
+              }
+          });
+
+          // send a message to all open tabs; including this tab
+          crosstab.relay = function(message) {
+              // wrap the message in a relay object
+              var relay = {
+                  message: message,
+                  timestamp: Date.now()
+              }
+
+              try {
+                  localStorage[key] = JSON.stringify(relay);
+              } catch(e) {
+                  console.error("Tried to cross-tab relay non-json-able message:", message);
+                  throw e;
+              }
+
+              // fire the event locally
+              crosstab.trigger("relay", message);
+          }
+
+          crosstab.listen = function(callback) {
+              return crosstab.on("relay").then(callback);
+          }
+
+          return crosstab;
+      };
+
+      crosstab.listen(function(message) {
+          console.log("Received cross-tab message:", message);
+          queue(message)
+      })
+
+
+
+
     </script>
   </body>
 </html>
