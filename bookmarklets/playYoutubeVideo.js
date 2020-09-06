@@ -8,7 +8,7 @@
  */
  
  var videoId=prompt('What youtube video id would you like to play?','')
- if(localStorage.getItem('youtubePlayer:status'){
+ if(localStorage.getItem('youtubePlayer:status')){
     localStorage.setItem('youtubePlayer', JSON.stringify({videoId:videoId,timestamp:new Date().getTime(),origin:window.location.href}));
  }else{
       var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300)
