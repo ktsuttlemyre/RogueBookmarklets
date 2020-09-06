@@ -35,7 +35,7 @@
           width: '100%',
           playerVars: {
                     autoplay: 0,
-                    loop: 1,
+                    loop: 0,
                     controls: 1,
                     showinfo: 0,
                     autohide: 1,
@@ -43,8 +43,8 @@
                     vq: 'hd1080'},
           videoId: videoId,
           events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onReady': onPlayerReady
+           // 'onStateChange': onPlayerStateChange
           }
         });
       }
@@ -72,10 +72,12 @@
         if(event.data==YT.PlayerState.ENDED){
            player.cueVideoById(queue.pop());
            if(autoAdvance){
+            window.focus()
             player.playVideo()
            }
         }else if(event.data==-1 && lastState==3){ //video is ready. lets autoplay (start point)
           console.log('playing')
+          window.focus()
           player.playVideo()
           autoplayInterval=setInterval(function(){window.focus();player.playVideo();},1000)
         }
