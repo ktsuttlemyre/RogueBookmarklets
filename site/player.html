@@ -36,7 +36,7 @@
           height: '100%',
           width: '100%',
           playerVars: {
-                    autoplay: 1,
+                    autoplay: 0,
                     loop: 1,
                     controls: 1,
                     showinfo: 0,
@@ -60,30 +60,36 @@
         //setTimeout(function(){event.target.playVideo();player.playVideo();},1000)
       }
 
+      var queue=[]
+      var lastState=null
       var done = false;
       function onPlayerStateChange(event) {
-        
-      }
-      function stopVideo() {
-        player.stopVideo();
+        lastState=event.data
+        if(event.data==YT.PlayerState.ENDED){
+           player.cueVideoById(queue.pop());
+        }
       }
 
-      function queue(videoId){
+      function addToQueue(videoId){
         //var validateID=/^[A-Za-z0-9_-]{11}$/
         console.log('queing',videoId)
-        player.cueVideoById(videoId);
+        queue.push(videoId);
+
+        if(lastState==YT.PlayerState.ENDED){
+          player.playVideo()
+        }
       }
 
 
     //use local storage to send message
     //Example:
-    // localStorage.setItem('youtubePlayer', JSON.stringify({videoId:'DJ5SnYg7tFI',timestamp:new Date().getTime(),origin:window.location.href}));
+    // localStorage.setItem('youtubePlayer', JSON.stringify({videoId:'kF4AWqUxRrg',timestamp:new Date().getTime(),origin:window.location.href}));
     window.addEventListener('storage', updateLogon);
 
     function updateLogon (event) {
       if (event.key === 'youtubePlayer') {
         console.log('got message',event)
-        queue(JSON.parse(event.newValue).videoId);
+        addToQueue(JSON.parse(event.newValue).videoId);
       }
     }
 
