@@ -81,7 +81,8 @@
       return !s && n && n.addEventListener(i, t = function() {
         n.removeEventListener(i, t);
         s = 1;
-        while (t = e.shift()){
+        t = e.shift();
+        while (t){
           t();
         }
       }),
