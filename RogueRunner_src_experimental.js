@@ -127,7 +127,7 @@
     }
 
     function loadInExternalWindow(){
-        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/LocalStorage.html',"RogueRunner",500,200,1);
+        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html',"RogueRunner",500,200,1);
 
         if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
             alert('RogueRunner external window popup blocked')
