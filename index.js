@@ -30,6 +30,7 @@ window.RogueBM.scripts={
           "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
           "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
           "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
+          "primarySrc":"jsdelivr",
           "index":{% increment bookmarklets %}
         },
       {% endif %}
@@ -224,5 +225,20 @@ window.RogueBM.scripts={
 
     }
 
+RogueBM.scriptCDNs={
+  "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{path}",
+  "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
+  "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
+  "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}",
 
+}
+
+//encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
+RogueBM.stringFormat=function(format, args1, args2){
+    return format.replace(/{(\w+)}/g, function(match, word) {
+      var sub = args1[word];
+
+      return sub != null? sub: match;//( args2[word] != null? args2[word]: match );
+    });
+};
 
