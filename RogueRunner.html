@@ -15,6 +15,7 @@
 
 
 		<script type="text/javascript">
+			console.log('RogueBM[xDLStorageiFrame]: initializing')
 			//This is for roguerunner injection if you want to do that? Might remove in the future
 			function ScriptOBJ(src) { //callback might not work
 				var script = document.createElement('script');
@@ -138,6 +139,7 @@
 				window.attachEvent('onmessage', _listener);
 			}
 			post({ready:true},'*');
+			console.log('RogueBM[xDLStorageiFrame]: loaded')
 		</script>
 	</body>
 </html>
