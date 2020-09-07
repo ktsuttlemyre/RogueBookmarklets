@@ -163,8 +163,8 @@
             loadInExternalWindow();
         }
 
-       xDLStorage.getScript(url,function(payload){
-            payload.error && showError("Error loading script from xDLStorage", payload.error);
+       xDLStorage.getScript(url,function(err,payload){
+            err && showError("Error loading script from xDLStorage", err);
             inject(payload.data,'javascript');
         })
     }
