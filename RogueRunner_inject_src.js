@@ -288,8 +288,10 @@
     };
     RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}};
 
-    injectScript(src,sessionID);
     
+    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+options['user'],sessionID)
+    injectScript(src,sessionID);
+   
     loadCrossOriginLocalStorage();
 
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
