@@ -665,7 +665,12 @@
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
         //make sure to show it and run any patching of the environment
-        show();
+	var lastCMD=RogueBM.lastCMD();
+	if(lastCMD){
+        	run(lastCMD);
+	}else{
+       		show();
+        }
     });
 
     var cacheWgetSelection=window.getSelection;
