@@ -6,9 +6,9 @@
         };
     }
 
-    window['RogueBM']=window['RogueBM'] || {} //in block notation so closure compiler will 'export' the vairable
+    window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
-        return window['RogueBM']['show']()
+        return window['RogueBM']['show']();
     }
 
 
@@ -81,8 +81,12 @@
     var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
     inject(sourceIndex,'javascript',function(err){
         if(err){
-            showError('Error injecting '+url,err);
-            loadFromIframe(sourceIndex);
+		showError('Error injecting '+url,err);
+		loadFromIframe(sourceIndex);
+		var lastCMD=RogueBM.lastCMD();
+		if(!lastCMD){
+			run(lastCMD);
+		}
         }
     });
     function scriptIndexReady(){
@@ -664,11 +668,10 @@
     domready(function(){
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
-        //make sure to show it and run any patching of the environment
+        //if there is a cmd passed from the injector
+	//then dont show the prompt and wait for the event to trigger from downlaoding the index.js
 	var lastCMD=RogueBM.lastCMD();
-	if(lastCMD){
-        	run(lastCMD);
-	}else{
+	if(!lastCMD){
        		show();
         }
     });
