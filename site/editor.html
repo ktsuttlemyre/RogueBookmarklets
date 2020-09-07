@@ -1,0 +1,620 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Editor</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+
+  <style>
+  html,body{margin:0; padding:0;}
+  	#header,
+	#content,
+	#footer{
+	    width: 920px;
+	    margin: 0 auto;
+	}
+
+	#header{
+	    height: 100px;
+	    /*background: #009;*/
+	}
+
+	#content{
+	    /*background: #FFF;*/
+	      overflow: auto;
+	}
+
+	#footer{
+	    height: 30px;
+	   /* background: #009;*/
+	}
+
+	.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 1em;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+/*  padding: 20px;*/
+  position: relative;
+}
+
+@media screen and (max-height: 450px) {
+  /*.sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}*/
+}
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/link"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script> -->
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/image"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/list"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/embed"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
+  	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/marker"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/warning"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@editorjs/code"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/attaches"></script>
+
+</head>
+
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+  <select id="list" style="overflow: auto;background: transparent;color:white;border: 0;height:100%;width:100%;,margin: 0" size="20"></select>
+</div>
+
+
+
+	<div id="main">
+		<span style="font-size:2em;cursor:pointer;position: absolute; top:1rem;left:1rem" onclick="toggleNav()">&#9776;</span>
+		<div id="header">
+		</div>
+		<div id="content">
+			<div id="editorjs"></div>
+		</div>
+		<div id="footer"></div>
+	</div>
+  	<script>
+  		var sidenav=document.getElementById("mySidenav")
+  		var mainContent=document.getElementById("main")
+function toggleNav() {
+   console.log(sidenav.style.width)
+
+   // if(sidenav.className.indexOf('showSideNav'))
+   // sidenav.className += " MyClass";
+
+
+   // if(x.className == "sidenavhide") x.className = "sidenavshow";
+   // else x.className = "sidenavhide";
+   var style= sidenav.style
+   if(!style.width || style.width == "0em"){
+   	style.width= "10em"; //(document.getElementsByClassName("ce-toolbox").item(0).getBoundingClientRect().x)+"px";
+   	mainContent.style.marginLeft= "10em"
+   }else{
+   	style.width="0em"
+   	mainContent.style.marginLeft= "0em"
+   }
+}
+
+
+/**
+*
+*  Base64 encode / decode
+*  http://www.webtoolkit.info/
+*
+**/
+var Base64 = {
+
+// private property
+_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+// public method for encoding
+encode : function (input) {
+    var output = "";
+    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+    var i = 0;
+
+    input = Base64._utf8_encode(input);
+
+    while (i < input.length) {
+
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+
+        output = output +
+        this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+
+    }
+
+    return output;
+},
+
+// public method for decoding
+decode : function (input) {
+    var output = "";
+    var chr1, chr2, chr3;
+    var enc1, enc2, enc3, enc4;
+    var i = 0;
+
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+    while (i < input.length) {
+
+        enc1 = this._keyStr.indexOf(input.charAt(i++));
+        enc2 = this._keyStr.indexOf(input.charAt(i++));
+        enc3 = this._keyStr.indexOf(input.charAt(i++));
+        enc4 = this._keyStr.indexOf(input.charAt(i++));
+
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+
+        output = output + String.fromCharCode(chr1);
+
+        if (enc3 != 64) {
+            output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+            output = output + String.fromCharCode(chr3);
+        }
+
+    }
+
+    output = Base64._utf8_decode(output);
+
+    return output;
+
+},
+
+// private method for UTF-8 encoding
+_utf8_encode : function (string) {
+    string = string.replace(/\r\n/g,"\n");
+    var utftext = "";
+
+    for (var n = 0; n < string.length; n++) {
+
+        var c = string.charCodeAt(n);
+
+        if (c < 128) {
+            utftext += String.fromCharCode(c);
+        }
+        else if((c > 127) && (c < 2048)) {
+            utftext += String.fromCharCode((c >> 6) | 192);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+        else {
+            utftext += String.fromCharCode((c >> 12) | 224);
+            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+            utftext += String.fromCharCode((c & 63) | 128);
+        }
+
+    }
+
+    return utftext;
+},
+
+// private method for UTF-8 decoding
+_utf8_decode : function (utftext) {
+    var string = "";
+    var i = 0;
+    var c = c1 = c2 = 0;
+
+    while ( i < utftext.length ) {
+
+        c = utftext.charCodeAt(i);
+
+        if (c < 128) {
+            string += String.fromCharCode(c);
+            i++;
+        }
+        else if((c > 191) && (c < 224)) {
+            c2 = utftext.charCodeAt(i+1);
+            string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+            i += 2;
+        }
+        else {
+            c2 = utftext.charCodeAt(i+1);
+            c3 = utftext.charCodeAt(i+2);
+            string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+            i += 3;
+        }
+
+    }
+
+    return string;
+}
+
+}
+
+
+
+
+
+class AceEditor {
+	  /**
+   * Should this tool be displayed at the Editor's Toolbox
+   * @returns {boolean}
+   * @public
+   */
+  static get displayInToolbox() {
+    return true;
+  }
+
+  /**
+   * Allow to press Enter inside the  textarea
+   * @returns {boolean}
+   * @public
+   */
+  static get enableLineBreaks() {
+    return true;
+  }
+
+  render() {
+    var div= document.createElement('div');
+    div.id='ACE'+Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER +1))
+    //div.style.width='800px'
+    div.style.minHeight ='30em'
+    div.innerHTML='var x = 100;\n'+
+	'var text = "hello, world";\n'+
+	'\n'+
+	'console.log(x);\n'+
+	'alert(text);\n'
+
+	var aceEditor = ace.edit(div);
+	aceEditor.setTheme("ace/theme/monokai");
+	var results = hljs.highlightAuto(div.innerHTML)
+	aceEditor.getSession().setMode("ace/mode/"+results.language);
+    return div
+  }
+  static get toolbox() {
+    return {
+      title: 'ACE',
+      icon: '<i class="fas fa-code"></i>'
+    };
+  }
+  save(div) {
+  	var aceEditor=ace.edit(div.id);
+    return {
+      text: aceEditor.getValue()
+    }
+  }
+}
+
+
+
+
+
+	// Convert file to base64 string
+	var fileToBase64 = function(file) {
+	  return new Promise(function(resolve) {
+	    var reader = new FileReader();
+	    // Read file content on file loaded event
+	    reader.onload = function(event) {
+	      resolve(event.target.result);
+	    };
+	    
+	    // Convert data to base64 
+	    reader.readAsDataURL(file);
+	  });
+	};
+
+
+
+	// Retrieve the object from storage
+	var activePage = localStorage.getItem('activePage');
+	activePage=(activePage!=null)?activePage:'{}';
+
+  	window.editor = new EditorJS({
+	   holderId : "editorjs",
+	   data:   JSON.parse(LZString.decompressFromEncodedURIComponent(window.location.hash)||localStorage.getItem(activePage)||"{}"),
+	     tools: {
+		    header: {
+		      class: Header,
+		      shortcut: 'CMD+SHIFT+H',
+		    },
+	        //  linkTool: {
+		    //   class: LinkTool,
+		    //   config: {
+		    //     endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
+		    //   }
+		    // },
+		    //image: SimpleImage,
+
+
+			image: {
+			      class: ImageTool,
+			      config: {
+			        /**
+			         * Custom uploader 
+			         */
+			        uploader: {
+			          /**
+			           * Upload file to the server and return an uploaded image data
+			           * @param {File} file - file selected from the device or pasted by drag-n-drop
+			           * @return {Promise.<{success, file: {url}}>}
+			           */
+			          uploadByFile:function(file){
+			          	// if(!file){ //test file
+			          	// 	file=new File(["test.pdf"], "../files/test.pdf")
+			          	// }
+
+						// Example call:
+						return fileToBase64(file).then(function(result){
+							return {
+				                success: 1,
+				                file: {
+				                  url: result,
+				                  // any other image data you want to store, such as width, height, color, extension, etc
+				                }
+							}
+						});
+
+			          },
+			          
+			          /**
+			           * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
+			           * @param {string} url - pasted image URL
+			           * @return {Promise.<{success, file: {url}}>}
+			           */
+			          uploadByUrl:function(url){
+			            // your ajax request for uploading
+			            return fileToBase64(file).then(function(result){
+							return {
+				                success: 1,
+				                file: {
+				                  url: result,
+				                  // any other image data you want to store, such as width, height, color, extension, etc
+				                }
+							}
+						});
+			          }
+			        }
+			      }
+			    },
+
+
+
+	        checklist: {
+		      class: Checklist,
+		      inlineToolbar: true,
+		    },
+	        list: {
+			  class: List,
+			  inlineToolbar: true,
+			},
+		    embed: {
+		      class: Embed,
+		      inlineToolbar:true,
+		      config: {
+		        services: {
+		          codepen:true,
+		          coub: true,
+		          imgur:true,
+		          gifycat:true,
+		          'twitch-video':true,
+		          'twitch-channel':true,
+		          'yandex-music-track':true,
+		          'yandex-music-album':true,
+		          'yandex-music-playlist':true,
+		          venmo:true,
+		          vine:true,
+		          youtube: true,
+
+		        }
+		      }
+			},
+			// quote: {
+		 //      class: Quote,
+		 //      inlineToolbar: true,
+		 //      shortcut: 'CMD+SHIFT+O',
+		 //      config: {
+		 //        quotePlaceholder: 'Enter a quote',
+		 //        captionPlaceholder: 'Quote\'s author',
+		 //      },
+		 //    },
+			// paragraph: {
+			//   class: Paragraph,
+			//   inlineToolbar: true,
+			// },
+			    inlineCode: {
+			class: InlineCode,
+			shortcut: 'CMD+SHIFT+C',
+			},
+			Marker: {
+			  class: Marker,
+			  shortcut: 'CMD+SHIFT+M',
+			},
+			    table: {
+      class: Table,
+      inlineToolbar: true,
+      config: {
+        rows: 2,
+        cols: 3,
+      },
+    },
+        attaches: {
+      class: AttachesTool,
+      config: {
+        endpoint: function(){
+        	return fileToBase64(file).then(function(result){
+							return {
+				                success: 1,
+				                file: {
+				                  url: result,
+				                  // any other image data you want to store, such as width, height, color, extension, etc
+				                }
+							}
+						})
+        }
+      }
+    },
+
+    	ace:{
+		    	class:AceEditor,
+		    	shortcut: 'CMD+SHIFT+V',
+		    	inlineToolbar:true,
+		    },
+
+			delimiter: Delimiter,
+			// warning: {
+			//   class: Warning,
+			//   inlineToolbar: true,
+			//   shortcut: 'CMD+SHIFT+W',
+			//   config: {
+			//     titlePlaceholder: 'Title',
+			//     messagePlaceholder: 'Message',
+			//   },
+			// },
+		   // raw: RawTool,
+			//code: CodeTool,
+
+	    //End tool
+		  },
+		  autofocus: true,
+	   onReady: function(){console.log("Editor.js is ready to work!")},
+	   onChange: debounce(function(){console.log('yes');save(toLocalStorage)},15000) 
+	});
+
+
+
+		//https://gist.github.com/peduarte/7ee475dd0fae1940f857582ecbb9dc5f
+	function debounce(func,wait) {
+	  let timeout;
+	  return function() {
+	    clearTimeout(timeout);
+	    timeout = setTimeout(() => {
+	      func.apply(this, arguments);
+	    }, wait);
+	  };
+	}
+
+	var i=0;
+  	function setHash(){
+	  	save(function(output){
+  			window.location.hash = LZString.compressToEncodedURIComponent(output);
+	  	})
+  	}
+
+  	function generateDataURI(source,push){
+  		!source && (source=document.documentElement.outerHTML||document.documentElement.innerHTML)
+  		var uri="data:text/html;charset=utf-8;base64,"+Base64.encode(source)
+	  	push && window.history.pushState('page'+i++, document.title, uri)
+	  	return uri
+  	}
+
+  	function toLocalStorage(outputData){
+  		console.log('saving',outputData)
+  		localStorage.setItem('page1', JSON.stringify(outputData));
+  	}
+
+  	function load(key){
+  		localStorage.getItem(key)
+  	}
+
+
+	function save(callback){
+		if(typeof window.editor == 'undefined'){
+			return
+		}
+		console.log('getting data to save')
+		editor.save().then(function(outputData) {
+		  callback && callback(outputData)
+		  console.log('Article data: ', outputData)
+		}).catch(function(error)  {
+		  console.log('Saving failed: ', error)
+		});	
+	}
+
+	window.addEventListener("beforeunload", function(e){
+		save()
+	}, false)
+
+
+
+    var sel = document.getElementById("list");
+    sel.ondblclick = function(){
+    	var key = this.options[this.selectedIndex].value
+    	var data =JSON.parse(localStorage.getItem(key))
+    	console.log(key,'data',data)
+    	editor.render(data)
+
+    // or alert(this.options[this.selectedIndex].value);
+};
+    for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+    	var key = localStorage.key( i )
+    	if(key.indexOf('page')!=0){
+    		continue
+    	}
+    	//var data=localStorage.getItem(key)
+        var name = "Option "+i;
+        sel.options[sel.options.length] = new Option(key,key);
+	}
+
+
+  	</script>
+</body>
+</html>
