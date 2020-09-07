@@ -173,13 +173,13 @@ function getComments(text) {
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Install extention to allow RogueRunner on all sites</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">RogueRunner Enhanced Installation Step</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        You are welcome to use RogueRunner as a bookmarklet alone but some webistes will block it from working properly. In order to get the full experience install <a href="https://chrome.google.com/webstore/detail/content-security-policy-o/lhieoncdgamiiogcllfmboilhgoknmpi">Content Security Policy Override</a> and add the following rule to the config.
+        You are welcome to use RogueRunner bookmarklet as is but some webistes will block it from working properly. In order to get the full experience chrome users can install <a href="https://chrome.google.com/webstore/detail/content-security-policy-o/lhieoncdgamiiogcllfmboilhgoknmpi">Content Security Policy Override</a> and add the following rule to the config.
 <pre class="pre-scrollable"><code>
 [
 # Allow RogueDJ
@@ -189,6 +189,7 @@ function getComments(text) {
     ]]
 ]
 </code></pre>
+        Other browsers will get enhanced support soon...
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -218,8 +219,7 @@ function getComments(text) {
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
         return false;
       }) //end on click
-      .on('dragstart', function(ev) {
-           $('#exampleModalCenter').modal('show')
+//      .on('dragstart', function(ev) {         
 //         var self=$(this)
 //         $(document).mouseleave(function () {
 //             self.text('RogueBookmarks')
@@ -227,12 +227,13 @@ function getComments(text) {
 //             self.text('No no, take me to the bookmarks bar!')
 //         });
 //         self.text("keep dragging me to your bookmarks!");
-      })
-//         .on('dragstop', function(ev) {
+//      })
+         .on('dragstop', function(ev) {
+         $('#exampleModalCenter').modal('show')
 //         $(document).off('mouseleave')
 //         $(document).off('mouseenter')
 //         $(this).text("Click and Drag me to Bookmarks to install");
-//       })
+       })
     },
     error: function(jqXHR,textStatus,errorThrown ){
       console.error(textStatus,errorThrown,jqXHR)
