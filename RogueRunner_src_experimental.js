@@ -78,17 +78,17 @@
     ///////////////////////
     // start the index download asap
     var keys = [] //init when scripts are loaded
-    var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
-    inject(sourceIndex,'javascript',function(err){
-        if(err){
-		showError('Error injecting '+url,err);
-		loadFromIframe(sourceIndex);
-		var lastCMD=RogueBM.lastCMD();
-		if(lastCMD){
-			run(lastCMD);
-		}
-        }
-    });
+//     var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
+//     inject(sourceIndex,'javascript',function(err){
+//         if(err){
+// 		showError('Error injecting '+url,err);
+// 		loadFromIframe(sourceIndex);
+// 		var lastCMD=RogueBM.lastCMD();
+// 		if(lastCMD){
+// 			run(lastCMD);
+// 		}
+//         }
+//     });
     function scriptIndexReady(){
 		if (!window.RogueBM.scripts) {	
             return setTimeout(scriptIndexReady, 0);	
