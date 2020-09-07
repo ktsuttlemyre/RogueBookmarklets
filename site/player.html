@@ -79,11 +79,11 @@
         console.info('player state=',event)
         if(event.data==YT.PlayerState.PLAYING){
           console.log('clearing interval')
-          localStorage.setItem('youtubePlayer:status', JSON.stringify({activeInstance:uuid,timestamp:new Date().getTime(),origin:window.location.href}));
+          localStorage.setItem('YoutubePlayer:status', JSON.stringify({activeInstance:uuid,timestamp:new Date().getTime(),origin:window.location.href}));
           clearInterval(autoplayInterval)
         }
         if(event.data==YT.PlayerState.ENDED){
-            var isActive=JSON.parse(localStorage.getItem('youtubePlayer:status'))
+            var isActive=JSON.parse(localStorage.getItem('YoutubePlayer:status'))
             // TODO proper handoff off instance
             if(state.isPlaylistMode){
               return
@@ -126,7 +126,7 @@
 
     //use local storage to send message
     //Example:
-    // localStorage.setItem('youtubePlayer:pipe', JSON.stringify({videoId:'kF4AWqUxRrg',timestamp:new Date().getTime(),origin:window.location.href}));
+    // localStorage.setItem('YoutubePlayer:pipe', JSON.stringify({videoId:'kF4AWqUxRrg',timestamp:new Date().getTime(),origin:window.location.href}));
     window.addEventListener('storage', updateLogon);
 
     var disableLSPipeHandler=false
@@ -134,7 +134,7 @@
       if(disableLSPipeHandler){
           return
         }
-      if (event.key === 'youtubePlayer:pipe') {
+      if (event.key === 'YoutubePlayer:pipe') {
         console.log('got message',event)
         var data=JSON.parse(event.newValue);
         if(data.refreshStatus){
@@ -149,11 +149,11 @@
         if(data.playlist){
           addPlaylist(data.playlist)
         }
-      }else if (event.key === 'youtubePlayer:status'){
+      }else if (event.key === 'YoutubePlayer:status'){
         var data=JSON.parse(event.newValue);
         if(data.refreshStatus){
-          if(localStorage.getItem('youtubePlayer:status')){//if it is empty we can become the active instance
-            localStorage.setItem('youtubePlayer:status', JSON.stringify({activeInstance:uuid,timestamp:new Date().getTime(),origin:window.location.href}));
+          if(localStorage.getItem('YoutubePlayer:status')){//if it is empty we can become the active instance
+            localStorage.setItem('YoutubePlayer:status', JSON.stringify({activeInstance:uuid,timestamp:new Date().getTime(),origin:window.location.href}));
             state=state //copy the other instance state
             //emulate a ytPlayer state change
             onPlayerStateChange({data:state.lastState})
@@ -164,8 +164,8 @@
 
     window.addEventListener("beforeunload", function(e){
       disableLSPipeHandler=true
-      localStorage.removeItem('youtubePlayer:status')
-      localStorage.setItem('youtubePlayer:pipe', JSON.stringify({refreshStatus:true,state:state,timestamp:new Date().getTime(),origin:window.location.href}));
+      localStorage.removeItem('YoutubePlayer:status')
+      localStorage.setItem('YoutubePlayer:pipe', JSON.stringify({refreshStatus:true,state:state,timestamp:new Date().getTime(),origin:window.location.href}));
     }, false);
 
     </script>
