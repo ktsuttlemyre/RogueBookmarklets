@@ -149,6 +149,9 @@
             xOriginElement = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
               //xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
               //(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
+             if(!xOriginElement || xOriginElement.closed || typeof xOriginElement.closed=='undefined'){
+                alert('popup window blocked') //TODO replace with a model or something nice
+             }
               xOriginElement.blur();
             }
           });
