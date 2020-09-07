@@ -72,28 +72,8 @@
     //  Use this micro framework to see if the dom is ready
     //some modifications to make it init faster
     //https://github.com/ded/domready
-    var domready = (function() {
-      var e = [],
-      t, n = typeof document == "object" && document,
-      r = n && n.documentElement.doScroll,
-      i = "DOMContentLoaded",
-      s = n && (r ? /^loaded|^c/ : /^loaded|^i|^c/).test(n.readyState);
-      return !s && n && n.addEventListener(i, t = function() {
-        n.removeEventListener(i, t);
-        s = 1;
-        t = e.shift();
-        while (t){
-          t();
-        }
-      }),
-      function(t) {
-        if(s){
-          setTimeout(t, 0);
-        }else{
-          e.push(t);
-        }
-      };
-    })();
+!function(e,t){typeof module!="undefined"?module.exports=t():typeof define=="function"&&typeof define.amd=="object"?define(t):this[e]=t()}("domready",function(){var e=[],t,n=typeof document=="object"&&document,r=n&&n.documentElement.doScroll,i="DOMContentLoaded",s=n&&(r?/^loaded|^c/:/^loaded|^i|^c/).test(n.readyState);return!s&&n&&n.addEventListener(i,t=function(){n.removeEventListener(i,t),s=1;while(t=e.shift())t()}),function(t){s?setTimeout(t,0):e.push(t)}})
+
 
     /**
      * @constructor
