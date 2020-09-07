@@ -164,8 +164,11 @@
         }
 
         var data=JSON.parse(event.data);
-        if(data.error){
-          showError(data.error,event);
+        var err=data.error
+        data.error=null
+        delete data.error
+        if(err){
+          showError(err,data,event);
         }
           //debugger
           if(data.ready){
@@ -187,7 +190,7 @@
               return;
             }
             if(handler.fn){
-              handler.fn(data, event);
+              handler.fn(err, data, event);
             }
             messageQueue[data.messageID]=null;
             delete messageQueue[data.messageID];
