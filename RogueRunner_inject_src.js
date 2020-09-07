@@ -164,9 +164,9 @@
         }
 
         var data=JSON.parse(event.data);
-        var err=data.error
-        data.error=null
-        delete data.error
+        var err=data.error;
+        data.error=null;
+        delete data.error;
         if(err){
           showError(err,data,event);
         }
@@ -308,8 +308,8 @@
     
     loadCrossOriginLocalStorage();
 
-    var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300)
+    var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
-        var win = window.open(url, _blank, externalWindowString);
-    }
+        var win = window.open(url, '_blank', externalWindowString);
+    };
 })('0.0.1',window,{'user':'anonymous','skin':'experimental','forceIframeInjecting':false} /*,cmd*/);
