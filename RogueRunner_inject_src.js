@@ -240,7 +240,7 @@
 
   // set the RogueBM object
   var RogueBM=self['RogueBM']=(self['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
-  RogueBM.lastCMD=function(){return cmd;};
+  RogueBM['lastCMD']=function(){return cmd;};
   if(RogueBM['show']){
     //if crossorignlocal storage not loaded then load it
     if(!RogueBM['CrossOriginLocalStorage']){
