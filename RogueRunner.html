@@ -15,6 +15,7 @@
 
 
 		<script type="text/javascript">
+			//This is for roguerunner injection if you want to do that? Might remove in the future
 			function ScriptOBJ(src) { //callback might not work
 				var script = document.createElement('script');
 				script.setAttribute('type', 'text/javascript');
@@ -24,23 +25,22 @@
 			}
 			document.getElementById('InjectRogueRunner').onclick=function(){ScriptOBJ('/RogueRunner_src.js')};
 
-			function showError(message){
-				//statusBar.innerHTML=message
+			function showError(/*arguments*/){
 				var args = Array.prototype.slice.call( arguments );
 				args.unshift("RogueBM[xDLStorageiFrame]: ");
 				console.error.apply(console, args);
+				//statusBar.innerHTML=arguments[0]
 			}
 
-			//a comment
-			var allowedOrigins = [];
-			var allowedScriptSources=[
+			//add some security so we don't just load any script from any domain
+			var allowedOrigins = [],
+			    allowedScriptSources=[
 				'https://ktsuttlemyre.github.io'
-			]
-
-			var keys=Object.keys(RogueBM.scriptEndpoints),
-				key;
-			for(var i=0;i<keys.length;i++){
-				key= RogueBM.stringFormat(RogueBM.scriptEndpoints[keys[i]],{path:''})
+				],
+			    keys=Object.keys(RogueBM.scriptCDNs);
+			
+			for(var i=0,key=null;i<keys.length;i++){
+				key= RogueBM.stringFormat(RogueBM.scriptCDNs[keys[i]],{path:''})
 				console.log('keys',key)
 				if(key==null){
 					continue
@@ -95,7 +95,6 @@
 								err='no url for payload'
 								showError(err,payload)
 								returnPayload.error=err+':  '+JSON.stringify(payload)
-								console.log()
 
 							}
 							var fn=function(item){
