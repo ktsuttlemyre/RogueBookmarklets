@@ -84,7 +84,7 @@
 		showError('Error injecting '+url,err);
 		loadFromIframe(sourceIndex);
 		var lastCMD=RogueBM.lastCMD();
-		if(!lastCMD){
+		if(lastCMD){
 			run(lastCMD);
 		}
         }
