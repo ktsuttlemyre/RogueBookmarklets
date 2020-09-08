@@ -619,8 +619,6 @@
 
         //make the input active so we can type without anymore inputs
         input.focus()
-        //go ahead and prepopulate suggestions
-        getSuggestions()
     }
 
     function isShown(){ //idk if i need this?
@@ -896,6 +894,8 @@
         if(startInit){ //init once
             console.info('init RogueRunner');
             init=true;
+            //go ahead and prepopulate suggestions
+            getSuggestions()
             //RogueRunner completely loaded
             var lastCMD=RogueBM.lastCMD();
             if(lastCMD){
@@ -919,4 +919,3 @@
     window['RogueBM']['loaded']('RogueRunner.js')
 //usersessions
 })("")
-
