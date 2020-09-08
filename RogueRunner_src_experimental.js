@@ -903,7 +903,7 @@
             var lastCMD=RogueBM.lastCMD();
             if(lastCMD){
                 console.info('running injected cmd')
-                run(lastCMD);
+                RogueBM.run(lastCMD);
             }
         }
     }
