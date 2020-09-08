@@ -887,6 +887,7 @@
     var initScripts=['RogueRunner.js','index.js']
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
+         console.log('loaded',name)
         loadedScripts.push(name)
         
         var startInit=(!init && loadedScripts.filter(function (elem) {
