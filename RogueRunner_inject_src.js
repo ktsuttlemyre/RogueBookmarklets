@@ -56,13 +56,25 @@
     }
 
     xDLStorage['getScript'](url,function(err,payload){
+      var errors=0
       if(err){
-        showError("Error loading script from xDLStorage",payload.error);
+        errors=1
+        showError("Error loading script from xDLStorage",error);
       }
       try{
         appendToHead(ScriptOBJ(null,payload.data));
       }catch(e){
-        eval(payload);
+        try{
+          eval(payload);
+        }catch(e2){
+          error++;
+        }
+      }
+
+      //SPECIAL FALLBACK CASE FOR ROGUERUNNER
+      if(errors && url==rogueRunnerSrc){
+        loadInExternalWindow()
+        return
       }
     });
   }
@@ -318,6 +330,15 @@
     }
   }
 
+  //inject the rogue runner dialog
+  var doc=document.documentElement;
+  var skin=options['skin'];
+  skin=( (("all" in doc.style) || ("cssall" in doc.style)) && ( !!skin != false) )?'_'+skin:'';
+  var rogueRunnerSrc='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user']+'&cmd='+cmd;
+  function injectRogueRunner(){
+    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID);
+    injectScript(rogueRunnerSrc,sessionID);
+  }
 
   function injectScript(src,token,forceIframe){
     if(forceIframe == null){
@@ -341,25 +362,18 @@
 
     //a bit of security 
     var sessionID=UUID();
-    //inject the rogue runner dialog
-    var doc=document.documentElement;
-    var skin=options['skin'];
-    skin=( (("all" in doc.style) || ("cssall" in doc.style)) && ( !!skin != false) )?'_'+skin:'';
-    var src='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user']+'&cmd='+cmd;
+
+    injectRogueRunner();
+   
+    loadCrossOriginLocalStorage();
 
 
-    
+    //expose helper functions
     RogueBM['injectScript']=injectScript; //helper function for loading external scripts (//TODO maybe remove this? make it more difficult?)
     RogueBM['getSessionID']=function(){
       prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID);
     };
     RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}};
-
-    
-    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+options['user'],sessionID)
-    injectScript(src,sessionID);
-   
-    loadCrossOriginLocalStorage();
 
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
