@@ -243,14 +243,13 @@ RogueBM.stringFormat=function(format, args1, args2){
 
 
 //jsonp callback
-   var dummyObj={};
 function readySignal(){
-  var callback=(window.RogueBM||dummyObj);
-  if (!callback.loaded) {//what function to look for
+  var callback=window.RogueBM.loaded;
+  if (!callback) {//what function to look for
     return setTimeout(readySignal, 10); 
   }
   //call that function we were looking for
-  callback.loaded('index.js');
+  callback('index.js');
 }
 window.RogueBM.keys=Object.keys(window.RogueBM.scripts)
 readySignal();
