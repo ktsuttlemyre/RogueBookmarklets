@@ -65,7 +65,7 @@
         appendToHead(ScriptOBJ(null,payload.data));
       }catch(e){
         try{
-          eval(payload);
+          eval(payload.data);
         }catch(e2){
           error++;
         }
