@@ -254,7 +254,7 @@
     self['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
     var allowedOrigins = ['https://ktsuttlemyre.github.io'];
-    self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html' , allowedOrigins);
+    self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
   }
 
    ///////FROM ROGUE RUNNER index.js backup loading
@@ -284,7 +284,7 @@
     }
 
     function loadInExternalWindow(){
-        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html',"RogueRunner",500,200,1);
+        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html',"RogueRunner",500,200,1);
 
         if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
             alert('RogueRunner external window popup blocked')
