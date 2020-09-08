@@ -13,89 +13,68 @@
 
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
-	//limitation: urls must end with an extention otherwise it will be assumed to be inline source
-	function inject(str,mime,callback){ 
-		/*
-		str = url or embeded code
-		mime = mimetype 
-		callback must be true if external source (aka str is a url
-		 - given the arguments (error,data)
-		
-		mime prefix assumed to be 'text/'
-		*/
-		if(mime.indexOf('text/')==0){
-			mime=mime.substring(5);
-		}
-		var ext=str.substr(str.lastIndexOf('.') + 1);
-		var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
-		var obj=document.createElement(tag)
-		obj.setAttribute('type', (mime.indexOf('/')<0)?'text/'+mime:mime);
-		switch(mime){
-			case "javascript":
-				if(callback){
-					obj.setAttribute('src',str);
-					obj.setAttribute('crossorigin', "anonymous");
-					obj.onerror = callback;
-				}else{
-					try {
-						obj.appendChild(document.createTextNode(str));
-					} catch (err) { //silent error fallback for shitty browsers
-						obj.text = str;
-					}
-				}
-			break;
-			case "css":
-				if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
-					obj = document.createElement( "link" );
-					obj.href = str
-					obj.rel = "stylesheet";
-					obj.media = "screen,print";
-				}else{
-					if ("textContent" in obj){
-					    obj.textContent = str;
-					}else if(obj.styleSheet){
-						obj.styleSheet.cssText =str
-					}else{
-					    obj.innerText = str;
-					}
-				}
-			break;
-			default:
-				throw Error('unknown mime injection',mime)
-		}
+  //limitation: urls must end with an extention otherwise it will be assumed to be inline source
+  function inject(str,mime,callback){ 
+    /*
+    str = url or embeded code
+    mime = mimetype 
+    callback must be true if external source (aka str is a url
+     - given the arguments (error,data)
+    
+    mime prefix assumed to be 'text/'
+    */
+    if(mime.indexOf('text/')==0){
+      mime=mime.substring(5);
+    }
+    var ext=str.substr(str.lastIndexOf('.') + 1);
+    var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
+    var obj=document.createElement(tag)
+    obj.setAttribute('type', (mime.indexOf('/')<0)?'text/'+mime:mime);
+    switch(mime){
+      case "javascript":
+        if(callback){
+          obj.setAttribute('src',str);
+          obj.setAttribute('crossorigin', "anonymous");
+          obj.onerror = callback;
+        }else{
+          try {
+            obj.appendChild(document.createTextNode(str));
+          } catch (err) { //silent error fallback for shitty browsers
+            obj.text = str;
+          }
+        }
+      break;
+      case "css":
+        if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
+          obj = document.createElement( "link" );
+          obj.href = str
+          obj.rel = "stylesheet";
+          obj.media = "screen,print";
+        }else{
+          if ("textContent" in obj){
+              obj.textContent = str;
+          }else if(obj.styleSheet){
+            obj.styleSheet.cssText =str
+          }else{
+              obj.innerText = str;
+          }
+        }
+      break;
+      default:
+        throw Error('unknown mime injection',mime)
+    }
 
-    	document.getElementsByTagName('head')[0].appendChild(obj);
+      document.getElementsByTagName('head')[0].appendChild(obj);
         if(typeof callback == 'function'){
             obj.onload=function(err){
-		    var args=Array.prototype.slice.call(arguments);
-		    args.unshift(null);
-		    callback.apply(callback, args)}
-        	}
-	}
+        var args=Array.prototype.slice.call(arguments);
+        args.unshift(null);
+        callback.apply(callback, args)}
+          }
+  }
 
 
 
-    ///////////////////////
-    // start the index download asap
-    var keys = [] //init when scripts are loaded
-//     var sourceIndex='https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'+user
-//     inject(sourceIndex,'javascript',function(err){
-//         if(err){
-// 		showError('Error injecting '+url,err);
-// 		loadFromIframe(sourceIndex);
-// 		var lastCMD=RogueBM.lastCMD();
-// 		if(lastCMD){
-// 			run(lastCMD);
-// 		}
-//         }
-//     });
-    function scriptIndexReady(){
-		if (!window.RogueBM.scripts) {	
-            return setTimeout(scriptIndexReady, 0);	
-        }	
-        keys = Object.keys(window.RogueBM.scripts);
-    }
-    scriptIndexReady();
 
     ///////////////////////
     //  helper functions
@@ -106,72 +85,7 @@
             console.error.apply(console, args);
     }
 
-    //https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
-    function PopupCenter(url, title, w, h, systemZoom) {
-        // Fixes dual-screen position                         Most browsers      Firefox
-        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
-        var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
-
-        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-        if(systemZoom==null){
-            systemZoom=width / window.screen.availWidth||0;
-        }
-        console.log(width,w,2,systemZoom,dualScreenLeft)
-        var left = (width - w) / 2 / systemZoom + dualScreenLeft
-        var top = 0 //(height - h) / 2 / systemZoom + dualScreenTop
-
-        var rogueRunnerPopup = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
-        //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
-
-        // Puts focus on the rogueRunnerPopup
-        if (window.focus) rogueRunnerPopup.focus();
-        return rogueRunnerPopup;
-    }
-
-    function loadInExternalWindow(){
-        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html',"RogueRunner",500,200,1);
-
-        if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
-            alert('RogueRunner external window popup blocked')
-        }
-        
-        /*
-        var html = ''+
-            '<html>'+
-                '<head>'+
-                    '<script src="https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js"></script>'+
-                    '<script>'+
-                    'parent.postMessage("a message you didn\'t expect","*");'+
-                    '</script>'+
-                '</head>'+
-                '<body>'+
-                '</body>'+
-            '</html>';
-
-        
-        rogueRunnerPopup.document.open()
-        rogueRunnerPopup.document.write(html)
-        rogueRunnerPopup.document.close()
-        */
-
-    }
-    //setTimeout(function(){loadInExternalWindow()},5000)
-
-    function loadFromIframe(url){
-        //start the injection
-        var xDLStorage=self['RogueBM']['xDLStorage']
-        if(!xDLStorage){
-            showError("xDLStorage isn't loaded and can't fetch "+ url);
-            loadInExternalWindow();
-        }
-
-       xDLStorage.getScript(url,function(err,payload){
-            err && showError("Error loading script from xDLStorage", err);
-            inject(payload.data,'javascript');
-        })
-    }
+  
 
 
     function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
@@ -669,10 +583,10 @@
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
         //if there is a cmd passed from the injector
-	//then dont show the prompt and wait for the event to trigger from downlaoding the index.js
-	var lastCMD=RogueBM.lastCMD();
-	if(!lastCMD){
-       		show();
+        //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
+        var lastCMD=RogueBM.lastCMD();
+        if(!lastCMD){
+           show();
         }
     });
 
@@ -710,7 +624,7 @@
     }
 
     function isShown(){ //idk if i need this?
-    	return modalBackdropDiv.style.display == "block";
+      return modalBackdropDiv.style.display == "block";
     }
 
     function getFocusedElement(){
@@ -867,9 +781,9 @@
 
     var promptChar='<'
     function run(key){
-	        //no key, then get the first suggestion script obj	
-        var script=window.RogueBM.scripts[key] 	
-        if(!script){	
+          //no key, then get the first suggestion script obj  
+        var script=window.RogueBM.scripts[key]  
+        if(!script){  
             script = (url=currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
         }
 
@@ -946,38 +860,63 @@
 
 
 
-   function getArgs(url){	
-        if(!url){ //get this scripts url	
-            var scripts = document.getElementsByTagName('script');	
-            var index = scripts.length - 1;	
-            url = scripts[index].src;	
-        }	
-        var args = {};	
-        url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {	
-            args[decodeURIComponent(key)] = decodeURIComponent(value);	
-        }); 	
-        return args;	
-    }	
-    var args=getArgs();	
-    //in block notation so closure compiler will 'export' the vairable	
+   function getArgs(url){ 
+        if(!url){ //get this scripts url  
+            var scripts = document.getElementsByTagName('script');  
+            var index = scripts.length - 1; 
+            url = scripts[index].src; 
+        } 
+        var args = {};  
+        url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {  
+            args[decodeURIComponent(key)] = decodeURIComponent(value);  
+        });   
+        return args;  
+    } 
+    var args=getArgs(); 
+    //in block notation so closure compiler will 'export' the vairable  
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
     window['RogueBM']['loadScript']=inject;
-    if(window['RogueBM']['cmd']){	
-        window['RogueBM']['run'](window['RogueBM']['cmd']);	
-    }else if(args.cmd){	
-        window['RogueBM']['run'](args.cmd);	
+    if(window['RogueBM']['cmd']){ 
+        window['RogueBM']['run'](window['RogueBM']['cmd']); 
+    }else if(args.cmd){ 
+        window['RogueBM']['run'](args.cmd); 
     }
-
+    var keys=[]
+    var init=false;
+    var initScripts=['RogueRunner.js','index.js']
+    var loadedScripts=[]
+    window['RogueBM']['loaded']=function(name,secret){
+        loadedScripts.push(name)
+        
+        var startInit=(!init && loadedScripts.filter(function (elem) {
+            return initScripts.indexOf(elem) > -1;
+        }).length == initScripts.length)
+        if(startInit){ //init once
+            console.info('init RogueRunner');
+            init=true;
+            //RogueRunner completely loaded
+            //populate script autosearch
+            keys = Object.keys(window.RogueBM.scripts);
+            
+            var lastCMD=RogueBM.lastCMD();
+            if(lastCMD){
+                console.info('running injected cmd')
+                run(lastCMD);
+            }
+        }
+    }
+    
+    
     //set up hotkey to show/hide
-	document.addEventListener('keyup', function doc_keyUp(e) {
-	    // this would test for ~ and the ctrl key at the same time
-	    if (e.ctrlKey && e.keyCode == 192) {
-	        // call your function to do the thing
-	       	show()
-	    }
-	}, false);
+    document.addEventListener('keyup', function doc_keyUp(e) {
+        // this would test for ~ and the ctrl key at the same time
+        if (e.ctrlKey && e.keyCode == 192) {
+            // call your function to do the thing
+            show()
+        }
+    }, false);
 
 //usersessions
 })("")
