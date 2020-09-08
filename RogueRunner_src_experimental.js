@@ -685,7 +685,7 @@
         console.log(reg.toString())
         var list = [] //new list each time
         
-        var numberOfSuggestions=keys.length
+        var numberOfSuggestions=window['RogueBM']['keys'].length
         if(!input.length){
             numberOfSuggestions=5
             if(defaultSuggestions.length){
@@ -694,7 +694,7 @@
         }
         
         for (var i = 0; i < numberOfSuggestions; i++) {
-            var key = keys[i]
+            var key = window['RogueBM']['keys'][i]
             if (key && key.match(reg)) {
                 list.push(generateSelectionLink(key));
             }
@@ -719,7 +719,7 @@
             input=deferedInput
             deferedInput=null
         }
-        if(!keys.length){
+        if(!window['RogueBM']['keys'].length){
             deferedInput=input
             setTimeout(getSuggestions, 0)
             return
@@ -883,7 +883,6 @@
     }else if(args.cmd){ 
         window['RogueBM']['run'](args.cmd); 
     }
-    var keys=[]
     var init=false;
     var initScripts=['RogueRunner.js','index.js']
     var loadedScripts=[]
@@ -897,9 +896,6 @@
             console.info('init RogueRunner');
             init=true;
             //RogueRunner completely loaded
-            //populate script autosearch
-            keys = Object.keys(window.RogueBM.scripts);
-            
             var lastCMD=RogueBM.lastCMD();
             if(lastCMD){
                 console.info('running injected cmd')
@@ -918,6 +914,8 @@
         }
     }, false);
 
+    //send loaded signal
+    window['RogueBM']['loaded']('RogueRunner.js')
 //usersessions
 })("")
 
