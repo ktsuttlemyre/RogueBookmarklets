@@ -334,7 +334,10 @@
   var doc=document.documentElement;
   var skin=options['skin'];
   skin=( (("all" in doc.style) || ("cssall" in doc.style)) && ( !!skin != false) )?'_'+skin:'';
-  var rogueRunnerSrc='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user']+'&cmd='+cmd;
+  var rogueRunnerSrc='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user'];
+  if(cmd){
+    rogueRunnerSrc+='&cmd='+cmd;
+  }
   function injectRogueRunner(){
     injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID);
     injectScript(rogueRunnerSrc,sessionID);
