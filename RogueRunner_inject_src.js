@@ -245,10 +245,13 @@
         xOriginElement.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
       };
       this['convertToInterface']=function(){
-
+        var messageData = {
+          method: 'convertToInterface'
+        };
+        this.postMessage(messageData,function(){alert('now interface')});
       }
     };//end CrossOriginLocalStorage
-    self['RogueBM']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
+    self['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
     var allowedOrigins = ['https://ktsuttlemyre.github.io'];
     self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html' , allowedOrigins);
