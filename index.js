@@ -4,11 +4,11 @@
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
 window.RogueBM.about.scripts={
-        "owner_name":"{{ site.github.owner_name }}",
-        "owner_url":"{{ site.github.owner_url }}",
-        "build_revision":"{{ site.github.build_revision }}",
-        "version":"0.0.5"
-       }
+  "owner_name":"{{ site.github.owner_name }}",
+  "owner_url":"{{ site.github.owner_url }}",
+  "build_revision":"{{ site.github.build_revision }}",
+  "version":"0.0.5"
+}
 // window.RogueBM.about.RogueRunner={
 //         "latest":"{{ site.github.owner_name }}",
 //         "current":"",
@@ -17,27 +17,27 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-    {% for marklet in site.static_files %}
-      {% assign path = marklet.path | split: "/" %}
-      {% if path[1] contains 'bookmarklets' %}
+  {% for marklet in site.static_files %}
+  {% assign path = marklet.path | split: "/" %}
+  {% if path[1] contains 'bookmarklets' %}
     "{{ marklet.basename | escape }}":{
-          "basename":"{{ marklet.basename }}",
-          "path":"{{ marklet.path }}",
-          "modified_time":"{{ marklet.modified_time }}",
-          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | url_escape }}",
-          "href":"javascript:{{ marklet.path | url_escape }}",
-          "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
-          "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
-          "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
-          "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-          "primarySrc":"jsdelivr",
-          "index":{% increment bookmarklets %}
-        },
-      {% endif %}
-    {% endfor %}
+      "basename":"{{ marklet.basename }}",
+      "path":"{{ marklet.path }}",
+      "modified_time":"{{ marklet.modified_time }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ marklet.path | url_escape }}",
+      "href":"javascript:{{ marklet.path | url_escape }}",
+      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
+      "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "primarySrc":"jsdelivr",
+      "index":{% increment bookmarklets %}
+    },
+  {% endif %}
+  {% endfor %}
 
-//original source
-//https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+  //original source
+  //https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
   "Digg this!": "location.href='http://digg.com/submit?phase=3&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)",
   "Delicious": "void(window.open('http://del.icio.us/url?url='+document.location.href));",
   "Design Float": "q=(document.location.href);void(open('http://www.designfloat.com/submit.php?url='+escape(q),'','resizable,location,menubar,toolbar,scrollbars,status'));",
@@ -101,9 +101,9 @@ window.RogueBM.scripts={
   "Japanese to English": "var t=((window.getSelection&&window.getSelection())||(document.getSelection&&document.getSelection())||(document.selection &&document.selection.createRange&&document.selection.createRange().text));var e=(document.charset||document.characterSet);if(t!=''){location.href='http://translate.google.com/translate_t?text='+t+'&hl=en&langpair=ja|en&tbb=1&ie='+e;}else{location.href='http://translate.google.com/translate?u='+escape(location.href)+'&hl=en&langpair=ja|en&tbb=1&ie='+e;};",
   "Auto Detect Language": "var t=((window.getSelection&&window.getSelection())||(document.getSelection&&document.getSelection())||(document.selection &&document.selection.createRange&&document.selection.createRange().text));var e=(document.charset||document.characterSet);if(t!=''){location.href='http://translate.google.com/translate_t?text='+t+'&hl=en&langpair=auto|en&tbb=1&ie='+e;}else{location.href='http://translate.google.com/translate?u='+escape(location.href)+'&hl=en&langpair=auto|en&tbb=1&ie='+e;};",
   "Blummy": "for(nIx5Bs=0;nIx5Bs<document.all.length;nIx5Bs++){if(document.all[nIx5Bs].tagName=='A'){with(document.all[nIx5Bs].style){if(backgroundColor=='yellow'){void(backgroundColor=document.bgColor)}else{void(backgroundColor='yellow')}}}}",
- 
 
-//http://7is7.com/software/bookmarklets/translate.html
+
+  //http://7is7.com/software/bookmarklets/translate.html
   "unTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
   "Google Translate [Afrikaans]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=af&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=af';wt=window.open(lw);if(window.focus){wt.focus()};})()",
   "Google Translate [Shqip]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=sq&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=sq';wt=window.open(lw);if(window.focus){wt.focus()};})()",
@@ -210,35 +210,45 @@ window.RogueBM.scripts={
   "Google Translate [Yorùbá]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=yo&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=yo';wt=window.open(lw);if(window.focus){wt.focus()};})()",
   "Google Translate [IsiZulu]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=zu&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=zu';wt=window.open(lw);if(window.focus){wt.focus()};})()",
 
- //TODO link bookmarks https://www.squarefree.com/bookmarklets/pagelinks.html
+   //TODO link bookmarks https://www.squarefree.com/bookmarklets/pagelinks.html
 
-//https://www.online-tech-tips.com/cool-websites/the-12-best-bookmarklets-every-browser-should-have/
+  //https://www.online-tech-tips.com/cool-websites/the-12-best-bookmarklets-every-browser-should-have/
   "bugmenot":"(function() { var url = ('http://www.bugmenot.com/view/' + escape(location.hostname)); w = open(url, 'w', 'location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400,modal=yes,dependent=yes'); if (w) { setTimeout('w.focus()', 1000) } else { location = url } })();",
 
 
   "instantgram": {"Author":"theus",
-                  "website":"https://theus.github.io/instantgram/",
-                  "src":"https://cdn.jsdelivr.net/gh/theus/instantgram/dist/main.js",
-                  },
+  "website":"https://theus.github.io/instantgram/",
+  "src":"https://cdn.jsdelivr.net/gh/theus/instantgram/dist/main.js",
+  }
 
 //https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
 
-    }
+}
 
 RogueBM.scriptCDNs={
   "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{path}",
   "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
   "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
-  "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}",
-
+  "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
 }
 
 //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
 RogueBM.stringFormat=function(format, args1, args2){
-    return format.replace(/{(\w+)}/g, function(match, word) {
-      var sub = args1[word];
+  return format.replace(/{(\w+)}/g, function(match, word) {
+    var sub = args1[word];
 
       return sub != null? sub: match;//( args2[word] != null? args2[word]: match );
     });
 };
 
+
+//jsonp callback
+function readySignal(){
+  var callback=window.RogueBM;
+  if (!callback) {//what function to look for
+    return setTimeout(readySignal, 10); 
+  }
+  //call that function we were looking for
+  callback.loaded('index.js');
+}
+readySignal();
