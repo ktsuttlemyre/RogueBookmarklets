@@ -225,9 +225,76 @@
     self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html' , allowedOrigins);
   }
 
+   ///////FROM ROGUE RUNNER index.js backup loading
+   
+     //https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
+    function PopupCenter(url, title, w, h, systemZoom) {
+        // Fixes dual-screen position                         Most browsers      Firefox
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
 
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
+        if(systemZoom==null){
+            systemZoom=width / window.screen.availWidth||0;
+        }
+        console.log(width,w,2,systemZoom,dualScreenLeft)
+        var left = (width - w) / 2 / systemZoom + dualScreenLeft
+        var top = 0 //(height - h) / 2 / systemZoom + dualScreenTop
 
+        var rogueRunnerPopup = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+        //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
+
+        // Puts focus on the rogueRunnerPopup
+        if (window.focus) rogueRunnerPopup.focus();
+        return rogueRunnerPopup;
+    }
+
+    function loadInExternalWindow(){
+        var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/localstorage.html',"RogueRunner",500,200,1);
+
+        if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
+            alert('RogueRunner external window popup blocked')
+        }
+        
+        /*
+        var html = ''+
+            '<html>'+
+                '<head>'+
+                    '<script src="https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src.js"></script>'+
+                    '<script>'+
+                    'parent.postMessage("a message you didn\'t expect","*");'+
+                    '</script>'+
+                '</head>'+
+                '<body>'+
+                '</body>'+
+            '</html>';
+
+        
+        rogueRunnerPopup.document.open()
+        rogueRunnerPopup.document.write(html)
+        rogueRunnerPopup.document.close()
+        */
+
+    }
+    //setTimeout(function(){loadInExternalWindow()},5000)
+
+    function loadFromIframe(url){
+        //start the injection
+        var xDLStorage=self['RogueBM']['xDLStorage']
+        if(!xDLStorage){
+            showError("xDLStorage isn't loaded and can't fetch "+ url);
+            loadInExternalWindow();
+        }
+
+       xDLStorage.getScript(url,function(err,payload){
+            err && showError("Error loading script from xDLStorage", err);
+            inject(payload.data,'javascript');
+        })
+    }
+
+   ///END OF FROM ROGUERUNNER INJECT index.js backup loading
 
   var NotLoadedRogueBM=!self['RogueBM'];
 
