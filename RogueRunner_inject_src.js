@@ -14,10 +14,9 @@
 
 
 (function (vers,self,options,cmd) {
-  function UUID(){
-    return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
-  }
-
+    function UUID(){
+      return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
+    }
 
   // show err
   function showError(/*arguments*/){
@@ -26,9 +25,16 @@
     console.error.apply(console, args);
       //statusBar.innerHTML=arguments[0]
   }
-
+  var scriptIndex=0
   function appendToHead(el,callback) {
-    document.getElementsByTagName('head')[0].appendChild(el);
+    var id='injected_'+UUID()+'_'+scriptIndex;
+    el.id=id
+    try{
+      document.getElementsByTagName('head')[0].appendChild(el);
+    }catch(error){
+      return false
+    }
+    return !!(document.getElementById(id));
   }
 
   function ScriptOBJ(src,code,err) { //callback might not work
@@ -48,12 +54,9 @@
         return script;
   }
 
-  function getScriptFromLocalStorageIframe(url,err){
+  function getScriptFromLocalStorageIframe(url,test){
     //start the injection
     var xDLStorage=self['RogueBM']['xDLStorage'];
-    if(!xDLStorage){
-      showError('Error injecting '+url,' xDLStorage isn\'t loaded as a backup either',err);
-    }
 
     xDLStorage['getScript'](url,function(err,payload){
       var errors=0
@@ -61,21 +64,27 @@
         errors=1
         showError("Error loading script from xDLStorage",error);
       }
-      try{
-        appendToHead(ScriptOBJ(null,payload.data));
-      }catch(e){
-        try{
+
+      appendToHead(ScriptOBJ(null,payload.data));
+
+      setTimeout(function(){
+        if(!test()){
           eval(payload.data);
-        }catch(e2){
-          error++;
         }
+      },10)
+      
+      if(url==rogueRunnerSrc){
+        setTimeout(function(){
+          console.log('doin external probably')
+          if(!test()){
+            console.log('using iframe embed')
+            xDLStorage['convertToInterface']()
+          }
+        },10)
       }
 
-      //SPECIAL FALLBACK CASE FOR ROGUERUNNER
-      if(errors && url==rogueRunnerSrc){
-        loadInExternalWindow()
-        return
-      }
+ 
+
     });
   }
 
@@ -91,9 +100,14 @@
      * @constructor
      */
     var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
+      var self=this;
+      var timeout=0; //setTimeout(function(){self.status='blocked';alert('failed to load CrossOriginLocalStorage')},20000);
       var xOriginElement; //could be an iframe or a window
       var preloadQueue=[];
+      self.status='loading'
       var doPreloadHandlers = function(){
+        clearTimeout(timeout); //don't show error now
+        self.status='ready';
         if(!preloadQueue){
           return;
         }
@@ -111,12 +125,11 @@
       // }
 
       domready(function(){
-        var forcePopOut=false;
         var iframe;
-        if(!forcePopOut){
+        if(!options['forcePopOut']){
           iframe = document.createElement('iframe');
           iframe.addEventListener("load",doPreloadHandlers);
-          iframe.onerror=function(){alert('yeeeet');};
+          iframe.onerror=function(){self.status='blocked';};
           iframe.src = url;
           iframe.style.display = "none";
               iframe.style.position = 'absolute'; //ensure no reflow
@@ -142,7 +155,8 @@
               //xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
               //(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
              if(!xOriginElement || xOriginElement.closed || typeof xOriginElement.closed=='undefined'){
-                alert('popup window blocked') //TODO replace with a model or something nice
+                //alert('popup window blocked') //TODO replace with a model or something nice
+                self.status='blocked'
              }
               xOriginElement.blur();
             }
@@ -230,7 +244,10 @@
         }
         xOriginElement.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
       };
-    };
+      this['convertToInterface']=function(){
+
+      }
+    };//end CrossOriginLocalStorage
     self['RogueBM']['CrossOriginLocalStorage']= CrossOriginLocalStorage;
 
     var allowedOrigins = ['https://ktsuttlemyre.github.io'];
@@ -325,14 +342,11 @@
     rogueRunnerSrc+='&cmd='+cmd;
   }
   function injectRogueRunner(){
-    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID);
-    injectScript(rogueRunnerSrc,sessionID);
+    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID,function(){return window['RogueBM']['scripts']});
+    injectScript(rogueRunnerSrc,sessionID,function(){return window['RogueBM']['loaded']});
   }
 
-  function injectScript(src,token,forceIframe){
-    if(forceIframe == null){
-      forceIframe=options['forceIframeInjecting'];
-    }
+  function injectScript(src,token,test){
     /*low level injection script. 
     Use RogueBookmarklet.loadScript for more reliable script loading
     */
@@ -340,11 +354,12 @@
       console.error('RogueRunner[injector]: sessionID either not correct or not provided. Will not load this url',src);
       return 1;
     }
-    if(forceIframe){
+
+    if(options['forceIframeInjecting']){
       // use this to test script injection failures to load
-      setTimeout(function(){getScriptFromLocalStorageIframe(src);},1);
+      setTimeout(function(){getScriptFromLocalStorageIframe(src,test);},1);
     }else{
-      appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,err);}));
+      appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,test);}));
     }
     return 0;
   }
