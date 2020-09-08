@@ -16,6 +16,7 @@
 
 		<script type="text/javascript">
 			console.log('RogueBM[xDLStorageiFrame]: initializing')
+			
 			//This is for roguerunner injection if you want to do that? Might remove in the future
 			function ScriptOBJ(src) { //callback might not work
 				var script = document.createElement('script');
@@ -24,7 +25,10 @@
 				script.setAttribute('crossorigin', "anonymous");
 				return script
 			}
-			document.getElementById('InjectRogueRunner').onclick=function(){document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('/RogueBookmarklets/RogueRunner_inject_src.js'));};
+			function inject(){
+				document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('/RogueBookmarklets/RogueRunner_inject_src.js'));
+			}
+			document.getElementById('InjectRogueRunner').onclick=function(){inject()};
 
 			function showError(/*arguments*/){
 				var args = Array.prototype.slice.call( arguments );
@@ -32,117 +36,124 @@
 				console.error.apply(console, args);
 				//statusBar.innerHTML=arguments[0]
 			}
+			function asLocalStorage(){
+				//add some security so we don't just load any script from any domain
+				var allowedOrigins = [],
+				    allowedScriptSources=[
+					'https://ktsuttlemyre.github.io'
+					],
+				    keys=Object.keys(RogueBM.scriptCDNs);
 
-			//add some security so we don't just load any script from any domain
-			var allowedOrigins = [],
-			    allowedScriptSources=[
-				'https://ktsuttlemyre.github.io'
-				],
-			    keys=Object.keys(RogueBM.scriptCDNs);
-			
-			for(var i=0,key=null;i<keys.length;i++){
-				key= RogueBM.stringFormat(RogueBM.scriptCDNs[keys[i]],{path:''})
-				console.log('keys',key)
-				if(key==null){
-					continue
+				for(var i=0,key=null;i<keys.length;i++){
+					key= RogueBM.stringFormat(RogueBM.scriptCDNs[keys[i]],{path:''})
+					console.log('keys',key)
+					if(key==null){
+						continue
+					}
+					allowedScriptSources.push(key)
 				}
-				allowedScriptSources.push(key)
-			}
 
-			var post=function(json,domain){
-				if(typeof json == 'object'){
-					json = JSON.stringify(json)
+				var post=function(json,domain){
+					if(typeof json == 'object'){
+						json = JSON.stringify(json)
+					}
+					if(window.opener && window.opener !== window){
+						window.opener.postMessage(json,domain)
+					}
+					if(parent && parent !== window){
+						parent.postMessage(json,domain);
+					}
 				}
-				if(window.opener && window.opener !== window){
-					window.opener.postMessage(json,domain)
-				}
-				if(parent && parent !== window){
-					parent.postMessage(json,domain);
-				}
-			}
 
-			var _listener = function (e) {
-				//if (!allowedOrigins.includes(e.origin)) {
-				//    return;
-				//}
-				//console.log('iframe got message',e)
-				var payload = JSON.parse(e.data);
-				var parent = window.parent;
-				var returnPayload={
-					method:payload.method,
-					messageID:payload.messageID
-				}
-				var err;
-				try{
-					switch(payload.method) {
-						case 'convertToInterface':
-							document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('/RogueBookmarklets/RogueRunner_inject_src.js'));
-							returnPayload.data=true //TODO make this async so I can tell the interface is installed properly
-							break;
-						case 'get':
-							var data = localStorage.getItem(payload.key);
-							returnPayload.data= data;
-							break;
-						case 'set':
-							returnPayload.data=localStorage.setItem(payload.key, JSON.stringify(payload.data));
-							//TODO send success/fail
-							break;
-						case 'getScript': //TODO force allowed origins
-							//force it to stay in path?
-							//var l = document.createElement("a");
-							//l.href = href;
-							//l.path
-							//var element = document.getElementById('RogueRunner')
-							//returnPayload.data=element.innerText || element.textContent;
-							//console.log('iframe payload=',payload)
-							
-							if(!payload.url){
-								err='no url for payload'
+				var _listener = function (e) {
+					//if (!allowedOrigins.includes(e.origin)) {
+					//    return;
+					//}
+					//console.log('iframe got message',e)
+					var payload = JSON.parse(e.data);
+					var parent = window.parent;
+					var returnPayload={
+						method:payload.method,
+						messageID:payload.messageID
+					}
+					var err;
+					try{
+						switch(payload.method) {
+							case 'convertToInterface':
+								inject();
+								returnPayload.data=true //TODO make this async so I can tell the interface is installed properly
+								break;
+							case 'get':
+								var data = localStorage.getItem(payload.key);
+								returnPayload.data= data;
+								break;
+							case 'set':
+								returnPayload.data=localStorage.setItem(payload.key, JSON.stringify(payload.data));
+								//TODO send success/fail
+								break;
+							case 'getScript': //TODO force allowed origins
+								//force it to stay in path?
+								//var l = document.createElement("a");
+								//l.href = href;
+								//l.path
+								//var element = document.getElementById('RogueRunner')
+								//returnPayload.data=element.innerText || element.textContent;
+								//console.log('iframe payload=',payload)
+
+								if(!payload.url){
+									err='no url for payload'
+									showError(err,payload)
+									returnPayload.error=err+':  '+JSON.stringify(payload)
+
+								}
+								var fn=function(item){
+									return (payload.url.indexOf(item) == 0)
+								}
+								if(!allowedScriptSources.some(fn)){
+									showError('refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
+									return
+								}
+								load(payload.url,function(e,data){
+									//console.log('load returned something',e,data)
+									returnPayload.data=data
+									//console.log('iframe got data',data)
+									post(returnPayload, '*');
+								})
+
+								return
+								break;
+							case 'remove':
+								returnPayload.data=localStorage.removeItem(payload.key);
+								break;
+							default:
+								err='No method on message payload '
 								showError(err,payload)
 								returnPayload.error=err+':  '+JSON.stringify(payload)
-
-							}
-							var fn=function(item){
-								return (payload.url.indexOf(item) == 0)
-							}
-							if(!allowedScriptSources.some(fn)){
-								showError('refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
 								return
+
 							}
-							load(payload.url,function(e,data){
-								//console.log('load returned something',e,data)
-								returnPayload.data=data
-								//console.log('iframe got data',data)
-								post(returnPayload, '*');
-							})
-						
-							return
-							break;
-						case 'remove':
-							returnPayload.data=localStorage.removeItem(payload.key);
-							break;
-						default:
-							err='No method on message payload '
-							showError(err,payload)
-							returnPayload.error=err+':  '+JSON.stringify(payload)
-							return
-						
-						}
 
-				}catch(err){
-					showError('Error:',err)
-					returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
+					}catch(err){
+						showError('Error:',err)
+						returnPayload.error=JSON.stringify(err, Object.getOwnPropertyNames(err))
+					}
+					post(returnPayload, '*');
+					};
+
+				// Support IE8 with attachEvent
+				if (window.addEventListener) {
+					window.addEventListener('message', _listener, false);
+				} else {
+					window.attachEvent('onmessage', _listener);
 				}
-				post(returnPayload, '*');
-				};
-
-			// Support IE8 with attachEvent
-			if (window.addEventListener) {
-				window.addEventListener('message', _listener, false);
-			} else {
-				window.attachEvent('onmessage', _listener);
+				post({ready:true},'*');
 			}
-			post({ready:true},'*');
+			var mode=window.location.hash.substring(1);
+			if(mode=='localstorage'){
+				asLocalStorage();
+			}else{
+				inject()
+			}
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
 		</script>
 	</body>
