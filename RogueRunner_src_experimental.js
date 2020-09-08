@@ -635,6 +635,9 @@
     }
 
     function hide(){
+        if(parent!== window){
+              parent.postMessage("RogueRunner:Blur",'*');
+        }
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
