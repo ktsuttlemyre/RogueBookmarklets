@@ -24,7 +24,7 @@
 				script.setAttribute('crossorigin', "anonymous");
 				return script
 			}
-			document.getElementById('InjectRogueRunner').onclick=function(){ScriptOBJ('/RogueRunner_src.js')};
+			document.getElementById('InjectRogueRunner').onclick=function(){document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('/RogueRunner_inject_src.js'));};
 
 			function showError(/*arguments*/){
 				var args = Array.prototype.slice.call( arguments );
@@ -75,6 +75,10 @@
 				var err;
 				try{
 					switch(payload.method) {
+						case 'convertToInterface':
+							document.getElementsByTagName('head')[0].appendChild(ScriptOBJ('/RogueRunner_inject_src.js'));
+							returnPayload.data=true //TODO make this async so I can tell the interface is installed properly
+							break;
 						case 'get':
 							var data = localStorage.getItem(payload.key);
 							returnPayload.data= data;
