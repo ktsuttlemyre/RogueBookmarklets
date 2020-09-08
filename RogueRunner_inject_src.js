@@ -13,6 +13,13 @@
 */
 
 
+/*test websites
+
+https://glebbahmutov.com/disable-inline-javascript-tutorial/index-secure.html
+Blocks [script injection] [script inlining] [eval] 
+Allows [iframe insertion] [popups]
+*/
+
 (function (vers,self,options,cmd) {
     function UUID(){
       return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
