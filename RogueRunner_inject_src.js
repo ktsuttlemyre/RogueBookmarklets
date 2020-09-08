@@ -32,16 +32,16 @@ Allows [iframe insertion] [popups]
     console.error.apply(console, args);
       //statusBar.innerHTML=arguments[0]
   }
-  var scriptIndex=0
+  var scriptIndex=0;
   function appendToHead(el,callback) {
-    var id='injected_'+UUID()+'_'+scriptIndex;
-    el.id=id
-    try{
+    //var id='injected_'+UUID()+'_'+scriptIndex;
+    //el.id=id;
+    //try{
       document.getElementsByTagName('head')[0].appendChild(el);
-    }catch(error){
-      return false
-    }
-    return !!(document.getElementById(id));
+    //}catch(error){
+    //  return false
+    //}
+    //return !!(document.getElementById(id));
   }
 
   function ScriptOBJ(src,code,err) { //callback might not work
@@ -66,9 +66,9 @@ Allows [iframe insertion] [popups]
     var xDLStorage=self['RogueBM']['xDLStorage'];
 
     xDLStorage['getScript'](url,function(err,payload){
-      var errors=0
+      var errors=0;
       if(err){
-        errors=1
+        errors=1;
         showError("Error loading script from xDLStorage",error);
       }
 
@@ -78,16 +78,16 @@ Allows [iframe insertion] [popups]
         if(!test()){
           eval(payload.data);
         }
-      },10)
+      },10);
       
       if(url==rogueRunnerSrc){
         setTimeout(function(){
-          console.log('doin external probably')
+          console.log('doin external probably');
           if(!test()){
-            console.log('using iframe embed')
-            xDLStorage['convertToInterface']()
+            console.log('using iframe embed');
+            xDLStorage['convertToInterface']();
           }
-        },10)
+        },10);
       }
 
  
@@ -111,7 +111,7 @@ Allows [iframe insertion] [popups]
       var timeout=0; //setTimeout(function(){self.status='blocked';alert('failed to load CrossOriginLocalStorage')},20000);
       var xOriginElement; //could be an iframe or a window
       var preloadQueue=[];
-      self.status='loading'
+      self.status='loading';
       var doPreloadHandlers = function(){
         clearTimeout(timeout); //don't show error now
         self.status='ready';
@@ -163,7 +163,7 @@ Allows [iframe insertion] [popups]
               //(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
              if(!xOriginElement || xOriginElement.closed || typeof xOriginElement.closed=='undefined'){
                 //alert('popup window blocked') //TODO replace with a model or something nice
-                self.status='blocked'
+                self.status='blocked';
              }
               xOriginElement.blur();
             }
@@ -255,8 +255,8 @@ Allows [iframe insertion] [popups]
         var messageData = {
           method: 'convertToInterface'
         };
-        this.postMessage(messageData,function(){alert('now interface')});
-      }
+        this.postMessage(messageData,function(){alert('now interface');});
+      };
     };//end CrossOriginLocalStorage
     self['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
@@ -278,9 +278,9 @@ Allows [iframe insertion] [popups]
         if(systemZoom==null){
             systemZoom=width / window.screen.availWidth||0;
         }
-        console.log(width,w,2,systemZoom,dualScreenLeft)
-        var left = (width - w) / 2 / systemZoom + dualScreenLeft
-        var top = 0 //(height - h) / 2 / systemZoom + dualScreenTop
+        console.log(width,w,2,systemZoom,dualScreenLeft);
+        var left = (width - w) / 2 / systemZoom + dualScreenLeft;
+        var top = 0; //(height - h) / 2 / systemZoom + dualScreenTop;
 
         var rogueRunnerPopup = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
         //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
@@ -294,7 +294,7 @@ Allows [iframe insertion] [popups]
         var rogueRunnerPopup = PopupCenter('https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html',"RogueRunner",500,200,1);
 
         if(!rogueRunnerPopup || rogueRunnerPopup.closed || typeof rogueRunnerPopup.closed=='undefined'){
-            alert('RogueRunner external window popup blocked')
+            alert('RogueRunner external window popup blocked');
         }
         
         /*
