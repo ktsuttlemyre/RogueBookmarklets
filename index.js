@@ -251,4 +251,5 @@ function readySignal(){
   //call that function we were looking for
   callback.loaded('index.js');
 }
+window.RogueBM.keys=Object.keys(window.RogueBM.scripts)
 readySignal();
