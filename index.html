@@ -181,10 +181,9 @@ function getComments(text) {
       <div class="modal-body">
         You are welcome to use RogueRunner bookmarklet as is but some webistes will block it from working properly. In order to get the full experience chrome users can install <a href="https://chrome.google.com/webstore/detail/content-security-policy-o/lhieoncdgamiiogcllfmboilhgoknmpi">Content Security Policy Override</a> and add the following rule to the config.
 <pre class="pre-scrollable"><code>
-[
 # Allow RogueDJ
     [".*", [
-        ["script-src", "script-src https://cdn.mathjax.org https://github.com/ktsuttlemyre/RogueBookmarklets/ https://ktsuttlemyre.github.io/RogueBookmarklets/ https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/ https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/bookmarklets/"],
+        ["script-src", "script-src https://github.com/ktsuttlemyre/RogueBookmarklets/ https://ktsuttlemyre.github.io/RogueBookmarklets/ https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/ https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/bookmarklets/"],
 ["frame-src","frame-src https://ktsuttlemyre.github.io/"]
     ]]
 ]
