@@ -292,20 +292,6 @@
     }
     //setTimeout(function(){loadInExternalWindow()},5000)
 
-    function loadFromIframe(url){
-        //start the injection
-        var xDLStorage=self['RogueBM']['xDLStorage']
-        if(!xDLStorage){
-            showError("xDLStorage isn't loaded and can't fetch "+ url);
-            loadInExternalWindow();
-        }
-
-       xDLStorage.getScript(url,function(err,payload){
-            err && showError("Error loading script from xDLStorage", err);
-            inject(payload.data,'javascript');
-        })
-    }
-
    ///END OF FROM ROGUERUNNER INJECT index.js backup loading
 
   var NotLoadedRogueBM=!self['RogueBM'];
