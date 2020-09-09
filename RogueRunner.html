@@ -168,13 +168,13 @@
 					if(op){
 						op.call&&op();
 					}else{
-						addiFrame(op)
+						addiFrame(mode[i])
 					}
 				}
-				if(mode.indexOf('!roguerunner')<0){
-					operations.roguerunner()
-					return
-				}
+				//if(mode.indexOf('hide')<=0){
+				//	operations.roguerunner()
+				//	return
+				//}
 			}
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
