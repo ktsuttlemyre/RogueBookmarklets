@@ -584,7 +584,7 @@
         document.body.appendChild(modalBackdropDiv);
         //if there is a cmd passed from the injector
         //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
-        var lastCMD=RogueBM.lastCMD();
+        var lastCMD=RogueBM.lastCMD;
         if(!lastCMD){
            show();
         }
@@ -815,6 +815,7 @@
         }else{ //if it is a string assume its code
             inject(script,'javascript')
         }
+        RogueBM.lastCMD=key;
     }
 
     var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
@@ -901,7 +902,7 @@
             //go ahead and prepopulate suggestions
             getSuggestions()
             //RogueRunner completely loaded
-            var lastCMD=RogueBM.lastCMD();
+            var lastCMD=RogueBM.lastCMD;
             if(lastCMD){
                 console.info('running injected cmd')
                 RogueBM.run(lastCMD);
