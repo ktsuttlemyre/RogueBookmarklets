@@ -20,7 +20,13 @@ Blocks [script injection] [script inlining] [eval]
 Allows [iframe insertion] [popups]
 */
 
-(function (vers,self,options,cmd) {
+(function (vers,global,options,cmd) {
+  //options include
+  //forceIframeInject = defaults false will force iframe injection only
+  //options['forcePopOut'] = forces popout
+  //skin = look and feel of roguerunner
+  //user = your user name preferences on the server (if there is going to be one)[currently not used]
+    cmd=cmd=='%s'?'':cmd;
     function UUID(){
       return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
     }
@@ -32,8 +38,8 @@ Allows [iframe insertion] [popups]
     console.error.apply(console, args);
       //statusBar.innerHTML=arguments[0]
   }
-  var scriptIndex=0;
-  function appendToHead(el,callback) {
+  //var scriptIndex=0;
+  function appendToHead(el) {
     //var id='injected_'+UUID()+'_'+scriptIndex;
     //el.id=id;
     //try{
@@ -58,12 +64,12 @@ Allows [iframe insertion] [popups]
         script.text = code;
       }
     }
-        return script;
+    return script;
   }
 
   function getScriptFromLocalStorageIframe(url,test){
     //start the injection
-    var xDLStorage=self['RogueBM']['xDLStorage'];
+    var xDLStorage=global['RogueBM']['xDLStorage'];
 
     xDLStorage['getScript'](url,function(err,payload){
       //use xiframe to get script.
@@ -128,9 +134,17 @@ Allows [iframe insertion] [popups]
     //  Use this micro framework to see if the dom is ready
     //some modifications to make it init faster
     //https://github.com/ded/domready
-!function(e,t){typeof module!="undefined"?module.exports=t():typeof define=="function"&&typeof define.amd=="object"?define(t):this[e]=t()}("domready",function(){var e=[],t,n=typeof document=="object"&&document,r=n&&n.documentElement.doScroll,i="DOMContentLoaded",s=n&&(r?/^loaded|^c/:/^loaded|^i|^c/).test(n.readyState);return!s&&n&&n.addEventListener(i,t=function(){n.removeEventListener(i,t),s=1;while(t=e.shift())t()}),function(t){s?setTimeout(t,0):e.push(t)}})
-
-
+    global.domready=(function() {
+      var e = [], t, n = document, r = n.documentElement.doScroll, i = "DOMContentLoaded", s = (r ? /^loaded|^c/ : /^loaded|^i|^c/).test(n.readyState);
+      return !s && n.addEventListener(i, t = function() {
+        n.removeEventListener(i, t), s = 1;
+        while (t = e.shift()) {
+          t();
+        }
+      }), function(t) {
+        s ? setTimeout(t, 0) : e.push(t);
+      };
+    })();
     /**
      * @constructor
      */
@@ -158,16 +172,17 @@ Allows [iframe insertion] [popups]
       // }else{
       //  iframe=url
       // }
-        var iframe,popup;
-      domready(function(){
+        var iframe,iframeStyle,popup;
+      global.domready(function(){
 
         if(!options['forcePopOut']){
           iframe = document.createElement('iframe');
           iframe.addEventListener("load",doPreloadHandlers);
           iframe.onerror=function(){self.status='blocked';};
           iframe.src = url;
-          iframe.style.display = "none";
-              iframe.style.position = 'absolute'; //ensure no reflow
+          iframeStyle=iframe.style;
+          iframeStyle.display = "none";
+              iframeStyle.position = 'absolute'; //ensure no reflow
               document.body.appendChild(iframe);
 
               //some browser (don't remember which one) throw exception when you try to access
@@ -187,7 +202,7 @@ Allows [iframe insertion] [popups]
           //if the iframe fails use a window
           if(!iframe || !iframe.contentDocument || !xOriginElement){
             iframe=null;
-            popup=window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+            popup=global.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
             xOriginElement = popup;
               //xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
               //(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
@@ -216,7 +231,7 @@ Allows [iframe insertion] [popups]
         }catch(error1){
           data=event.data;
           if(data=='RogueRunner:Blur'){
-            iframe.style.display='none';
+            iframeStyle.display='none';
           }
           return;
         }
@@ -298,20 +313,19 @@ Allows [iframe insertion] [popups]
         this.postMessage(messageData,function(err,payload){
           if(payload.data){
             if(iframe){
-              iframe.style.width="100%";
-              iframe.style.height="100%";
-              iframe.style.display="block";
-              iframe.style.position='absolute';
-              iframe.style.bottom=iframe.style.right='2em';
-              iframe.style.border= '0';
-              window['RogueBM']['show']=function(){iframe.style.display="block";};
+              iframeStyle.width=iframeStyle.height="100%";
+              iframeStyle.display="block";
+              iframeStyle.position='absolute';
+              iframeStyle.bottom=iframeStyle.right='0';
+              iframeStyle.border= '0';
+              global['RogueBM']['show']=function(){iframeStyle.display="block";};
 
               //set up hotkey to show/hide
               document.addEventListener('keyup', function doc_keyUp(e) {
                   // this would test for ~ and the ctrl key at the same time
                   if (e.ctrlKey && e.keyCode == 192) {
                       // call your function to do the thing
-                      window['RogueBM']['show']();
+                      global['RogueBM']['show']();
                   }
               }, false);
             }
@@ -321,10 +335,10 @@ Allows [iframe insertion] [popups]
         });
       };
     };//end CrossOriginLocalStorage
-    self['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
+    global['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
     var allowedOrigins = ['https://ktsuttlemyre.github.io'];
-    self['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(self, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
+    global['RogueBM']['xDLStorage'] = new CrossOriginLocalStorage(global, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
   }
 
    ///////FROM ROGUE RUNNER index.js backup loading
@@ -332,24 +346,24 @@ Allows [iframe insertion] [popups]
      //https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
     function PopupCenter(url, title, w, h, systemZoom) {
         // Fixes dual-screen position                         Most browsers      Firefox
-        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
-        var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+        var dualScreenLeft = global.screenLeft != undefined ? global.screenLeft : global.screenX;
+        var dualScreenTop = global.screenTop != undefined ? global.screenTop : global.screenY;
 
-        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var width = global.innerWidth ? global.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = global.innerHeight ? global.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
         if(systemZoom==null){
-            systemZoom=width / window.screen.availWidth||0;
+            systemZoom=width / global.screen.availWidth||0;
         }
         console.log(width,w,2,systemZoom,dualScreenLeft);
         var left = (width - w) / 2 / systemZoom + dualScreenLeft;
         var top = 0; //(height - h) / 2 / systemZoom + dualScreenTop;
 
-        var rogueRunnerPopup = window.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+        var rogueRunnerPopup = global.open(url, title, 'scrollbars=no, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
         //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
 
         // Puts focus on the rogueRunnerPopup
-        if (window.focus) rogueRunnerPopup.focus();
+        if (global.focus) rogueRunnerPopup.focus();
         return rogueRunnerPopup;
     }
 
@@ -384,7 +398,7 @@ Allows [iframe insertion] [popups]
 
    ///END OF FROM ROGUERUNNER INJECT index.js backup loading
 
-  var NotLoadedRogueBM=!self['RogueBM'];
+  var NotLoadedRogueBM=!global['RogueBM'];
 
   // pollyfill for date.now
   if (!Date.now) {
@@ -394,8 +408,8 @@ Allows [iframe insertion] [popups]
   }
 
   // set the RogueBM object
-  var RogueBM=self['RogueBM']=(self['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
-  RogueBM['lastCMD']=function(){return cmd;};
+  var RogueBM=global['RogueBM']=(global['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
+  RogueBM['lastCMD']=cmd;
   if(RogueBM['show']){
     //if crossorignlocal storage not loaded then load it
     if(!RogueBM['CrossOriginLocalStorage']){
@@ -411,14 +425,11 @@ Allows [iframe insertion] [popups]
   var doc=document.documentElement;
   var skin=options['skin'];
   skin=( (("all" in doc.style) || ("cssall" in doc.style)) && ( !!skin != false) )?'_'+skin:'';
-  var rogueRunnerSrc='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+options['user'];
+  var rogueRunnerSrc='https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_src'+skin+'.js?user='+encodeURIComponent(options['user']);
   if(cmd){
-    rogueRunnerSrc+='&cmd='+cmd;
+    rogueRunnerSrc+='&cmd='+encodeURIComponent(cmd);
   }
-  function injectRogueRunner(){
-    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID,function(){return window['RogueBM']['scripts'];});
-    injectScript(rogueRunnerSrc,sessionID,function(){return window['RogueBM']['loaded'];});
-  }
+
 
   function injectScript(src,token,test){
     /*low level injection script. 
@@ -429,11 +440,12 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    if(options['force.Injecting']){
+    var callback=function(){getScriptFromLocalStorageIframe(src,test);}
+    if(options['forceIframeInject']){
       // use this to test script injection failures to load
-      setTimeout(function(){getScriptFromLocalStorageIframe(src,test);},1);
+      setTimeout(callback,1);
     }else{
-      appendToHead(ScriptOBJ(src,null,function(err){getScriptFromLocalStorageIframe(src,test);}));
+      appendToHead(ScriptOBJ(src,null,callback));
     }
     return 0;
   }
@@ -441,7 +453,8 @@ Allows [iframe insertion] [popups]
     //a bit of security 
     var sessionID=UUID();
 
-    injectRogueRunner();
+    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'/*?user='+options['user']*/,sessionID,function(){return global['RogueBM']['scripts'];});
+    injectScript(rogueRunnerSrc,sessionID,function(){return global['RogueBM']['loaded'];});
    
     loadCrossOriginLocalStorage();
 
@@ -455,6 +468,6 @@ Allows [iframe insertion] [popups]
 
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
-        var win = window.open(url, '_blank', externalWindowString);
+        var win = global.open(url, '_blank', externalWindowString);
     };
-})('0.0.1',window,{'user':'anonymous','skin':'experimental','forceIframeInjecting':false} /*,cmd*/);
+})('0.0.1',window,{'user':'anonymous','skin':'experimental'},'%s');
