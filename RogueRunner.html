@@ -163,6 +163,13 @@
 					operations.roguerunner()
 					return
 				}
+				//if localstorage is there then override all
+				if(mode.indexOf('localstorage')>=0){
+					operations.localstorage()
+					return
+				}
+				
+				
 				for(var i=0,l=mode.length;i<l;i++){
 					var op=operations[mode[i]];
 					if(op){
@@ -171,10 +178,10 @@
 						addiFrame(mode[i])
 					}
 				}
-				//if(mode.indexOf('hide')<=0){
-				//	operations.roguerunner()
-				//	return
-				//}
+				if(mode.indexOf('home')<0){
+					operations.roguerunner()
+					return
+				}
 			}
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
