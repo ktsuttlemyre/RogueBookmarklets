@@ -635,15 +635,15 @@
     }
 
     function hide(){
-        //unpatch
-        document.getSelection=cacheDgetSelection
-        window.getSelection=cacheWgetSelection
-        window.prompt=cachePrompt
-
         if(parent!== window){
           parent.postMessage("RogueRunner:Blur",'*');
         }else{
-          modalBackdropDiv.style.display = "none";
+             //unpatch
+             document.getSelection=cacheDgetSelection
+             window.getSelection=cacheWgetSelection
+             window.prompt=cachePrompt
+
+             modalBackdropDiv.style.display = "none";
         }
         input.value='';
     }
