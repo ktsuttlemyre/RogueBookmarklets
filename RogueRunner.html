@@ -69,12 +69,42 @@
 			}
 			
 			
+			.expando span{
+			    overflow:hidden;
+			    display: inline-block;
+			    vertical-align: bottom;
+			}
+			.expando.expand .expando-elem,.expando:hover .expando-elem{
+			    max-width: 100%;
+			}
+			.expando-elem{
+			    max-width: 0;
+			    transition: all 1s ease;
+			}
+			.constrict.expando:hover .expando-elem{
+			    max-width: 0 !important;
+			}
+			@media (max-width: 576px) { 
+				.expando:hover .expando-elem{
+				max-width: 0 !important;
+			    }
+
+			}
+
+			
 		</style>
 	</head>
 
 	<body>
 		<script id="home" type="text/template">
-		<div class="quarter-ellipse quarter-ellipse4" style="position:absolute; top:0;right:0">RogueRunner</div>
+		<div class="quarter-ellipse quarter-ellipse4" style="position:absolute; top:0;right:0">
+			<span class="text-muted expando">
+				<span>R</span><span class="expando-elem">ogue</span><span>R</span><span class="expando-elem">unner</span>
+			</span>
+			
+			
+			
+		</div>
 			<div class="phi-layout">
 				<!--<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>-->
 				<div class="phi-bottom">
