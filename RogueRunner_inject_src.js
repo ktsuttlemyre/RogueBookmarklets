@@ -2,6 +2,8 @@
 // @output_file_name default.js
 // @compilation_level ADVANCED_OPTIMIZATIONS
 // ==/ClosureCompiler==
+//for warning supression info see
+//https://github.com/google/closure-compiler/wiki/@suppress-annotations
 
 /*how to compile this file
 
@@ -249,7 +251,6 @@ Allows [iframe insertion] [popups]
           }
 
           if(data['messageID']==null){
-            
             console.error('need data.messageID for callbacks to function',event);
             return;
           }
@@ -264,8 +265,8 @@ Allows [iframe insertion] [popups]
             if(handler.fn){
               handler.fn(err, data, event);
             }
-            messageQueue[data.messageID]=null;
-            delete messageQueue[data.messageID];
+            messageQueue[data['messageID']]=null;
+            delete messageQueue[data['messageID']];
           }else{
             showError('no handler found for ',event['messageID'],event);
           }
@@ -283,7 +284,7 @@ Allows [iframe insertion] [popups]
           method: 'getScript',
           url:url,
         };
-        this.postMessage(messageData,handler);
+        this['postMessage'](messageData,handler);
       };
 
       this['postMessage'] = function(messageData,handler) {
@@ -310,7 +311,7 @@ Allows [iframe insertion] [popups]
         var messageData = {
           method: 'convertToInterface'
         };
-        this.postMessage(messageData,function(err,payload){
+        this['postMessage'](messageData,function(err,payload){
           if(payload.data){
             if(iframe){
               iframeStyle.width=iframeStyle.height="100%";
@@ -330,6 +331,7 @@ Allows [iframe insertion] [popups]
               }, false);
             }
             if(popup){
+              alert('not implemented yet')
             }
           }
         });
