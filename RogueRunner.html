@@ -201,6 +201,9 @@
 				iframe.src = 'https://ktsuttlemyre.github.io/RogueBookmarklets/site/'+src;
 				document.body.appendChild(iframe);
 			}
+			operation['home']=function(){
+				document.body.innerHTML+=document.getElementById('home').innerHTML
+			}
 			function uniq(a) {
 			    return a.sort().filter(function(item, pos, ary) {
 				return !pos || item != ary[pos - 1];
@@ -232,20 +235,23 @@
 				}
 				if(mode.indexOf('home')<0){
 					operations.roguerunner()
+					operations.home()
 					return
 				}
 			}
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
 		</script>
-		<div class="phi-layout">
-			<!--<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>-->
-			<div class="phi-bottom">
-			    <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/editor"></iframe>
-			    <div class="phi-right">
-			       <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></iframe>
-				<iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/calendar"></iframe>
-			    </div>
+		<script id="home" type="text/template">
+			<div class="phi-layout">
+				<!--<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>-->
+				<div class="phi-bottom">
+				    <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/editor"></iframe>
+				    <div class="phi-right">
+				       <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></iframe>
+					<iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/calendar"></iframe>
+				    </div>
+				</div>
 			</div>
-		</div>
+		</script>
 	</body>
