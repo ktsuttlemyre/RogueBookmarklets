@@ -220,7 +220,19 @@
 				}
 				post({ready:true},'*');
 			}
-			operations['roguerunner']=function(){inject()}
+			operations['roguerunner']=function(){
+				inject();
+				var focusEvent=function(){
+					window.RogueBM.show();
+				}
+				
+			      if (currentWindow.addEventListener) {
+				currentWindow.addEventListener('focus', focusEvent, false);
+			      } else {
+				currentWindow.attachEvent('onfocus', focusEvent);
+			      }
+			
+			}
 			function addiFrame(src){
 				var iframe = document.createElement('iframe');
 				//iframe.style.display = "none";
@@ -268,5 +280,6 @@
 			}
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
+
 		</script>
 	</body>
