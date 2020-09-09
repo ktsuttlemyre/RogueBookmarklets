@@ -13,15 +13,15 @@
 			html, body {margin:0;padding:0;}
 			div {margin:0;padding:1em}
 			iframe {border:0}
-			iframe:only-child{
+			.stage *:only-child{
 				width:100% !important;
 				height:100% !important;
 			}
-			.phi-right>*:nth-child(1) {
+			.stage .phi-right>*:nth-child(1) {
 				width:61.803398875%;
 				height:100%;
 			}
-			.phi-right>*:nth-child(2) {
+			.stage .phi-right>*:nth-child(2) {
 				width:38.196601125%;
 				height:100%;
 			}
@@ -208,5 +208,13 @@
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
 		</script>
-		<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>
+		<div class="stage">
+			<!--<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>-->
+			<div class="phi-right">
+			    <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></iframe>
+			    <div class="phi-right">
+			       <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/delta"></iframe>
+			    </div>
+			</div>
+		</div>
 	</body>
