@@ -66,29 +66,57 @@ Allows [iframe insertion] [popups]
     var xDLStorage=self['RogueBM']['xDLStorage'];
 
     xDLStorage['getScript'](url,function(err,payload){
-      var errors=0;
+      //use xiframe to get script.
+      //if injection via script.src has already failed. this is an inline attempt
+      //next we try a new Function()
+      //next we try eval
+      //finally if you are roguerunner.js we will try to use the xDLStorage iframe OR an external popup to display roguerunner
       if(err){
-        errors=1;
         showError("Error loading script from xDLStorage",error);
       }
 
       appendToHead(ScriptOBJ(null,payload.data));
-
-      setTimeout(function(){
-        if(!test()){
-          eval(payload.data);
+      var limit=500; //5 seconds roughtly
+      var failedCount=0;
+      var to=10;
+      function check(){
+        if(test()){ //positive test. It loaded! close out
+           return;
         }
-      },10);
-      
-      if(url==rogueRunnerSrc){
+        failedCount++;
+  
+        if(failedCount<limit){ //havent reached timelimit. stop here and try again
+          return setTimeout(check,to);
+        }//reached time limit. 
+        
+        //test to see if it executed. if not then try new Function
         setTimeout(function(){
-          console.log('doin external probably');
           if(!test()){
-            console.log('using iframe embed');
-            xDLStorage['convertToInterface']();
+            new Function(payload.data)();
           }
-        },10);
+        },to); //need to do this because the whole tick is cancled when CSP blocks javascript execution
+        
+        
+        //test to see if it executed. if not then try eval and end
+        setTimeout(function(){
+          if(!test()){
+            eval(payload.data);
+          }
+        },to); //need to do this because the whole tick is cancled when CSP blocks javascript execution
+
+        //actually, if you are roguerunner lets try to open in iframe or external window
+        if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
+           setTimeout(function(){
+            console.log('doin external probably');
+            if(!test()){
+              console.log('using iframe embed');
+              xDLStorage['convertToInterface']();
+            }
+           },to);
+        }    
       }
+      check();
+       
 
  
 
@@ -130,9 +158,9 @@ Allows [iframe insertion] [popups]
       // }else{
       //  iframe=url
       // }
-
+        var iframe,popup;
       domready(function(){
-        var iframe;
+
         if(!options['forcePopOut']){
           iframe = document.createElement('iframe');
           iframe.addEventListener("load",doPreloadHandlers);
@@ -158,7 +186,9 @@ Allows [iframe insertion] [popups]
 
           //if the iframe fails use a window
           if(!iframe || !iframe.contentDocument || !xOriginElement){
-            xOriginElement = window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+            iframe=null;
+            popup=window.open(url.src || url, 'RogueRunner', 'scrollbars=no, width=1, height=1, top=1, left=1');
+            xOriginElement = popup;
               //xOriginElement[xOriginElement.addEventListener ? 'addEventListener' : 'attachEvent'](
               //(xOriginElement.attachEvent ? 'on' : '') + 'load', doPreloadHandlers, false)
              if(!xOriginElement || xOriginElement.closed || typeof xOriginElement.closed=='undefined'){
@@ -180,7 +210,16 @@ Allows [iframe insertion] [popups]
           return;
         }
 
-        var data=JSON.parse(event.data);
+        var data=null;
+        try{
+          data=JSON.parse(event.data);
+        }catch(error1){
+          data=event.data;
+          if(data=='RogueRunner:Blur'){
+            iframe.style.display='none';
+          }
+          return;
+        }
         var err=data.error;
         data.error=null;
         delete data.error;
@@ -195,6 +234,7 @@ Allows [iframe insertion] [popups]
           }
 
           if(data['messageID']==null){
+            
             console.error('need data.messageID for callbacks to function',event);
             return;
           }
@@ -255,7 +295,30 @@ Allows [iframe insertion] [popups]
         var messageData = {
           method: 'convertToInterface'
         };
-        this.postMessage(messageData,function(){alert('now interface');});
+        this.postMessage(messageData,function(err,payload){
+          if(payload.data){
+            if(iframe){
+              iframe.style.width="100%";
+              iframe.style.height="100%";
+              iframe.style.display="block";
+              iframe.style.position='absolute';
+              iframe.style.bottom=iframe.style.right='2em';
+              iframe.style.border= '0';
+              window['RogueBM']['show']=function(){iframe.style.display="block";};
+
+              //set up hotkey to show/hide
+              document.addEventListener('keyup', function doc_keyUp(e) {
+                  // this would test for ~ and the ctrl key at the same time
+                  if (e.ctrlKey && e.keyCode == 192) {
+                      // call your function to do the thing
+                      window['RogueBM']['show']();
+                  }
+              }, false);
+            }
+            if(popup){
+            }
+          }
+        });
       };
     };//end CrossOriginLocalStorage
     self['RogueBM']['CrossOriginLocalStorage']=CrossOriginLocalStorage;
@@ -341,6 +404,7 @@ Allows [iframe insertion] [popups]
     if(!cmd){ //if we have a command then don't show the interface just do the command
       RogueBM['show']();
     }
+    return;
   }
 
   //inject the rogue runner dialog
@@ -352,8 +416,8 @@ Allows [iframe insertion] [popups]
     rogueRunnerSrc+='&cmd='+cmd;
   }
   function injectRogueRunner(){
-    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID,function(){return window['RogueBM']['scripts']});
-    injectScript(rogueRunnerSrc,sessionID,function(){return window['RogueBM']['loaded']});
+    injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js?user='+options['user'],sessionID,function(){return window['RogueBM']['scripts'];});
+    injectScript(rogueRunnerSrc,sessionID,function(){return window['RogueBM']['loaded'];});
   }
 
   function injectScript(src,token,test){
@@ -365,7 +429,7 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    if(options['forceIframeInjecting']){
+    if(options['force.Injecting']){
       // use this to test script injection failures to load
       setTimeout(function(){getScriptFromLocalStorageIframe(src,test);},1);
     }else{
