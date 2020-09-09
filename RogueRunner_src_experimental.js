@@ -635,15 +635,16 @@
     }
 
     function hide(){
-        if(parent!== window){
-              parent.postMessage("RogueRunner:Blur",'*');
-        }
         //unpatch
         document.getSelection=cacheDgetSelection
         window.getSelection=cacheWgetSelection
         window.prompt=cachePrompt
 
-        modalBackdropDiv.style.display = "none";
+        if(parent!== window){
+          parent.postMessage("RogueRunner:Blur",'*');
+        }else{
+          modalBackdropDiv.style.display = "none";
+        }
         input.value='';
     }
 
