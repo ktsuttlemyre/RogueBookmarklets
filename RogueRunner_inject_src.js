@@ -28,7 +28,10 @@ Allows [iframe insertion] [popups]
   //options['forcePopOut'] = forces popout
   //skin = look and feel of roguerunner
   //user = your user name preferences on the server (if there is going to be one)[currently not used]
-    cmd=cmd=='%s'?'':cmd;
+   //this helps support search engine features in browsers that use %s as a string replace to insert searches from the browsers location bar
+    if(cmd ==  ['%','s'].join('')){ //purposely convoluted so %s doesn't get replaced here as well
+      cmd=''; //if %s comes through then remove it
+    }
     function UUID(){
       return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
     }
