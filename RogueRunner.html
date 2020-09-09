@@ -11,29 +11,50 @@
 		<script type="text/javascript" src="/RogueBookmarklets/index.js"></script>
 		<style>
 			html, body {margin:0;padding:0;}
-			.stage * {margin:0;padding:0; float:left}
-			.stage iframe {border:0}
-			.stage *:only-child{
+			.phi-layout * {margin:0;padding:0; float:left}
+			.phi-layout iframe {border:0}
+			.phi-layout *:only-child{
 				width:100% !important;
 				height:100% !important;
 			}
-			.stage .phi-right>*:nth-child(1) {
+			.phi-layout .phi-right>*:nth-child(1) {
 				width:62%;
 				height:100%;
 			}
-			.stage .phi-right>*:nth-child(2) {
+			.phi-layout .phi-right>*:nth-child(2) {
 				width:38%;
 				height:100%;
 			}
+			.phi-layout .phi-left>*:nth-child(1) {
+				width:38%;
+				height:100%;
+			}
+			.phi-layout .phi-left>*:nth-child(2) {
+				width:62%;
+				height:100%;
+			}
 			
-			.stage .phi-bottom>*:nth-child(1) {
+			
+			.phi-layout .phi-bottom>*:nth-child(1) {
 				width:100%;
 				height:62%;
 			}
-			.stage .phi-bottom>*:nth-child(2) {
+			.phi-layout .phi-bottom>*:nth-child(2) {
 				width:100%;
 				height:38%;
 			}
+			
+			.phi-layout .phi-top>*:nth-child(1) {
+				width:100%;
+				height:38%;
+			}
+			.phi-layout .phi-top>*:nth-child(2) {
+				width:100%;
+				height:62%;
+			}
+			
+			
+			
 		</style>
 	</head>
 
@@ -217,7 +238,7 @@
 			main()
 			console.log('RogueBM[xDLStorageiFrame]: loaded')
 		</script>
-		<div class="stage">
+		<div class="phi-layout">
 			<!--<div class='phi-right'><iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></div>-->
 			<div class="phi-right">
 			    <iframe src="https://ktsuttlemyre.github.io/RogueBookmarklets/site/player"></iframe>
