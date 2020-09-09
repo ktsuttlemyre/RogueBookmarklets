@@ -29,7 +29,7 @@ Allows [iframe insertion] [popups]
   //skin = look and feel of roguerunner
   //user = your user name preferences on the server (if there is going to be one)[currently not used]
    //this helps support search engine features in browsers that use %s as a string replace to insert searches from the browsers location bar
-    if(cmd ==  ['%','s'].join('')){ //purposely convoluted so %s doesn't get replaced here as well
+    if(cmd ==  String.fromCharCode(37,115)){ //purposely convoluted so %s doesn't get replaced here as well
       cmd=''; //if %s comes through then remove it
     }
     function UUID(){
