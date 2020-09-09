@@ -123,6 +123,22 @@ border: 1px solid #a7a7a7;
     color: BLACK;
 	transform: rotate(-10deg);
 }
+			
+.ratio_one2one {
+  width: 100%;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  position: relative; /* If you want text inside of it */
+}
+
+/* If you want text inside of the container */
+.aspect_text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}			
+			
 		</style>
 	</head>
 
@@ -137,7 +153,11 @@ border: 1px solid #a7a7a7;
 		</div>
 		
 		<div class="leaf expando" style="position:absolute;bottom:10%;right:1.5em;">
-			<div style="transform: rotate(10deg);"><span>R</span><span class="expando-elem">ogue</span><span>R</span><span class="expando-elem">unner</span></div>
+			<div class="ratio_one2one" style="transform: rotate(10deg);">
+				<div class="aspect_text">
+					<span>R</span><span class="expando-elem">ogue</span><span>R</span><span class="expando-elem">unner</span>
+				</div>
+			</div>
 		</div>
 
 
