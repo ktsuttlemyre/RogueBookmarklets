@@ -226,10 +226,10 @@
 					window.RogueBM.show();
 				}
 				
-			      if (currentWindow.addEventListener) {
-				currentWindow.addEventListener('focus', focusEvent, false);
+			      if (window.addEventListener) {
+				window.addEventListener('focus', focusEvent, false);
 			      } else {
-				currentWindow.attachEvent('onfocus', focusEvent);
+				window.attachEvent('onfocus', focusEvent);
 			      }
 			
 			}
