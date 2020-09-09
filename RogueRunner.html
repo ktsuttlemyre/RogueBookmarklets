@@ -154,6 +154,11 @@
 				iframe.src = 'https://ktsuttlemyre.github.io/RogueBookmarklets/site/'+src;
 				document.body.appendChild(iframe);
 			}
+			function uniq(a) {
+			    return a.sort().filter(function(item, pos, ary) {
+				return !pos || item != ary[pos - 1];
+			    });
+			}
 			
 			function main(){
 				var mode=window.location.hash.substring(1)
@@ -168,7 +173,7 @@
 					operations.localstorage()
 					return
 				}
-				
+				mode=uniq(mode);
 				
 				for(var i=0,l=mode.length;i<l;i++){
 					var op=operations[mode[i]];
