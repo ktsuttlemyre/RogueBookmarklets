@@ -164,7 +164,7 @@
 				for(var i=0,l=mode.length;i<l;i++){
 					var op=operations[mode[i]];
 					if(op){
-						p.call&&op();
+						op.call&&op();
 					}else{
 						addiFrame(op)
 					}
