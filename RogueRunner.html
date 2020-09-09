@@ -156,7 +156,10 @@
 			}
 			
 			function main(){
-				var mode=window.location.hash.substring(1).split(',');
+				var mode=window.location.hash.substring(1)
+				if(mode){
+					mode=mode.split(',');
+				}
 				if(!mode.length){
 					operations.roguerunner()
 					return
