@@ -1,5 +1,7 @@
 ---
-author: Jane Doe
+authors: |
+    Jane Doe <another url>
+    kyle suttlemyre <url>
 description: |
     # This is some markdown content in YAML that will be output as an <h1>.
 
@@ -9,7 +11,8 @@ description: |
 params: |
     {type} describe what you expect to see as input
     {type} describe what you expect to see as input
-returns: {bool} somethign something
+returns: |
+    {bool} somethign something
 layout: script
 ---
 alert('yeet');
