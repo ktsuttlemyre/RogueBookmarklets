@@ -29,12 +29,12 @@
 {%- comment -%}-----TEMPLATE-----{%- endcomment -%}
 /**
  *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}{{ COMMENT_NL }}
- *  @see OriginalSource: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
- *  @file LastModified: {{ page.date }} 
  *  
  *  @param {{ page.params | split: NL | join: PARAM_NL }} 
  *  @returns {{ page.returns | replace: NL, COMMENT_NL }}
  *  @author Original: {{ page.authors | split: NL | join: AUTHOR_NL }} 
+ *  @see OriginalSource: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
+ *  @file LastModified: {{ page.date }} Location: {{ page.url }}
  */
 {{ content }}
 
