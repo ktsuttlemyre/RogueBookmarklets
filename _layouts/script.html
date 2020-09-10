@@ -4,6 +4,18 @@
 {% assign curlyOpen = "{" %}
 {% assign curlyClose = "}" %}
 
+
+{% assign words = page.description | split: " " %}
+
+{% for i in (0..words.size) %}
+  {% if i | modulo:5 %}
+     \n * 
+  {% endif %}
+  {{ words[i] }}
+{% endfor %}
+
+
+
 /**
  *  {{page.description}}
  *  Original Source: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
