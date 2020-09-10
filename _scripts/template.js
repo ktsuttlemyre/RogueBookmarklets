@@ -15,8 +15,10 @@ authors: |
 originalsource: codepen.com/something/something
 layout: script
 ---
-//{% raw %}
-alert('Aye, It\'s just me. Imma template!');
+
+
+    var g={g:function(){alert('Aye, It\'s just me. Imma template!');}}
+
 {{ page.url }}
 {{ date }}
 {{ page.returns }}
@@ -24,5 +26,3 @@ alert('Aye, It\'s just me. Imma template!');
 {{ returns }}
 {%- comment --%}
 -----Options-----{%- endcomment -%}
- 
-//{% endraw %}
