@@ -12,9 +12,9 @@
 {%- assign curlyClose = "}" -%}
 {%- assign SPACE = "}" -%}
 {% capture NL %}
-{% endcapture %}
+{%- endcapture -%}
 {% capture COMMENT_NL %}
- *  {% endcapture %}
+ *  {%- endcapture -%}
 {%- comment -%}
 -----END Predefined Special Charaters-----
 
@@ -26,9 +26,11 @@
 /**
  *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}{{ COMMENT_NL }}
  *  Original Source: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
+ *
  *  @param {{ curlyOpen }}type{{ curlyClose }} describe what you expect to see as input
  *  @param {{ curlyOpen }}type{{ curlyClose }} describe what you expect to see as input
  *  @returns {{ curlyOpen }}type{{ curlyClose }}
+ *
  *  @author page.author 
  */
 {{ content }}
