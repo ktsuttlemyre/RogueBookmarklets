@@ -15,14 +15,5 @@ authors: |
 originalsource: codepen.com/something/something
 layout: script
 ---
-
-
-    var g={g:function(){alert('Aye, It\'s just me. Imma template!');}}
-
-{{ page.url }}
-{{ date }}
-{{ page.returns }}
-{{ url }}
-{{ returns }}
-{%- comment --%}
------Options-----{%- endcomment -%}
+var g={g:function(){alert('Aye, It\'s just me. Imma template!');}}
+g.g()
