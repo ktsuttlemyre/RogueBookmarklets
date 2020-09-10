@@ -29,7 +29,7 @@
  *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}{{ COMMENT_NL }}
  *  Original Source: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
  *
- *  @param {{ page.params | replace: NL , PARAM_NL }} 
+ *  @param {{ page.params | split: NL | join: PARAM_NL }} 
  *  @returns {{ page.returns }}
  *
  *  @author {{ page.author }} 
