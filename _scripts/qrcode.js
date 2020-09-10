@@ -1,9 +1,6 @@
 ---
 author: Jane Doe
-description: |
-··Several lines of text,
-··with some "quotes" of various 'types',
-··and also a blank line:
+description: a really lon grun on sentance that will keep goin gand goging oand gon analknds lkansdf
 layout: script
 ---
 alert('yeet');
