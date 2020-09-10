@@ -40,7 +40,9 @@
  *  @file LastModified: {{ page.date }}
  */
 (function(global){
-{{ content }}
-}(window);
+  var RogueBM=global['RogueBM']||null
+  var RogueRunner=global['RogueRunner'](secret)
+  {{ content }}
+}(window,'{{ site.github.build_revision }}');
 
 
