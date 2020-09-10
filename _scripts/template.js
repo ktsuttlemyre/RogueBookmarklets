@@ -15,7 +15,7 @@ authors: |
 originalsource: codepen.com/something/something
 layout: script
 ---
-//test
+//{% raw %}
 alert('Aye, It\'s just me. Imma template!');
 {{ page.url }}
 {{ date }}
