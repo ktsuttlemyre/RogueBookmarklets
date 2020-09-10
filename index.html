@@ -40,13 +40,13 @@ function getComments(text) {
     match;
     comments = [];
     regex = /\/\*[\s\S]*?\*\//g
-    
+    //GET comment section
     while ((match = regex.exec(text)) != null) {
         comments.push(match);
     }
     
     
-    
+    //parse out comments into an object
     comments = comments[0]||''
     comments = (comments[0])?comments[0]:comments
   
@@ -54,7 +54,14 @@ function getComments(text) {
     regex = /.*\*.*\@(.*?)\s(.+)/g
     
     while ((match = regex.exec(text)) != null) {
-        commentObj[match[1]]=match[2];
+        var key = match[1]
+        if(key==''){
+          key='description'
+        }
+        if(!commentObj[key]){
+          commentObj[key]=[]
+        }
+        commentObj[key].push(match[2]);
     }
   
    
@@ -290,7 +297,7 @@ function getComments(text) {
                   var commentBlock=getComments(data)
                   Object.keys(commentBlock).forEach(function(key){
                     var value=commentBlock[key]
-                    infoDOM.append($('<li/>').html(key).append($('<ul/>').css({'list-style-type':'disc'}).append($('<li/>').html(value))))
+                    infoDOM.append($('<li/>').html(key).append($('<ul/>').css({'list-style-type':'disc'}).append($('<li/>').html(value.join(',')))))
                   })
                   
                   card.find(".description").empty().append(infoDOM) 
