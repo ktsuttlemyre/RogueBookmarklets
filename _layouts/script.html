@@ -7,11 +7,12 @@
 
 {% assign words = page.description | split: " " %}
 
-{% for i in (0..words.size) %}
-  {% if i | modulo:5 %}
+{% for word in words %}
+  {% assign remainder = forloop.index | modulo: 5 %}
+  {% if remainder == 0 %}
      \n * 
   {% endif %}
-  {{ words[i] }}
+  {{ word }}
 {% endfor %}
 
 
