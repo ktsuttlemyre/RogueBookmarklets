@@ -3,3 +3,5 @@ collections:
   scripts:
     output: true
     permalink: /scripts/:path.js
+liquid:
+  error_mode: lax
