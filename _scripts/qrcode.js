@@ -9,7 +9,7 @@ description: |
 params: |
     {type} describe what you expect to see as input
     {type} describe what you expect to see as input
-returns: somethign something
+returns: {bool} somethign something
 layout: script
 ---
 alert('yeet');
