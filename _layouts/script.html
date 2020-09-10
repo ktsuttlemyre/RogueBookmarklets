@@ -2,12 +2,12 @@
 #layout: default
 ---
 {% comment %}
-Options {% endcomment %}
+-----Options {% endcomment %}
 {% assign desciptionWordWrapLength = 7 %}
 
 
 {% comment %}
-Predefined special characters {% endcomment %}
+-----Predefined special characters {% endcomment %}
 {% assign curlyOpen = "{" %}
 {% assign curlyClose = "}" %}
 {% assign SPACE = "}" %}
@@ -17,8 +17,11 @@ Predefined special characters {% endcomment %}
  *  {% endcapture %}
 
 
-
+{% comment %}
+-----Data preprocess {% endcomment %}
 {% assign words = page.description | strip_newlines | split: " " %}
+
+
 
 {% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == desciptionWordWrapLength %}{{ COMMENT_NL }}{% endif %}{{ word }}{{ SPACE }}{% endfor %}
 
