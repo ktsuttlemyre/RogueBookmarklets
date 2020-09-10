@@ -3,17 +3,13 @@
 ---
 {% assign curlyOpen = "{" %}
 {% assign curlyClose = "}" %}
+{% capture nl %}
+{% endcapture %}
 
 
-{% assign words = page.description | split: " " %}
+{% assign words = page.description | strip_newlines | split: " " %}
 
-{% for word in words %}
-  {% assign remainder = forloop.index | modulo: 5 %}
-  {% if remainder == 0 %}
-     \n * 
-  {% endif %}
-  {{ word }}
-{% endfor %}
+{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == 0 %}{{ nl }}{% endif %}{{ word }}{% endfor %}
 
 
 
