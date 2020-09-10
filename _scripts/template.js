@@ -16,3 +16,10 @@ originalsource: codepen.com/something/something
 layout: script
 ---
 alert('Aye, It\'s just me. Imma template!');
+{{ page.url }}
+{{ date }}
+{{ page.returns }}
+{{ url }}
+{{ returns }}
+{%- comment --%}
+-----Options-----{%- endcomment -%}
