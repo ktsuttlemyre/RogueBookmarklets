@@ -1,35 +1,35 @@
 ---
 #layout: default
 ---
-{% comment %}
------Options-----{% endcomment %}
-{% assign desciptionWordWrapLength = 7 %}
-{% comment %}
+{%- comment --%}
+-----Options-----{%- endcomment -%}
+{%- assign desciptionWordWrapLength = 7 -%}
+{%- comment -%}
 -----END OPTIONS-----
 
------Predefined special characters-----{% endcomment %}
-{% assign curlyOpen = "{" %}{% assign curlyClose = "}" %}{% assign SPACE = "}" %}
-{% capture NL %}
-{% endcapture %}
-{% capture COMMENT_NL %}
- *  {% endcapture %}
-{% comment %}
+-----Predefined special characters-----{%- endcomment -%}
+{%- assign curlyOpen = "{" -%}{%- assign curlyClose = "}" -%}{%- assign SPACE = "}" -%}
+{%- capture NL -%}
+{%- endcapture -%}
+{%- capture COMMENT_NL -%}
+ *  {%- endcapture -%}
+{%- comment -%}
 -----END Predefined Special Charaters-----
 
------Data preprocess----- {% endcomment %}
-{% assign words = page.description | strip_newlines | split: " " %}
+-----Data preprocess----- {%- endcomment -%}
+{%- assign words = page.description | strip_newlines | split: " " -%}
 
 
-{% comment %}-----TEMPLATE-----{% endcomment %}
+{%- comment -%}-----TEMPLATE-----{%- endcomment -%}
 /**
- *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}
+ *  {%- for word in words -%}{%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}{%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word }} {%- endfor -%}
  *  Original Source: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
  *  @param {{ curlyOpen }}type{{ curlyClose }} describe what you expect to see as input
  *  @param {{ curlyOpen }}type{{ curlyClose }} describe what you expect to see as input
  *  @returns {{ curlyOpen }}type{{ curlyClose }}
  *  @author page.author 
  */
-{{content}}
+{{- content -}}
 
 {{ raw }}
 //Example:
