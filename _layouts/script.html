@@ -1,6 +1,7 @@
 ---
 #layout: default
 ---
+//Wrapper Revision:{{ site.github.build_revision }}
 {%- comment --%}
 -----Options-----{%- endcomment -%}
 {%- assign desciptionWordWrapLength = 7 -%}
@@ -41,8 +42,7 @@
  */
 (function(global){
   var RogueBM=global['RogueBM']||null
-  var RogueRunner=global['RogueRunner'](secret)
   {{ content }}
-}(window,'{{ site.github.build_revision }}');
+}(window);
 
 
