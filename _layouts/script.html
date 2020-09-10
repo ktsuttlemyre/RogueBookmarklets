@@ -10,16 +10,17 @@ Options {% endcomment %}
 Predefined special characters {% endcomment %}
 {% assign curlyOpen = "{" %}
 {% assign curlyClose = "}" %}
-{% assign space = "}" %}
-{% capture nl %}
+{% assign SPACE = "}" %}
+{% capture NL %}
 {% endcapture %}
-
+{% capture COMMENT_NL %}
+ *  {% endcapture %}
 
 
 
 {% assign words = page.description | strip_newlines | split: " " %}
 
-{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == desciptionWordWrapLength %}{{ nl }}{% endif %}{{ word }}{{ space }}{% endfor %}
+{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == desciptionWordWrapLength %}{{ COMMENT_NL }}{% endif %}{{ word }}{{ SPACE }}{% endfor %}
 
 
 
