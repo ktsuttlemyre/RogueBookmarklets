@@ -1,15 +1,25 @@
 ---
 #layout: default
 ---
+{% comment %}
+Options {% endcomment %}
+{% assign desciptionWordWrapLength = 7 %}
+
+
+{% comment %}
+Predefined special characters {% endcomment %}
 {% assign curlyOpen = "{" %}
 {% assign curlyClose = "}" %}
+{% assign space = "}" %}
 {% capture nl %}
 {% endcapture %}
 
 
+
+
 {% assign words = page.description | strip_newlines | split: " " %}
 
-{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == 0 %}{{ nl }}{% endif %}{{ word }}{% endfor %}
+{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == desciptionWordWrapLength %}{{ nl }}{% endif %}{{ word }}{{ space }}{% endfor %}
 
 
 
