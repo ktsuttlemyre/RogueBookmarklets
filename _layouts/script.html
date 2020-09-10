@@ -2,27 +2,25 @@
 #layout: default
 ---
 {% comment %}
------Options {% endcomment %}
+-----Options-----{% endcomment %}
 {% assign desciptionWordWrapLength = 7 %}
-
-
 {% comment %}
------Predefined special characters {% endcomment %}
-{% assign curlyOpen = "{" %}
-{% assign curlyClose = "}" %}
-{% assign SPACE = "}" %}
+-----END OPTIONS-----
+
+-----Predefined special characters-----{% endcomment %}
+{% assign curlyOpen = "{" %}{% assign curlyClose = "}" %}{% assign SPACE = "}" %}
 {% capture NL %}
 {% endcapture %}
 {% capture COMMENT_NL %}
  *  {% endcapture %}
-
-
 {% comment %}
------Data preprocess {% endcomment %}
+-----END Predefined Special Charaters-----
+
+-----Data preprocess----- {% endcomment %}
 {% assign words = page.description | strip_newlines | split: " " %}
 
 
-
+{% comment %}-----TEMPLATE-----{% endcomment %}
 /**
  *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}
  *  Original Source: {{ curlyOpen }}@link {{ page.link }}{{ curlyClose }}
