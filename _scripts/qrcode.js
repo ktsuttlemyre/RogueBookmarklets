@@ -6,6 +6,11 @@ description: |
     This will be output as a paragraph tag.
 
     So will this!
+params: |
+    {type} describe what you expect to see as input
+    {type} describe what you expect to see as input
+returns: |
+    {type} somethign something
 layout: script
 ---
 alert('yeet');
