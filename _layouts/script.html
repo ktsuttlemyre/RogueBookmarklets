@@ -18,7 +18,7 @@
 {% capture PARAM_NL %}
  *  @param {% endcapture %}
 {% capture AUTHOR_NL %}
- *  @author {% endcapture %}
+ *  @author Contributor: {% endcapture %}
 {%- comment -%}
 -----END Predefined Special Charaters-----
 
@@ -34,7 +34,7 @@
  *  
  *  @param {{ page.params | split: NL | join: PARAM_NL }} 
  *  @returns {{ page.returns | replace: NL, COMMENT_NL }}
- *  @author {{ page.authors | split: NL | join: AUTHOR_NL }} 
+ *  @author Original:{{ page.authors | split: NL | join: AUTHOR_NL }} 
  */
 {{ content }}
 
