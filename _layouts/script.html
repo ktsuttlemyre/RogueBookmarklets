@@ -34,7 +34,7 @@
  *  @returns {{ page.returns | replace: NL, COMMENT_NL }}
  *
  *  @author Original: {{ page.authors | split: NL | join: AUTHOR_NL }} 
-{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }} {{ NL }}{%- endif -%}
+{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }}{{ NL }} {%- endif -%}
  *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
