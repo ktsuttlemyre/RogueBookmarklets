@@ -23,7 +23,7 @@
 
 
 
-{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }}{{ SPACE }}{% endfor %}
+{% for word in words %}{% assign remainder = forloop.index | modulo: 5 %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}
 
 
 
