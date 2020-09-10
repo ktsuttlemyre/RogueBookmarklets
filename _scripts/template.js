@@ -12,6 +12,7 @@ returns: |
 authors: |
     Jane Doe <another url>
     kyle suttlemyre <url>
+originalsource: codepen.com/something/something
 layout: script
 ---
 alert('Aye, It\'s just me. Imma template!');
