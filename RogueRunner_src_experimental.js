@@ -590,30 +590,9 @@
         }
     });
 
-    var cacheWgetSelection=window.getSelection;
-    var cacheDgetSelection=document.getSelection;
     var cachePrompt=window.prompt;
     function show(){
         input.value=''
-        cacheWgetSelection=window.getSelection;
-        cacheDgetSelection=document.getSelection;
-
-        //Patch the getselection function
-        //try to get selection from document and then window
-        var selectedTextCache=document.getSelection() || window.getSelection();
-
-        //try to get from frames
-        for(i=0;i<frames.length;i++){
-            if(selectedTextCache){
-                break;
-            }
-            selectedTextCache=frames[i].document.getSelection() || frames[i].window.getSelection();
-        }
-
-        window.getSelection=document.getSelection=function(){
-            return selectedTextCache || prompt('Enter parameter','');
-        }
-
 
         modalBackdropDiv.style.display = "block";
 
@@ -639,8 +618,6 @@
           parent.postMessage("RogueRunner:Blur",'*');
         }else{
              //unpatch
-             document.getSelection=cacheDgetSelection
-             window.getSelection=cacheWgetSelection
              window.prompt=cachePrompt
 
              modalBackdropDiv.style.display = "none";
