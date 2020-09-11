@@ -40,9 +40,12 @@
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
  */
-(function(global){
+(function(global,selection){
   var RogueBM=global['RogueBM']||null
   {{ content }}
-})(window);
+})(
+window,
+(window.getSelection && window.getSelection() || document.getSelection && document.getSelection() || document.selection && document.selection.createRange && document.selection.createRange().text).toString();
+);
 
 
