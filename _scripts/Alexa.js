@@ -1,7 +1,7 @@
 ---
 description: |
+    hows you the Alexa ranking of the site.
     SEO and Competitive analyhsis software created by amazon.com
-    check the website for their alexa rank
 params: |
     {string} current location
 returns: |
