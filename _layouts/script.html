@@ -40,12 +40,31 @@
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
  */
-(function(global,selection){
+{%- comment -%}
+Special vars all functions get (to make them independent)
+selection = if there was text selected it is now accessable via this variable
+open = similar to window.open but will open modal, window, 
+{% endcomment -%}
+(function(global){
+  function getSelection(win){
+    var selection=(win.getSelection && win.getSelection() || win.document.getSelection && win.document.getSelection() || win.document.selection && win.document.selection.createRange && win.document.selection.createRange().text).toString()
+    if(selection){
+    	return selection
+    }
+    //try to get from frames
+    for(var i=0,l=win.frames.length;i<l;i++){
+      selection=getSelection(win.frames[i].window);
+      if(selection){
+        return selection;
+      }
+    }
+  }
+  var selection = getSelection(window);
+                                              
   var RogueBM=global['RogueBM']||null
   {{ content }}
 })(
-window,
-(window.getSelection && window.getSelection() || document.getSelection && document.getSelection() || document.selection && document.selection.createRange && document.selection.createRange().text).toString();
-);
+window);
+
 
 
