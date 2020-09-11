@@ -1,6 +1,6 @@
 ---
 description: |
-    Uses google translate to autodetect language and convert
+    Use Google Translate to automatically detect the language and convert it to your own native language
 params: |
     {string} url current location or selected text
 returns: |
@@ -12,10 +12,9 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-var t = window.getSelection && window.getSelection() || document.getSelection && document.getSelection() || document.selection && document.selection.createRange && document.selection.createRange().text;
 var e = document.charset || document.characterSet;
-if (t != "") {
-  open("http://translate.google.com/translate_t?text=" + t + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
+if (selection != "") {
+  open("http://translate.google.com/translate_t?text=" + selection + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
 } else {
   open("http://translate.google.com/translate?u=" + escape(location.href) + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
 };
