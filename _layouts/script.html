@@ -45,7 +45,20 @@ Special vars all functions get (to make them independent)
 selection = if there was text selected it is now accessable via this variable
 open = similar to window.open but will open modal, window, 
 {% endcomment -%}
-(function(global,RogueBM,serverSecret){
+(function(window,document,RogueBM,serverSecret){
+	// todo create fake window,document and also create fake about,confirm, prompt and other calls
+	//https://stackoverflow.com/questions/17776830/looping-through-all-of-the-items-in-the-window-object#comment25928156_17776830
+	var fakewindow = {}
+	var obj = window;
+
+	do Object.getOwnPropertyNames(obj).forEach(function(name) {
+	       fakeWindow[name]=function(/*arguments*/){
+	       	windowref[name].apply(windowref,arguments)
+	       };
+	   });
+	while(obj = Object.getPrototypeOf(obj));
+
+
 var currentCommandID=RogueBM['currentCommandID']
 function alert(message){
     var skipAlerts=RogueBM['skipAlerts'][currentCommandID];
@@ -90,8 +103,7 @@ var stdout=RogueBM['stdout'];
 var selection = (stdout!=null)?stdout:(getSelection(global,global.document)||'');
 
   {{ content }}
-})(
-window,window['RogueBM']||{},'{{ site.github.build_revision }}');
+})(null,null,window['RogueBM']||{},'{{ site.github.build_revision }}');
 
 
 
