@@ -33,7 +33,7 @@
     document.head.appendChild(newScript);
   }
 
-function getComments(text) {
+function getCommentBlock(text) {
   //https://stackoverflow.com/questions/27113509/how-to-extract-block-comments-from-a-string-using-regular-expressions
     var comments,
     regex,
@@ -215,7 +215,20 @@ function getComments(text) {
   
 
 <script>
-
+function download(filename, data) {
+    var blob = new Blob([data], {type: 'text/csv'});
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else{
+        var elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob, { oneTimeOnly: true });
+        elem.download = filename;        
+        document.body.appendChild(elem);
+        elem.click();        
+        document.body.removeChild(elem);
+    }
+}
   $.ajax({
     url: 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner_inject.js',
     async: true,
@@ -295,6 +308,40 @@ function getComments(text) {
  
                   var infoDOM=$('<ul/>').css({'list-style-type':'none'});
                   var commentBlock=getComments(data)
+                  
+                  
+                  
+// ---
+// description: |
+//     <h1>This is some markdown content in YAML that will be output as an </h1>.
+//     describe the code here
+
+//     you can use multiple lines. Its totally cool here
+// params: |
+//     {type} describe what you expect to see as input
+//     {type} describe what you expect to see as input
+// returns: |
+//     {bool} somethign something
+// authors: |
+//     Jane Doe <another url>
+//     kyle suttlemyre <url>
+// originalsource: codepen.com/something/something
+// layout: script
+// ---
+// var g={g:function(){alert('Aye, It\'s just me. Imma template!');}}
+// g.g()
+                  
+//                   var yml = '---\n'
+//                   yml+= 'description: |\n'+commentBlock['file']+'\n'
+//                   yml+= 'params: |\n {type} todo\n'
+//                   yml+= 'returns: |\n {type} todo\n'
+//                   yml+= 'authors: |\n'+commentBlock['author']+'\n'
+//                   yml+= 'originalsource: '+commentBlock['link']+'\n'
+//                   yml+= 'layout: script\n'
+//                   yml+= '---\n'
+                      
+//                   console.log()
+                  //download(name+'.js',)
                   Object.keys(commentBlock).forEach(function(key){
                     var value=commentBlock[key]
                     infoDOM.append($('<li/>').html(key).append($('<ul/>').css({'list-style-type':'disc'}).append($('<li/>').html(value.join(',')))))
