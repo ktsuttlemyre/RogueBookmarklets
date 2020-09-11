@@ -48,6 +48,8 @@ open = similar to window.open but will open modal, window,
 (function(global,RogueBM){
 
 function confirm(){
+    var autoConfirmAnswer=RogueBM['autoConfirm'][RogueBM['currentCommandID']];
+    if(typeof autoConfirmAnswer =='boolean'){return autoConfirmAnswer;}
     var args=RogueBM['handoffArgs'][RogueBM['currentCommandID']];
     if(args.length){
          var arg=args.shift(); //maybe check if argument is a boolean and enforce it?
