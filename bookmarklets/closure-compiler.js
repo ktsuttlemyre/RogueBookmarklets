@@ -15,12 +15,15 @@ formatting pretty_print,print_input_delimiter
 This will also accept compilation_level strings as opts. This also includes "pretty_print"
 which will auto set formatting to pretty_print and compliation_level to WHITESPACE_ONLY
 
+calls are asyncryonus locally but blocked so that the service only gets one at a time. A pause time of 5 seconds is default between calls
+
 calls are cached in order to reduce calls to the compiler
 cache can be cleared by calling closureCompiler('cache_clear') or disabled by closureCompiler('cache_off')
 */
 //Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
+//pretty print example: closureCompiler('(function(){/*yeet*/alert("big mood")})()',{'compilation_level':'pretty_print'},function(e,obj){console.log(obj.closure())})
 var closureCompiler=(function(){
-	var cache={};
+	var cache={},queue=[],blocked=0,timeout=5000;//milliseconds;
 	function Compiled(compiled){
 		this.data=$.trim(compiled)
 	}
@@ -57,18 +60,30 @@ var closureCompiler=(function(){
 		}
 		return this.compiledBookmarklet=closure;
 	};
+	function next(){
+		var item = queue.shift();
+		if(item){
+		    blocked=true;
+		    setTimeout(function(){$.ajax(item)},timeout);
+		}
+	    }
 
 	function closureCompiler(code,opts,callback){
 		opts=opts||{};
 		//clear cache if needed
-		if(code=='cache_clear'){
+		if(code=='cache:clear'){
 			cache={};
 			return
-		}else if(code=='cache_off'){
+		}else if(code=='cache:off'){
 			cache=null;
 			return
 		}
-
+		
+		if(code.indexOf('timeout:')==0){
+	            timeout=parseFloat(code.split(':')[1]);
+		    return
+		}
+		//if there are no ops the callback might be in the wrong argument spot. move that callback over
 		if(typeof opts == 'function'){
 			callback=opts;
 			opts=null;
@@ -81,7 +96,7 @@ var closureCompiler=(function(){
 		}else if(optsType=='number'){
 			opts={'compilation_level':compileLevels[optsType]}
 		}else if(optsType=='object'){
-			opts=jQuery.extend({}, opts);
+			opts=$.extend({}, opts);
 		}else{
 			console.error('wrong opts typeof ',optsType)
 		}
@@ -113,7 +128,7 @@ var closureCompiler=(function(){
 			},1);
 			return
 		}
-		$.ajax({
+		var post={
 		    type:'post',
 		    url:'https://closure-compiler.appspot.com/compile',
 		    async: true,
@@ -121,15 +136,22 @@ var closureCompiler=(function(){
 		    data:opts,
 		    dataType:'text', 
 		    success: function (compiled){
+			blocked=false;
 		    	var obj=new Compiled(compiled);
-		    	cache && (cache[JSON.stringify(opts)]=obj);
+		    	compiled && cache && (cache[JSON.stringify(opts)]=obj);
 		    	callback(null,obj);
 		    },
 		    error: function(jqXHR,textStatus,errorThrown ){
+			blocked=false;
 		    	console.error(textStatus,errorThrown,jqXHR)
 		    	callback(errorThrown)
-		    }
-		})
+		    },
+		    complete:next
+		}
+		queue.push(post);
+		if(!blocked){
+                    next();
+		}
 
 	}
 	return closureCompiler
