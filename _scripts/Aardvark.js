@@ -1,21 +1,15 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
-
-    you can use multiple lines. Its totally cool here
-params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
-returns: |
-    {bool} something something
+    Aardvark is a developer toolset that was once an old Firefox extention now turned into a bookmarklet.
+    - Clean up unwanted banners and surrounding "fluff," especially prior to printing a page
+    - See how the page is created, block by block
+    - View the source code of one or more elements
 authors: |
-    Hong Kiat collection <hongkiat.com>
-    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+    Rob Brown <rob@karmatics.com>
+originalsource: https://www.karmatics.com/aardvark/
+deprecated: Originally created in 2005 it doesn't seem to work as well at it once did as browsers have evovled a lot since then.
 layout: script
 ---
 {{ raw }}
-
 document.getElementsByTagName("head")[0].appendChild(document.createElement("script")).setAttribute("src", "http://www.karmatics.com/aardvark/loader.js");
 {{ endraw }}
