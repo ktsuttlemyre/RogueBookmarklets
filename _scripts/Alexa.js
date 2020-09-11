@@ -1,21 +1,15 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
-
-    you can use multiple lines. Its totally cool here
+    SEO and Competitive analyhsis software created by amazon.com
+    check the website for their alexa rank
 params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
+    {string} current location
 returns: |
-    {bool} something something
+    {null} opens alexa window with current url as search
 authors: |
-    Hong Kiat collection <hongkiat.com>
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
 layout: script
 ---
 {{ raw }}
-
-location = "http://www.alexa.com/data/details/traffic_details?q=&url=" + location.hostname;
+open("https://www.alexa.com/siteinfo/" + encodeURIComponent(location.hostname));
 {{ endraw }}
