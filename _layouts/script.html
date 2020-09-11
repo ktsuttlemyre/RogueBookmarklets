@@ -47,6 +47,22 @@ open = similar to window.open but will open modal, window,
 {% endcomment -%}
 (function(global,RogueBM){
 
+function confirm(){
+    var args=RogueBM['handoffArgs'][RogueBM['currentCommandID']];
+    if(args.length){
+         var arg=args.shift(); //maybe check if argument is a boolean and enforce it?
+         return !!arg;
+    }
+    return window.confirm(message,value);
+}
+function prompt(message,value){
+    var args=RogueBM['handoffArgs'][RogueBM['currentCommandID']];
+    if(args.length){
+         var arg=args.shift(); //maybe check if argument is string and enforce it?
+         return arg;
+    }
+    return window.prompt(message,value);
+}
 
 function getSelection(win,doc){
   var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
