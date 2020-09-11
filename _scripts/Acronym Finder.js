@@ -1,28 +1,17 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
-
-    you can use multiple lines. Its totally cool here
-params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
-returns: |
-    {bool} something something
+    With more than 1,000,000 human-edited definitions, Acronym Finder is the world's largest and most comprehensive dictionary of acronyms, abbreviations, and initialisms. Combined with the Acronym Attic, Acronym Finder contains more than 5 million acronyms and abbreviations. You can also search for more than 850,000 US and Canadian postal codes.
 authors: |
-    Hong Kiat collection <hongkiat.com>
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+originalsource: https://www.acronymfinder.com/
 layout: script
 ---
 {{ raw }}
-
-Qr = document.getSelection();
+var Qr = document.getSelection().toString();
 if (!Qr) {
-  void(Qr = prompt("Acronym please", ""));
+  Qr = prompt("Input an acronym", "");
 }
 if (Qr) {
-  location.href = "http://www.acronymfinder.com/af-query.asp?String=exact&Acronym=" + escape(Qr) + "&Find=Find";
-}
-;
+  open("http://www.acronymfinder.com/af-query.asp?String=exact&Acronym=" + escape(Qr) + "&Find=Find");
+};
 {{ endraw }}
