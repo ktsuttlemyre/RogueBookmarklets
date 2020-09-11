@@ -45,12 +45,17 @@ Special vars all functions get (to make them independent)
 selection = if there was text selected it is now accessable via this variable
 open = similar to window.open but will open modal, window, 
 {% endcomment -%}
-(function(global,RogueBM){
-
+(function(global,RogueBM,serverSecret){
+var currentCommandID=RogueBM['currentCommandID']
+function alert(message){
+    var skipAlerts=RogueBM['skipAlerts'][currentCommandID];
+    if(skipAlerts){return autoConfirmAnswer;}
+    return alert(message);
+}
 function confirm(){
-    var autoConfirmAnswer=RogueBM['autoConfirm'][RogueBM['currentCommandID']];
+    var autoConfirmAnswer=RogueBM['autoConfirm'][currentCommandID];
     if(typeof autoConfirmAnswer =='boolean'){return autoConfirmAnswer;}
-    var args=RogueBM['handoffArgs'][RogueBM['currentCommandID']];
+    var args=RogueBM['handoffArgs'][currentCommandID];
     if(args.length){
          var arg=args.shift(); //maybe check if argument is a boolean and enforce it?
          return !!arg;
@@ -58,7 +63,7 @@ function confirm(){
     return window.confirm(message,value);
 }
 function prompt(message,value){
-    var args=RogueBM['handoffArgs'][RogueBM['currentCommandID']];
+    var args=RogueBM['handoffArgs'][currentCommandID];
     if(args.length){
          var arg=args.shift(); //maybe check if argument is string and enforce it?
          return arg;
@@ -86,7 +91,7 @@ var selection = (stdout!=null)?stdout:(getSelection(global,global.document)||'')
 
   {{ content }}
 })(
-window,window['RogueBM']||{});
+window,window['RogueBM']||{},'{{ site.github.build_revision }}');
 
 
 
