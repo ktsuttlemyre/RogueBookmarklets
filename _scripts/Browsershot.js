@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-
+void(location='http://browsershots.org/?url='+escape(location))
 {{ endraw }}
