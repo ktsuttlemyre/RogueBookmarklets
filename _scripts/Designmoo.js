@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-
+q=(document.location.href);t=(document.title);s=(document.getSelection());void(open('http://designmoo.com/submit?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(document.getSelection()),'',''));
 {{ endraw }}
