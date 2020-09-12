@@ -21,14 +21,14 @@ window.RogueBM.scripts={
 
   {%- for coll in site.collections -%}
   {%- unless coll.label == "posts" -%}
-  {%- assign allScripts = allScripts | concat: coll.files -%}
+  {%- assign allScripts = allScripts | push: coll.files -%}
   {%- endunless -%}
   {%- endfor -%}
 
   {%- for marklet in site.static_files -%}
   {%- assign path = marklet.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' or path[1] contains 'scripts' -%}
-    {%- assign allScripts = allScripts | concat: marklet -%}
+    {%- assign allScripts = allScripts | push: marklet -%}
   {%- endif -%}
   {%- endfor -%}
   
