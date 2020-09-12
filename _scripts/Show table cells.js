@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-
+var t=document.getElementsByTagName('td');for (i=0;i<t.length;i++){void(t[i].style.border='1px solid navy');void(t[i].style.padding='6px');void(t[i].style.color='navy');void(t[i].style.background='#E5E5E5');}
 {{ endraw }}
