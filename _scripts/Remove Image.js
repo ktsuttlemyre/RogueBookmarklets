@@ -16,5 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-javascript:void(d=document);if(frames.length)%7Balert('Script doesn/'t work in frames');%7Delse%7Bwhile((el=d.getElementsByTagName('img')).length)%7Bel%5B0%5D.parentNode.removeChild(el%5B0%5D)%7D%7Dd.close()
+void(d=document);if(frames.length)%7Balert('Script doesn/'t work in frames');%7Delse%7Bwhile((el=d.getElementsByTagName('img')).length)%7Bel%5B0%5D.parentNode.removeChild(el%5B0%5D)%7D%7Dd.close()
 {{ endraw }}
