@@ -15,5 +15,6 @@ authors: |
 originalsource: codepen.com/something/something
 layout: script
 ---
+var aLiquidVariable = {{ site.github.build_revision }}
 var g={g:function(){alert('Aye, It\'s just me. Imma template!');}}
 g.g()
