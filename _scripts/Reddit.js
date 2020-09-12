@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-
+(function(){location.href='http://reddit.com/submit?url='+location.href+'&title='+encodeURIComponent(document.title)})()
 {{ endraw }}
