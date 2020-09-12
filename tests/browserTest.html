@@ -8133,7 +8133,7 @@ Force Touch events are available in OS X 10.11 and later on devices equipped wit
 */
 
   Modernizr.addTest('forcetouch', function() {
-		// github.com/Modernizr/Modernizr/issues/1613
+    // github.com/Modernizr/Modernizr/issues/1613
     // Test if the browser supports the force touch event progression (see notes link)
     if (!hasEvent(prefixed('mouseforcewillbegin', window, false), window)) {
       return false;
@@ -10008,7 +10008,912 @@ Detects support for CSS Snap Points
 })(window, document);
   </script>
   <style>
-   li{color:green}.no-MessageChannel li.MessageChannel{ color: red; }.no-adownload li.adownload{ color: red; }.no-ambientlight li.ambientlight{ color: red; }.no-animation li.animation{ color: red; }.no-apng li.apng{ color: red; }.no-appearance li.appearance{ color: red; }.no-applicationcache li.applicationcache{ color: red; }.no-arrow li.arrow{ color: red; }.no-atobbtoa li.atobbtoa{ color: red; }.no-audio li.audio{ color: red; }.no-audioloop li.audioloop{ color: red; }.no-audiopreload li.audiopreload{ color: red; }.no-backdropfilter li.backdropfilter{ color: red; }.no-backgroundblendmode li.backgroundblendmode{ color: red; }.no-backgroundcliptext li.backgroundcliptext{ color: red; }.no-backgroundsize li.backgroundsize{ color: red; }.no-batteryapi li.batteryapi{ color: red; }.no-bdi li.bdi{ color: red; }.no-beacon li.beacon{ color: red; }.no-bgpositionshorthand li.bgpositionshorthand{ color: red; }.no-bgpositionxy li.bgpositionxy{ color: red; }.no-bgrepeatspace li.bgrepeatspace{ color: red; }.no-bgrepeatround li.bgrepeatround{ color: red; }.no-bgsizecover li.bgsizecover{ color: red; }.no-blobconstructor li.blobconstructor{ color: red; }.no-bloburls li.bloburls{ color: red; }.no-blobworkers li.blobworkers{ color: red; }.no-borderimage li.borderimage{ color: red; }.no-borderradius li.borderradius{ color: red; }.no-boxshadow li.boxshadow{ color: red; }.no-boxsizing li.boxsizing{ color: red; }.no-canvas li.canvas{ color: red; }.no-canvasblending li.canvasblending{ color: red; }.no-canvastext li.canvastext{ color: red; }.no-canvaswinding li.canvaswinding{ color: red; }.no-capture li.capture{ color: red; }.no-checked li.checked{ color: red; }.no-classlist li.classlist{ color: red; }.no-contains li.contains{ color: red; }.no-contenteditable li.contenteditable{ color: red; }.no-contextmenu li.contextmenu{ color: red; }.no-cookies li.cookies{ color: red; }.no-cors li.cors{ color: red; }.no-createelementattrs li.createelementattrs{ color: red; }.no-createelement li.createelement{ color: red; }.no-attrs li.attrs{ color: red; }.no-cryptography li.cryptography{ color: red; }.no-cssall li.cssall{ color: red; }.no-cssanimations li.cssanimations{ color: red; }.no-csscalc li.csscalc{ color: red; }.no-csschunit li.csschunit{ color: red; }.no-csscolumns li.csscolumns{ color: red; }.no-cssescape li.cssescape{ color: red; }.no-cssexunit li.cssexunit{ color: red; }.no-cssfilters li.cssfilters{ color: red; }.no-cssgradients li.cssgradients{ color: red; }.no-cssgrid li.cssgrid{ color: red; }.no-cssgridlegacy li.cssgridlegacy{ color: red; }.no-csshyphens li.csshyphens{ color: red; }.no-softhyphens li.softhyphens{ color: red; }.no-softhyphensfind li.softhyphensfind{ color: red; }.no-cssinvalid li.cssinvalid{ color: red; }.no-cssmask li.cssmask{ color: red; }.no-csspointerevents li.csspointerevents{ color: red; }.no-csspositionsticky li.csspositionsticky{ color: red; }.no-csspseudoanimations li.csspseudoanimations{ color: red; }.no-csspseudotransitions li.csspseudotransitions{ color: red; }.no-cssreflections li.cssreflections{ color: red; }.no-cssremunit li.cssremunit{ color: red; }.no-cssresize li.cssresize{ color: red; }.no-cssscrollbar li.cssscrollbar{ color: red; }.no-csstransforms li.csstransforms{ color: red; }.no-csstransforms3d li.csstransforms3d{ color: red; }.no-csstransformslevel2 li.csstransformslevel2{ color: red; }.no-csstransitions li.csstransitions{ color: red; }.no-cssvalid li.cssvalid{ color: red; }.no-cssvhunit li.cssvhunit{ color: red; }.no-cssvmaxunit li.cssvmaxunit{ color: red; }.no-cssvminunit li.cssvminunit{ color: red; }.no-cssvwunit li.cssvwunit{ color: red; }.no-cubicbezierrange li.cubicbezierrange{ color: red; }.no-customelements li.customelements{ color: red; }.no-customevent li.customevent{ color: red; }.no-customprotocolhandler li.customprotocolhandler{ color: red; }.no-dart li.dart{ color: red; }.no-datachannel li.datachannel{ color: red; }.no-datalistelem li.datalistelem{ color: red; }.no-dataset li.dataset{ color: red; }.no-datauri li.datauri{ color: red; }.no-dataview li.dataview{ color: red; }.no-dataworkers li.dataworkers{ color: red; }.no-details li.details{ color: red; }.no-devicemotion li.devicemotion{ color: red; }.no-deviceorientation li.deviceorientation{ color: red; }.no-directory li.directory{ color: red; }.no-display li.display{ color: red; }.no-runin li.runin{ color: red; }.no-displaytable li.displaytable{ color: red; }.no-documentfragment li.documentfragment{ color: red; }.no-ellipsis li.ellipsis{ color: red; }.no-emoji li.emoji{ color: red; }.no-es5 li.es5{ color: red; }.no-es5array li.es5array{ color: red; }.no-es5date li.es5date{ color: red; }.no-es5function li.es5function{ color: red; }.no-es5object li.es5object{ color: red; }.no-es5string li.es5string{ color: red; }.no-es5syntax li.es5syntax{ color: red; }.no-es5undefined li.es5undefined{ color: red; }.no-es6array li.es6array{ color: red; }.no-es6collections li.es6collections{ color: red; }.no-es6math li.es6math{ color: red; }.no-es6number li.es6number{ color: red; }.no-es6object li.es6object{ color: red; }.no-es6string li.es6string{ color: red; }.no-eventlistener li.eventlistener{ color: red; }.no-eventsource li.eventsource{ color: red; }.no-exiforientation li.exiforientation{ color: red; }.no-fetch li.fetch{ color: red; }.no-fileinput li.fileinput{ color: red; }.no-filereader li.filereader{ color: red; }.no-filesystem li.filesystem{ color: red; }.no-flash li.flash{ color: red; }.no-flexbox li.flexbox{ color: red; }.no-flexboxlegacy li.flexboxlegacy{ color: red; }.no-flexboxtweener li.flexboxtweener{ color: red; }.no-flexwrap li.flexwrap{ color: red; }.no-focuswithin li.focuswithin{ color: red; }.no-fontface li.fontface{ color: red; }.no-forcetouch li.forcetouch{ color: red; }.no-formattribute li.formattribute{ color: red; }.no-formvalidation li.formvalidation{ color: red; }.no-framed li.framed{ color: red; }.no-fullscreen li.fullscreen{ color: red; }.no-gamepads li.gamepads{ color: red; }.no-generatedcontent li.generatedcontent{ color: red; }.no-generators li.generators{ color: red; }.no-geolocation li.geolocation{ color: red; }.no-getrandomvalues li.getrandomvalues{ color: red; }.no-getusermedia li.getusermedia{ color: red; }.no-hairline li.hairline{ color: red; }.no-hashchange li.hashchange{ color: red; }.no-hidden li.hidden{ color: red; }.no-hiddenscroll li.hiddenscroll{ color: red; }.no-history li.history{ color: red; }.no-hovermq li.hovermq{ color: red; }.no-hsla li.hsla{ color: red; }.no-htmlimports li.htmlimports{ color: red; }.no-ie8compat li.ie8compat{ color: red; }.no-imgcrossorigin li.imgcrossorigin{ color: red; }.no-indexeddb li.indexeddb{ color: red; }.no-indexeddbblob li.indexeddbblob{ color: red; }.no-inlinesvg li.inlinesvg{ color: red; }.no-input li.input{ color: red; }.no-inputformaction li.inputformaction{ color: red; }.no-inputformenctype li.inputformenctype{ color: red; }.no-inputformmethod li.inputformmethod{ color: red; }.no-inputformtarget li.inputformtarget{ color: red; }.no-inputtypes li.inputtypes{ color: red; }.no-intl li.intl{ color: red; }.no-jpeg2000 li.jpeg2000{ color: red; }.no-jpegxr li.jpegxr{ color: red; }.no-json li.json{ color: red; }.no-lastchild li.lastchild{ color: red; }.no-ligatures li.ligatures{ color: red; }.no-localizednumber li.localizednumber{ color: red; }.no-localstorage li.localstorage{ color: red; }.no-lowbandwidth li.lowbandwidth{ color: red; }.no-lowbattery li.lowbattery{ color: red; }.no-matchmedia li.matchmedia{ color: red; }.no-mathml li.mathml{ color: red; }.no-mediaqueries li.mediaqueries{ color: red; }.no-microdata li.microdata{ color: red; }.no-multiplebgs li.multiplebgs{ color: red; }.no-mutationobserver li.mutationobserver{ color: red; }.no-notification li.notification{ color: red; }.no-nthchild li.nthchild{ color: red; }.no-objectfit li.objectfit{ color: red; }.no-olreversed li.olreversed{ color: red; }.no-oninput li.oninput{ color: red; }.no-opacity li.opacity{ color: red; }.no-outputelem li.outputelem{ color: red; }.no-overflowscrolling li.overflowscrolling{ color: red; }.no-pagevisibility li.pagevisibility{ color: red; }.no-passiveeventlisteners li.passiveeventlisteners{ color: red; }.no-peerconnection li.peerconnection{ color: red; }.no-performance li.performance{ color: red; }.no-picture li.picture{ color: red; }.no-placeholder li.placeholder{ color: red; }.no-pointerevents li.pointerevents{ color: red; }.no-pointerlock li.pointerlock{ color: red; }.no-pointermq li.pointermq{ color: red; }.no-postmessage li.postmessage{ color: red; }.no-preserve3d li.preserve3d{ color: red; }.no-progressbar li.progressbar{ color: red; }.no-meter li.meter{ color: red; }.no-promises li.promises{ color: red; }.no-proximity li.proximity{ color: red; }.no-queryselector li.queryselector{ color: red; }.no-quotamanagement li.quotamanagement{ color: red; }.no-regions li.regions{ color: red; }.no-requestanimationframe li.requestanimationframe{ color: red; }.no-requestautocomplete li.requestautocomplete{ color: red; }.no-rgba li.rgba{ color: red; }.no-ruby li.ruby{ color: red; }.no-sandbox li.sandbox{ color: red; }.no-scriptasync li.scriptasync{ color: red; }.no-scriptdefer li.scriptdefer{ color: red; }.no-scrollsnappoints li.scrollsnappoints{ color: red; }.no-seamless li.seamless{ color: red; }.no-search li.search{ color: red; }.no-serviceworker li.serviceworker{ color: red; }.no-sessionstorage li.sessionstorage{ color: red; }.no-shapes li.shapes{ color: red; }.no-sharedworkers li.sharedworkers{ color: red; }.no-siblinggeneral li.siblinggeneral{ color: red; }.no-sizes li.sizes{ color: red; }.no-smil li.smil{ color: red; }.no-speechrecognition li.speechrecognition{ color: red; }.no-speechsynthesis li.speechsynthesis{ color: red; }.no-srcdoc li.srcdoc{ color: red; }.no-srcset li.srcset{ color: red; }.no-strictmode li.strictmode{ color: red; }.no-stylescoped li.stylescoped{ color: red; }.no-subpixelfont li.subpixelfont{ color: red; }.no-supports li.supports{ color: red; }.no-svg li.svg{ color: red; }.no-svgasimg li.svgasimg{ color: red; }.no-svgclippaths li.svgclippaths{ color: red; }.no-svgfilters li.svgfilters{ color: red; }.no-svgforeignobject li.svgforeignobject{ color: red; }.no-target li.target{ color: red; }.no-template li.template{ color: red; }.no-templatestrings li.templatestrings{ color: red; }.no-textalignlast li.textalignlast{ color: red; }.no-textareamaxlength li.textareamaxlength{ color: red; }.no-textshadow li.textshadow{ color: red; }.no-texttrackapi li.texttrackapi{ color: red; }.no-track li.track{ color: red; }.no-time li.time{ color: red; }.no-todataurljpeg li.todataurljpeg{ color: red; }.no-todataurlpng li.todataurlpng{ color: red; }.no-todataurlwebp li.todataurlwebp{ color: red; }.no-touchevents li.touchevents{ color: red; }.no-transferables li.transferables{ color: red; }.no-typedarrays li.typedarrays{ color: red; }.no-unicode li.unicode{ color: red; }.no-unicoderange li.unicoderange{ color: red; }.no-unknownelements li.unknownelements{ color: red; }.no-urlparser li.urlparser{ color: red; }.no-urlsearchparams li.urlsearchparams{ color: red; }.no-userdata li.userdata{ color: red; }.no-userselect li.userselect{ color: red; }.no-variablefonts li.variablefonts{ color: red; }.no-vibrate li.vibrate{ color: red; }.no-video li.video{ color: red; }.no-videoautoplay li.videoautoplay{ color: red; }.no-videocrossorigin li.videocrossorigin{ color: red; }.no-videoloop li.videoloop{ color: red; }.no-videopreload li.videopreload{ color: red; }.no-vml li.vml{ color: red; }.no-webaudio li.webaudio{ color: red; }.no-webgl li.webgl{ color: red; }.no-webglextensions li.webglextensions{ color: red; }.no-webintents li.webintents{ color: red; }.no-webp li.webp{ color: red; }.no-webpalpha li.webpalpha{ color: red; }.no-webpanimation li.webpanimation{ color: red; }.no-webplossless li.webplossless{ color: red; }.no-webp li.webp{ color: red; }.no-lossless li.lossless{ color: red; }.no-websockets li.websockets{ color: red; }.no-websocketsbinary li.websocketsbinary{ color: red; }.no-websqldatabase li.websqldatabase{ color: red; }.no-webworkers li.webworkers{ color: red; }.no-willchange li.willchange{ color: red; }.no-wrapflow li.wrapflow{ color: red; }.no-xdomainrequest li.xdomainrequest{ color: red; }.no-xhr2 li.xhr2{ color: red; }.no-xhrresponsetype li.xhrresponsetype{ color: red; }.no-xhrresponsetypearraybuffer li.xhrresponsetypearraybuffer{ color: red; }.no-xhrresponsetypeblob li.xhrresponsetypeblob{ color: red; }.no-xhrresponsetypedocument li.xhrresponsetypedocument{ color: red; }.no-xhrresponsetypejson li.xhrresponsetypejson{ color: red; }.no-xhrresponsetypetext li.xhrresponsetypetext{ color: red; }.no-addtest li.addtest{ color: red; }.no-atrule li.atrule{ color: red; }.no-domprefixes li.domprefixes{ color: red; }.no-dontmin li.dontmin{ color: red; }.no-hasevent li.hasevent{ color: red; }.no-mq li.mq{ color: red; }.no-prefixed li.prefixed{ color: red; }.no-prefixedcss li.prefixedcss{ color: red; }.no-prefixedcssvalue li.prefixedcssvalue{ color: red; }.no-prefixes li.prefixes{ color: red; }.no-printshiv li.printshiv{ color: red; }.no-setclasses li.setclasses{ color: red; }.no-shiv li.shiv{ color: red; }.no-testallprops li.testallprops{ color: red; }.no-testprop li.testprop{ color: red; }.no-teststyles li.teststyles{ color: red; }
+   li {
+  color: green; float:left;
+}
+.no-MessageChannel li.MessageChannel {
+  color:red; float:right;
+}
+.no-adownload li.adownload {
+  color:red; float:right;
+}
+.no-ambientlight li.ambientlight {
+  color:red; float:right;
+}
+.no-animation li.animation {
+  color:red; float:right;
+}
+.no-apng li.apng {
+  color:red; float:right;
+}
+.no-appearance li.appearance {
+  color:red; float:right;
+}
+.no-applicationcache li.applicationcache {
+  color:red; float:right;
+}
+.no-arrow li.arrow {
+  color:red; float:right;
+}
+.no-atobbtoa li.atobbtoa {
+  color:red; float:right;
+}
+.no-audio li.audio {
+  color:red; float:right;
+}
+.no-audioloop li.audioloop {
+  color:red; float:right;
+}
+.no-audiopreload li.audiopreload {
+  color:red; float:right;
+}
+.no-backdropfilter li.backdropfilter {
+  color:red; float:right;
+}
+.no-backgroundblendmode li.backgroundblendmode {
+  color:red; float:right;
+}
+.no-backgroundcliptext li.backgroundcliptext {
+  color:red; float:right;
+}
+.no-backgroundsize li.backgroundsize {
+  color:red; float:right;
+}
+.no-batteryapi li.batteryapi {
+  color:red; float:right;
+}
+.no-bdi li.bdi {
+  color:red; float:right;
+}
+.no-beacon li.beacon {
+  color:red; float:right;
+}
+.no-bgpositionshorthand li.bgpositionshorthand {
+  color:red; float:right;
+}
+.no-bgpositionxy li.bgpositionxy {
+  color:red; float:right;
+}
+.no-bgrepeatspace li.bgrepeatspace {
+  color:red; float:right;
+}
+.no-bgrepeatround li.bgrepeatround {
+  color:red; float:right;
+}
+.no-bgsizecover li.bgsizecover {
+  color:red; float:right;
+}
+.no-blobconstructor li.blobconstructor {
+  color:red; float:right;
+}
+.no-bloburls li.bloburls {
+  color:red; float:right;
+}
+.no-blobworkers li.blobworkers {
+  color:red; float:right;
+}
+.no-borderimage li.borderimage {
+  color:red; float:right;
+}
+.no-borderradius li.borderradius {
+  color:red; float:right;
+}
+.no-boxshadow li.boxshadow {
+  color:red; float:right;
+}
+.no-boxsizing li.boxsizing {
+  color:red; float:right;
+}
+.no-canvas li.canvas {
+  color:red; float:right;
+}
+.no-canvasblending li.canvasblending {
+  color:red; float:right;
+}
+.no-canvastext li.canvastext {
+  color:red; float:right;
+}
+.no-canvaswinding li.canvaswinding {
+  color:red; float:right;
+}
+.no-capture li.capture {
+  color:red; float:right;
+}
+.no-checked li.checked {
+  color:red; float:right;
+}
+.no-classlist li.classlist {
+  color:red; float:right;
+}
+.no-contains li.contains {
+  color:red; float:right;
+}
+.no-contenteditable li.contenteditable {
+  color:red; float:right;
+}
+.no-contextmenu li.contextmenu {
+  color:red; float:right;
+}
+.no-cookies li.cookies {
+  color:red; float:right;
+}
+.no-cors li.cors {
+  color:red; float:right;
+}
+.no-createelementattrs li.createelementattrs {
+  color:red; float:right;
+}
+.no-createelement li.createelement {
+  color:red; float:right;
+}
+.no-attrs li.attrs {
+  color:red; float:right;
+}
+.no-cryptography li.cryptography {
+  color:red; float:right;
+}
+.no-cssall li.cssall {
+  color:red; float:right;
+}
+.no-cssanimations li.cssanimations {
+  color:red; float:right;
+}
+.no-csscalc li.csscalc {
+  color:red; float:right;
+}
+.no-csschunit li.csschunit {
+  color:red; float:right;
+}
+.no-csscolumns li.csscolumns {
+  color:red; float:right;
+}
+.no-cssescape li.cssescape {
+  color:red; float:right;
+}
+.no-cssexunit li.cssexunit {
+  color:red; float:right;
+}
+.no-cssfilters li.cssfilters {
+  color:red; float:right;
+}
+.no-cssgradients li.cssgradients {
+  color:red; float:right;
+}
+.no-cssgrid li.cssgrid {
+  color:red; float:right;
+}
+.no-cssgridlegacy li.cssgridlegacy {
+  color:red; float:right;
+}
+.no-csshyphens li.csshyphens {
+  color:red; float:right;
+}
+.no-softhyphens li.softhyphens {
+  color:red; float:right;
+}
+.no-softhyphensfind li.softhyphensfind {
+  color:red; float:right;
+}
+.no-cssinvalid li.cssinvalid {
+  color:red; float:right;
+}
+.no-cssmask li.cssmask {
+  color:red; float:right;
+}
+.no-csspointerevents li.csspointerevents {
+  color:red; float:right;
+}
+.no-csspositionsticky li.csspositionsticky {
+  color:red; float:right;
+}
+.no-csspseudoanimations li.csspseudoanimations {
+  color:red; float:right;
+}
+.no-csspseudotransitions li.csspseudotransitions {
+  color:red; float:right;
+}
+.no-cssreflections li.cssreflections {
+  color:red; float:right;
+}
+.no-cssremunit li.cssremunit {
+  color:red; float:right;
+}
+.no-cssresize li.cssresize {
+  color:red; float:right;
+}
+.no-cssscrollbar li.cssscrollbar {
+  color:red; float:right;
+}
+.no-csstransforms li.csstransforms {
+  color:red; float:right;
+}
+.no-csstransforms3d li.csstransforms3d {
+  color:red; float:right;
+}
+.no-csstransformslevel2 li.csstransformslevel2 {
+  color:red; float:right;
+}
+.no-csstransitions li.csstransitions {
+  color:red; float:right;
+}
+.no-cssvalid li.cssvalid {
+  color:red; float:right;
+}
+.no-cssvhunit li.cssvhunit {
+  color:red; float:right;
+}
+.no-cssvmaxunit li.cssvmaxunit {
+  color:red; float:right;
+}
+.no-cssvminunit li.cssvminunit {
+  color:red; float:right;
+}
+.no-cssvwunit li.cssvwunit {
+  color:red; float:right;
+}
+.no-cubicbezierrange li.cubicbezierrange {
+  color:red; float:right;
+}
+.no-customelements li.customelements {
+  color:red; float:right;
+}
+.no-customevent li.customevent {
+  color:red; float:right;
+}
+.no-customprotocolhandler li.customprotocolhandler {
+  color:red; float:right;
+}
+.no-dart li.dart {
+  color:red; float:right;
+}
+.no-datachannel li.datachannel {
+  color:red; float:right;
+}
+.no-datalistelem li.datalistelem {
+  color:red; float:right;
+}
+.no-dataset li.dataset {
+  color:red; float:right;
+}
+.no-datauri li.datauri {
+  color:red; float:right;
+}
+.no-dataview li.dataview {
+  color:red; float:right;
+}
+.no-dataworkers li.dataworkers {
+  color:red; float:right;
+}
+.no-details li.details {
+  color:red; float:right;
+}
+.no-devicemotion li.devicemotion {
+  color:red; float:right;
+}
+.no-deviceorientation li.deviceorientation {
+  color:red; float:right;
+}
+.no-directory li.directory {
+  color:red; float:right;
+}
+.no-display li.display {
+  color:red; float:right;
+}
+.no-runin li.runin {
+  color:red; float:right;
+}
+.no-displaytable li.displaytable {
+  color:red; float:right;
+}
+.no-documentfragment li.documentfragment {
+  color:red; float:right;
+}
+.no-ellipsis li.ellipsis {
+  color:red; float:right;
+}
+.no-emoji li.emoji {
+  color:red; float:right;
+}
+.no-es5 li.es5 {
+  color:red; float:right;
+}
+.no-es5array li.es5array {
+  color:red; float:right;
+}
+.no-es5date li.es5date {
+  color:red; float:right;
+}
+.no-es5function li.es5function {
+  color:red; float:right;
+}
+.no-es5object li.es5object {
+  color:red; float:right;
+}
+.no-es5string li.es5string {
+  color:red; float:right;
+}
+.no-es5syntax li.es5syntax {
+  color:red; float:right;
+}
+.no-es5undefined li.es5undefined {
+  color:red; float:right;
+}
+.no-es6array li.es6array {
+  color:red; float:right;
+}
+.no-es6collections li.es6collections {
+  color:red; float:right;
+}
+.no-es6math li.es6math {
+  color:red; float:right;
+}
+.no-es6number li.es6number {
+  color:red; float:right;
+}
+.no-es6object li.es6object {
+  color:red; float:right;
+}
+.no-es6string li.es6string {
+  color:red; float:right;
+}
+.no-eventlistener li.eventlistener {
+  color:red; float:right;
+}
+.no-eventsource li.eventsource {
+  color:red; float:right;
+}
+.no-exiforientation li.exiforientation {
+  color:red; float:right;
+}
+.no-fetch li.fetch {
+  color:red; float:right;
+}
+.no-fileinput li.fileinput {
+  color:red; float:right;
+}
+.no-filereader li.filereader {
+  color:red; float:right;
+}
+.no-filesystem li.filesystem {
+  color:red; float:right;
+}
+.no-flash li.flash {
+  color:red; float:right;
+}
+.no-flexbox li.flexbox {
+  color:red; float:right;
+}
+.no-flexboxlegacy li.flexboxlegacy {
+  color:red; float:right;
+}
+.no-flexboxtweener li.flexboxtweener {
+  color:red; float:right;
+}
+.no-flexwrap li.flexwrap {
+  color:red; float:right;
+}
+.no-focuswithin li.focuswithin {
+  color:red; float:right;
+}
+.no-fontface li.fontface {
+  color:red; float:right;
+}
+.no-forcetouch li.forcetouch {
+  color:red; float:right;
+}
+.no-formattribute li.formattribute {
+  color:red; float:right;
+}
+.no-formvalidation li.formvalidation {
+  color:red; float:right;
+}
+.no-framed li.framed {
+  color:red; float:right;
+}
+.no-fullscreen li.fullscreen {
+  color:red; float:right;
+}
+.no-gamepads li.gamepads {
+  color:red; float:right;
+}
+.no-generatedcontent li.generatedcontent {
+  color:red; float:right;
+}
+.no-generators li.generators {
+  color:red; float:right;
+}
+.no-geolocation li.geolocation {
+  color:red; float:right;
+}
+.no-getrandomvalues li.getrandomvalues {
+  color:red; float:right;
+}
+.no-getusermedia li.getusermedia {
+  color:red; float:right;
+}
+.no-hairline li.hairline {
+  color:red; float:right;
+}
+.no-hashchange li.hashchange {
+  color:red; float:right;
+}
+.no-hidden li.hidden {
+  color:red; float:right;
+}
+.no-hiddenscroll li.hiddenscroll {
+  color:red; float:right;
+}
+.no-history li.history {
+  color:red; float:right;
+}
+.no-hovermq li.hovermq {
+  color:red; float:right;
+}
+.no-hsla li.hsla {
+  color:red; float:right;
+}
+.no-htmlimports li.htmlimports {
+  color:red; float:right;
+}
+.no-ie8compat li.ie8compat {
+  color:red; float:right;
+}
+.no-imgcrossorigin li.imgcrossorigin {
+  color:red; float:right;
+}
+.no-indexeddb li.indexeddb {
+  color:red; float:right;
+}
+.no-indexeddbblob li.indexeddbblob {
+  color:red; float:right;
+}
+.no-inlinesvg li.inlinesvg {
+  color:red; float:right;
+}
+.no-input li.input {
+  color:red; float:right;
+}
+.no-inputformaction li.inputformaction {
+  color:red; float:right;
+}
+.no-inputformenctype li.inputformenctype {
+  color:red; float:right;
+}
+.no-inputformmethod li.inputformmethod {
+  color:red; float:right;
+}
+.no-inputformtarget li.inputformtarget {
+  color:red; float:right;
+}
+.no-inputtypes li.inputtypes {
+  color:red; float:right;
+}
+.no-intl li.intl {
+  color:red; float:right;
+}
+.no-jpeg2000 li.jpeg2000 {
+  color:red; float:right;
+}
+.no-jpegxr li.jpegxr {
+  color:red; float:right;
+}
+.no-json li.json {
+  color:red; float:right;
+}
+.no-lastchild li.lastchild {
+  color:red; float:right;
+}
+.no-ligatures li.ligatures {
+  color:red; float:right;
+}
+.no-localizednumber li.localizednumber {
+  color:red; float:right;
+}
+.no-localstorage li.localstorage {
+  color:red; float:right;
+}
+.no-lowbandwidth li.lowbandwidth {
+  color:red; float:right;
+}
+.no-lowbattery li.lowbattery {
+  color:red; float:right;
+}
+.no-matchmedia li.matchmedia {
+  color:red; float:right;
+}
+.no-mathml li.mathml {
+  color:red; float:right;
+}
+.no-mediaqueries li.mediaqueries {
+  color:red; float:right;
+}
+.no-microdata li.microdata {
+  color:red; float:right;
+}
+.no-multiplebgs li.multiplebgs {
+  color:red; float:right;
+}
+.no-mutationobserver li.mutationobserver {
+  color:red; float:right;
+}
+.no-notification li.notification {
+  color:red; float:right;
+}
+.no-nthchild li.nthchild {
+  color:red; float:right;
+}
+.no-objectfit li.objectfit {
+  color:red; float:right;
+}
+.no-olreversed li.olreversed {
+  color:red; float:right;
+}
+.no-oninput li.oninput {
+  color:red; float:right;
+}
+.no-opacity li.opacity {
+  color:red; float:right;
+}
+.no-outputelem li.outputelem {
+  color:red; float:right;
+}
+.no-overflowscrolling li.overflowscrolling {
+  color:red; float:right;
+}
+.no-pagevisibility li.pagevisibility {
+  color:red; float:right;
+}
+.no-passiveeventlisteners li.passiveeventlisteners {
+  color:red; float:right;
+}
+.no-peerconnection li.peerconnection {
+  color:red; float:right;
+}
+.no-performance li.performance {
+  color:red; float:right;
+}
+.no-picture li.picture {
+  color:red; float:right;
+}
+.no-placeholder li.placeholder {
+  color:red; float:right;
+}
+.no-pointerevents li.pointerevents {
+  color:red; float:right;
+}
+.no-pointerlock li.pointerlock {
+  color:red; float:right;
+}
+.no-pointermq li.pointermq {
+  color:red; float:right;
+}
+.no-postmessage li.postmessage {
+  color:red; float:right;
+}
+.no-preserve3d li.preserve3d {
+  color:red; float:right;
+}
+.no-progressbar li.progressbar {
+  color:red; float:right;
+}
+.no-meter li.meter {
+  color:red; float:right;
+}
+.no-promises li.promises {
+  color:red; float:right;
+}
+.no-proximity li.proximity {
+  color:red; float:right;
+}
+.no-queryselector li.queryselector {
+  color:red; float:right;
+}
+.no-quotamanagement li.quotamanagement {
+  color:red; float:right;
+}
+.no-regions li.regions {
+  color:red; float:right;
+}
+.no-requestanimationframe li.requestanimationframe {
+  color:red; float:right;
+}
+.no-requestautocomplete li.requestautocomplete {
+  color:red; float:right;
+}
+.no-rgba li.rgba {
+  color:red; float:right;
+}
+.no-ruby li.ruby {
+  color:red; float:right;
+}
+.no-sandbox li.sandbox {
+  color:red; float:right;
+}
+.no-scriptasync li.scriptasync {
+  color:red; float:right;
+}
+.no-scriptdefer li.scriptdefer {
+  color:red; float:right;
+}
+.no-scrollsnappoints li.scrollsnappoints {
+  color:red; float:right;
+}
+.no-seamless li.seamless {
+  color:red; float:right;
+}
+.no-search li.search {
+  color:red; float:right;
+}
+.no-serviceworker li.serviceworker {
+  color:red; float:right;
+}
+.no-sessionstorage li.sessionstorage {
+  color:red; float:right;
+}
+.no-shapes li.shapes {
+  color:red; float:right;
+}
+.no-sharedworkers li.sharedworkers {
+  color:red; float:right;
+}
+.no-siblinggeneral li.siblinggeneral {
+  color:red; float:right;
+}
+.no-sizes li.sizes {
+  color:red; float:right;
+}
+.no-smil li.smil {
+  color:red; float:right;
+}
+.no-speechrecognition li.speechrecognition {
+  color:red; float:right;
+}
+.no-speechsynthesis li.speechsynthesis {
+  color:red; float:right;
+}
+.no-srcdoc li.srcdoc {
+  color:red; float:right;
+}
+.no-srcset li.srcset {
+  color:red; float:right;
+}
+.no-strictmode li.strictmode {
+  color:red; float:right;
+}
+.no-stylescoped li.stylescoped {
+  color:red; float:right;
+}
+.no-subpixelfont li.subpixelfont {
+  color:red; float:right;
+}
+.no-supports li.supports {
+  color:red; float:right;
+}
+.no-svg li.svg {
+  color:red; float:right;
+}
+.no-svgasimg li.svgasimg {
+  color:red; float:right;
+}
+.no-svgclippaths li.svgclippaths {
+  color:red; float:right;
+}
+.no-svgfilters li.svgfilters {
+  color:red; float:right;
+}
+.no-svgforeignobject li.svgforeignobject {
+  color:red; float:right;
+}
+.no-target li.target {
+  color:red; float:right;
+}
+.no-template li.template {
+  color:red; float:right;
+}
+.no-templatestrings li.templatestrings {
+  color:red; float:right;
+}
+.no-textalignlast li.textalignlast {
+  color:red; float:right;
+}
+.no-textareamaxlength li.textareamaxlength {
+  color:red; float:right;
+}
+.no-textshadow li.textshadow {
+  color:red; float:right;
+}
+.no-texttrackapi li.texttrackapi {
+  color:red; float:right;
+}
+.no-track li.track {
+  color:red; float:right;
+}
+.no-time li.time {
+  color:red; float:right;
+}
+.no-todataurljpeg li.todataurljpeg {
+  color:red; float:right;
+}
+.no-todataurlpng li.todataurlpng {
+  color:red; float:right;
+}
+.no-todataurlwebp li.todataurlwebp {
+  color:red; float:right;
+}
+.no-touchevents li.touchevents {
+  color:red; float:right;
+}
+.no-transferables li.transferables {
+  color:red; float:right;
+}
+.no-typedarrays li.typedarrays {
+  color:red; float:right;
+}
+.no-unicode li.unicode {
+  color:red; float:right;
+}
+.no-unicoderange li.unicoderange {
+  color:red; float:right;
+}
+.no-unknownelements li.unknownelements {
+  color:red; float:right;
+}
+.no-urlparser li.urlparser {
+  color:red; float:right;
+}
+.no-urlsearchparams li.urlsearchparams {
+  color:red; float:right;
+}
+.no-userdata li.userdata {
+  color:red; float:right;
+}
+.no-userselect li.userselect {
+  color:red; float:right;
+}
+.no-variablefonts li.variablefonts {
+  color:red; float:right;
+}
+.no-vibrate li.vibrate {
+  color:red; float:right;
+}
+.no-video li.video {
+  color:red; float:right;
+}
+.no-videoautoplay li.videoautoplay {
+  color:red; float:right;
+}
+.no-videocrossorigin li.videocrossorigin {
+  color:red; float:right;
+}
+.no-videoloop li.videoloop {
+  color:red; float:right;
+}
+.no-videopreload li.videopreload {
+  color:red; float:right;
+}
+.no-vml li.vml {
+  color:red; float:right;
+}
+.no-webaudio li.webaudio {
+  color:red; float:right;
+}
+.no-webgl li.webgl {
+  color:red; float:right;
+}
+.no-webglextensions li.webglextensions {
+  color:red; float:right;
+}
+.no-webintents li.webintents {
+  color:red; float:right;
+}
+.no-webp li.webp {
+  color:red; float:right;
+}
+.no-webpalpha li.webpalpha {
+  color:red; float:right;
+}
+.no-webpanimation li.webpanimation {
+  color:red; float:right;
+}
+.no-webplossless li.webplossless {
+  color:red; float:right;
+}
+.no-webp li.webp {
+  color:red; float:right;
+}
+.no-lossless li.lossless {
+  color:red; float:right;
+}
+.no-websockets li.websockets {
+  color:red; float:right;
+}
+.no-websocketsbinary li.websocketsbinary {
+  color:red; float:right;
+}
+.no-websqldatabase li.websqldatabase {
+  color:red; float:right;
+}
+.no-webworkers li.webworkers {
+  color:red; float:right;
+}
+.no-willchange li.willchange {
+  color:red; float:right;
+}
+.no-wrapflow li.wrapflow {
+  color:red; float:right;
+}
+.no-xdomainrequest li.xdomainrequest {
+  color:red; float:right;
+}
+.no-xhr2 li.xhr2 {
+  color:red; float:right;
+}
+.no-xhrresponsetype li.xhrresponsetype {
+  color:red; float:right;
+}
+.no-xhrresponsetypearraybuffer li.xhrresponsetypearraybuffer {
+  color:red; float:right;
+}
+.no-xhrresponsetypeblob li.xhrresponsetypeblob {
+  color:red; float:right;
+}
+.no-xhrresponsetypedocument li.xhrresponsetypedocument {
+  color:red; float:right;
+}
+.no-xhrresponsetypejson li.xhrresponsetypejson {
+  color:red; float:right;
+}
+.no-xhrresponsetypetext li.xhrresponsetypetext {
+  color:red; float:right;
+}
+.no-addtest li.addtest {
+  color:red; float:right;
+}
+.no-atrule li.atrule {
+  color:red; float:right;
+}
+.no-domprefixes li.domprefixes {
+  color:red; float:right;
+}
+.no-dontmin li.dontmin {
+  color:red; float:right;
+}
+.no-hasevent li.hasevent {
+  color:red; float:right;
+}
+.no-mq li.mq {
+  color:red; float:right;
+}
+.no-prefixed li.prefixed {
+  color:red; float:right;
+}
+.no-prefixedcss li.prefixedcss {
+  color:red; float:right;
+}
+.no-prefixedcssvalue li.prefixedcssvalue {
+  color:red; float:right;
+}
+.no-prefixes li.prefixes {
+  color:red; float:right;
+}
+.no-printshiv li.printshiv {
+  color:red; float:right;
+}
+.no-setclasses li.setclasses {
+  color:red; float:right;
+}
+.no-shiv li.shiv {
+  color:red; float:right;
+}
+.no-testallprops li.testallprops {
+  color:red; float:right;
+}
+.no-testprop li.testprop {
+  color:red; float:right;
+}
+.no-teststyles li.teststyles {
+  color:red; float:right;
+}
   </style>
   </head>
   <body>
