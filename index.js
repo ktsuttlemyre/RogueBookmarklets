@@ -17,7 +17,8 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-  {% for marklet in site.static_files %}
+  {% assign allScripts = site.static_files | concat: site.scripts %}
+  {% for marklet in allScripts %}
   {% assign path = marklet.path | split: "/" %}
   {% if path[1] contains 'bookmarklets' or path[1] contains 'scripts' %}
     "{{ marklet.basename | escape }}":{
