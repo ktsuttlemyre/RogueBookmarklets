@@ -17,11 +17,25 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-  {% assign allScripts = site.static_files | concat: site.documents %}
+  {%- assign allScripts = '' | split: '' -%}
+
+  {%- for coll in site.collections -%}
+  {%- unless coll.label == "posts" -%}
+  {%- assign allScripts = allScripts | concat: coll.files -%}
+  {%- endunless -%}
+  {%- endfor -%}
+
+  {%- for marklet in site.static_files -%}
+  {%- assign path = marklet.path | split: "/" -%}
+  {%- if path[1] contains 'bookmarklets' or path[1] contains 'scripts' -%}
+    {%- assign allScripts = allScripts | concat: marklet -%}
+  {%- endif -%}
+  {%- endfor -%}
+  
+  
+
   {% for marklet in allScripts %}
-  {% assign path = marklet.path | split: "/" %}
-  {% if path[1] contains 'bookmarklets' or path[1] contains 'scripts' %}
-    "{{ marklet.basename | escape }}":{
+   "{{ marklet.basename | escape }}":{
       "basename":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
       "modified_time":"{{ marklet.modified_time }}",
@@ -34,7 +48,6 @@ window.RogueBM.scripts={
       "primarySrc":"jsdelivr",
       "index":{% increment bookmarklets %}
     },
-  {% endif %}
   {% endfor %}
 
   //http://7is7.com/software/bookmarklets/translate.html
