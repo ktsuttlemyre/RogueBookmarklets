@@ -46,7 +46,7 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "primarySrc":"jsdelivr",
-      "index":{{ forloop.index }}
+      "index":{{ forloop.index | minus:1 }}
     },
   {% endfor %}
 
