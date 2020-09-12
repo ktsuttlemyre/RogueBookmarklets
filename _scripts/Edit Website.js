@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-
+document.body.contentEditable = 'true'; document.designMode='on'; void 0
 {{ endraw }}
