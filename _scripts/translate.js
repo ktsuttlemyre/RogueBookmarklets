@@ -23,7 +23,7 @@ var e = document.charset || document.characterSet;
 var selection=window.getSelection();
 debugger
 if (selection) {
-  window.open("http://translate.google.com/translate_t?text=" + selection + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
+  location.href=("http://translate.google.com/translate_t?text=" + selection + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
 } else {
-  window.open("http://translate.google.com/translate?u=" + escape(location.href) + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
+  location.href=("http://translate.google.com/translate?u=" + escape(location.href) + "&hl=en&langpair=auto|en&tbb=1&ie=" + e);
 }
