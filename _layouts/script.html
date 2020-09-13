@@ -192,14 +192,15 @@ function mock(obj,skip){
 
     var checkedWindows
     var getSelection=function getSelection(){
-        console.log('getSelection',win,doc);
+        var win,doc;
         if(this==mocks.window){
             win=refs.window
             doc=refs.window.document
         }else{
             win=this;
-            doc=this.document||this.contentDocument;
+            doc=this.contentDocument||this.document;
         }
+        console.log('getSelection',win,doc);
 
         var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
         if(selection){
