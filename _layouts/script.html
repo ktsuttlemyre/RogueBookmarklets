@@ -148,21 +148,30 @@ function mock(obj,skip){
  
     var RogueBM=window['RogueBM']||{};
     
-    var win=mock(window);
-    var doc=mock(window.document,['location']);
-    var loc=mock(window.document.location);
+
+    //win.document.location='http://google.com'
+    var mocks = {
+        window:mock(window),
+        document:mock(window.document,['location']),
+        location:mock(window.document.location)
+    }
+
+    //build higherarchy 
+    mocks.window.document=mocks.document;
+    mocks.window.document.location=mocks.location
+    mocks.window.location=mocks.location;
 
     //custom apis
-    //loc.href=location.href.toString()
+    //mocks.location.href=location.href.toString()
 
     var refs=RogueBM['envRefs'];
     var currentCommandID=RogueBM['currentCommandID']
-    var alert=win.alert=function alert(message){
+    var alert=mocks.window.alert=function alert(message){
         var skipAlerts=RogueBM['skipAlerts'][currentCommandID];
         if(skipAlerts){return autoConfirmAnswer;}
         return refs.window.alert(message);
     }
-    var confirm=win.confirm=function confirm(){
+    var confirm=mocks.window.confirm=function confirm(){
         var autoConfirmAnswer=RogueBM['autoConfirm'][currentCommandID];
         if(typeof autoConfirmAnswer =='boolean'){return autoConfirmAnswer;}
         var args=RogueBM['handoffArgs'][currentCommandID];
@@ -172,7 +181,7 @@ function mock(obj,skip){
         }
         return refs.window.confirm(message,value);
     }
-    var prompt=win.prompt=function prompt(message,value){
+    var prompt=mocks.window.prompt=function prompt(message,value){
         var args=RogueBM['handoffArgs'][currentCommandID];
         if(args.length){
              var arg=args.shift(); //maybe check if argument is string and enforce it?
@@ -182,54 +191,52 @@ function mock(obj,skip){
     }
 
     var checkedWindows
-    var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
-        if(!win || !doc){
-            throw "Must provide getSelection with a window and doc object. win="+!!win+"doc="+!!doc
-        }
+    var getSelection=function getSelection(){
         console.log('getSelection',win,doc);
-      var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
-      if(selection){
-        return selection
-      }
-      //try to get from frames
-      for(var i=0,l=window.frames.length;i<l;i++){
-        //call document this way because of IE
-        //https://stackoverflow.com/questions/17197084/difference-between-contentdocument-and-contentwindow-javascript-iframe-frame-acc
-        try{
-            console.log('iframe index',i)
-            selection=getSelection(window.frames[i] /*.contentWindow note: that is the contentWindow*/ ,window.frames[i].contentDocument);
-        }catch(error1){
-            continue;
+        if(this==mocks.window){
+            win=refs.window
+            doc=refs.window.document
+        }else{
+            win=this;
+            doc=this.document||this.contentDocument;
         }
+
+        var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
         if(selection){
-          return selection;
+          return selection
+        }
+        //try to get from frames
+        for(var i=0,l=window.frames.length;i<l;i++){
+          //call document this way because of IE
+          //https://stackoverflow.com/questions/17197084/difference-between-contentdocument-and-contentwindow-javascript-iframe-frame-acc
+          try{
+              console.log('iframe index',i)
+              selection=getSelection.call(window.frames[i]); // /*.contentWindow note: that is the contentWindow*/ ,window.frames[i].contentDocument);
+          }catch(error1){
+              continue;
+          }
+          if(selection){
+            return selection;
         }
       }
     }
-    doc.selection={
+    mocks.window.getSelection=getSelection.bind(mocks.window)
+    mocks.document.getSelection=getSelection.bind(mocks.document)
+
+    mocks.document.selection={
         'createRange':function(){
-            return {'text': getSelection(win,doc)}
+            return {'text': mocks.window.getSelection()}
         }
     }
 
 
-    //build higherarchy 
-    win.document=doc;
-    win.document.location=loc
-    win.location=loc;
 
-    //win.document.location='http://google.com'
-    var mocks = {
-            window:win,
-            document:doc,
-            location:loc
-        }
 
 
     var package=function bookmarkletClosure(window,document,location,prompt,alert,confirm){
 
         var stdout=RogueBM['stdout'];
-        var selection = (stdout!=null)?stdout:(getSelection(window,window.document)||'');
+        var selection = (stdout!=null)?stdout:(getSelection.call(window)||'');
         var serverSecret='{{ site.github.build_revision }}'
         //Their code
         {{ page.content }}
