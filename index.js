@@ -2,7 +2,7 @@
 ---
 {% capture NL %}
 {% endcapture %}
-{% assign index = 0 %}
+{% assign counter = 0 %}
 //touch
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
@@ -41,7 +41,7 @@ window.RogueBM.scripts={
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ path | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ path | url_escape }}",
         "primarySrc":"jsdelivr",
-        "index":{{ index | plus: 1 }}
+        "index":{{ counter | plus: 1 }}
       },
     {%- endfor -%}
     {%- endif -%}
@@ -62,7 +62,7 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "primarySrc":"jsdelivr",
-      "index":{{ index | plus: 1 }}
+      "index":{{ counter | plus: 1 }}
     },
   {%- endif -%}
   {%- endfor -%}
