@@ -240,7 +240,7 @@ function mock(obj,skip){
             RogueBM['execute'](package)
         }else{
             var mocks=RogueBM['mocks']
-            packagel.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocsk.window.prompt,mocsk.window.alert,mocsk.window.confirm])
+            package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocsk.window.prompt,mocsk.window.alert,mocsk.window.confirm])
         }
     }else{
         package(window,document,location,prompt,alert,confirm)
