@@ -183,6 +183,7 @@ function mock(obj,skip){
 
     var checkedWindows
     var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
+        console.log('getSelection',win,doc);
       var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
       if(selection){
         return selection
@@ -192,6 +193,7 @@ function mock(obj,skip){
         //call document this way because of IE
         //https://stackoverflow.com/questions/17197084/difference-between-contentdocument-and-contentwindow-javascript-iframe-frame-acc
         try{
+            console.log('iframe index',i)
             selection=getSelection(window.frames[i] /*.contentWindow note: that is the contentWindow*/ ,window.frames[i].contentDocument);
         }catch(error1){
             continue;
