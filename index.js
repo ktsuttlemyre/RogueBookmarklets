@@ -39,7 +39,7 @@ window.RogueBM.scripts={
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
         "href":"javascript:{{ url | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
-        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ url | url_escape }}",
+        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ url | url_escape }}",
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "index":{{ counter | plus: 1 }}
