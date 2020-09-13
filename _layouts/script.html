@@ -183,6 +183,9 @@ function mock(obj,skip){
 
     var checkedWindows
     var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
+        if(!win || !doc){
+            throw "Must provide getSelection with a window and doc object. win="+!!win+"doc="+!!doc
+        }
         console.log('getSelection',win,doc);
       var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
       if(selection){
@@ -205,7 +208,7 @@ function mock(obj,skip){
     }
     doc.selection={
         'createRange':function(){
-            return {'text': getSelection()}
+            return {'text': getSelection(win,doc)}
         }
     }
 
