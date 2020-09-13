@@ -36,7 +36,9 @@ window.RogueBM.scripts={
   
 
   {% for marklet in allScripts %}
-
+  {%- if forloop.first -%}
+    {%- continue -%}
+  {%- endif -%}
    "{{ marklet.basename | escape }}":{
       "basename":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
