@@ -216,9 +216,7 @@ function mock(obj,skip){
         var selection = (stdout!=null)?stdout:(getSelection(global,global.document)||'');
         var serverSecret='{{ site.github.build_revision }}'
         //Their code
-        {% raw %}
         {{ page.content }}
-        {% endraw %}
         //End their code
 
         })(win,win.document,win.document.location)
