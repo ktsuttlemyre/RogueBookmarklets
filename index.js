@@ -2,7 +2,7 @@
 ---
 {% capture NL %}
 {% endcapture %}
-{% assign counter = 0 %}
+{% assign counter = -1 %}
 //touch
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
@@ -20,6 +20,8 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
+  
+  {{ NL }}
 
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
