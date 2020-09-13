@@ -209,6 +209,11 @@ function mock(obj,skip){
     win.location=loc;
 
     //win.document.location='http://google.com'
+    var mocks = {
+            window:win,
+            document:doc,
+            location:loc]
+        }
 
 
     var package=function package(){
@@ -239,7 +244,7 @@ function mock(obj,skip){
         if(RogueBM['execute']){
             RogueBM['execute'](package)
         }else{
-            var mocks=RogueBM['mocks']
+            var mocks=RogueBM['mocks']||mocks;
             package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocsk.window.prompt,mocsk.window.alert,mocsk.window.confirm])
         }
     }else{
