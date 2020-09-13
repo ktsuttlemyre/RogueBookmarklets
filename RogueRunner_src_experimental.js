@@ -853,7 +853,12 @@
         return args;  
     } 
     var args=getArgs(); 
-    //in block notation so closure compiler will 'export' the vairable  
+    //in block notation so closure compiler will 'export' the vairable
+    window['RogueBM']['envRefs']={
+         window:window,
+         document:window.document,
+         location:window.document.location
+    }
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
