@@ -1,5 +1,8 @@
 ---
 ---
+{% capture NL %}
+{% endcapture %}
+{% assign index = 0 %}
 //touch
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
@@ -17,28 +20,37 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-  {%- assign allScripts = '' | split: ',' -%}
-  {%- assign allScripts = allScripts | pop -%}
 
   {%- for coll in site.collections -%}
-  {%- unless coll.label == "posts" -%}
-  {%- assign allScripts = allScripts | push: coll.files -%}
-  {%- endunless -%}
+    {%- if coll.label == "scripts" -%}
+    {%- for doc in site.collections.scripts.docs -%}
+      {%- assign meta doc | split: NL | first | split: '<META>' -%}
+      {%- assign url meta[1] -%}
+      {%- assign path meta[2] -%}
+      {%- assign title meta[3] -%}
+      {%- assign date meta[4] -%}
+      {%- assign revision meta[5] -%}
+     "{{ title | escape }}":{
+        "basename":"{{ title }}",
+        "path":"{{ path }}",
+        "modified_time":"{{ modified_time }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ path | url_escape }}",
+        "href":"javascript:{{ path | url_escape }}",
+        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ path | url_escape }}",
+        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ path | url_escape }}",
+        "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ path | url_escape }}",
+        "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ path | url_escape }}",
+        "primarySrc":"jsdelivr",
+        "index":{{ index | plus: 1 }}
+      },
+    {%- endfor -%}
+    {%- endif -%}
   {%- endfor -%}
+  
 
   {%- for marklet in site.static_files -%}
   {%- assign path = marklet.path | split: "/" -%}
-  {%- if path[1] contains 'bookmarklets' or path[1] contains 'scripts' -%}
-    {%- assign allScripts = allScripts | push: marklet -%}
-  {%- endif -%}
-  {%- endfor -%}
-  
-  
-
-  {% for marklet in allScripts %}
-  {%- if forloop.first -%}
-    {%- continue -%}
-  {%- endif -%}
+  {%- if path[1] contains 'bookmarklets' -%}
    "{{ marklet.basename | escape }}":{
       "basename":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
@@ -50,9 +62,12 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "primarySrc":"jsdelivr",
-      "index":{{ forloop.index | minus:1 }}
+      "index":{{ index | plus: 1 }}
     },
-  {% endfor %}
+  {%- endif -%}
+  {%- endfor -%}
+  
+  
 
   //http://7is7.com/software/bookmarklets/translate.html
   "unTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
