@@ -220,7 +220,7 @@ function mock(obj,skip){
         (function bookmarkletClosure(window,document,location,prompt,alert,confirm){
 
         var stdout=RogueBM['stdout'];
-        var selection = (stdout!=null)?stdout:(getSelection(global,global.document)||'');
+        var selection = (stdout!=null)?stdout:(getSelection(window,window.document)||'');
         var serverSecret='{{ site.github.build_revision }}'
         //Their code
         {{ page.content }}
