@@ -137,12 +137,31 @@ border: 1px solid #a7a7a7;
   left: 0;
   bottom: 0;
   right: 0;
-}			
+}
+
+.iframe #RogueRunner>.modal-content:before{
+    font-family: Ringside Regular A,Ringside Regular B,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: .5rem;
+    content: "iFrame Compatibility Mode";
+    color: #fff;
+    position: absolute;
+    top: -.2rem;
+    right: .4rem;
+    padding: 0;
+    color: #ff8a00!important;
+}
 			
 		</style>
 	</head>
 
 	<body>
+		<script>
+		if(window!==parent){
+			document.getElementsByTagName("HTML")[0].className+=' iframe';
+		}
+		</script>
 		<script id="home" type="text/template">
 		
 		<!--<div class="bubble6 expando" style="position:absolute;top:10%;right:20px;font-size: .75em;">
@@ -239,6 +258,7 @@ border: 1px solid #a7a7a7;
 					try{
 						switch(payload.method) {
 							case 'convertToInterface':
+								window.location.hash+=',roguerunner'
 								inject();
 								returnPayload.data=true //TODO make this async so I can tell the interface is installed properly
 								break;
