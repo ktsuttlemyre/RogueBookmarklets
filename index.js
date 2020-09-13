@@ -28,7 +28,7 @@ window.RogueBM.scripts={
     {%- for doc in coll.docs -%}
       {%- assign meta = doc | split: NL | first | split: "<META>" -%}
       {%- assign url = meta[1] -%}
-      {%- assign path = meta[2] -%}
+      {%- assign source_path = meta[2] -%}
       {%- assign title = meta[3] -%}
       {%- assign date = meta[4] -%}
       {%- assign revision = meta[5] -%}
@@ -36,13 +36,12 @@ window.RogueBM.scripts={
         "basename":"{{ title }}",
         "path":"{{ url }}",
         "modified_time":"{{ modified_time }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ url | url_escape }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
         "href":"javascript:{{ url | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ url | url_escape }}",
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
-        "primarySrc":"jsdelivr",
         "index":{{ counter | plus: 1 }}
       },
     {%- endfor -%}
@@ -63,7 +62,6 @@ window.RogueBM.scripts={
       "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ marklet.path | url_escape }}",
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-      "primarySrc":"jsdelivr",
       "index":{{ counter | plus: 1 }}
     },
   {%- endif -%}
