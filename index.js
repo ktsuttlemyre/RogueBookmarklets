@@ -35,10 +35,8 @@ window.RogueBM.scripts={
   
   
 
-  {%- for marklet in allScripts -%}
-  {%- if forloop.first -%}
-    {%- continue -%}
-  {%- endif -%}
+  {% for marklet in allScripts %}
+
    "{{ marklet.basename | escape }}":{
       "basename":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
@@ -52,7 +50,7 @@ window.RogueBM.scripts={
       "primarySrc":"jsdelivr",
       "index":{{ forloop.index | minus:1 }}
     },
-  {%- endfor -%}
+  {% endfor %}
 
   //http://7is7.com/software/bookmarklets/translate.html
   "unTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
