@@ -18,6 +18,7 @@ window.RogueBM.about.scripts={
 //        }
 window.RogueBM.scripts={
   {%- assign allScripts = '' | split: '' -%}
+  {%- allScripts | pop -%}
 
   {%- for coll in site.collections -%}
   {%- unless coll.label == "posts" -%}
