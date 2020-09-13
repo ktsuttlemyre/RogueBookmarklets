@@ -5,3 +5,4 @@ collections:
     permalink: /scripts/:path.js
 liquid:
   error_mode: lax
+emptyArray: []
