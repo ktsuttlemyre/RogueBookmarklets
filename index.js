@@ -17,8 +17,8 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-  {% assign allScripts = site.emptyArray %}
-  {% assign allScripts = allScripts | pop %}
+  {%- assign allScripts = '' | split: ',' -%}
+  {%- assign allScripts = allScripts | pop -%}
 
   {%- for coll in site.collections -%}
   {%- unless coll.label == "posts" -%}
@@ -35,7 +35,10 @@ window.RogueBM.scripts={
   
   
 
-  {% for marklet in allScripts %}
+  {%- for marklet in allScripts -%}
+  {%- if forloop.first -%}
+    {%- continue -%}
+  {%- endif -%}
    "{{ marklet.basename | escape }}":{
       "basename":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
@@ -49,7 +52,7 @@ window.RogueBM.scripts={
       "primarySrc":"jsdelivr",
       "index":{{ forloop.index | minus:1 }}
     },
-  {% endfor %}
+  {%- endfor -%}
 
   //http://7is7.com/software/bookmarklets/translate.html
   "unTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
