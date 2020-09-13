@@ -245,11 +245,11 @@ function mock(obj,skip){
 
         //cleanup and check for inconsistantcies 
         //check location and location href
-        if(!mocks.document.location.href == refs.location.href){
+        if(mocks.document.location.href != refs.location.href){
             refs.location.href=mocks.document.location.href
         }
-        if(mocks.document.location != refs.document.location){
-            refs.document.location=mocks.document.location
+        if(mocks.document.location.toString() != refs.document.location.toString()){
+            refs.document.location=mocks.document.location.toString()
         }
     }
 
