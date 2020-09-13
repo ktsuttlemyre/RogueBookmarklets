@@ -153,11 +153,12 @@ function mock(obj,skip){
     //custom apis
     //loc.href=location.href.toString()
 
+    var refs=RogueBM['envRefs'];
     var currentCommandID=RogueBM['currentCommandID']
     var alert=win.alert=function alert(message){
         var skipAlerts=RogueBM['skipAlerts'][currentCommandID];
         if(skipAlerts){return autoConfirmAnswer;}
-        return RogueBM['envRefs']alert(message);
+        return refs.alert(message);
     }
     var confirm=win.confirm=function confirm(){
         var autoConfirmAnswer=RogueBM['autoConfirm'][currentCommandID];
@@ -167,7 +168,7 @@ function mock(obj,skip){
              var arg=args.shift(); //maybe check if argument is a boolean and enforce it?
              return !!arg;
         }
-        return RogueBM['envRefs'].confirm(message,value);
+        return refs.confirm(message,value);
     }
     var prompt=win.prompt=function prompt(message,value){
         var args=RogueBM['handoffArgs'][currentCommandID];
@@ -175,7 +176,7 @@ function mock(obj,skip){
              var arg=args.shift(); //maybe check if argument is string and enforce it?
              return arg;
         }
-        return RogueBM['envRefs'].prompt(message,value);
+        return refs.prompt(message,value);
     }
 
     var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
