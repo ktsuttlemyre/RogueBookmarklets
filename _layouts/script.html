@@ -1,12 +1,6 @@
 ---
 #layout: default
 ---
-//{{ page.url }}
-//{{ page.name }}
-//{{ page.id }}
-//{{ page.path }}
-//{{ page.dir }}
-//{{ page.title }}
 //Wrapper Revision:{{ site.github.build_revision }}
 {%- comment --%}
 -----Options-----{%- endcomment -%}
@@ -251,5 +245,4 @@ function mock(obj,skip){
     }
 
 })(window,document,location)
-
-
+//<META>{{ page.url }}<META>{{ page.path }}<META>{{ page.title }}
