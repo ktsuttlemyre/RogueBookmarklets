@@ -34,14 +34,14 @@ window.RogueBM.scripts={
       {%- assign revision = meta[5] -%}
      "{{ title | escape }}":{
         "basename":"{{ title }}",
-        "path":"{{ path }}",
+        "path":"{{ url }}",
         "modified_time":"{{ modified_time }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ path | url_escape }}",
-        "href":"javascript:{{ path | url_escape }}",
-        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ path | url_escape }}",
-        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ path | url_escape }}",
-        "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ path | url_escape }}",
-        "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ path | url_escape }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ url | url_escape }}",
+        "href":"javascript:{{ url | url_escape }}",
+        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
+        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/{{ url | url_escape }}",
+        "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
+        "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "primarySrc":"jsdelivr",
         "index":{{ counter | plus: 1 }}
       },
