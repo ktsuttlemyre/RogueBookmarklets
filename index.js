@@ -17,7 +17,7 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
-  {%- assign allScripts = '' | split: '' -%}
+  {% assign allScripts = site.emptyArray %}
   {% assign allScripts = allScripts | pop %}
 
   {%- for coll in site.collections -%}
