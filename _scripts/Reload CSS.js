@@ -16,5 +16,15 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-void(setTimeout(function(){var qs='?'+new Date().getTime(),l,i=0;while(l=document.getElementsByTagName('link')[i++]){if(l.rel&&'stylesheet'==l.rel.toLowerCase()){if(!l._h)l._h=l.href;l.href=l._h+qs}}},2000));
+void setTimeout(function() {
+  var qs = "?" + (new Date).getTime(), l, i = 0;
+  while (l = document.getElementsByTagName("link")[i++]) {
+    if (l.rel && "stylesheet" == l.rel.toLowerCase()) {
+      if (!l._h) {
+        l._h = l.href;
+      }
+      l.href = l._h + qs;
+    }
+  }
+}, 2000);
 {{ endraw }}
