@@ -11,7 +11,7 @@ returns: |
     {bool} somethign something
 authors: |
     Jane Doe <another url>
-    kyle suttlemyre <url>
+    kyle suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: codepen.com/something/something
 layout: script
 ---
