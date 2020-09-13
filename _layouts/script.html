@@ -182,15 +182,15 @@ function mock(obj,skip){
     }
 
     var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
-      var selection=(window.getSelection && window.getSelection() || window.document.getSelection && window.document.getSelection() || window.document.selection && window.document.selection.createRange && window.document.selection.createRange().text).toString()
+    var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
       if(selection){
         return selection
       }
       //try to get from frames
-      for(var i=0,l=window.frames.length;i<l;i++){
+      for(var i=0,l=win.frames.length;i<l;i++){
         //call document this way because of IE
         //https://stackoverflow.com/questions/17197084/difference-between-contentdocument-and-contentwindow-javascript-iframe-frame-acc
-        selection=getSelection(window.frames[i].contentWindow,window.frames[i].contentDocument);
+        selection=getSelection(win.frames[i].contentWindow,win.frames[i].contentDocument);
         if(selection){
           return selection;
         }
@@ -220,7 +220,7 @@ function mock(obj,skip){
         (function bookmarkletClosure(window,document,location,prompt,alert,confirm){
 
         var stdout=RogueBM['stdout'];
-        var selection = (stdout!=null)?stdout:(getSelection(window,window.document)||'');
+        var selection = (stdout!=null)?stdout:(getSelection(global,global.document)||'');
         var serverSecret='{{ site.github.build_revision }}'
         //Their code
         {{ page.content }}
