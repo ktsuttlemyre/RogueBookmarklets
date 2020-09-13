@@ -1,17 +1,17 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
+    <h1>This is some markdown content in YAML that will be output as a header </h1>.
     describe the code here
 
     you can use multiple lines. Its totally cool here
 params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
+    {type} VarName - describe what you expect to see as input
+    {type} VarName - describe what you expect to see as input
 returns: |
-    {bool} somethign something
+    {bool} Something something
 authors: |
     Jane Doe <another url>
-    kyle suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: codepen.com/something/something
 layout: script
 ---
