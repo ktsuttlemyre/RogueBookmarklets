@@ -182,7 +182,7 @@ function mock(obj,skip){
     }
 
     var getSelection=win.getSelection=doc.getSelection=function getSelection(win,doc){
-    var selection=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
+      var selection=(refs.window.getSelection && refs.window.getSelection() || refs.window.document.getSelection && refs.window.document.getSelection() || refs.window.document.selection && refs.window.document.selection.createRange && refs.window.document.selection.createRange().text).toString()
       if(selection){
         return selection
       }
