@@ -23,7 +23,7 @@ window.RogueBM.scripts={
 
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
-    {%- for doc in site.collections.scripts.docs -%}
+    {%- for doc in coll.docs -%}
       {%- assign meta doc | split: NL | first | split: "<META>" -%}
       {%- assign url meta[1] -%}
       {%- assign path meta[2] -%}
