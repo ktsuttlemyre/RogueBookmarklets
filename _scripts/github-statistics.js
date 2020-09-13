@@ -1,3 +1,5 @@
+---
+---
 //  alert('only works on github.com, github.io or githubusercontent.com');
 var host = window.location.hostname||window.location.host.split(':')[0];
 var username=window.getSelection(); //get selection
