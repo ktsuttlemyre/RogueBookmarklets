@@ -187,10 +187,10 @@ function mock(obj,skip){
         return selection
       }
       //try to get from frames
-      for(var i=0,l=win.frames.length;i<l;i++){
+      for(var i=0,l=window.frames.length;i<l;i++){
         //call document this way because of IE
         //https://stackoverflow.com/questions/17197084/difference-between-contentdocument-and-contentwindow-javascript-iframe-frame-acc
-        selection=getSelection(win.frames[i].contentWindow,win.frames[i].contentDocument);
+        selection=getSelection(window.frames[i].contentWindow,window.frames[i].contentDocument);
         if(selection){
           return selection;
         }
