@@ -785,7 +785,7 @@
     	var type=typeof parsed
     	if(type=='string'){
     		handleCommand(parsed)
-    	}else if(isArray(parsed)){
+    	}else if(Array.isArray(parsed)){
     		handleCommandChain(parsed);
     	}else if(type=='object'){
     		if(Object.keys(parsed).length!=1){
