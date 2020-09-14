@@ -1,3 +1,4 @@
+---
 description: |
     Does a regular expression search and replace on the current page
 params: |
