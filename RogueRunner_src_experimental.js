@@ -14,6 +14,7 @@
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
   //limitation: urls must end with an extention otherwise it will be assumed to be inline source
+     //TODO show loading icon on rogueDJ as long as we are loading
   function inject(str,mime,callback){ 
     /*
     str = url or embeded code
@@ -624,6 +625,12 @@
         }
         input.value='';
     }
+     
+     function loadBookmarklet(loading){
+          if(loading){
+          }else{
+          }
+     }
 
     var linkCache={};
     function generateSelectionLink(key){
@@ -861,7 +868,19 @@
     }
     window['RogueBM']['currentCommandID']=-1
     window['RogueBM']['commandChain']=[-1:{}]
-    window['RogueBM']['execute']=funciton(packge,mode){
+    window['RogueBM']['execute']=funciton(packge,filename,mode){
+         //TODO fix the loading situation
+         var index = waitingForBookmarklet.indexOf(filename);
+         var item=null
+          if (index > -1) {
+            item=waitingForBookmarklet[index]
+            waitingForBookmarklet.splice(index, 1);
+          }
+         if(item){
+              
+         }
+         loadedBookmarklet('filename')
+         hide()
          if(mode){
             var mocks=RogueBM['mocks']||mode;
             var refs=window['RogueBM']['envRefs']
