@@ -787,28 +787,24 @@
 		obj[parsed]=[];
 		parsed=obj;
         }
-	if(typeof parsed == 'object'){
-		parsed=[parsed];
-	}
 	    
 	if(!Array.isArray(parsed)){
-		alert('Schema Error see console. For issues')
-    		console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',parsed);
-    		return
-    	}	
-	handleCommandChain(parsed);
-    	//input.value='';
-    }
-    function handleCommandChain(commands){
+		parsed=[parsed];
+    	}
+	    
+	commands=parsed;
     	for(var index=0,l=commands.length;index<l;index++){
     		var command=commands[index]
     		var keys=Object.keys(command)
 		if(keys.length!=1){
 			alert('Currently not accepting unordered commands');
+			alert('Schema Error see console. For issues')
+    			console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
 			return
 		}
     		handleCommand(keys[0],command[keys[0]])//command and arguments seperated
     	}
+	//input.value='';
     }
     function handleCommand(inputCommand,args){
     	var normalizedCommand=normalizeCommandToScriptName(inputCommand);
