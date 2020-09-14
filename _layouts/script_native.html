@@ -1,0 +1,72 @@
+---
+#layout: default
+---
+//Jekyll metadata<META>{{ page.url }}<META>{{ page.path }}<META>{{ page.name }}<META>{{ page.title }}<META>{{ page.date }}<META>{{ site.github.build_revision }}
+{%- comment --%}
+-----Options-----{%- endcomment -%}
+{%- assign desciptionWordWrapLength = 7 -%}
+{%- comment -%}
+-----END OPTIONS-----
+
+-----Predefined special characters-----{%- endcomment -%}
+{%- assign curlyOpen = "{" -%}
+{%- assign curlyClose = "}" -%}
+{%- assign SPACE = "}" -%}
+{% capture NL %}
+{% endcapture %}
+{% capture COMMENT_NL %}
+ *  {% endcapture %}
+{% capture PARAM_NL %}
+ *  @param {% endcapture %}
+{% capture AUTHOR_NL %}
+ *  @author Contributor: {% endcapture %}
+{%- comment -%}
+-----END Predefined Special Charaters-----
+
+-----Data preprocess----- {%- endcomment -%}
+{%- assign words = page.description | split: " " -%}
+
+
+{%- comment -%}-----TEMPLATE-----{%- endcomment -%}
+/**
+ *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}
+ *  
+ *  @param {{ page.params | split: NL | join: PARAM_NL }} 
+ *  @returns {{ page.returns | replace: NL, COMMENT_NL }}
+ *
+ *  @author Original: {{ page.authors | split: NL | join: AUTHOR_NL }} 
+{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }} {% endif %}
+ *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
+ *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
+ *  @file LastModified: {{ page.date }}
+ */
+{%- comment -%}
+Special vars all functions get (to make them independent)
+selection = if there was text selected it is now accessable via this variable
+open = similar to window.open but will open modal, window, 
+{% endcomment -%}
+
+
+
+(function container(window,document,location){
+ 
+    var RogueBM=window['RogueBM']||{};
+    
+
+
+    var package=function bookmarkletClosure(window,document,location,prompt,alert,confirm){
+
+        var stdout=RogueBM['stdout'];
+        //var selection = (stdout!=null)?stdout:(getSelection.call(window)||'');
+        var serverSecret='{{ site.github.build_revision }}'; //MAKE SURE THIS STATEMENT IS ENDED SO THAT ANY SELFCALLING CLOSURES DON'T GET MISTAKEN FOR A CALL SYNTAX
+        //Their code
+        {{ page.content }}
+        //End their code
+
+    }
+
+    
+    package(window,document,location,prompt,alert,confirm)
+    
+
+})(window,document,location)
