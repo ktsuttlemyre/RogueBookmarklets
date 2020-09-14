@@ -29,11 +29,12 @@ window.RogueBM.scripts={
       {%- assign meta = doc | split: NL | first | split: "<META>" -%}
       {%- assign url = meta[1] -%}
       {%- assign source_path = meta[2] -%}
-      {%- assign title = meta[3] -%}
-      {%- assign date = meta[4] -%}
-      {%- assign revision = meta[5] -%}
+      {%- assign name = meta[3] -%}
+      {%- assign title = meta[4] -%}
+      {%- assign date = meta[5] -%}
+      {%- assign revision = meta[6] -%}
      "{{ title | escape }}":{
-        "basename":"{{ title }}",
+        "basename":"{{ name }}",
         "path":"{{ url }}",
         "modified_time":"{{ modified_time }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
