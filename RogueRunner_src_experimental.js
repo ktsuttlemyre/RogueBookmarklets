@@ -533,7 +533,7 @@
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title)
             }
-            run()
+            run(input.value)
             return
         }
         getSuggestions(this.value)
@@ -776,6 +776,10 @@
 
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
     function run(rogueYML){
+    	if(!rogueYML){
+    		statusBar.innerHTML="Nothing to execute";
+    		return
+    	}
     	RogueBM.lastInput=rogueYML;
     	var parsed=jsyaml.load(rogueYML);
     	var type=typeof parsed
