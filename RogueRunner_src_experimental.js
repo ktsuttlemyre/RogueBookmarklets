@@ -782,10 +782,12 @@
     	}
     	RogueBM.lastInput=rogueYML;
     	var parsed=jsyaml.load(rogueYML);
-    	var type=typeof parsed
-	if(type=='string'){
-    		parsed=[{parsed:[]}];
-        }else if(type=='object'){
+	if(typeof == 'string'){
+    		var obj={};
+		obj[parsed]=[];
+		parsed=obj;
+        }
+	if(typeof == 'object'){
 		parsed=[parsed];
 	}
 	    
