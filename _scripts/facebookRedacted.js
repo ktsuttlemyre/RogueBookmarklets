@@ -889,7 +889,7 @@ function validURL(str) {
 	// },1)}, true); 
 
 })(null,this);
-
+/*
 (['George Washington',
 'John Adams',
 'Thomas Jefferson',
@@ -935,3 +935,4 @@ function validURL(str) {
 'George W. Bush',
 'Barack Hussein Obama',
 'Donald J. Trump']);
+*/
