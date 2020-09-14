@@ -55,13 +55,14 @@ Allows [iframe insertion] [popups]
     //return !!(document.getElementById(id));
   }
 
-  function ScriptOBJ(src,code,err) { //callback might not work
+  function ScriptOBJ(src,code,callback) { //callback might not work
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     if(src){
       script.setAttribute('src',src);
       script.setAttribute('crossorigin', "anonymous");
-      script.onerror = err;
+      script.onerror = callback;
+      script.onload = function(){console.log('loaded',src,code)};
     }else{
       try {
         script.appendChild(document.createTextNode(code));
