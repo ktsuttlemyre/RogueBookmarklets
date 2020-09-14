@@ -62,7 +62,9 @@ Allows [iframe insertion] [popups]
       script.setAttribute('src',src);
       script.setAttribute('crossorigin', "anonymous");
       script.onerror = callback;
-      script.onload = function(){console.log('loaded',src,code)};
+      script.onload = function(){
+         window['RogueBM']['loaded']&&window['RogueBM']['loaded'](src);
+      };
     }else{
       try {
         script.appendChild(document.createTextNode(code));
