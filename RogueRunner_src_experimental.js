@@ -591,7 +591,7 @@
         }
     });
 
-    var cachePrompt=window.prompt;
+
     function show(){
         input.value=''
 
@@ -600,6 +600,12 @@
         //make the input active so we can type without anymore inputs
         input.focus()
     }
+     
+     function normalizeCommandToScriptName(name){
+          //Because commands can be in camelcase, pascal case, snake case, underscore case, URI encoded or even have spaces
+          //this will take a command name and convert it to the hyphanated script name in the repository
+          return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y.toLowerCase()}).trim().replace(/\s+/gi,'-')
+     }
 
     function isShown(){ //idk if i need this?
       return modalBackdropDiv.style.display == "block";
@@ -618,9 +624,6 @@
         if(parent!== window){
           parent.postMessage("RogueRunner:Blur",'*');
         }else{
-             //unpatch
-             window.prompt=cachePrompt
-
              modalBackdropDiv.style.display = "none";
         }
         input.value='';
@@ -640,7 +643,7 @@
         var a = document.createElement('a');
         a.appendChild(document.createTextNode(key));
         a.title = key;
-        a.className = 'Rogue_suggestion_link RogueRunner_animate'
+        a.className = 'Rogue_suggestion_link Roguener_animate'
         a.href = "javascript:RogueBM.run(\'"+key+"\')";
         a.tabIndex=0;
         //a.onfocus = "RogueBM.setSelection(\'"+key+"\')";
@@ -765,13 +768,48 @@
         }
     }
 
-    var promptChar='<'
-    function run(key){
-          //no key, then get the first suggestion script obj  
-        var script=window.RogueBM.scripts[key]  
-        if(!script){  
-            script = (url=currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
-        }
+
+    // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
+    function run(rogueYML){
+    	RogueBM.lastInput=rogueYML;
+    	var parsed=jsyaml.load(rogueYML);
+    	var type=typeof parsed
+    	if(type=='string'){
+    		handleCommand(parsed)
+    	}else if(isArray(parsed)){
+    		handleCommandChain(parsed);
+    	}else if(type=='object'){
+    		if(Object.keys(parsed).length!=1){
+    			alert('currently do not accept unorderd commands');
+    			return
+    		}
+    		handleCommand(parsed)
+    	}else{
+    		alert('your syntax is wrong see console. For issues')
+    		console.error('Your output structure looks like this and RogueRunner doesn\'t know how to handle it',parsed);
+    	}
+
+    	//input.value='';
+    }
+    function handleCommandChain(commands){
+    	for(var index=0,l=commands.length;index<l;index++){
+    		var command=commands[index]
+    		var key=Object.keys(command)
+    		handleCommand(key,command[key])//command and arguments seperated
+    	}
+    }
+    function handleCommand(inputCommand,args){
+    	var normalizedCommand=normalizeCommandToScriptName(inputCommand);
+    	if(inputCommand){
+	        //assume user put in the right scriptname
+	        script=window.RogueBM.scripts[inputCommand]  
+	        if(!script){  //no script goes by key name then try to normalize the key
+	        	script=window.RogueBM.scripts[normalizedCommand];
+	        	if(!script){// if that fails then get the first suggestion script obj  
+	            	script = (currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
+	            }
+	        }
+	    }
 
         //now we have a script obj or string
         //download the src if it exists OR run the string
@@ -781,25 +819,28 @@
             return
         }
 
-        var params=input.value.split(promptChar)
-        params.shift() //remove the first one
-        window.prompt=function(arg1,arg2){
-            console.log('using it')
-            if(params.length){
-                return params.shift()
-            }
-            cachePrompt(arg1,arg2)
-        }
-        input.value='';
         //potential api to send arguments to roguebookmarks
-        RogueBM.key=key
-        RogueBM.arguments=[]
+        var commandID=RogueBM.commandChain.length
+        if(RogueBM.currentCommandID==-1){
+        	RogueBM.currentCommandID=commandID
+        }
+        var command={
+        	inputCommand:inputCommand,
+        	normalizedCommand:normalizedCommand,
+        	script:script,
+        	src:script.src,
+        	args:args,
+        	commandID:commandID
+        }
+        RogueBM.commandChain.push(command);
+
+        //async calls
         if(script.src){ //if we get a script obj use the src attribute
             inject(script.src,'javascript',true)
         }else{ //if it is a string assume its code
             inject(script,'javascript')
         }
-        RogueBM.lastCMD=key;
+        RogueBM.lastCMD=inputCommand;
     }
 
     var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
@@ -867,8 +908,8 @@
          location:window.document.location
     }
     window['RogueBM']['currentCommandID']=-1
-    window['RogueBM']['commandChain']=[-1:{}]
-    window['RogueBM']['execute']=funciton(packge,filename,mode){
+    window['RogueBM']['commandChain']=[]
+    window['RogueBM']['execute']=function(packge,filename,mode){
          //TODO fix the loading situation
          var index = waitingForBookmarklet.indexOf(filename);
          var item=null
@@ -881,6 +922,8 @@
          }
          loadedBookmarklet('filename')
          hide()
+         var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
+         var args=commandMetaData.args;
          if(mode){
             var mocks=RogueBM['mocks']||mode;
             var refs=window['RogueBM']['envRefs']
