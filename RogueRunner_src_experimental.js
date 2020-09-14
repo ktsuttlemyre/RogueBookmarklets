@@ -6,6 +6,7 @@
         };
     }
 
+
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
         return window['RogueBM']['show']();
@@ -84,7 +85,8 @@
             var args = Array.prototype.slice.call( arguments );
             args.unshift("RogueBM[runner]: ");
             console.error.apply(console, args);
-    }
+    };
+    
 
   
 
@@ -583,6 +585,10 @@
     domready(function(){
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
+        var about=window['RogueBM']['about']
+        if(!about || !about['injector'] ){
+        	showError('RogueRunner wasn\'t injected with the injector script!');
+        }
         //if there is a cmd passed from the injector
         //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
         var lastCMD=RogueBM.lastCMD;
@@ -888,19 +894,24 @@
 
 
 
-   function getArgs(url){ 
-        if(!url){ //get this scripts url  
-            var scripts = document.getElementsByTagName('script');  
-            var index = scripts.length - 1; 
-            url = scripts[index].src; 
-        } 
+   function getArgsFromUrl(url){ 
         var args = {};  
         url.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {  
             args[decodeURIComponent(key)] = decodeURIComponent(value);  
         });   
         return args;  
     } 
-    var args=getArgs(); 
+    var RogueRunnerScriptOBJ=(function(){
+	        var scripts = document.getElementsByTagName('script');  
+	        var index = scripts.length - 1; 
+	        if(scripts.length){
+	        	return scripts[index];
+	    	}
+    	})();
+
+
+    var args=''
+    RogueRunnerScriptOBJ&&getArgsFromUrl(RogueRunnerScriptOBJ.src); 
     //in block notation so closure compiler will 'export' the vairable
     window['RogueBM']['envRefs']={
          window:window,
