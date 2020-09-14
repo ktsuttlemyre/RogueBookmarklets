@@ -12,11 +12,14 @@ layout: script
 (function(aliasDatabase,global){
 	var seed=9834579834890
 	//loadingScreen
-	// var loadingScreen = document.createElement('div');
-	// loadingScreen.style.cssText = 'position:absolute;top:0;left:0;display:block;width:100%;height:100%;z-index:100;background:#000';
-	// //loadingScreen.className="loadingScreen_"+seed
-	// document.body.appendChild(loadingScreen);
+	var loadingScreen = true;
+	if(loadingScreen){
+		loadingScreen=document.createElement('div');
+		loadingScreen.style.cssText = 'position:absolute;top:0;left:0;display:block;width:100%;height:100%;z-index:100;background:#000';
 
+		//loadingScreen.className="loadingScreen_"+seed
+		document.body.appendChild(loadingScreen);
+	}
 
 	//pollfill
 
@@ -383,9 +386,15 @@ function hslToRgb(h, s, l){
 	}
 
 	var height=function(el){
+	    if(el==window || el == document){
+	      return parseFloat(document.body.clientHeight)
+	    }
 		return parseFloat(getComputedStyle(el, null).height.replace("px", ""))
 	}
 	var width=function(el){
+	    if(el==window || el == document){
+	      return parseFloat(document.body.clientWidth)
+	    }
 		return parseFloat(getComputedStyle(el, null).width.replace("px", ""))
 	}
 
@@ -798,8 +807,12 @@ function validURL(str) {
 		//assume if it is the same size as parent then it is main
 		for(var i=1,l=siblings.length;i<l;i++){
 			var el=siblings[i]
-			var parent=el.parentNode
-			if(width(el)==width(parent) && height(el)==height(parent)){
+			var parentNode=el.parentNode
+			try{
+				if(width(el)==width(parentNode) && height(el)==height(parentNode)){
+					keepPages.push(el)
+				}
+			}catch(exx){
 				keepPages.push(el)
 			}
 		}
@@ -922,5 +935,3 @@ function validURL(str) {
 'George W. Bush',
 'Barack Hussein Obama',
 'Donald J. Trump']);
-
-
