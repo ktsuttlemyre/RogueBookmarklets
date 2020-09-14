@@ -968,6 +968,8 @@
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
          console.log('loaded',name)
+	var split=name.split('/');
+	name=split[split.length-1];
         loadedScripts.push(name)
         
         var startInit=(!init && loadedScripts.filter(function (elem) {
