@@ -964,7 +964,7 @@
         window['RogueBM']['run'](args.cmd); 
     }
     var init=false;
-    var initScripts=['RogueRunner.js','index.js']
+    var initScripts=['RogueRunner.js','index.js','js-yaml.min.js']
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
          console.log('loaded',name)
