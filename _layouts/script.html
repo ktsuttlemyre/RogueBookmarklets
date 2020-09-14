@@ -131,7 +131,7 @@ function mock(obj,skip){
     var props=allProperties(obj,function(name){
         console.log(name)
         //if(skip.indexOf(name)>=0){return;}
-        if(obj[name] && obj[name].bind && typeof obj['name'].bind == 'function'){ //if it is a bindable function
+        if(obj[name] && obj[name].bind && typeof obj[name] == 'function'){ //if it is a bindable function
             Mock.prototype[name] = obj[name].bind(obj);
         }else{
             Mock.prototype[name] = obj[name];
