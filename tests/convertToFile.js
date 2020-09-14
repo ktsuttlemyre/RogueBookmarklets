@@ -93,9 +93,12 @@ function download(filename, data) {
 }
 
 
-for(var i=0;l=keys.length;i<l;i++){
+// for(var i=0;l=keys.length;i<l;i++){
+//    var key = keys[i]
+//    download(key,header+'\n'+scripts[key]+'\n{{ endraw }}')
+// }
+for(var i=0,l=keys.length;i<l;i++){
    var key = keys[i]
-   download(key,header+'\n'+scripts[key]+'\n{{ endraw }}')
+   closureCompiler(scripts[key],'pretty_print',function(e,obj){ download(key+'.js',header+'\n'+obj.compiled()+'\n{{ endraw }}')})
 }
-
 
