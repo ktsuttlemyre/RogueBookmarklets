@@ -859,6 +859,25 @@
          document:window.document,
          location:window.document.location
     }
+    window['RogueBM']['currentCommandID']=-1
+    window['RogueBM']['commandChain']=[-1:{}]
+    window['RogueBM']['execute']=funciton(packge,mode){
+         if(mode){
+            var mocks=RogueBM['mocks']||mode;
+            var refs=window['RogueBM']['envRefs']
+            package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocks.window.prompt,mocks.window.alert,mocks.window.confirm])
+             //cleanup and check for inconsistantcies 
+             //check location and location href
+             if(mocks.document.location.href != refs.location.href){
+                 refs.location.href=mocks.document.location.href
+             }
+             if(mocks.document.location.toString() != refs.document.location.toString()){
+                 refs.document.location=mocks.document.location.toString()
+             }
+         }else{
+            package(window,document,location,prompt,alert,confirm)
+         }
+    }
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
