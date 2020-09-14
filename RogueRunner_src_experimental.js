@@ -671,7 +671,6 @@
     function searchScripts(input) {
         input=input||''
         //https://stackoverflow.com/questions/11404855/javascript-autocomplete-without-external-library
-        input=input.split(promptChar)[0]
         if(input == lastSearch){
             return
         }
