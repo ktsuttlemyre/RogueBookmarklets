@@ -459,7 +459,7 @@ Allows [iframe insertion] [popups]
     //a bit of security 
     var sessionID=UUID();
 
-    injectScript('https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.8.1/js-yaml.min.js',sessionID,function(){return global['jsyaml'];});
+    injectScript('https://ktsuttlemyre.github.io/libs/js-yaml.min.js',sessionID,function(){return global['jsyaml'];});
     injectScript('https://ktsuttlemyre.github.io/RogueBookmarklets/index.js'/*?user='+options['user']*/,sessionID,function(){return global['RogueBM']['scripts'];});
     injectScript(rogueRunnerSrc,sessionID,function(){return global['RogueBM']['loaded'];});
    
