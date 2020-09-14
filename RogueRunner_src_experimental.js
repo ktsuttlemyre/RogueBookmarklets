@@ -783,28 +783,29 @@
     	RogueBM.lastInput=rogueYML;
     	var parsed=jsyaml.load(rogueYML);
     	var type=typeof parsed
-    	if(type=='string'){
-    		handleCommand(parsed)
-    	}else if(Array.isArray(parsed)){
-    		handleCommandChain(parsed);
-    	}else if(type=='object'){
-    		if(Object.keys(parsed).length!=1){
-    			alert('currently do not accept unorderd commands');
-    			return
-    		}
-    		handleCommand(parsed)
-    	}else{
-    		alert('your syntax is wrong see console. For issues')
-    		console.error('Your output structure looks like this and RogueRunner doesn\'t know how to handle it',parsed);
-    	}
-
+	if(type=='string'){
+    		parsed=[{parsed:[]}];
+        }else if(type=='object'){
+		parsed=[parsed];
+	}
+	    
+	if(!Array.isArray(parsed)){
+		alert('Schema Error see console. For issues')
+    		console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',parsed);
+    		return
+    	}	
+	handleCommandChain(parsed);
     	//input.value='';
     }
     function handleCommandChain(commands){
     	for(var index=0,l=commands.length;index<l;index++){
     		var command=commands[index]
-    		var key=Object.keys(command)
-    		handleCommand(key,command[key])//command and arguments seperated
+    		var keys=Object.keys(command)
+		if(keys.length!=1){
+			alert('Currently not accepting unordered commands');
+			return
+		}
+    		handleCommand(keys[0],command[keys[0]])//command and arguments seperated
     	}
     }
     function handleCommand(inputCommand,args){
