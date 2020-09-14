@@ -7,7 +7,7 @@ returns: |
     {undefined} Should do an action
 authors: |
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-layout: script
+layout: script_native
 ---
 (function(aliasDatabase,global){
 	var seed=9834579834890
