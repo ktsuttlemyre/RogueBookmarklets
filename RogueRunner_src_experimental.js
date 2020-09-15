@@ -550,6 +550,7 @@
                 var display=input.style.display;
                 input.style.display=(display=='block')?'none':'block';
                 multiLineInput.style.display=display;
+                multiLineInput.focus();
                 return false
             }
             var focused = getFocusedElement();
