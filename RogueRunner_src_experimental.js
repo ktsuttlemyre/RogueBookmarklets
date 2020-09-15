@@ -544,8 +544,8 @@
     multiLine.name="text";
     var setTextAreaHeight=function(){
         inputs.singleLine.value='';
-        this.style.height = "";
-        this.style.height = Math.max(this.scrollHeight +3,12) + "px";
+        multiLine.style.height = "";
+        multiLine.style.height = Math.max(multiLine.scrollHeight +3,12) + "px";
     }
     multiLine.oninput=setTextAreaHeight;
     multiLine.id="multiLine-input";
