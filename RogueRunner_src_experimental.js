@@ -538,7 +538,7 @@
             statusBar.innerHTML='';
             statusBar.appendChild(rogueLink)
         }
-        if(keyCode == 13){ //enter will focus again
+        if(keycode == 13){ //enter will focus again
 	    if(evt.shiftKey){
 		    alert("yeet")
 		    evt.preventDefault();
