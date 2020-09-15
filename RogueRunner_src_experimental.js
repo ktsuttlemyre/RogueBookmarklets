@@ -839,23 +839,33 @@
     //http://nodeca.github.io/js-yaml/#yaml=LS0tCi0gR3JheXNjYWxlOgogIC0gfAogICAgYXNkZmFmZHMKICAgIGFzZGYKICAgIGFzCiAgICBkZmFmZAogICAgYXNkCiAgLSAgc2RmYQogIC0gIHNhZHNmCi0gQVNDSUk6CiAgLSBsamthc2RramYKICAtIHNkZmFzZGYKICAtIGFzZGZhc2Zk
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
     function run(rogueYML){
+        RogueBM.lastInput=rogueYML;
         if(!rogueYML){
             statusBar.innerHTML="Nothing to execute";
             return
         }
-        RogueBM.lastInput=rogueYML;
-        var parsed=jsyaml.safeLoad(rogueYML);
-    if(typeof parsed == 'string'){
+        var parsed;
+        if(rogueYML.indexOf('\n')<0){
+            rogueYML='[ '+rogueYML+' ]';
+            parsed=jsyaml.safeLoad(rogueYML);
+        }else{
+            rogueYML.replace(/^[^\s-#]/gm,function(match){
+                return '---\n'+match
+            })
+            parsed=jsyaml.safeLoadAll(rogueYML);
+        }
+
+        if(typeof parsed == 'string'){
             var obj={};
-        obj[parsed]=[];
-        parsed=obj;
+            obj[parsed]=[];
+            parsed=obj;
         }
         
-    if(!Array.isArray(parsed)){
-        parsed=[parsed];
+        if(!Array.isArray(parsed)){
+            parsed=[parsed];
         }
         
-    commands=parsed;
+        commands=parsed;
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index]
             var keys=Object.keys(command)
