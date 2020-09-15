@@ -518,28 +518,49 @@
     runnerWrapper.id = 'RogueRunner_div';
     modalPane.appendChild(runnerWrapper);
     
-    /* multiline svg icon
+    /* multiLine svg icon
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.09668 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z" fill="currentColor" /><path d="M22.8412 7H8.84119V5H22.8412V7Z" fill="currentColor" /><path d="M22.8412 11H8.84119V9H22.8412V11Z" fill="currentColor" /><path d="M8.84119 15H22.8412V13H8.84119V15Z" fill="currentColor" /><path d="M22.8412 19H8.84119V17H22.8412V19Z" fill="currentColor" /></svg>
     */
     
-    var multiLineInput=document.createElement('textarea');
-    multiLineInput.name="text";
+    var inputs={
+        multiLine:document.createElement('textarea'),
+        singleLine:document.createElement('input')
+    }
+    inputs.current=inputs.singleLine;
+    inputs.multiLineMode=false;
+    inputs.toggleMultiline=function(bool){
+        if(bool==null){
+            bool=!inputs.multiLineMode;
+        }
+        
+        singleLine.style.display=(bool)?'none':'block';
+        multiLine.style.display=(bool)?'block':'none';
+        input.current=(bool)?input.multiLine:input.singleLine;
+        input.current.focus();
+        setTextAreaHeight();
+        
+    }
+    var multiLine=inputs.multiLine;
+    var singleLine=inputs.singleLine;
+    multiLine.name="text";
     var setTextAreaHeight=function(){
         this.style.height = "";
         this.style.height = this.scrollHeight +3 + "px";
     }
-    multiLineInput.oninput=setTextAreaHeight;
-    multiLineInput.id="multiline-input";
-    multiLineInput.style.display='none';
-    multiLineInput.style.width='100%';
-    multiLineInput.className='rogue-input';
+    multiLine.oninput=setTextAreaHeight;
+    multiLine.id="multiLine-input";
+    multiLine.style.display='none';
+    multiLine.style.width='100%';
+    multiLine.className='rogue-input';
 
-    var input = document.createElement('input');
-    input.id = "input";
-    input.type = 'text';
-    input.className='rogue-input';
-    input.autocomplete="off";
-    input.style.display='block';
+    singleLine.id = "input";
+    singleLine.type = 'text';
+    singleLine.className='rogue-input';
+    singleLine.autocomplete="off";
+    singleLine.style.display='block';
+    singleLine.oninput=function(){
+        inputs.multiLine.value=inputs.singleLine.value;
+    };
     
     var keyUP = function(evt) {
         var keycode = keyCode(evt)
@@ -550,37 +571,30 @@
         if(keycode == 13){ //enter will focus again
             if(evt.shiftKey){
                 evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-                var display=input.style.display;
-                input.style.display=(display=='block')?'none':'block';
-                multiLineInput.style.display=display;
-                multiLineInput.focus();
-                setTextAreaHeight()
+                inputs.toggleMultiline(true)
                 return false
             }
             var focused = getFocusedElement();
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title);
             }
-            run(multiLineInput.value);
+            run(input.current.value);
             return
         }
-        getSuggestions(multiLineInput.value)
+        getSuggestions(multiLine.value)
     }
-    multiLineInput.onkeyup = function(evt){
-        input.value=multiLineInput.value;
+    multiLine.onkeyup = function(evt){
+        singleLine.value=multiLine.value;
         var keycode = keyCode(evt)
         if(keycode==13 && !evt.ctrlKey){
             return
         }
-        keyUP(evt);
+        return keyUP(evt);
     }
-    input.onkeyup = function(evt){
-        multiLineInput.value=input.value;
-        keyUP(evt);
-    }
+    singleLine.onkeyup = keyUP
     
-    runnerWrapper.appendChild(input);
-    runnerWrapper.appendChild(multiLineInput);
+    runnerWrapper.appendChild(singleLine);
+    runnerWrapper.appendChild(multiLine);
 
     var statusBar_isLink=true;
     var rogueLink= document.createElement('a');
@@ -641,13 +655,13 @@
 
 
     function show(){
-        input.value=''
-        multiLineInput.value=''
+        singleLine.value=''
+        multiLine.value=''
 
         modalBackdropDiv.style.display = "block";
 
         //make the input active so we can type without anymore inputs
-        input.focus()
+        singleLine.focus()
     }
      
      function normalizeCommandToScriptName(name){
@@ -675,8 +689,8 @@
         }else{
              modalBackdropDiv.style.display = "none";
         }
-        input.value='';
-        multiLineInput.value=''
+        singleLine.value='';
+        multiLine.value=''
     }
      
      function loadBookmarklet(loading){
@@ -789,7 +803,9 @@
         return evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     }
 
-    function inputFocus(){input.focus()};
+    function inputFocus(){
+        inputs.current.focus()
+    };
     ///////////////////
     //  load hotkeys
     document.onkeyup = function(evt) {
@@ -827,7 +843,7 @@
             return
         }
         RogueBM.lastInput=rogueYML;
-        var parsed=jsyaml.load(rogueYML);
+        var parsed=jsyaml.safeLoad(rogueYML);
     if(typeof parsed == 'string'){
             var obj={};
         obj[parsed]=[];
@@ -850,8 +866,7 @@
         }
             handleCommand(keys[0],command[keys[0]])//command and arguments seperated
         }
-    //input.value='';
-    //multiLineInput.value='';
+    //inputs.setValue('')
     }
     function handleCommand(inputCommand,args){
         var normalizedCommand=normalizeCommandToScriptName(inputCommand);
