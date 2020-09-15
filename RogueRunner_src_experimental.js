@@ -535,14 +535,15 @@
         
         singleLine.style.display=(bool)?'none':'block';
         multiLine.style.display=(bool)?'block':'none';
-        input.current=(bool)?input.multiLine:input.singleLine;
-        input.current.focus();
+        inputs.current=(bool)?inputs.multiLine:inputs.singleLine;
+        inputs.current.focus();
         setTextAreaHeight();
     }
     var multiLine=inputs.multiLine;
     var singleLine=inputs.singleLine;
     multiLine.name="text";
     var setTextAreaHeight=function(){
+        inputs.singleLine.value='';
         this.style.height = "";
         this.style.height = Math.max(this.scrollHeight +3,12) + "px";
     }
@@ -577,7 +578,7 @@
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title);
             }
-            run(input.current.value);
+            run(multiLine.value);
             return
         }
         getSuggestions(multiLine.value)
@@ -640,7 +641,7 @@
     domready(function(){
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
-        setTextAreaHeight(); //make multiline have some height
+        setTextAreaHeight(); //make multiLine have some height
         var about=window['RogueBM']['about']
         if(!about || !about['injector'] ){
             showError('RogueRunner wasn\'t injected with the injector script!');
