@@ -537,7 +537,8 @@
     input.className='rogue-input';
     input.autocomplete="off";
     input.style.display='block';
-    input.onkeyup = multiLineInput.onkeyup = function(evt) {
+    
+    var keyUP = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
             statusBar.innerHTML='';
@@ -560,6 +561,15 @@
         }
         getSuggestions(this.value)
     }
+    multiLineInput.onkeyup = function(evt){
+	input.value=multiLineInput.value;
+        keyUP(evt);
+    }
+    input.onkeyup = function(evt){
+	multiLineInput.value=input.value;
+        keyUP(evt);
+    }
+	
     runnerWrapper.appendChild(input);
     runnerWrapper.appendChild(multiLineInput);
 
