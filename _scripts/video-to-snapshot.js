@@ -21,15 +21,13 @@ for(var i=0,l=v.length;i<l;i++){
   c.width = w;
   c.height = h;
   c.getContext("2d").drawImage(e, 0, 0, w, h);
-  d = document.createElement("img");
-  d.style.margin='auto';
-  d.style.display='block';
-  var data = c.toDataURL()
+  var data = c.toDataURL();
+  var d = document.createElement("img");
   d.src = data;
   d.height = e.videoHeight;
   document.body.appendChild(d);
   var win = window.open(null,'snapshot_'+i); //'menubar=no,location=no,resizable=yes,scrollbars=no,status=no'
-  win.document.write('<img src="'+data+'"/>');
+  win.document.write('<img style="margin:auto; display:block;" src="'+data+'"/>');
   win.document.close()
   //window.open(data);
      
