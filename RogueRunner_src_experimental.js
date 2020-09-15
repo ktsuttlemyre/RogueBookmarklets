@@ -518,8 +518,8 @@
     runnerWrapper.id = 'RogueRunner_div';
     modalPane.appendChild(runnerWrapper);
     
-	
-	
+    
+    
     var multiLineInput=document.createElement('textarea');
     multiLineInput.name="text";
     multiLineInput.oninput=function(){
@@ -545,31 +545,35 @@
             statusBar.appendChild(rogueLink);
         }
         if(keycode == 13){ //enter will focus again
-	    if(evt.shiftKey){
-		    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-		    var display=input.style.display;
-		    input.style.display=(display=='block')?'none':'block';
-		    multiLineInput.style.display=display;
-		    return false
-	    }    
+            if(evt.shiftKey){
+                evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+                var display=input.style.display;
+                input.style.display=(display=='block')?'none':'block';
+                multiLineInput.style.display=display;
+                return false
+            }
             var focused = getFocusedElement();
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
-                run(focused.title)
+                run(focused.title);
             }
-            run(multiLineInput.value)
+            run(multiLineInput.value);
             return
         }
         getSuggestions(this.value)
     }
     multiLineInput.onkeyup = function(evt){
-	input.value=multiLineInput.value;
+        input.value=multiLineInput.value;
+        var keycode = keyCode(evt)
+        if(keycode==13 && !evt.ctrlKey){
+            return
+        }
         keyUP(evt);
     }
     input.onkeyup = function(evt){
-	multiLineInput.value=input.value;
+        multiLineInput.value=input.value;
         keyUP(evt);
     }
-	
+    
     runnerWrapper.appendChild(input);
     runnerWrapper.appendChild(multiLineInput);
 
@@ -620,7 +624,7 @@
         document.body.appendChild(modalBackdropDiv);
         var about=window['RogueBM']['about']
         if(!about || !about['injector'] ){
-        	showError('RogueRunner wasn\'t injected with the injector script!');
+            showError('RogueRunner wasn\'t injected with the injector script!');
         }
         //if there is a cmd passed from the injector
         //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
@@ -811,49 +815,49 @@
 
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
     function run(rogueYML){
-    	if(!rogueYML){
-    		statusBar.innerHTML="Nothing to execute";
-    		return
-    	}
-    	RogueBM.lastInput=rogueYML;
-    	var parsed=jsyaml.load(rogueYML);
-	if(typeof parsed == 'string'){
-    		var obj={};
-		obj[parsed]=[];
-		parsed=obj;
+        if(!rogueYML){
+            statusBar.innerHTML="Nothing to execute";
+            return
         }
-	    
-	if(!Array.isArray(parsed)){
-		parsed=[parsed];
-    	}
-	    
-	commands=parsed;
-    	for(var index=0,l=commands.length;index<l;index++){
-    		var command=commands[index]
-    		var keys=Object.keys(command)
-		if(keys.length!=1){
-			alert('Currently not accepting unordered commands');
-			alert('Schema Error see console. For issues')
-    			console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
-			return
-		}
-    		handleCommand(keys[0],command[keys[0]])//command and arguments seperated
-    	}
-	//input.value='';
+        RogueBM.lastInput=rogueYML;
+        var parsed=jsyaml.load(rogueYML);
+    if(typeof parsed == 'string'){
+            var obj={};
+        obj[parsed]=[];
+        parsed=obj;
+        }
+        
+    if(!Array.isArray(parsed)){
+        parsed=[parsed];
+        }
+        
+    commands=parsed;
+        for(var index=0,l=commands.length;index<l;index++){
+            var command=commands[index]
+            var keys=Object.keys(command)
+        if(keys.length!=1){
+            alert('Currently not accepting unordered commands');
+            alert('Schema Error see console. For issues')
+                console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
+            return
+        }
+            handleCommand(keys[0],command[keys[0]])//command and arguments seperated
+        }
+    //input.value='';
     //multiLineInput.value='';
     }
     function handleCommand(inputCommand,args){
-    	var normalizedCommand=normalizeCommandToScriptName(inputCommand);
-    	if(inputCommand){
-	        //assume user put in the right scriptname
-	        script=window.RogueBM.scripts[inputCommand]  
-	        if(!script){  //no script goes by key name then try to normalize the key
-	        	script=window.RogueBM.scripts[normalizedCommand];
-	        	if(!script){// if that fails then get the first suggestion script obj  
-	            	script = (currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
-	            }
-	        }
-	    }
+        var normalizedCommand=normalizeCommandToScriptName(inputCommand);
+        if(inputCommand){
+            //assume user put in the right scriptname
+            script=window.RogueBM.scripts[inputCommand]  
+            if(!script){  //no script goes by key name then try to normalize the key
+                script=window.RogueBM.scripts[normalizedCommand];
+                if(!script){// if that fails then get the first suggestion script obj  
+                    script = (currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
+                }
+            }
+        }
 
         //now we have a script obj or string
         //download the src if it exists OR run the string
@@ -866,15 +870,15 @@
         //potential api to send arguments to roguebookmarks
         var commandID=RogueBM.commandChain.length
         if(RogueBM.currentCommandID==-1){
-        	RogueBM.currentCommandID=commandID
+            RogueBM.currentCommandID=commandID
         }
         var command={
-        	inputCommand:inputCommand,
-        	normalizedCommand:normalizedCommand,
-        	script:script,
-        	src:script.src,
-        	args:args,
-        	commandID:commandID
+            inputCommand:inputCommand,
+            normalizedCommand:normalizedCommand,
+            script:script,
+            src:script.src,
+            args:args,
+            commandID:commandID
         }
         RogueBM.commandChain.push(command);
 
@@ -942,12 +946,12 @@
         return args;  
     } 
     var RogueRunnerScriptOBJ=(function(){
-	        var scripts = document.getElementsByTagName('script');  
-	        var index = scripts.length - 1; 
-	        if(scripts.length){
-	        	return scripts[index];
-	    	}
-    	})();
+            var scripts = document.getElementsByTagName('script');  
+            var index = scripts.length - 1; 
+            if(scripts.length){
+                return scripts[index];
+            }
+        })();
 
 
     var args=''
@@ -1005,8 +1009,8 @@
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
          console.log('loaded',name)
-	var split=name.split('/');
-	name=split[split.length-1];
+    var split=name.split('/');
+    name=split[split.length-1];
         loadedScripts.push(name)
         
         var startInit=(!init && loadedScripts.filter(function (elem) {
