@@ -522,17 +522,18 @@
     multiLineInput.name="text";
     multiLineInput.oninput=function(){
         this.style.height = "";
-        this.style.height = this.scrollHeight + "px";
+        this.style.height = this.scrollHeight +3 + "px";
     }
     multiLineInput.id="multiline-input";
     multiLineInput.style.display='none';
+    multiLineInput.style.width='100%';
 
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
     input.autocomplete="off";
     input.style.display='block';
-    input.onkeyup = function(evt) {
+    input.onkeyup = multiLineInput.onkeyup function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
             statusBar.innerHTML='';
@@ -540,8 +541,7 @@
         }
         if(keycode == 13){ //enter will focus again
 	    if(evt.shiftKey){
-		    alert("yeet")
-		    evt.preventDefault();
+		    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 		    var display=input.style.display;
 		    input.style.display=(display=='block')?'none':'block';
 		    multiLineInput.style.display=display
