@@ -143,7 +143,7 @@
             'position: relative;'+
         '}'+
 
-        '#RogueRunner #RogueRunner_div > #input {'+
+        '#RogueRunner #RogueRunner_div > .rogue-input {'+
             'outline: none;'+
             'font-size: 1em;'+
             'height: 1.5em;'+
@@ -164,7 +164,7 @@
             'transition: all 0.1s ease;'+
         '}'+
 
-        '#RogueRunner #RogueRunner_div #input:focus ~ .status_bar{'+
+        '#RogueRunner #RogueRunner_div .rogue-input:focus ~ .status_bar{'+
             'color:#999999;'+
             'right: 1em;'+
             'bottom: 0.1em;'+
@@ -527,24 +527,26 @@
     multiLineInput.id="multiline-input";
     multiLineInput.style.display='none';
     multiLineInput.style.width='100%';
+    multiLineInput.className='rogue-input';
 
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
+    input.className='rogue-input';
     input.autocomplete="off";
     input.style.display='block';
     input.onkeyup = multiLineInput.onkeyup = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
             statusBar.innerHTML='';
-            statusBar.appendChild(rogueLink)
+            statusBar.appendChild(rogueLink);
         }
         if(keycode == 13){ //enter will focus again
 	    if(evt.shiftKey){
 		    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 		    var display=input.style.display;
 		    input.style.display=(display=='block')?'none':'block';
-		    multiLineInput.style.display=display
+		    multiLineInput.style.display=display;
 		    return false
 	    }    
             var focused = getFocusedElement();
