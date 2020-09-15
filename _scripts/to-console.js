@@ -9,4 +9,10 @@ authors: |
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 layout: script
 ---
-alert('//TODO Implement this')
+console.log('arguments',Array.prototype.slice.call(arguments))
+console.log('RogueBM["stdin"]',RogueBM['stdin'])
+console.log('window.getSelection()',window.getSelection())
+console.log('RogueBM["stdout"]',RogueBM["stdout"])
+
+
+
