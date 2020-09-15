@@ -22,10 +22,10 @@ for(var i=0,l=v.length;i<l;i++){
   c.height = h;
   c.getContext("2d").drawImage(e, 0, 0, w, h);
   var data = c.toDataURL();
-  var d = document.createElement("img");
-  d.src = data;
-  d.height = e.videoHeight;
-  document.body.appendChild(d);
+  //var d = document.createElement("img");
+  //d.src = data;
+  //d.height = e.videoHeight;
+  //document.body.appendChild(d);
   var win = window.open(null,'snapshot_'+i); //'menubar=no,location=no,resizable=yes,scrollbars=no,status=no'
   win.document.write('<img style="margin:auto; display:block;" src="'+data+'"/>');
   win.document.close()
