@@ -22,6 +22,8 @@ for(var i=0,l=v.length;i<l;i++){
   c.height = h;
   c.getContext("2d").drawImage(e, 0, 0, w, h);
   d = document.createElement("img");
+  d.style.margin='auto';
+  d.style.display='block';
   var data = c.toDataURL()
   d.src = data;
   d.height = e.videoHeight;
@@ -30,5 +32,6 @@ for(var i=0,l=v.length;i<l;i++){
   win.document.write('<img src="'+data+'"/>');
   win.document.close()
   //window.open(data);
-  
+     
+
 }
