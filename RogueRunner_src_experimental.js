@@ -518,6 +518,8 @@
     runnerWrapper.id = 'RogueRunner_div';
     modalPane.appendChild(runnerWrapper);
     
+	
+	
     var multiLineInput=document.createElement('textarea');
     multiLineInput.name="text";
     multiLineInput.oninput=function(){
@@ -553,7 +555,7 @@
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title)
             }
-            run(input.value)
+            run(multiLineInput.value)
             return
         }
         getSuggestions(this.value)
@@ -621,6 +623,7 @@
 
     function show(){
         input.value=''
+        multiLineInput.value=''
 
         modalBackdropDiv.style.display = "block";
 
@@ -654,6 +657,7 @@
              modalBackdropDiv.style.display = "none";
         }
         input.value='';
+        multiLineInput.value=''
     }
      
      function loadBookmarklet(loading){
@@ -826,6 +830,7 @@
     		handleCommand(keys[0],command[keys[0]])//command and arguments seperated
     	}
 	//input.value='';
+    //multiLineInput.value='';
     }
     function handleCommand(inputCommand,args){
     	var normalizedCommand=normalizeCommandToScriptName(inputCommand);
