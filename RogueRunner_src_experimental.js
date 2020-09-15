@@ -855,7 +855,8 @@
                 return '---\n'+match
             })
             commands=[]
-            var iterArray=rogueYML.split(/^---\s*$/gm).shift()
+            var iterArray=rogueYML.split(/^---\s*$/gm);
+            iterArray.shift();
             iterArray.forEach(function(page){
                  
                 commands.push(jsyaml.safeLoad(page))
