@@ -26,8 +26,8 @@ for(var i=0,l=v.length;i<l;i++){
   d.src = data;
   d.height = e.videoHeight;
   document.body.appendChild(d);
-  var win = window.open();
-  win.document.write('<img src="'+data+'"/>','snapshot_'+i,'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
+  var win = window.open(null,'snapshot_'+i,'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
+  win.document.write('<img src="'+data+'"/>');
   win.document.close()
   //window.open(data);
   
