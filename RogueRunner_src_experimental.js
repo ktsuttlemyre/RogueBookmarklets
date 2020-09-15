@@ -849,7 +849,7 @@
             rogueYML='[ '+rogueYML+' ]';
             parsed=jsyaml.safeLoad(rogueYML);
         }else{
-            rogueYML.replace(/^[^\s-#]/gm,function(match){
+            rogueYML=rogueYML.replace(/^[^\s-#]/gm,function(match){
                 return '---\n'+match
             })
             parsed=jsyaml.safeLoadAll(rogueYML);
