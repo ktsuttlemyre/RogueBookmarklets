@@ -844,22 +844,25 @@
             statusBar.innerHTML="Nothing to execute";
             return
         }
-        var parsed;
+        var parsed,commands;
         if(rogueYML.indexOf('\n')<0){
             rogueYML='[ '+rogueYML+' ]';
             parsed=jsyaml.safeLoad(rogueYML);
+            commands=parsed
         }else{
             rogueYML=rogueYML.replace(/^[^\s-#]/gm,function(match){
                 return '---\n'+match
             })
-            parsed=jsyaml.safeLoadAll(rogueYML);
+            commands=[]
+            rogueYML.split(/^---\s*$/gm).forEach(function(page){
+                commands.push(jsyaml.safeLoad(page))
+            });
         }
         
-        if(!Array.isArray(parsed)){
-            parsed=[parsed];
+        if(!Array.isArray(commands)){
+            commands=[commands];
         }
         
-        commands=parsed;
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index];
             var type= typeof command
