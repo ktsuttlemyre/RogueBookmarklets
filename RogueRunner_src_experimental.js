@@ -538,14 +538,13 @@
         input.current=(bool)?input.multiLine:input.singleLine;
         input.current.focus();
         setTextAreaHeight();
-        
     }
     var multiLine=inputs.multiLine;
     var singleLine=inputs.singleLine;
     multiLine.name="text";
     var setTextAreaHeight=function(){
         this.style.height = "";
-        this.style.height = this.scrollHeight +3 + "px";
+        this.style.height = Math.max(this.scrollHeight +3,12) + "px";
     }
     multiLine.oninput=setTextAreaHeight;
     multiLine.id="multiLine-input";
@@ -641,6 +640,7 @@
     domready(function(){
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
+        setTextAreaHeight(); //make multiline have some height
         var about=window['RogueBM']['about']
         if(!about || !about['injector'] ){
             showError('RogueRunner wasn\'t injected with the injector script!');
