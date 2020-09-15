@@ -517,18 +517,36 @@
     var runnerWrapper = document.createElement('div');
     runnerWrapper.id = 'RogueRunner_div';
     modalPane.appendChild(runnerWrapper);
+    
+    var multiLineInput=document.createElement('textarea');
+    multiLineInput.name="text";
+    multiLineInput.oninput=function(){
+        this.style.height = "";
+        this.style.height = this.scrollHeight + "px";
+    }
+    multiLineInput.id="multiline-input";
+    multiLineInput.style.display='none';
 
     var input = document.createElement('input');
     input.id = "input";
     input.type = 'text';
     input.autocomplete="off";
+    input.style.display='block';
     input.onkeyup = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
             statusBar.innerHTML='';
             statusBar.appendChild(rogueLink)
         }
-        if(keycode==13){ //enter will focus again
+        if(keyCode == 13){ //enter will focus again
+	    if(evt.shiftKey){
+		    alert("yeet")
+		    evt.preventDefault();
+		    var display=input.style.display;
+		    input.style.display=(display=='block')?'none':'block';
+		    multiLineInput.style.display=display
+		    return false
+	    }    
             var focused = getFocusedElement();
             if(focused && focused.className && focused.className.indexOf('Rogue_suggestion_link') > -1){
                 run(focused.title)
@@ -539,6 +557,7 @@
         getSuggestions(this.value)
     }
     runnerWrapper.appendChild(input);
+    runnerWrapper.appendChild(multiLineInput);
 
     var statusBar_isLink=true;
     var rogueLink= document.createElement('a');
@@ -893,7 +912,9 @@
     //  };
     // self['RogueBM']['xDLStorage'].getData('name',onMessage);
 
-
+   function toggleMultiline(){
+      
+   }
 
 
    function getArgsFromUrl(url){ 
