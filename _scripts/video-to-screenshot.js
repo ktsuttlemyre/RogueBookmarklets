@@ -12,7 +12,6 @@ authors: |
 originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
 layout: script_native
 ---
-
 var v = document.querySelectorAll("video");
 for(var i=0,l=v.length;i<l;i++){
   var e=v[i],
@@ -27,6 +26,9 @@ for(var i=0,l=v.length;i<l;i++){
   d.src = data;
   d.height = e.videoHeight;
   document.body.appendChild(d);
-  window.open(data);
+  var win = window.open();
+  win.document.write('<img src="'+data+'"/>','snapshot_'+i,'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
+  win.document.close()
+  //window.open(data);
   
 }
