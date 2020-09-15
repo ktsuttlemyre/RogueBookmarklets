@@ -559,7 +559,7 @@
             run(multiLineInput.value);
             return
         }
-        getSuggestions(this.value)
+        getSuggestions(multiLineInput.value)
     }
     multiLineInput.onkeyup = function(evt){
         input.value=multiLineInput.value;
