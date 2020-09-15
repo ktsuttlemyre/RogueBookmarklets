@@ -533,7 +533,7 @@
     input.type = 'text';
     input.autocomplete="off";
     input.style.display='block';
-    input.onkeyup = multiLineInput.onkeyup function(evt) {
+    input.onkeyup = multiLineInput.onkeyup = function(evt) {
         var keycode = keyCode(evt)
         if(!statusBar_isLink){
             statusBar.innerHTML='';
