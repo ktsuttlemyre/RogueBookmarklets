@@ -522,10 +522,11 @@
     
     var multiLineInput=document.createElement('textarea');
     multiLineInput.name="text";
-    multiLineInput.oninput=function(){
+    var setTextAreaHeight=function(){
         this.style.height = "";
         this.style.height = this.scrollHeight +3 + "px";
     }
+    multiLineInput.oninput=setTextAreaHeight;
     multiLineInput.id="multiline-input";
     multiLineInput.style.display='none';
     multiLineInput.style.width='100%';
@@ -551,6 +552,7 @@
                 input.style.display=(display=='block')?'none':'block';
                 multiLineInput.style.display=display;
                 multiLineInput.focus();
+                setTextAreaHeight()
                 return false
             }
             var focused = getFocusedElement();
