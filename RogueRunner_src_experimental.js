@@ -564,8 +564,10 @@
     multiLineInput.onkeyup = function(evt){
         input.value=multiLineInput.value;
         var keycode = keyCode(evt)
-        if(keycode==13 && !evt.ctrlKey){
-            return
+        if(keycode==13){
+             if(!evt.ctrlKey || !evt.shiftKey){
+               return
+             }
         }
         keyUP(evt);
     }
