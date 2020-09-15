@@ -187,6 +187,12 @@ Allows [iframe insertion] [popups]
           iframe = document.createElement('iframe');
           iframe.addEventListener("load",doPreloadHandlers);
           iframe.onerror=function(){self.status='blocked';};
+           
+          //make transparent
+          iframe.style.backgroundColor = "transparent";
+          iframe.frameBorder = "0";
+          iframe.allowTransparency="true"; 
+           
           iframe.src = url;
           iframeStyle=iframe.style;
           iframeStyle.display = "none";
