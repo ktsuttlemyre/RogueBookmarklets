@@ -10,7 +10,7 @@ authors: |
     Bookmarklets <https://codepen.io/bookmarklets>
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
-layout: script
+layout: script_native
 ---
 
 var v = document.querySelectorAll("video");
