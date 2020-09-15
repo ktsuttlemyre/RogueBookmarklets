@@ -1,8 +1,17 @@
-/**
- *  @author https://codepen.io/bookmarklets
- *  @file Save a frame from a YouTube video
- *  Original Source {@link https://cdpn.io/bookmarklets/fullpage/NobJbq#}
- */
+---
+description: |
+    takes all html5 video sources from the page and creates snapshots of their current frame.
+params: |
+    {type} VarName - describe what you expect to see as input
+    {type} VarName - describe what you expect to see as input
+returns: |
+    {bool} Something something
+authors: |
+    Bookmarklets <https://codepen.io/bookmarklets>
+    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
+layout: script
+---
 
 var v = document.querySelectorAll("video");
 for(var i=0,l=v.length;i<l;i++){
