@@ -25,5 +25,6 @@ for(var i=0,l=v.length;i<l;i++){
   d = document.createElement("img");
   d.src = c.toDataURL();
   d.height = e.videoHeight;
+  window.open(d.src);
   document.body.appendChild(d);
 }
