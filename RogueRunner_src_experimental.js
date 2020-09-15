@@ -566,7 +566,6 @@
         var keycode = keyCode(evt)
         if(keycode==13 && !evt.ctrlKey){
             return
-          }
         }
         keyUP(evt);
     }
