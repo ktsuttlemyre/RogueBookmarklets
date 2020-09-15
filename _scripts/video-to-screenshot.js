@@ -23,8 +23,10 @@ for(var i=0,l=v.length;i<l;i++){
   c.height = h;
   c.getContext("2d").drawImage(e, 0, 0, w, h);
   d = document.createElement("img");
-  d.src = c.toDataURL();
+  var data = c.toDataURL()
+  d.src = data;
   d.height = e.videoHeight;
-  window.open(d.src);
   document.body.appendChild(d);
+  window.open(data);
+  
 }
