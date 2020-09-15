@@ -653,7 +653,7 @@
      function normalizeCommandToScriptName(name){
           //Because commands can be in camelcase, pascal case, snake case, underscore case, URI encoded or even have spaces
           //this will take a command name and convert it to the hyphanated script name in the repository
-          return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y.toLowerCase()}).trim().replace(/\s+/gi,'-')
+          return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y}).trim().replace(/\s+/gi,'-').toLowerCase()
      }
 
     function isShown(){ //idk if i need this?
@@ -691,7 +691,9 @@
             return linkCache[key]
         }
         var a = document.createElement('a');
-        a.appendChild(document.createTextNode(key));
+        a.appendChild(document.createTextNode(key.replace(/^.|-./gi,function(match,group){
+   return (' '+match.charAt(match.length-1)).toUpperCase()
+}).trim()));
         a.title = key;
         a.className = 'Rogue_suggestion_link Roguener_animate'
         a.href = "javascript:RogueBM.run(\'"+key+"\')";
