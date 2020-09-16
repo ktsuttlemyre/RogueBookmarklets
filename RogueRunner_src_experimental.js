@@ -1020,7 +1020,7 @@
     window['RogueBM']['commandChain']=[]
     window['RogueBM']['execute']=function(package,filename,mode){
         debugger
-        if(!cachedCommands[filename]{
+        if(!cachedCommands[filename]){
            cachedCommands[filename]=function(){window['RogueBM']['execute'](package,filename,mode)}
         }
 
