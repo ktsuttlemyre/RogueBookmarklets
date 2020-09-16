@@ -7,7 +7,7 @@
       <script src='./site.js'></script>
     <script>
       
-      function tobody(){
+      function tobody(str){
           document.write(str)
           document.close()
       }
@@ -22,12 +22,13 @@
       }
       var str=JSON.stringify(site,replacer,2)
       if(location.hash.toLowerCase()=='#tobody'){
-        tobody()
+        tobody(str)
       }else{
           document.write('see console')
           document.close()
           console.log(JSON.parse(str))
       }
+
 
     </script>
   </body>
