@@ -15,13 +15,13 @@
         }
       }
       var str=JSON.stringify(site,replacer,2)
-      if(location.hash=='toBody'){
+      if(location.hash.toLowerCase()=='#tobody'){
           document.write(str)
           document.close()
       }else{
           document.write('see console')
           document.close()
-          console.log(json.parse(str))
+          console.log(JSON.parse(str))
       }
 
     </script>
