@@ -86,6 +86,7 @@
             args.unshift("RogueBM[runner]: ");
             console.error.apply(console, args);
     };
+    var cachedCommands={};
     
 
   
@@ -928,13 +929,20 @@
         }
         RogueBM.commandChain.push(command);
 
+        RogueBM.lastCMD=inputCommand;
+        
+        var cached=cachedCommands[script.src||script]
+        if(cached){
+            setTimeout(cached,1);
+            return
+        }
+
         //async calls
         if(script.src){ //if we get a script obj use the src attribute
             inject(script.src,'javascript',true)
         }else{ //if it is a string assume its code
             inject(script,'javascript')
         }
-        RogueBM.lastCMD=inputCommand;
     }
 
     var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
@@ -1011,6 +1019,9 @@
     window['RogueBM']['currentCommandID']=-1
     window['RogueBM']['commandChain']=[]
     window['RogueBM']['execute']=function(packge,filename,mode){
+        debugger
+        !(cachedCommands[filename]) && cachedCommands[filename]=function(){window['RogueBM']['execute'](package,filename,mode)}
+
          //TODO fix the loading situation
          var index = waitingForBookmarklet.indexOf(filename);
          var item=null
