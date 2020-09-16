@@ -17,8 +17,8 @@
           if(value.length>trunkcateLength){
             return value.substring(0,trunkcateLength)+'...(trunkated)'; 
           }
-          return value
         }
+        return value
       }
       var str=JSON.stringify(site,replacer,2)
       if(location.hash.toLowerCase()=='#tobody'){
