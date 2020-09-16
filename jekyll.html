@@ -5,6 +5,11 @@
   </head>
   <body>
     <script>
+      
+      function tobody(){
+          document.write(str)
+          document.close()
+      }
       var trunkcateLength=50;
       function replacer(key,value){
         if(typeof value =='string'){
@@ -16,8 +21,7 @@
       }
       var str=JSON.stringify(site,replacer,2)
       if(location.hash.toLowerCase()=='#tobody'){
-          document.write(str)
-          document.close()
+        tobody()
       }else{
           document.write('see console')
           document.close()
