@@ -87,7 +87,9 @@
             console.error.apply(console, args);
     };
     var cachedCommands={};
-    
+    function normalizeURLCache(url){ //cant use this because RogueBM.execute is called with relateive path or filename only
+         return url.split("/RogueBookmarklets/")[1];
+    }
 
   
 
