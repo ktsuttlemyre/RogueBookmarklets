@@ -856,10 +856,9 @@
             })
             commands=[]
             var iterArray=rogueYML.split(/^---\s*$/gm);
-            iterArray.shift();
             iterArray.forEach(function(page){
-                 
-                commands.push(jsyaml.safeLoad(page))
+                var parsed=jsyaml.safeLoad(page)
+                parsed && commands.push(parsed)
             });
         }
         
