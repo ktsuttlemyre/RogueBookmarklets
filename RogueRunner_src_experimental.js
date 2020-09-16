@@ -858,7 +858,7 @@
             var iterArray=rogueYML.split(/^---\s*$/gm);
             iterArray.forEach(function(page){
                 var parsedPage=jsyaml.safeLoad(page);
-                parsed && commands.push(parsedPage);
+                parsedPage && commands.push(parsedPage);
             });
         }
         
