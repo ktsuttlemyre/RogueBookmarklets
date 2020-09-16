@@ -1018,9 +1018,11 @@
     }
     window['RogueBM']['currentCommandID']=-1
     window['RogueBM']['commandChain']=[]
-    window['RogueBM']['execute']=function(packge,filename,mode){
+    window['RogueBM']['execute']=function(package,filename,mode){
         debugger
-        (!cachedCommands[filename]) && cachedCommands[filename]=function(){window['RogueBM']['execute'](package,filename,mode)}
+        if(!cachedCommands[filename]{
+           cachedCommands[filename]=function(){window['RogueBM']['execute'](package,filename,mode)}
+        }
 
          //TODO fix the loading situation
          var index = waitingForBookmarklet.indexOf(filename);
