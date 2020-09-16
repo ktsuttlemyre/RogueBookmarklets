@@ -7,10 +7,11 @@
     <script>
       var trunkcateLength=50;
       function replacer(key,value){
-        if(typeof value =='string){
+        if(typeof value =='string'){
           if(value.length>trunkcateLength){
             return value.substring(0,trunkcateLength); 
           }
+          return value
       }
       JSON.stringify(site,replacer,2)
       document.write(string)
