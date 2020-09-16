@@ -15,8 +15,15 @@
         }
       }
       var str=JSON.stringify(site,replacer,2)
-      document.write(str)
-      document.close()
+      if(location.hash=='toBody'){
+          document.write(str)
+          document.close()
+      }else{
+          document.write('see console')
+          document.close()
+          console.log(json.parse(str))
+      }
+
     </script>
   </body>
 </html>
