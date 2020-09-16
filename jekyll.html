@@ -15,7 +15,7 @@
       function replacer(key,value){
         if(typeof value =='string'){
           if(value.length>trunkcateLength){
-            return value.substring(0,trunkcateLength); 
+            return value.substring(0,trunkcateLength)+'...(trunkated)'; 
           }
           return value
         }
