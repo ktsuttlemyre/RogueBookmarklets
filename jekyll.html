@@ -11,10 +11,10 @@
           document.write(str)
           document.close()
       }
-      var trunkcateLength=50;
+      var trunkcateLength=0;
       function replacer(key,value){
         if(typeof value =='string'){
-          if(value.length>trunkcateLength){
+          if(trunkcateLength && value.length>trunkcateLength){
             return value.substring(0,trunkcateLength)+'...'; 
           }
         }
