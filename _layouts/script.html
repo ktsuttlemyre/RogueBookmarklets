@@ -27,19 +27,19 @@ Data preprocess
 {%- endcomment -%}
   
 {%- assign words = page.description | split: " " -%}
-#params
+
 {%- if page.params.first -%}
   {%- assign params = page.params -%}
 {%- else -%}
  {%- assign params = page.params | split: NL -%} 
 {%- endif -%}
-#returns
+
 {%- if page.returns.first -%}
   {%- assign returns = page.returns | join: " " -%}
 {%- else -%}
  {%- assign returns = page.returns | replace: NL, COMMENT_NL -%} 
 {%- endif -%}
-#authors
+
 {%- if page.authors.first -%}
   {%- assign authors = page.authors  -%}
 {%- else -%}
@@ -53,7 +53,7 @@ TEMPLATE
 /**
  *  {%- for word in words -%}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
-      {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word }} 
+      {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word }}{{ " " }}
     {%- endfor -%}
  *  
  *  @param {{ params | join: PARAM_NL }} 
