@@ -6,3 +6,8 @@ collections:
 liquid:
   error_mode: lax
 emptyArray: []
+curlyOpen: "{"
+curlyClose: "}"
+NL: |
+
+newLine: "\n"
