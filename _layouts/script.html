@@ -3,45 +3,51 @@
 ---
 //Jekyll metadata<META>{{ page.url }}<META>{{ page.path }}<META>{{ page.name }}<META>{{ page.title }}<META>{{ page.date }}<META>{{ site.github.build_revision }}
 {%- comment -%}
------Options-----{%- endcomment -%}
-{%- assign desciptionWordWrapLength = 7 -%}
+-----Options-----
+{%- endcomment -%}
+    {%- assign desciptionWordWrapLength = 7 -%}
 {%- comment -%}
 -----END OPTIONS-----
 
------Predefined special characters-----{%- endcomment -%}
-{%- assign curlyOpen = "{" -%}
-{%- assign curlyClose = "}" -%}
-{% capture NL %}
-{% endcapture %}
-{% assign COMMENT_NL = NL | append " *  " %}
-{% assign PARAM_NL = COMMENT_NL | append "@param " %}
-{% assign AUTHOR_NL = COMMENT_NL | append "@author Contributor: " %}
+-----Predefined special characters-----
+{%- endcomment -%}
+    {%- assign curlyOpen = "{" -%}
+    {%- assign curlyClose = "}" -%}
+    {% capture NL %}
+    {% endcapture %}
+    {% assign COMMENT_NL = NL | append " *  " %}
+    {% assign PARAM_NL = COMMENT_NL | append "@param " %}
+    {% assign AUTHOR_NL = COMMENT_NL | append "@author Contributor: " %}
+{%- comment -%}
 -----END Predefined Special Charaters-----
 
------Data preprocess----- {%- endcomment -%}
-{%- assign words = page.description | split: " " -%}
-#params
-{%- if page.params.first -%}
-  {%- assign params = page.params -%}
-{%- else -%}
- {%- assign params = page.params | split: NL -%} 
-{%- endif -%}
-#returns
-{%- if page.returns.first -%}
-  {%- assign returns = page.returns | join: " " -%}
-{%- else -%}
- {%- assign returns = page.returns | replace: NL, COMMENT_NL -%} 
-{%- endif -%}
-#authors
-{%- if page.authors.first -%}
-  {%- assign authors = page.authors  -%}
-{%- else -%}
- {%- assign authors = page.authors | split: NL  -%} 
-{%- endif -%}
+-----Data preprocess-----
+{%- endcomment -%}
+    {%- assign words = page.description | split: " " -%}
+    #params
+    {%- if page.params.first -%}
+      {%- assign params = page.params -%}
+    {%- else -%}
+     {%- assign params = page.params | split: NL -%} 
+    {%- endif -%}
+    #returns
+    {%- if page.returns.first -%}
+      {%- assign returns = page.returns | join: " " -%}
+    {%- else -%}
+     {%- assign returns = page.returns | replace: NL, COMMENT_NL -%} 
+    {%- endif -%}
+    #authors
+    {%- if page.authors.first -%}
+      {%- assign authors = page.authors  -%}
+    {%- else -%}
+     {%- assign authors = page.authors | split: NL  -%} 
+    {%- endif -%}
     
 
 
-{%- comment -%}-----TEMPLATE-----{%- endcomment -%}
+{%- comment -%}
+  -----TEMPLATE-----
+{%- endcomment -%}
 /**
  *  {%- for word in words -%}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
