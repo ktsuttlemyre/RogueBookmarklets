@@ -13,8 +13,6 @@ END OPTIONS
 Predefined special characters 
 {%- endcomment -%}
   
-{%- assign curlyOpen = "{" -%}
-{%- assign curlyClose = "}" -%}
 {% capture NL %}
 {% endcapture %}
 {% assign COMMENT_NL = NL | append: " *  " %}
@@ -60,7 +58,7 @@ TEMPLATE
  *  @returns {{ returns }}
  *
  *  @author Original: {{ authors | join: AUTHOR_NL }} 
-{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }} {% endif %}
+{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ "{" }}@link {{ page.originalsource }}{{ "}" }} {% endif %}
  *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
