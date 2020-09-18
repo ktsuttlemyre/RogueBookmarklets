@@ -2,25 +2,7 @@
 #layout: default
 ---
 //Jekyll metadata<META>{{ page.url }}<META>{{ page.path }}<META>{{ page.name }}<META>{{ page.title }}<META>{{ page.date }}<META>{{ site.github.build_revision }}
-{%- comment -%}
-Options 
-{%- endcomment -%}
-    {%- assign desciptionWordWrapLength = 7 -%}
-{%- comment -%}
-END OPTIONS
-Predefined special characters 
-{%- endcomment -%}
-    {%- assign curlyOpen = "{" -%}
-    {%- assign curlyClose = "}" -%}
-    {% capture NL %}
-    {% endcapture %}
-    {% assign COMMENT_NL = NL | append " *  " %}
-    {% assign PARAM_NL = COMMENT_NL | append "@param " %}
-    {% assign AUTHOR_NL = COMMENT_NL | append "@author Contributor: " %}
-{%- comment -%}
-END Predefined Special Charaters
-Data preprocess
-{%- endcomment -%}
+
     {%- assign words = page.description | split: " " -%}
     #params
     {%- if page.params.first -%}
@@ -40,8 +22,6 @@ Data preprocess
     {%- else -%}
      {%- assign authors = page.authors | split: NL  -%} 
     {%- endif -%}
-    
-
 
 {%- comment -%}
 TEMPLATE
