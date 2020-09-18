@@ -22,7 +22,7 @@ Blocks [script injection] [script inlining] [eval]
 Allows [iframe insertion] [popups]
 */
 
-(function (vers,global,options,cmd) {
+(function (global,document,console,vers,options,cmd,undefined) {
   //options include
   //forceIframeInject = defaults false will force iframe injection only
   //options['forcePopOut'] = forces popout
@@ -485,4 +485,4 @@ Allows [iframe insertion] [popups]
     RogueBM.open=function(url){
         var win = global.open(url, '_blank', externalWindowString);
     };
-})('0.0.1',window,{'user':'anonymous','skin':'experimental'},'%s');
+})(window,document,console,'0.0.1',{'user':'anonymous','skin':'experimental'},'%s');
