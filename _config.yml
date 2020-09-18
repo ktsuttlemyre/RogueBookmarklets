@@ -8,6 +8,6 @@ liquid:
 emptyArray: []
 curlyOpen: "{"
 curlyClose: "}"
-NL: |
-
 newLine: "\n"
+SPACE: " "
+
