@@ -1020,7 +1020,20 @@
     }
     window['RogueBM']['currentCommandID']=-1
     window['RogueBM']['commandChain']=[]
-    window['RogueBM']['execute']=function(package,filename,mode){
+    window['RogueBM']['execute']=function(package,args,filename,mode){
+         
+         
+          if(args){
+             var keys = Object.keys(args)
+             for(var i=0,l=keys.length;i<l;i++){
+
+             }
+
+         }
+         argVarNames = {{ args | jsonify }};          
+
+     
+     
         debugger
         if(!cachedCommands[filename]){
            cachedCommands[filename]=function(){window['RogueBM']['execute'](package,filename,mode)}
