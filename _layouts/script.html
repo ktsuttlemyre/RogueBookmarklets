@@ -11,30 +11,47 @@
 -----Predefined special characters-----{%- endcomment -%}
 {%- assign curlyOpen = "{" -%}
 {%- assign curlyClose = "}" -%}
-{%- assign SPACE = "}" -%}
 {% capture NL %}
 {% endcapture %}
-{% capture COMMENT_NL %}
- *  {% endcapture %}
-{% capture PARAM_NL %}
- *  @param {% endcapture %}
-{% capture AUTHOR_NL %}
- *  @author Contributor: {% endcapture %}
-{%- comment -%}
+{% assign COMMENT_NL = NL | append " *  " %}
+{% assign PARAM_NL = COMMENT_NL | append "@param " %}
+{% assign AUTHOR_NL = COMMENT_NL | append "@author Contributor: " %}
 -----END Predefined Special Charaters-----
 
 -----Data preprocess----- {%- endcomment -%}
 {%- assign words = page.description | split: " " -%}
+#params
+{%- if page.params.first -%}
+  {%- assign params = page.params -%}
+{%- else -%}
+ {%- assign params = page.params | split: NL -%} 
+{%- endif -%}
+#returns
+{%- if page.returns.first -%}
+  {%- assign returns = page.returns | join: " " -%}
+{%- else -%}
+ {%- assign returns = page.returns | replace: NL, COMMENT_NL -%} 
+{%- endif -%}
+#authors
+{%- if page.authors.first -%}
+  {%- assign authors = page.authors  -%}
+{%- else -%}
+ {%- assign authors = page.authors | split: NL  -%} 
+{%- endif -%}
+    
 
 
 {%- comment -%}-----TEMPLATE-----{%- endcomment -%}
 /**
- *  {% for word in words %}{% assign remainder = forloop.index | modulo: desciptionWordWrapLength %}{% if remainder == 0 %}{{ COMMENT_NL }}{% endif %}{{ word }} {% endfor %}
+ *  {%- for word in words -%}
+      {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
+      {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word }} 
+    {%- endfor -%}
  *  
- *  @param {{ page.params | split: NL | join: PARAM_NL }} 
- *  @returns {{ page.returns | replace: NL, COMMENT_NL }}
+ *  @param {{ params | join: PARAM_NL }} 
+ *  @returns {{ returns }}
  *
- *  @author Original: {{ page.authors | split: NL | join: AUTHOR_NL }} 
+ *  @author Original: {{ authors | join: AUTHOR_NL }} 
 {%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }} {% endif %}
  *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
