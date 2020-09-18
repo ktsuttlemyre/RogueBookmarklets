@@ -52,7 +52,7 @@ TEMPLATE
  *  {% for word in words %}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
-    {%- endfor -%}
+    {% endfor %}
  *  
  *  @param {{ params | join: PARAM_NL }} 
  *  @returns {{ returns }}
