@@ -178,8 +178,10 @@ function mock(obj,skip){
 (function container(window,document,location,alert,prompt,confirm,window.open,undefined){
  
     var RogueBM=window['RogueBM']||{};
-    
-
+  
+  
+  /////////MOCkS CODE////////////
+  
     //win.document.location='http://google.com'
     var mocks = {
         window:mock(window),
@@ -261,8 +263,7 @@ function mock(obj,skip){
         }
     }
 
-
-
+///////////END MOCKS CODE ///////
 
 
     var package=function bookmarkletClosure({{ args | join: ',' }}){
@@ -276,13 +277,11 @@ function mock(obj,skip){
     }
 
     
-    if(RogueBM){
-        if(RogueBM['execute']){
-            var mode=mocks
-            RogueBM['execute'](package, {{ args | jsonify }}, {{ page.url }}, mode)
-        }
-    }else{
-        package()
+    if(RogueBM && RogueBM['execute']){
+        var mode="useMocks";
+        return RogueBM['execute'](package, {{ args | jsonify }}, {{ page.url }}, mode)
     }
+    package()
+    
 
 })(window,document,location,alert,prompt,confirm,window.open)
