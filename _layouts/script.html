@@ -278,7 +278,7 @@ function mock(obj,skip){
     if(RogueBM){
         if(RogueBM['execute']){
             var mode=mocks
-            RogueBM['execute'](package, {{ args | jsonify }}, mode)
+            RogueBM['execute'](package, {{ args | jsonify }}, {{ page.url }}, mode)
         }
     }else{
         package()
