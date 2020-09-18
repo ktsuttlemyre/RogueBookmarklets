@@ -13,7 +13,8 @@ END OPTIONS
 Predefined special characters 
 {%- endcomment -%}
   
-{% assign NL = newLine %}
+{% capture NL %}
+{% endcapture %}
 {% assign COMMENT_NL = NL | append: " *  " %}
 {% assign PARAM_NL = COMMENT_NL | append: "@param " %}
 {% assign AUTHOR_NL = COMMENT_NL | append: "@author Contributor: " %}
