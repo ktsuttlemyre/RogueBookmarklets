@@ -31,8 +31,9 @@ Data preprocess
   {%- assign args = page.params | map: 1 | join: ","  -%}
 {%- else -%}
  {%- assign params = page.params | split: NL -%}
- {%- comment -%} CURRENTLY NOT DOING THIS BECAUSE ITS GOING TO FAIL A LOT
  {%- assign args = emptyArray -%}
+ {%- comment -%} CURRENTLY NOT DOING THIS BECAUSE ITS GOING TO FAIL A LOT
+ 
  {%- for param in params -%}
    {%- assign tmp1 = param | strip | split: "}" -%}
    {%- assign tmp2 = tmp1[1] | strip | split: "-" -%}
