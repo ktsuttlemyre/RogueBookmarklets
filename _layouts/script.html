@@ -33,14 +33,7 @@ Data preprocess
  {%- assign params = page.params | split: NL -%}
  {%- assign args = emptyArray -%}
   
- {%- comment -%} CURRENTLY NOT DOING THIS BECAUSE ITS GOING TO FAIL A LOT
- {%- for param in params -%}
-   {%- assign tmp1 = param | strip | split: "}" -%}
-   {%- assign tmp2 = tmp1[1] | strip | split: "-" -%}
-   {%- assign varName = tmp2[0] | strip -%} 
-   {%- assign args = args | push: varName -%}
- {%- endfor -%}
- {%- endcomment -%}
+
 {%- endif -%}
   
 {%- if page.returns.first -%}
