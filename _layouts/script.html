@@ -28,10 +28,19 @@ Data preprocess
 
 {%- if page.params.first -%}
   {%- assign params = page.params -%}
+  {%- assign args = page.params | map: 1 | join: ","  -%}
 {%- else -%}
- {%- assign params = page.params | split: NL -%} 
+ {%- assign params = page.params | split: NL -%}
+ {%- comment -%} CURRENTLY NOT DOING THIS BECAUSE ITS GOING TO FAIL A LOT
+ {%- assign args = emptyArray -%}
+ {%- for param in params -%}
+   {%- assign tmp1 = param | strip | split: "}" -%}
+   {%- assign tmp2 = tmp1[1] | strip | split: "-" -%}
+   {%- assign varName = tmp2[0] | strip -%} 
+   {%- assign args = args | push: varName -%}
 {%- endif -%}
-
+{%- endcomment -%}
+  
 {%- if page.returns.first -%}
   {%- assign returns = page.returns | join: " " -%}
 {%- else -%}
@@ -45,6 +54,8 @@ Data preprocess
 {%- endif -%}
 
 
+  
+  
 {%- comment -%}
 TEMPLATE
 {%- endcomment -%}
@@ -168,7 +179,7 @@ function mock(obj,skip){
 
 
 
-(function container(window,document,location){
+(function container(window,document,location,alert,prompt,confirm,window.open,undefined){
  
     var RogueBM=window['RogueBM']||{};
     
@@ -258,7 +269,7 @@ function mock(obj,skip){
 
 
 
-    var package=function bookmarkletClosure(window,document,location,prompt,alert,confirm){
+    var package=function bookmarkletClosure({{args}}){
 
         var stdout=RogueBM['stdout'];
         var selection = (stdout!=null)?stdout:(getSelection.call(window)||'');
@@ -275,7 +286,7 @@ function mock(obj,skip){
             RogueBM['execute'](package,mode)
         }
     }else{
-        package(window,document,location,prompt,alert,confirm)
+        package()
     }
 
-})(window,document,location)
+})(window,document,location,alert,prompt,confirm,window.open)
