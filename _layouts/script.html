@@ -58,7 +58,7 @@ TEMPLATE
  *  @returns {{ returns }}
  *
  *  @author Original: {{ authors | join: AUTHOR_NL }} 
-{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ "/{" }}@link {{ page.originalsource }}{{ "/}" }} {% endif %}
+{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ "{" }}@link {{ page.originalsource }}{{ "\}" }} {% endif %}
  *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
