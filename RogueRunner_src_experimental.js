@@ -1211,28 +1211,41 @@ function mock(obj,skip){
                  return {'text': mocks.window.getSelection()}
              }
          }
-
+          return mocks
      ///////////END MOCKS CODE //////
     }
      
      
      
      
-    window['RogueBM']['execute']=function(package,mode,args,filename){
+    window['RogueBM']['execute']=function(package,mode,argNames,filename){
          
+         var mocks=null
+         if(mode=="useMocks"){
+           mocks=createMockEnv()
+         }else{
+           mocks={window:window,
+                  document:window.document,
+                  alert:window.alert,
+                  confirm:window.confirm,
+                  location:window.document.location,
+                  prompt:window.prompt
+                 }
+                  
+         }
+              
          
-          if(args){
-             var keys = Object.keys(args)
+          if(argNames){
+             var keys = Object.keys(argNames)
              for(var i=0,l=keys.length;i<l;i++){
 
              }
 
          }
-         argVarNames = {{ args | jsonify }};          
+        
 
      
-     
-        debugger
+
         if(!cachedCommands[filename]){
            cachedCommands[filename]=function(){window['RogueBM']['execute'](package,mode,args,filename)}
         }
