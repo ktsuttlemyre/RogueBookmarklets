@@ -264,8 +264,8 @@ function mock(obj,skip){
 
 
 
-    var package=function bookmarkletClosure({{args}}){
-
+    var package=function bookmarkletClosure({{ args | join: ',' }}){
+        
         var stdout=RogueBM['stdout'];
         var selection = (stdout!=null)?stdout:(getSelection.call(window)||'');
         var serverSecret='{{ site.github.build_revision }}'; //MAKE SURE THIS STATEMENT IS ENDED SO THAT ANY SELFCALLING CLOSURES DON'T GET MISTAKEN FOR A CALL SYNTAX
@@ -278,7 +278,7 @@ function mock(obj,skip){
     if(RogueBM){
         if(RogueBM['execute']){
             var mode=mocks
-            RogueBM['execute'](package,mode)
+            RogueBM['execute'](package, {{ args | jsonify }}, mode)
         }
     }else{
         package()
