@@ -1,7 +1,71 @@
 ---
 #layout: default
 ---
+//Jekyll metadata<META>{{ page.url }}<META>{{ page.path }}<META>{{ page.name }}<META>{{ page.title }}<META>{{ page.date }}<META>{{ site.github.build_revision }}
+{%- comment -%}
+Options 
+{%- endcomment -%}
+    {%- assign desciptionWordWrapLength = 7 -%}
+{%- comment -%}
+END OPTIONS
+Predefined special characters 
+{%- endcomment -%}
+    {%- assign curlyOpen = "{" -%}
+    {%- assign curlyClose = "}" -%}
+    {% capture NL %}
+    {% endcapture %}
+    {% assign COMMENT_NL = NL | append " *  " %}
+    {% assign PARAM_NL = COMMENT_NL | append "@param " %}
+    {% assign AUTHOR_NL = COMMENT_NL | append "@author Contributor: " %}
+{%- comment -%}
+END Predefined Special Charaters
+Data preprocess
+{%- endcomment -%}
+    {%- assign words = page.description | split: " " -%}
+    #params
+    {%- if page.params.first -%}
+      {%- assign params = page.params -%}
+    {%- else -%}
+     {%- assign params = page.params | split: NL -%} 
+    {%- endif -%}
+    #returns
+    {%- if page.returns.first -%}
+      {%- assign returns = page.returns | join: " " -%}
+    {%- else -%}
+     {%- assign returns = page.returns | replace: NL, COMMENT_NL -%} 
+    {%- endif -%}
+    #authors
+    {%- if page.authors.first -%}
+      {%- assign authors = page.authors  -%}
+    {%- else -%}
+     {%- assign authors = page.authors | split: NL  -%} 
+    {%- endif -%}
+    
 
+
+{%- comment -%}
+TEMPLATE
+{%- endcomment -%}
+/**
+ *  {%- for word in words -%}
+      {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
+      {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word }} 
+    {%- endfor -%}
+ *  
+ *  @param {{ params | join: PARAM_NL }} 
+ *  @returns {{ returns }}
+ *
+ *  @author Original: {{ authors | join: AUTHOR_NL }} 
+{%- if page.originalsource -%}{{ COMMENT_NL }}@see OriginalSource: {{ curlyOpen }}@link {{ page.originalsource }}{{ curlyClose }} {% endif %}
+ *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
+ *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
+ *  @file LastModified: {{ page.date }}
+ */
+{%- comment -%}
+Special vars all functions get (to make them independent)
+selection = if there was text selected it is now accessable via this variable
+open = similar to window.open but will open modal, window, 
+{% endcomment -%}
 
 
 if(!Function.prototype.bind){
