@@ -97,7 +97,7 @@ open = similar to window.open but will open modal, window,
     }
 
     
-    if(RogueBM && RogueBM['execute']){
+    if(RogueBM && RogueBM['cacheCommand']){
         var mode="useMocks";
         return RogueBM['cacheCommand'](package, mode, {{ args | jsonify }}, '{{ page.url }}')
     }//else
