@@ -33,7 +33,7 @@ window.RogueBM.scripts={
       {%- assign title = meta[4] -%}
       {%- assign date = meta[5] -%}
       {%- assign revision = meta[6] -%}
-     "{{ title | escape }}":{
+     "{{ name | default: title }}":{
         "basename":"{{ name | default: title  }}",
         "path":"{{ url }}",
         "modified_time":"{{ modified_time }}",
