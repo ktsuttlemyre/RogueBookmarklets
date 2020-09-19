@@ -1256,8 +1256,17 @@ function mock(obj,skip){
         fn.apply(fn,pushArgs);
      }
            
-    window['RogueBM']['execute']=function(){
+    window['RogueBM']['execute']=function(package,args){
 
+        var type = typeof args;
+        if(Array.isArray(args)){
+            package.apply(package,args)
+        }else if(type=='object'){
+            argSpread(fn,argNames,params)
+        }else if (type == 'string'){
+            package(args);
+        }
+@@@@@@@@@
         hide()
         var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
         var args=commandMetaData.args;
