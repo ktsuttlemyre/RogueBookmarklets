@@ -762,11 +762,6 @@
         multiLine.value=''
     }
      
-     function loadBookmarklet(loading){
-          if(loading){
-          }else{
-          }
-     }
 
     var linkCache={};
     function generateSelectionLink(key){
@@ -986,6 +981,8 @@
         if(RogueBM.currentCommandID==-1){
             RogueBM.currentCommandID=commandID
         }
+
+
         var command={
             inputCommand:inputCommand,
             normalizedCommand:normalizedCommand,
@@ -1217,8 +1214,8 @@ function mock(obj,skip){
      
      
      
-     
-    window['RogueBM']['execute']=function(package,mode,argNames,filename){
+    //pakage first needs to be extracte from container
+    window['RogueBM']['cacheCommand']=function(container,mode,argNames,filename){
          
          var mocks=null
          if(mode=="useMocks"){
@@ -1233,52 +1230,50 @@ function mock(obj,skip){
                  }
                   
          }
+
+         function argBinder(params){
+            if(!argNames){
+                throw 'no arg mappings provided'
+                return
+            }
+            var args = argNames.slice();
+            var pushArgs=[]
+            var keys = Object.keys(argNames)
+            for(var i=0,l=keys.length;i<l;i++){
+               var key = keys[i];
+               pushArgs[args.indexOf(key)]=params[key]
+            }
+            fn.apply(fn,pushArgs);
+         }
               
          
-          if(argNames){
-             var keys = Object.keys(argNames)
-             for(var i=0,l=keys.length;i<l;i++){
 
-             }
-
-         }
         
-
+        var package = container(mocks.window,mocks.document.mocks.location,mocks.alert,mocks.prompt,mocks.confirm,window.open)
      
 
         if(!cachedCommands[filename]){
-           cachedCommands[filename]=function(){window['RogueBM']['execute'](package,mode,args,filename)}
+           cachedCommands[filename]=package;//function(){window['RogueBM']['execute'](package,mode,args,filename)}
         }
 
-         //TODO fix the loading situation
-         var index = waitingForBookmarklet.indexOf(filename);
-         var item=null
-          if (index > -1) {
-            item=waitingForBookmarklet[index]
-            waitingForBookmarklet.splice(index, 1);
-          }
-         if(item){
-              
-         }
-         loadedBookmarklet('filename')
-         hide()
-         var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
-         var args=commandMetaData.args;
-         if(mode){
-            var mocks=RogueBM['mocks']||mode;
-            var refs=window['RogueBM']['envRefs']
-            package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocks.window.prompt,mocks.window.alert,mocks.window.confirm])
-             //cleanup and check for inconsistantcies 
-             //check location and location href
-             if(mocks.document.location.href != refs.location.href){
-                 refs.location.href=mocks.document.location.href
-             }
-             if(mocks.document.location.toString() != refs.document.location.toString()){
-                 refs.document.location=mocks.document.location.toString()
-             }
-         }else{
-            package(window,document,location,prompt,alert,confirm)
-         }
+        hide()
+        var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
+        var args=commandMetaData.args;
+        if(mode){
+           var mocks=RogueBM['mocks']||mode;
+           var refs=window['RogueBM']['envRefs']
+           package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocks.window.prompt,mocks.window.alert,mocks.window.confirm])
+            //cleanup and check for inconsistantcies 
+            //check location and location href
+            if(mocks.document.location.href != refs.location.href){
+                refs.location.href=mocks.document.location.href
+            }
+            if(mocks.document.location.toString() != refs.document.location.toString()){
+                refs.document.location=mocks.document.location.toString()
+            }
+        }else{
+           package(window,document,location,prompt,alert,confirm)
+        }
     }
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
@@ -1293,9 +1288,9 @@ function mock(obj,skip){
     var initScripts=['RogueRunner.js','index.js','js-yaml.min.js']
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
-         console.log('loaded',name)
-    var split=name.split('/');
-    name=split[split.length-1];
+        console.log('loaded',name)
+        var split=name.split('/');
+        name=split[split.length-1];
         loadedScripts.push(name)
         
         var startInit=(!init && loadedScripts.filter(function (elem) {
