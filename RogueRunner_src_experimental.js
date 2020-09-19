@@ -1229,32 +1229,34 @@ function mock(obj,skip){
                   prompt:window.prompt
                  }
                   
-         }
-
-         function argBinder(params){
-            if(!argNames){
-                throw 'no arg mappings provided'
-                return
-            }
-            var args = argNames.slice();
-            var pushArgs=[]
-            var keys = Object.keys(argNames)
-            for(var i=0,l=keys.length;i<l;i++){
-               var key = keys[i];
-               pushArgs[args.indexOf(key)]=params[key]
-            }
-            fn.apply(fn,pushArgs);
-         }
-              
+         }   
          
 
-        
         var package = container(mocks.window,mocks.document.mocks.location,mocks.alert,mocks.prompt,mocks.confirm,window.open)
      
 
         if(!cachedCommands[filename]){
            cachedCommands[filename]=package;//function(){window['RogueBM']['execute'](package,mode,args,filename)}
         }
+        window['RogueBM']['execute'](package,args)
+    }
+
+     function argSpread(fn, argNames, params){
+        if(!argNames){
+            throw 'no arg mappings provided'
+            return
+        }
+        var args = argNames.slice();
+        var pushArgs=[]
+        var keys = Object.keys(argNames)
+        for(var i=0,l=keys.length;i<l;i++){
+           var key = keys[i];
+           pushArgs[args.indexOf(key)]=params[key]
+        }
+        fn.apply(fn,pushArgs);
+     }
+           
+    window['RogueBM']['execute']=function(){
 
         hide()
         var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
