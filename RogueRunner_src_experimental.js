@@ -151,10 +151,7 @@
             args.unshift("RogueBM[runner]: ");
             console.error.apply(console, args);
     };
-    var cachedCommands={};
-    function normalizeURLCache(url){ //cant use this because RogueBM.execute is called with relateive path or filename only
-         return url.split("/RogueBookmarklets/")[1];
-    }
+
 
   
 
@@ -733,11 +730,7 @@
         singleLine.focus()
     }
      
-     function normalizeCommandToScriptName(name){
-          //Because commands can be in camelcase, pascal case, snake case, underscore case, URI encoded or even have spaces
-          //this will take a command name and convert it to the hyphanated script name in the repository
-          return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y}).trim().replace(/\s+/gi,'-').toLowerCase()
-     }
+
 
     function isShown(){ //idk if i need this?
       return modalBackdropDiv.style.display == "block";
@@ -899,10 +892,53 @@
         }
     }
 
+    function normalizeCommandToScriptName(name){
+        //Because commands can be in camelcase, pascal case, snake case, underscore case, URI encoded or even have spaces
+        //this will take a command name and convert it to the hyphanated script name in the repository
+        return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y}).trim().replace(/\s+/gi,'-').toLowerCase()
+    }
+
+    var cachedCommands={};
+    function fullURLtoPath(url){ //cant use this because RogueBM.processTick is called with relateive path or filename only
+        var prefix='/RogueBookmarklets/';
+        var restOfPath=url.split(prefix)[1];
+        if(!restOfPath){
+            return null
+        }
+        return prefix + restOfPath
+    }
+    var cdnPreference='github_pages,github_raw,jsdelivr'.split(',')
+    function getScript(scriptEntry){
+        var cached=cachedCommands[scriptEntry.basename||scriptEntry];
+        if(cached){
+            return scriptEntry
+        }
+
+        if(typeof scriptEntry == 'string'){ //assume its code
+            //if it is a string assume its code
+            //TODO handle https:// http:// and javascript:
+            inject(script,'javascript')
+            return scriptEntry
+        }
+
+        //src takes priority
+        if(scriptEntry.src){//if we get a script obj use the src attribute
+            inject(scriptEntry.src,'javascript',true)
+            return scriptEntry
+        }
+
+        //TODO have cdn fallback failures
+        
+        inject(RogueBM.stringFormat(cdnPreference[0], scriptEntry.path),'javascript',true)
+        return scriptEntry
+        }
+
+
     //http://nodeca.github.io/js-yaml/#yaml=LS0tCi0gR3JheXNjYWxlOgogIC0gfAogICAgYXNkZmFmZHMKICAgIGFzZGYKICAgIGFzCiAgICBkZmFmZAogICAgYXNkCiAgLSAgc2RmYQogIC0gIHNhZHNmCi0gQVNDSUk6CiAgLSBsamthc2RramYKICAtIHNkZmFzZGYKICAtIGFzZGZhc2Zk
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
-    function run(rogueYML){
-         rogueYML=rogueYML.trim();
+    function run(rogueYML){ //Interperate input/yaml
+        var timeouts=[];
+        rogueYML=rogueYML.trim();
         RogueBM.lastInput=rogueYML;
         if(!rogueYML){
             statusBar.innerHTML="Nothing to execute";
@@ -928,86 +964,78 @@
         if(!Array.isArray(commands)){
             commands=[commands];
         }
+        var thread={processes:[]}
+
         
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index];
-            var type= typeof command
-            if(type == 'string'){
-                handleCommand(command)
-                continue
+            var commandVarType= typeof command
+            var scriptEntry,query,args;
+            if(commandVarType == 'string'){
+                query=queryScriptEntry(command)
+                args=[]
             }else if(Array.isArray(command)){
                 alert('got array of arrays!')
                 console.log('got array of arrays',parsed)
                 return
-            }else if(type!='object'){
+            }else if(commandVarType=='object'){
+                var keys=Object.keys(command)
+                if(keys.length!=1){
+                    alert('Currently not accepting unordered commands');
+                    alert('Schema Error see console. For issues')
+                    console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
+                    return
+                }
+                query=queryScriptEntry(keys[0])
+                args=command[keys[0]];
+            }else{
                 alert('Schema Error see console. For issues')
                 console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
             }
 
-            var keys=Object.keys(command)
-            if(keys.length!=1){
-                alert('Currently not accepting unordered commands');
-                alert('Schema Error see console. For issues')
-                console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
+
+
+            //now we have a script obj or string
+            //download the src if it exists OR run the string
+            if(!scriptEntry){
+                statusBar_isLink=false
+                statusBar.innerHTML="Interpreter error. One or more commands can not be executed";
                 return
             }
-            handleCommand(keys[0],command[keys[0]])//command and arguments seperated
+
+            thread.processes.push({scriptEntry:scriptEntry,inputCommand:inputCommand,args:args,processID:processIndex++})
+
+            //go ahead and asyncget/cache the script (even if there is a syntax error it is likely the person will fix it and need this soon)
+            //if command is already cached then use it
+            getScript(scriptEntry)
+
         }
-    //inputs.setValue('')
+        activity[thread.threadID=(threadIndex++).toString(36)]=thread;
+        //parsed and everything seems ok. Create the thread
+        setTimeout(function(){RogueBM.processTick()},1);
     }
-    function handleCommand(inputCommand,args){
+
+    var threads={}; //hash of threads(arrays)
+    var processIDSs=[]; //array of processIDs
+    var processIndex=0
+    var threadIndex=0
+    var activity={}
+    function queryScriptEntry(inputCommand){
         var normalizedCommand=normalizeCommandToScriptName(inputCommand);
         if(inputCommand){
             //assume user put in the right scriptname
-            script=window.RogueBM.scripts[inputCommand]  
-            if(!script){  //no script goes by key name then try to normalize the key
-                script=window.RogueBM.scripts[normalizedCommand];
-                if(!script){// if that fails then get the first suggestion script obj  
-                    script = (currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
+            scriptEntry=window.RogueBM.scripts[inputCommand];
+            if(!scriptEntry){  //no script goes by key name then try to normalize the key
+                scriptEntry=window.RogueBM.scripts[normalizedCommand];
+                if(!scriptEntry){// if that fails then get the first suggestion script obj  
+                    scriptEntry = (currentSuggestions[0] && window.RogueBM.scripts[currentSuggestions[0].title])
                 }
             }
         }
-
-        //now we have a script obj or string
-        //download the src if it exists OR run the string
-        if(!script){
-            statusBar_isLink=false
-            statusBar.innerHTML="Nothing to execute";
-            return
-        }
-
-        //potential api to send arguments to roguebookmarks
-        var commandID=RogueBM.commandChain.length
-        if(RogueBM.currentCommandID==-1){
-            RogueBM.currentCommandID=commandID
-        }
-
-
-        var command={
-            inputCommand:inputCommand,
-            normalizedCommand:normalizedCommand,
-            script:script,
-            src:script.src,
-            args:args,
-            commandID:commandID
-        }
-        RogueBM.commandChain.push(command);
-
-        RogueBM.lastCMD=inputCommand;
-        
-        var cached=cachedCommands[script.src||script]
-        if(cached){
-            setTimeout(cached,1);
-            return
-        }
-
-        //async calls
-        if(script.src){ //if we get a script obj use the src attribute
-            inject(script.src,'javascript',true)
-        }else{ //if it is a string assume its code
-            inject(script,'javascript')
-        }
+        return scriptEntry
     }
+
+        
 
     var CrossOriginLocalStorage = window['RogueBM']['CrossOriginLocalStorage']
     if(!CrossOriginLocalStorage){
@@ -1124,8 +1152,7 @@ function mock(obj,skip){
          document:window.document,
          location:window.document.location
     }
-    window['RogueBM']['currentCommandID']=-1
-    window['RogueBM']['commandChain']=[]
+   
      
     function createMockEnv(){
          //win.document.location='http://google.com'
@@ -1144,16 +1171,17 @@ function mock(obj,skip){
          //mocks.location.href=location.href.toString()
 
          var refs=RogueBM['envRefs'];
-         var currentCommandID=RogueBM['currentCommandID']
+         var currentCommandID=RogueBM['getCurrentCommandID'] @@@@@@@
          var alert=mocks.window.alert=function alert(message){
-             var skipAlerts=RogueBM['commandChain'][currentCommandID]['skipAlerts'];
+             var skipAlerts=RogueBM['getCommandArgs'](currentCommandID)['skipAlerts'];
              if(skipAlerts){return autoConfirmAnswer;}
              return refs.window.alert(message);
          }
          var confirm=mocks.window.confirm=function confirm(){
-             var autoConfirmAnswer=RogueBM['commandChain'][currentCommandID]['autoConfirm'];
+             var args=RogueBM['getCommandArgs'] @@@@
+             var autoConfirmAnswer=args(currentCommandID)['autoConfirm'];
              if(typeof autoConfirmAnswer =='boolean'){return autoConfirmAnswer;}
-             var args=RogueBM['commandChain']['args'];
+             var args=commandChain['args'];
              if(args.length){
                   var arg=args.shift(); //maybe check if argument is a boolean and enforce it?
                   return !!arg;
@@ -1161,7 +1189,8 @@ function mock(obj,skip){
              return refs.window.confirm(message,value);
          }
          var prompt=mocks.window.prompt=function prompt(message,value){
-             var args=RogueBM['commandChain'][currentCommandID]['handoffArgs'];
+             var args=RogueBM['getCommandArgs']; @@@
+             RogueBM['getCommandArgs'](currentCommandID)['handoffArgs'];
              if(args.length){
                   var arg=args.shift(); //maybe check if argument is string and enforce it?
                   return arg;
@@ -1215,48 +1244,78 @@ function mock(obj,skip){
      
      
     //pakage first needs to be extracte from container
-    window['RogueBM']['cacheCommand']=function(container,mode,argNames,filename){
-         
-         var mocks=null
-         if(mode=="useMocks"){
-           mocks=createMockEnv()
-         }else{
-           mocks={window:window,
+    window['RogueBM']['cacheCommand']=function(container,mode,paramNames,filename){
+
+        if(!cachedCommands[filename]){
+           cachedCommands[filename]={container:container,filename:filename,mode:mode,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,mode,args,filename)}
+        }
+
+        setTimeout(funciton(){window['RogueBM']['processTick']();},1)
+    }
+
+    function argSpread(fn, paramNames, kwargs){
+        if(!paramNames){
+            throw 'no array of paramNames to map';
+            return
+        }
+        var args=[]
+        var keys = Object.keys(paramNames)
+        for(var i=0,l=keys.length;i<l;i++){
+           var key = keys[i];
+           args[paramNames.indexOf(key)]=kwargs[key];
+        }
+        return fn.apply(fn,args);
+    }
+
+    window['RogueBM']['processTick']=function(){
+        var activeThreadIDs=Object.keys(activity)
+        for(var i=0,l=activeThreadIDs.length;i<l;i++){
+            var thread=activity[activeThreadIDs[i]]
+            if(thread.killed){ //garbage collection
+                if(Date.now()-thread.killed>(60*60*1000)){
+                    activity[activeThreadIDs]=null
+                    delete activity[activeThreadIDs]
+                }
+            }
+            if(thread.active){
+                continue
+            }
+
+
+            cachedCommands
+
+
+            var mocks=null
+            if(mode=="useMocks"){
+                mocks=createMockEnv()
+            }else{
+                mocks={window:window,
                   document:window.document,
                   alert:window.alert,
                   confirm:window.confirm,
                   location:window.document.location,
-                  prompt:window.prompt
-                 }
+                  prompt:window.prompt,
+                  open:window.open
+                }
                   
-         }   
-         
-
-        var package = container(mocks.window,mocks.document.mocks.location,mocks.alert,mocks.prompt,mocks.confirm,window.open)
+            }   
      
+            var package = argSpread(container,'window,document,location,alert,prompt,confirm,open'.split(','),mocks);
 
-        if(!cachedCommands[filename]){
-           cachedCommands[filename]=package;//function(){window['RogueBM']['execute'](package,mode,args,filename)}
-        }
-        window['RogueBM']['execute'](package,args)
-    }
 
-     function argSpread(fn, argNames, params){
-        if(!argNames){
-            throw 'no arg mappings provided'
-            return
+
         }
-        var args = argNames.slice();
-        var pushArgs=[]
-        var keys = Object.keys(argNames)
-        for(var i=0,l=keys.length;i<l;i++){
-           var key = keys[i];
-           pushArgs[args.indexOf(key)]=params[key]
-        }
-        fn.apply(fn,pushArgs);
-     }
-           
-    window['RogueBM']['execute']=function(package,args){
+
+
+
+
+
+
+
+
+
+        //check chain for next execution
+        //check cache for if it has a cached function
 
         var type = typeof args;
         if(Array.isArray(args)){
@@ -1268,7 +1327,7 @@ function mock(obj,skip){
         }
 @@@@@@@@@
         hide()
-        var commandMetaData=RogueBM.commandChain[RogueBM.currentCommandID];
+        var commandMetaData=commandChain[currentCommandID];
         var args=commandMetaData.args;
         if(mode){
            var mocks=RogueBM['mocks']||mode;
