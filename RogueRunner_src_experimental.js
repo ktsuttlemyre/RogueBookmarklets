@@ -1260,10 +1260,9 @@ function mock(obj,skip){
             return
         }
         var args=[]
-        var keys = Object.keys(paramNames)
-        for(var i=0,l=keys.length;i<l;i++){
-           var key = keys[i];
-           args[paramNames.indexOf(key)]=kwargs[key];
+        for(var i=0,l=paramNames.length;i<l;i++){
+           var key = paramNames[i];
+           args[i]=kwargs[key];
         }
         return args
     }
