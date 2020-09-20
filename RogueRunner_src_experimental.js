@@ -909,7 +909,7 @@
     }
     var cdnPreference='github_pages,github_raw,jsdelivr'.split(',')
     function getScript(scriptEntry){
-        var cached=cachedCommands[scriptEntry.basename||scriptEntry];
+        var cached=cachedCommands[scriptEntry.path||scriptEntry];
         if(cached){
             return scriptEntry
         }
@@ -1020,8 +1020,8 @@
 
     var threads={}; //hash of threads(arrays)
     var processIDSs=[]; //array of processIDs
-    var processIndex=0
-    var threadIndex=0
+    var processIndex=1
+    var threadIndex=1
     var activity={}
     function queryScriptEntry(rawCMD){
         var normalizedCommand=normalizeCommandToScriptName(rawCMD);
@@ -1245,10 +1245,10 @@ function mock(obj,skip){
      
      
     //pakage first needs to be extracte from container
-    window['RogueBM']['cacheCommand']=function(container,mode,paramNames,filename){
+    window['RogueBM']['cacheCommand']=function(container,mode,paramNames,path){
 
-        if(!cachedCommands[filename]){
-           cachedCommands[filename]={container:container,filename:filename,mode:mode,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,mode,args,filename)}
+        if(!cachedCommands[path]){
+           cachedCommands[path]={container:container,path:path,mode:mode,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,mode,args,filename)}
         }
 
         window['RogueBM']['processTick']()
@@ -1287,7 +1287,7 @@ function mock(obj,skip){
             }
 
             var proc=thread.processes[0] //scriptEntry:,rawCMD:,args:args,processID:})
-            var cache=cachedCommands[proc.scriptEntry.basename] //{container:,filename:,mode:,paramNames:}
+            var cache=cachedCommands[proc.scriptEntry.path] //{container:,filename:,mode:,paramNames:}
             if(!cache){
                 continue
             }
