@@ -84,7 +84,7 @@ open = similar to window.open but will open modal, window,
     var RogueBM=window['RogueBM']||{};
   
   
-    var package = function package(window,document,location,alert,prompt,confirm,open){
+    var package = function package(window,document,location,alert,prompt,confirm,open,next){
       return function bookmarkletClosure({{ args | join: ',' }}){
 
           var stdout=RogueBM['stdout'];
