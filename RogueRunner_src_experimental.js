@@ -1288,6 +1288,9 @@ function mock(obj,skip){
 
             var proc=thread.processes[0] //scriptEntry:,rawCMD:,args:args,processID:})
             var cache=cachedCommands[proc.scriptEntry.basename] //{container:,filename:,mode:,paramNames:}
+            if(!cache){
+                continue
+            }
 
 
             var mocks=null
