@@ -1012,7 +1012,8 @@
         }
         activity[thread.threadID=(threadIndex++).toString(36)]=thread;
         //parsed and everything seems ok. Create the thread
-        setTimeout(function(){RogueBM.processTick()},1);
+        hide()
+        RogueBM.processTick();
     }
 
     var threads={}; //hash of threads(arrays)
@@ -1154,7 +1155,7 @@ function mock(obj,skip){
     }
    
      
-    function createMockEnv(){
+    function createMockEnv(threadID,processID){
          //win.document.location='http://google.com'
          var mocks = {
              window:mock(window),
@@ -1171,15 +1172,13 @@ function mock(obj,skip){
          //mocks.location.href=location.href.toString()
 
          var refs=RogueBM['envRefs'];
-         var currentCommandID=RogueBM['getCurrentCommandID'] @@@@@@@
          var alert=mocks.window.alert=function alert(message){
-             var skipAlerts=RogueBM['getCommandArgs'](currentCommandID)['skipAlerts'];
+             var skipAlerts=activity.threadID['skipAlerts'];
              if(skipAlerts){return autoConfirmAnswer;}
              return refs.window.alert(message);
          }
          var confirm=mocks.window.confirm=function confirm(){
-             var args=RogueBM['getCommandArgs'] @@@@
-             var autoConfirmAnswer=args(currentCommandID)['autoConfirm'];
+             var autoConfirmAnswer=activity.threadID['autoConfirm'];
              if(typeof autoConfirmAnswer =='boolean'){return autoConfirmAnswer;}
              var args=commandChain['args'];
              if(args.length){
@@ -1189,7 +1188,7 @@ function mock(obj,skip){
              return refs.window.confirm(message,value);
          }
          var prompt=mocks.window.prompt=function prompt(message,value){
-             var args=RogueBM['getCommandArgs']; @@@
+             alert('NEED TO IMPLMENT PROMPT')
              RogueBM['getCommandArgs'](currentCommandID)['handoffArgs'];
              if(args.length){
                   var arg=args.shift(); //maybe check if argument is string and enforce it?
@@ -1250,10 +1249,10 @@ function mock(obj,skip){
            cachedCommands[filename]={container:container,filename:filename,mode:mode,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,mode,args,filename)}
         }
 
-        setTimeout(funciton(){window['RogueBM']['processTick']();},1)
+        window['RogueBM']['processTick']()
     }
 
-    function argSpread(fn, paramNames, kwargs){
+    function argMap(paramNames, kwargs){
         if(!paramNames){
             throw 'no array of paramNames to map';
             return
@@ -1264,10 +1263,14 @@ function mock(obj,skip){
            var key = keys[i];
            args[paramNames.indexOf(key)]=kwargs[key];
         }
-        return fn.apply(fn,args);
+        return args
     }
 
     window['RogueBM']['processTick']=function(){
+        setTimeout(function(){tick()},1);
+    }
+
+    function tick(){
         var activeThreadIDs=Object.keys(activity)
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
             var thread=activity[activeThreadIDs[i]]
@@ -1281,13 +1284,13 @@ function mock(obj,skip){
                 continue
             }
 
-
-            cachedCommands
+            var proc=thread.processes[0] //scriptEntry:,inputCommand:,args:args,processID:})
+            var cache=cachedCommands[proc.scriptEntry.basename] //{container:,filename:,mode:,paramNames:}
 
 
             var mocks=null
-            if(mode=="useMocks"){
-                mocks=createMockEnv()
+            if(cache.mode=="useMocks"){
+                mocks=createMockEnv(activeThreadIDs[i],proc.processID)
             }else{
                 mocks={window:window,
                   document:window.document,
@@ -1300,51 +1303,56 @@ function mock(obj,skip){
                   
             }   
      
-            var package = argSpread(container,'window,document,location,alert,prompt,confirm,open'.split(','),mocks);
+            var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open'.split(','),mocks));
 
-
-
-        }
-
-
-
-
-
-
-
-
-
-        //check chain for next execution
-        //check cache for if it has a cached function
-
-        var type = typeof args;
-        if(Array.isArray(args)){
-            package.apply(package,args)
-        }else if(type=='object'){
-            argSpread(fn,argNames,params)
-        }else if (type == 'string'){
-            package(args);
-        }
-@@@@@@@@@
-        hide()
-        var commandMetaData=commandChain[currentCommandID];
-        var args=commandMetaData.args;
-        if(mode){
-           var mocks=RogueBM['mocks']||mode;
-           var refs=window['RogueBM']['envRefs']
-           package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocks.window.prompt,mocks.window.alert,mocks.window.confirm])
-            //cleanup and check for inconsistantcies 
-            //check location and location href
-            if(mocks.document.location.href != refs.location.href){
-                refs.location.href=mocks.document.location.href
+            thread.active=Date.now();
+            if(Array.isArray(proc.args)){
+                package.apply(package,proc.args)
+            }else{
+                package.apply(package,argMap(cache.paramNames,proc.args))
             }
-            if(mocks.document.location.toString() != refs.document.location.toString()){
-                refs.document.location=mocks.document.location.toString()
-            }
-        }else{
-           package(window,document,location,prompt,alert,confirm)
+
         }
+
+
     }
+
+
+
+
+
+
+    //     //check chain for next execution
+    //     //check cache for if it has a cached function
+
+    //     var type = typeof args;
+    //     if(Array.isArray(args)){
+    //         package.apply(package,args)
+    //     }else if(type=='object'){
+    //         fn.apply(fn,argMap(fn,argNames,params));
+    //     }else if (type == 'string'){
+    //         package(args);
+    //     }
+
+
+    //     var commandMetaData=commandChain[currentCommandID];
+    //     var args=commandMetaData.args;
+    //     if(mode){
+    //        var mocks=RogueBM['mocks']||mode;
+    //        var refs=window['RogueBM']['envRefs']
+    //        package.apply(mocks.window,[mocks.window,mocks.window.document,mocks.window.location,mocks.window.prompt,mocks.window.alert,mocks.window.confirm])
+    //         //cleanup and check for inconsistantcies 
+    //         //check location and location href
+    //         if(mocks.document.location.href != refs.location.href){
+    //             refs.location.href=mocks.document.location.href
+    //         }
+    //         if(mocks.document.location.toString() != refs.document.location.toString()){
+    //             refs.document.location=mocks.document.location.toString()
+    //         }
+    //     }else{
+    //        package(window,document,location,prompt,alert,confirm)
+    //     }
+    // }
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
