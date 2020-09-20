@@ -1245,10 +1245,10 @@ function mock(obj,skip){
      
      
     //pakage first needs to be extracte from container
-    window['RogueBM']['cacheCommand']=function(container,mode,paramNames,path){
+    window['RogueBM']['cacheCommand']=function(path,container,paramNames,options){
 
         if(!cachedCommands[path]){
-           cachedCommands[path]={container:container,path:path,mode:mode,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,mode,args,filename)}
+           cachedCommands[path]={container:container,path:path,options:options,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,options,args,filename)}
         }
 
         window['RogueBM']['processTick']()
@@ -1286,14 +1286,14 @@ function mock(obj,skip){
             }
 
             var proc=thread.processes[0] //scriptEntry:,rawCMD:,args:args,processID:})
-            var cache=cachedCommands[proc.scriptEntry.path] //{container:,filename:,mode:,paramNames:}
+            var cache=cachedCommands[proc.scriptEntry.path] //{container:,filename:,options:,paramNames:}
             if(!cache){
                 continue
             }
 
             var mocksModeDisabled=true
             var mocks=null
-            if(!mocksModeDisabled && cache.mode=="useMocks"){
+            if(!mocksModeDisabled && cache.options.mode=="useMocks"){
                 mocks=createMockEnv(activeThreadIDs[i],proc.processID)
             }else{
                 mocks={window:window,
@@ -1310,10 +1310,14 @@ function mock(obj,skip){
             var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open'.split(','),mocks));
 
             thread.active=Date.now();
+            thread.currentProcess=proc.processID
             if(Array.isArray(proc.args)){
                 package.apply(package,proc.args)
             }else{
                 package.apply(package,argMap(cache.paramNames,proc.args))
+            }
+            if(!cache.isAsync){
+                next()
             }
 
         }
