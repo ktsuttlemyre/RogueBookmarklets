@@ -970,9 +970,10 @@
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index];
             var commandVarType= typeof command
-            var scriptEntry,args;
+            var scriptEntry,args,rawCMD;
             if(commandVarType == 'string'){
-                scriptEntry=queryScriptEntry(command)
+                rawCMD=command
+                scriptEntry=queryScriptEntry(rawCMD)
                 args=[]
             }else if(Array.isArray(command)){
                 alert('got array of arrays!')
@@ -986,7 +987,8 @@
                     console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
                     return
                 }
-                scriptEntry=queryScriptEntry(keys[0])
+                rawCMD=keys[0]
+                scriptEntry=queryScriptEntry(rawCMD)
                 args=command[keys[0]];
             }else{
                 alert('Schema Error see console. For issues')
@@ -1003,7 +1005,7 @@
                 return
             }
 
-            thread.processes.push({scriptEntry:scriptEntry,inputCommand:inputCommand,args:args,processID:processIndex++})
+            thread.processes.push({scriptEntry:scriptEntry,rawCMD:rawCMD,args:args,processID:processIndex++})
 
             //go ahead and asyncget/cache the script (even if there is a syntax error it is likely the person will fix it and need this soon)
             //if command is already cached then use it
@@ -1021,11 +1023,11 @@
     var processIndex=0
     var threadIndex=0
     var activity={}
-    function queryScriptEntry(inputCommand){
-        var normalizedCommand=normalizeCommandToScriptName(inputCommand);
-        if(inputCommand){
+    function queryScriptEntry(rawCMD){
+        var normalizedCommand=normalizeCommandToScriptName(rawCMD);
+        if(rawCMD){
             //assume user put in the right scriptname
-            scriptEntry=window.RogueBM.scripts[inputCommand];
+            scriptEntry=window.RogueBM.scripts[rawCMD];
             if(!scriptEntry){  //no script goes by key name then try to normalize the key
                 scriptEntry=window.RogueBM.scripts[normalizedCommand];
                 if(!scriptEntry){// if that fails then get the first suggestion script obj  
@@ -1284,7 +1286,7 @@ function mock(obj,skip){
                 continue
             }
 
-            var proc=thread.processes[0] //scriptEntry:,inputCommand:,args:args,processID:})
+            var proc=thread.processes[0] //scriptEntry:,rawCMD:,args:args,processID:})
             var cache=cachedCommands[proc.scriptEntry.basename] //{container:,filename:,mode:,paramNames:}
 
 
