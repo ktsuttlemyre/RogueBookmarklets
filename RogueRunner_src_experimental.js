@@ -1291,9 +1291,9 @@ function mock(obj,skip){
                 continue
             }
 
-
+            var mocksModeDisabled=true
             var mocks=null
-            if(cache.mode=="useMocks"){
+            if(!mocksModeDisabled && cache.mode=="useMocks"){
                 mocks=createMockEnv(activeThreadIDs[i],proc.processID)
             }else{
                 mocks={window:window,
