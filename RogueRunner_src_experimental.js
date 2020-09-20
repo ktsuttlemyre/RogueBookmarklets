@@ -970,9 +970,9 @@
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index];
             var commandVarType= typeof command
-            var scriptEntry,query,args;
+            var scriptEntry,args;
             if(commandVarType == 'string'){
-                query=queryScriptEntry(command)
+                scriptEntry=queryScriptEntry(command)
                 args=[]
             }else if(Array.isArray(command)){
                 alert('got array of arrays!')
@@ -986,7 +986,7 @@
                     console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
                     return
                 }
-                query=queryScriptEntry(keys[0])
+                scriptEntry=queryScriptEntry(keys[0])
                 args=command[keys[0]];
             }else{
                 alert('Schema Error see console. For issues')
