@@ -964,7 +964,7 @@
         if(!Array.isArray(commands)){
             commands=[commands];
         }
-        var thread={processes:[]}
+        var thread={processes:[],stdout:[]}
 
         
         for(var index=0,l=commands.length;index<l;index++){
@@ -1271,54 +1271,76 @@ function mock(obj,skip){
         setTimeout(function(){tick()},1);
     }
 
+    var emptyRef={};
+    var processHistoryMaxLength=10;
+    var killedThreads=[]
     function tick(){
-        var activeThreadIDs=Object.keys(activity)
+        var activeThreadIDs=Object.keys(activity).sort()
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
-            var thread=activity[activeThreadIDs[i]]
+            var threadID=activeThreadIDs[i]
+            var thread=activity[threadID]
             if(thread.killed){ //garbage collection
-                if(Date.now()-thread.killed>(60*60*1000)){
-                    activity[activeThreadIDs]=null
-                    delete activity[activeThreadIDs]
+
+                killedThreads.push(thread)
+                activity[threadID]=null
+                delete activity[threadID]
+                
+                if(killedThreads.length>processHistoryMaxLength){
+                    killedThreads.shift()
+                //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
+                    
                 }
-            }
-            if(thread.active){
                 continue
             }
 
-            var proc=thread.processes[0] //scriptEntry:,rawCMD:,args:args,processID:})
-            var cache=cachedCommands[proc.scriptEntry.path] //{container:,filename:,options:,paramNames:}
-            if(!cache){
-                continue
-            }
+            if(thread.currentProcessIndex!=thread.stdout.length){
 
-            var mocksModeDisabled=true
-            var mocks=null
-            if(!mocksModeDisabled && cache.options.mode=="useMocks"){
-                mocks=createMockEnv(activeThreadIDs[i],proc.processID)
-            }else{
-                mocks={window:window,
-                  document:window.document,
-                  alert:window.alert,
-                  confirm:window.confirm,
-                  location:window.document.location,
-                  prompt:window.prompt,
-                  open:window.open
+                //init a thread
+                var proc=thread.processes[thread.stdout.length]; //scriptEntry:,rawCMD:,args:args,processID:})
+                var cache=cachedCommands[proc.scriptEntry.path]; //{container:,filename:,options:,paramNames:}
+                if(!cache){
+                    continue
                 }
-                  
-            }   
-     
-            var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open'.split(','),mocks));
 
-            thread.active=Date.now();
-            thread.currentProcess=proc.processID
-            if(Array.isArray(proc.args)){
-                package.apply(package,proc.args)
-            }else{
-                package.apply(package,argMap(cache.paramNames,proc.args))
+                var mocksModeDisabled=true
+                var kwargs=null
+                if(!mocksModeDisabled && cache.options.mode=="useMocks"){
+                    kwargs=createMockEnv(threadID,proc.processID)
+                }else{
+                    kwargs={window:window,
+                      document:window.document,
+                      alert:window.alert,
+                      confirm:window.confirm,
+                      location:window.document.location,
+                      prompt:window.prompt,
+                      open:window.open
+                    }
+                      
+                }
+                kwargs.next=function(returnValue){
+                    thread.stdout.push(returnValue)
+                    RogueBM['processTick']()
+                }
+         
+                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,next'.split(','),kwargs));
+
+                //call tick again since we did a call
+                RogueBM['processTick']()
+                thread.active=Date.now();
+                thread.currentProcessIndex=thread.stdout.length
+                var returnValue;
+                if(Array.isArray(proc.args)){
+                    returnValue=package.apply(package,proc.args);
+                }else{
+                    returnValue=package.apply(package,argMap(cache.paramNames,proc.args));
+                }
+
+                if(!cache.options.isAsync){
+                    kwargs.next(returnValue)
+                }
+
             }
-            if(!cache.isAsync){
-                next()
-            }
+
 
         }
 
