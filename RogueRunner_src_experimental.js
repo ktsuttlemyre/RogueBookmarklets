@@ -756,7 +756,7 @@
     }
      
     var runLink=function(){
-        return void(RogueRunner(this.title));
+        return void(RogueBM.run(this.title));
     }
     var linkCache={};
     function generateSelectionLink(key){
