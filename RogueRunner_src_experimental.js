@@ -767,7 +767,7 @@
 }).trim()));
         a.title = key;
         a.className = 'Rogue_suggestion_link Roguener_animate'
-        a.href = "javascript:RogueBM.run(\'"+key+"\')";
+        a.href = "javascript:void(RogueBM.run(\'"+key+"\'));";
         a.tabIndex=0;
         //a.onfocus = "RogueBM.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
