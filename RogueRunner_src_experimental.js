@@ -931,39 +931,51 @@
         
         inject(RogueBM.stringFormat(cdnPreference[0], scriptEntry.path),'javascript',true)
         return scriptEntry
-        }
+    }
 
+
+
+
+ var nestedThread 
+
+ var rogueSchema
+
+    var emptyRef={};
 
     //http://nodeca.github.io/js-yaml/#yaml=LS0tCi0gR3JheXNjYWxlOgogIC0gfAogICAgYXNkZmFmZHMKICAgIGFzZGYKICAgIGFzCiAgICBkZmFmZAogICAgYXNkCiAgLSAgc2RmYQogIC0gIHNhZHNmCi0gQVNDSUk6CiAgLSBsamthc2RramYKICAtIHNkZmFzZGYKICAtIGFzZGZhc2Zk
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
-    function run(rogueYML){ //Interperate input/yaml
-        var timeouts=[];
+    function run(rogueYML,callback){ //Interperate input/yaml
         rogueYML=rogueYML.trim();
         RogueBM.lastInput=rogueYML;
         if(!rogueYML){
             statusBar.innerHTML="Nothing to execute";
             return
         }
+
         var parsed,commands;
-        if(rogueYML.indexOf('\n')<0){
-            rogueYML='[ '+rogueYML+' ]';
-            parsed=jsyaml.safeLoad(rogueYML);
-            commands=parsed
+        if(typeof rogueYML=='string'){
+            if(rogueYML.indexOf('\n')<0){
+                rogueYML='[ '+rogueYML+' ]';
+                parsed=jsyaml.safeLoad(rogueYML,{ schema: rogueSchema });
+                commands=parsed
+            }else{
+                rogueYML=rogueYML.replace(/^[^\s-#]/gm,function(match){
+                    return '---\n'+match
+                })
+                commands=[]
+                var iterArray=rogueYML.split(/^---\s*$/gm);
+                iterArray.forEach(function(page){
+                    var parsedPage=jsyaml.safeLoad(page,{ schema: rogueSchema });
+                    parsedPage && commands.push(parsedPage);
+                });
+            }
+            if(!Array.isArray(commands)){
+                commands=[commands];
+            }
         }else{
-            rogueYML=rogueYML.replace(/^[^\s-#]/gm,function(match){
-                return '---\n'+match
-            })
-            commands=[]
-            var iterArray=rogueYML.split(/^---\s*$/gm);
-            iterArray.forEach(function(page){
-                var parsedPage=jsyaml.safeLoad(page);
-                parsedPage && commands.push(parsedPage);
-            });
+            throw 'error input run object'
         }
         
-        if(!Array.isArray(commands)){
-            commands=[commands];
-        }
         var thread={processes:[],stdout:[]}
 
         
@@ -1274,7 +1286,7 @@ function mock(obj,skip){
         }
     }
 
-    var emptyRef={};
+
     var processHistoryMaxLength=10;
     var inactiveThreads=[]
     function tick(){
@@ -1307,6 +1319,14 @@ function mock(obj,skip){
 
                 //init a thread
                 var proc=thread.processes[thread.stdout.length]; //scriptEntry:,rawCMD:,args:args,processID:})
+                if(proc.args.any(function(arg){
+                    if(arg['']===emptyRef){
+                        return true
+                    }
+                    return false
+                })){
+                    continue
+                }
                 var cache=cachedCommands[proc.scriptEntry.path]; //{container:,filename:,options:,paramNames:}
                 if(!cache){
                     continue
@@ -1417,6 +1437,37 @@ function mock(obj,skip){
         if(startInit){ //init once
             console.info('init RogueRunner');
             init=true;
+
+
+            nestedThread = new jsyaml.Type('!subRun', {
+               kind: 'sequence',
+               construct: function (data) {
+                data.forEach(function (obj) {
+                    if(typeof obj != 'object'){
+                        throw "Roguetine must be array of RogueBookmarklets"
+                    }else if(Array.isArray(obj)){
+                        throw "Roguetine must be array of RogueBookmarklets"
+                    }
+                });
+                var ref={'':emptyRef}
+                RogueBM.run(data,function(returnValue){
+                    ref['']=returnValue
+                    RogueBM.processTick('pending');
+                })
+                return ref
+               }
+            });
+
+            rogueSchema = jsyaml.Schema.create([ nestedThread ]);
+
+            var NULLREF = function NULLREF() {};
+            NULLREF.prototype = target.prototype;
+            bound.prototype = new NULLREF();
+            NULLREF.prototype = null;
+
+
+
+
             //go ahead and prepopulate suggestions
             getSuggestions()
             //RogueRunner completely loaded
