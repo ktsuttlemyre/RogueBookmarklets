@@ -1267,31 +1267,41 @@ function mock(obj,skip){
         return args
     }
 
+    var blocked=0
     window['RogueBM']['processTick']=function(){
-        setTimeout(function(){tick()},1);
+        if(!blocked){
+            blocked=setTimeout(function(){tick()},1);
+        }
     }
 
     var emptyRef={};
     var processHistoryMaxLength=10;
-    var killedThreads=[]
+    var inactiveThreads=[]
     function tick(){
+        blocked=0
         var activeThreadIDs=Object.keys(activity).sort()
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
             var threadID=activeThreadIDs[i]
             var thread=activity[threadID]
-            if(thread.killed){ //garbage collection
 
-                killedThreads.push(thread)
+            if(thread.processes.length==thread.stdout.length){
+                thread.complete=Date.now();
+            }
+
+            if(thread.killed||thread.complete){ //garbage collection
+                inactiveThreads.push(thread)
                 activity[threadID]=null
                 delete activity[threadID]
                 
-                if(killedThreads.length>processHistoryMaxLength){
-                    killedThreads.shift()
+                if(inactiveThreads.length>processHistoryMaxLength){
+                    inactiveThreads.shift()
                 //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
                     
                 }
                 continue
             }
+
+
 
             if(thread.currentProcessIndex!=thread.stdout.length){
 
