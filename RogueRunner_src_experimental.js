@@ -976,7 +976,7 @@
             throw 'error input run object'
         }
         
-        var thread={processes:[],stdout:[]}
+        var thread={processes:[],stdout:[],callback:callback}
 
         
         for(var index=0,l=commands.length;index<l;index++){
@@ -1022,12 +1022,13 @@
             //go ahead and asyncget/cache the script (even if there is a syntax error it is likely the person will fix it and need this soon)
             //if command is already cached then use it
             getScript(scriptEntry)
-
         }
-        activity[thread.threadID=(threadIndex++).toString(36)]=thread;
+        var threadID=(threadIndex++).toString(36)
+        activity[thread.threadID=threadID]=thread;
         //parsed and everything seems ok. Create the thread
-        hide()
-        RogueBM.processTick();
+        hide();
+        RogueBM['processTick']();
+        return threadID;
     }
 
     var threads={}; //hash of threads(arrays)
@@ -1300,7 +1301,9 @@ function mock(obj,skip){
                 thread.complete=Date.now();
             }
 
-            if(thread.killed||thread.complete){ //garbage collection
+            if(thread.error||thread.killed||thread.complete){ //garbage collection
+                //using a thread getter so that we wont have a circular reference if I want to jsonify it later
+                thread.callback&&thread.callback((thread.error&&{threadID:thread.threadID,error:thread.error,threadGetter:function(){return thread}}),thread.stdout[thread.stdout.length-1])
                 inactiveThreads.push(thread)
                 activity[threadID]=null
                 delete activity[threadID]
@@ -1316,17 +1319,34 @@ function mock(obj,skip){
 
 
             if(thread.currentProcessIndex!=thread.stdout.length){
+                //TODO check for ArgPromiseRef instances and set thread to pending if any exist
+
+                thread.pending=null
 
                 //init a thread
                 var proc=thread.processes[thread.stdout.length]; //scriptEntry:,rawCMD:,args:args,processID:})
-                if(proc.args.any(function(arg){
-                    if(arg['']===emptyRef){
-                        return true
+
+                var pending = Object.keys(proc.args).some(function(key){
+                    var arg = proc.args[key];
+                    if(arg instanceof ArgPromiseRef){
+                        if(arg.hasOwnProperty('error')){
+                            thread.error=arg.error
+                            thread.killed=Date.now()
+                        }
+                        if(!arg.hasOwnProperty('value')){
+                            thread.pending=arg.childThreadID;
+                            return true;
+                        }
+                        //if theres a value then replace it silentely and keep going
+                        proc.args[key]=arg.value;
                     }
-                    return false
-                })){
-                    continue
+                    return false;
+                })
+                if(pending){
+                    continue;
                 }
+
+        
                 var cache=cachedCommands[proc.scriptEntry.path]; //{container:,filename:,options:,paramNames:}
                 if(!cache){
                     continue
@@ -1422,6 +1442,13 @@ function mock(obj,skip){
     }else if(args.cmd){ 
         window['RogueBM']['run'](args.cmd); 
     }
+
+
+    var ArgPromiseRef = function ArgPromiseRef(childThreadID){
+        this.childThreadID=childThreadID;
+    };
+
+
     var init=false;
     var initScripts=['RogueRunner.js','index.js','js-yaml.min.js']
     var loadedScripts=[]
@@ -1438,7 +1465,6 @@ function mock(obj,skip){
             console.info('init RogueRunner');
             init=true;
 
-
             nestedThread = new jsyaml.Type('!subRun', {
                kind: 'sequence',
                construct: function (data) {
@@ -1449,21 +1475,19 @@ function mock(obj,skip){
                         throw "Roguetine must be array of RogueBookmarklets"
                     }
                 });
-                var ref={'':emptyRef}
-                RogueBM.run(data,function(returnValue){
-                    ref['']=returnValue
-                    RogueBM.processTick('pending');
-                })
-                return ref
+
+                var callback=function(err,value){
+                    ref.error=err;
+                    ref.value=value;
+                    RogueBM.processTick();
+                }
+                var childThreadID=RogueBM.run(data,callback);
+                var ref=new ArgPromiseRef(childThreadID);
+                return ref;
                }
             });
 
             rogueSchema = jsyaml.Schema.create([ nestedThread ]);
-
-            var NULLREF = function NULLREF() {};
-            NULLREF.prototype = target.prototype;
-            bound.prototype = new NULLREF();
-            NULLREF.prototype = null;
 
 
 
