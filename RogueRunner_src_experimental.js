@@ -755,7 +755,9 @@
         multiLine.value=''
     }
      
-
+    var runLink=function(){
+        return void(RogueRunner(this.title));
+    }
     var linkCache={};
     function generateSelectionLink(key){
         if(linkCache[key]){
@@ -766,8 +768,10 @@
    return (' '+match.charAt(match.length-1)).toUpperCase()
 }).trim()));
         a.title = key;
-        a.className = 'Rogue_suggestion_link Roguener_animate'
-        a.href = "javascript:void(RogueBM.run(\'"+key+"\'));";
+        a.className = 'Rogue_suggestion_link RogueRunner_animate'
+        a.href="#";
+        a.onclick=runLink;
+        //a.href = "javascript:void(RogueBM.run(\'"+key+"\'));";
         a.tabIndex=0;
         //a.onfocus = "RogueBM.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
