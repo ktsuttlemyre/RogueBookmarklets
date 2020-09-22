@@ -567,13 +567,18 @@
     //attach the above text as a style tag to the document head
     inject(cssText,'css')
 
-    function createElement(element, attrs, style, parent){
+    var setAttributesFor=['style']
+    function createElement(element, attrs, parent){
         if(typeof element=='string'){
             element=document.createElement(element);
         }
         
         var keys=Object.keys(attrs)
         for(var i=0,l=keys.length;i<l;i++) { //iter options
+            if(setAttributesFor.indexOf(keys[i]))>=0{
+                element.setAttribute(keys[i],attrs[keys[i]])
+                continue
+            }
             element[keys[i]]=attrs[keys[i]];
         }
         keys=Object.keys(style)
@@ -588,9 +593,9 @@
     ///////////////////////
     var modalBackdropDiv = createElement('div',{id:'RogueRunner'}); //this will be appended to body when document is finished loading
     // Create modal; 
-    var modalPane = createElement('div',{className:'modal-content'},null,modalBackdropDiv);
+    var modalPane = createElement('div',{className:'modal-content'},modalBackdropDiv);
     // input for rogue runner
-    var runnerWrapper = createElement('div',{id:'RogueRunner_div'},null,modalPane);
+    var runnerWrapper = createElement('div',{id:'RogueRunner_div'},modalPane);
     ///////////////////////
 
     
@@ -599,8 +604,8 @@
     */
     
     var inputs={
-        multiLine:createElement('textarea',{name:'text',id:'multiLine-input',className:'rogue-input'},{width:'100%',display:'none'},runnerWrapper),
-        singleLine:createElement('input',{id:'input',type:'text',className:'rogue-input',autocomplete:'off'},{display:'block'},runnerWrapper)
+        multiLine:createElement('textarea',{name:'text',id:'multiLine-input',className:'rogue-input',style:"width:100%; display:none;"},runnerWrapper),
+        singleLine:createElement('input',{id:'input',type:'text',className:'rogue-input',autocomplete:'off',style:'display:block;'},runnerWrapper)
     }
 
 
@@ -665,13 +670,13 @@
     singleLine.onkeyup = keyUP
     
 
-    var statusBar = createElement('span',{className:'status_bar'},null,runnerWrapper); //id: 'statusBar'
+    var statusBar = createElement('span',{className:'status_bar'},runnerWrapper); //id: 'statusBar'
 
     var statusBar_isLink=true;
-    var rogueLink=createElement('a',{title:RogueRunner,href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},null,statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
+    var rogueLink=createElement('a',{title:RogueRunner,href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
         rogueLink.appendChild(document.createTextNode('RogueRunner'));
 
-    var resultPane = createElement('p',{id:'result_pane',className:'RogueRunner_collapsed RogueRunner_animate'},null,runnerWrapper);
+    var resultPane = createElement('p',{id:'result_pane',className:'RogueRunner_collapsed RogueRunner_animate'},runnerWrapper);
 
     //  Use this micro framework to see if the dom is ready
     // some modifications to make it init faster
