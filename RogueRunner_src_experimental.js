@@ -1304,6 +1304,7 @@ function mock(obj,skip){
             inactiveThreads.push(thread)
             activity[threadID]=null
             delete activity[threadID]
+            return true
             
             if(inactiveThreads.length>processHistoryMaxLength){
                 inactiveThreads.shift()
@@ -1326,7 +1327,9 @@ function mock(obj,skip){
                 thread.complete=Date.now();
             }
 
-            garbageCollect(thread)
+            if(garbageCollect(thread){
+               continue
+               }
 
 
 
