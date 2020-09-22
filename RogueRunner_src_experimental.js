@@ -1328,7 +1328,7 @@ function mock(obj,skip){
                 thread.complete=Date.now();
             }
 
-            if(garbageCollect(thread){
+            if(garbageCollect(thread)){
                continue
                }
 
