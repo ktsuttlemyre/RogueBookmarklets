@@ -1,4 +1,8 @@
-(function(user,devMode) {
+(function(window,document,location,alert,prompt,confirm) {
+    window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
+    if(window['RogueBM']['show']){
+        return window['RogueBM']['show']();
+    }
      // pollyfill for date.now
     if (!Date.now) {
         Date.now = function now() {
@@ -7,138 +11,130 @@
     }
      
      
-     
+    if(!Function.prototype.bind){
+        //implementatino from https://github.com/Raynos/function-bind
+        //repurposed for easy browser pollyfill
+        Function.prototype.bind=(function(){
+            'use strict';
 
+            /* eslint no-invalid-this: 1 */
 
-    window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
-    if(window['RogueBM']['show']){
-        return window['RogueBM']['show']();
-    }
+            var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+            var slice = Array.prototype.slice;
+            var toStr = Object.prototype.toString;
+            var funcType = '[object Function]';
 
-     
-  if(!Function.prototype.bind){
-    //implementatino from https://github.com/Raynos/function-bind
-    //repurposed for easy browser pollyfill
-    Function.prototype.bind=(function(){
-        'use strict';
-
-        /* eslint no-invalid-this: 1 */
-
-        var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
-        var slice = Array.prototype.slice;
-        var toStr = Object.prototype.toString;
-        var funcType = '[object Function]';
-
-        return  function bind(that) {
-            var target = this;
-            if (typeof target !== 'function' || toStr.call(target) !== funcType) {
-                throw new TypeError(ERROR_MESSAGE + target);
-            }
-            var args = slice.call(arguments, 1);
-
-            var bound;
-            var binder = function () {
-                if (this instanceof bound) {
-                    var result = target.apply(
-                        this,
-                        args.concat(slice.call(arguments))
-                    );
-                    if (Object(result) === result) {
-                        return result;
-                    }
-                    return this;
-                } else {
-                    return target.apply(
-                        that,
-                        args.concat(slice.call(arguments))
-                    );
+            return  function bind(that) {
+                var target = this;
+                if (typeof target !== 'function' || toStr.call(target) !== funcType) {
+                    throw new TypeError(ERROR_MESSAGE + target);
                 }
+                var args = slice.call(arguments, 1);
+
+                var bound;
+                var binder = function () {
+                    if (this instanceof bound) {
+                        var result = target.apply(
+                            this,
+                            args.concat(slice.call(arguments))
+                        );
+                        if (Object(result) === result) {
+                            return result;
+                        }
+                        return this;
+                    } else {
+                        return target.apply(
+                            that,
+                            args.concat(slice.call(arguments))
+                        );
+                    }
+                };
+
+                var boundLength = Math.max(0, target.length - args.length);
+                var boundArgs = [];
+                for (var i = 0; i < boundLength; i++) {
+                    boundArgs.push('$' + i);
+                }
+
+                bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
+
+                if (target.prototype) {
+                    var Empty = function Empty() {};
+                    Empty.prototype = target.prototype;
+                    bound.prototype = new Empty();
+                    Empty.prototype = null;
+                }
+
+                return bound;
             };
-
-            var boundLength = Math.max(0, target.length - args.length);
-            var boundArgs = [];
-            for (var i = 0; i < boundLength; i++) {
-                boundArgs.push('$' + i);
-            }
-
-            bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
-
-            if (target.prototype) {
-                var Empty = function Empty() {};
-                Empty.prototype = target.prototype;
-                bound.prototype = new Empty();
-                Empty.prototype = null;
-            }
-
-            return bound;
-        };
-    })()
-};
+        })()
+    };
 
      
      
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
-  //limitation: urls must end with an extention otherwise it will be assumed to be inline source
-     //TODO show loading icon on rogueDJ as long as we are loading
-  function inject(str,mime,callback){ 
-    /*
-    str = url or embeded code
-    mime = mimetype 
-    callback must be true if external source (aka str is a url
-     - given the arguments (error,data)
-    
-    mime prefix assumed to be 'text/'
-    */
-    if(mime.indexOf('text/')==0){
-      mime=mime.substring(5);
-    }
-    var ext=str.substr(str.lastIndexOf('.') + 1);
-    var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
-    var obj=document.createElement(tag)
-    obj.setAttribute('type', (mime.indexOf('/')<0)?'text/'+mime:mime);
-    switch(mime){
-      case "javascript":
-        if(callback){
-          obj.setAttribute('src',str);
-          obj.setAttribute('crossorigin', "anonymous");
-          obj.onerror = callback;
-        }else{
-          try {
-            obj.appendChild(document.createTextNode(str));
-          } catch (err) { //silent error fallback for shitty browsers
-            obj.text = str;
-          }
+    //limitation: urls must end with an extention otherwise it will be assumed to be inline source
+    //TODO show loading icon on rogueDJ as long as we are loading
+    function inject(str,mime,callback){ 
+        /*
+        str = url or embeded code
+        mime = mimetype 
+        callback must be true if external source (aka str is a url
+         - given the arguments (error,data)
+        
+        mime prefix assumed to be 'text/'
+        */
+        if(mime.indexOf('text/')==0){
+          mime=mime.substring(5);
         }
-      break;
-      case "css":
-        if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
-          obj = document.createElement( "link" );
-          obj.href = str
-          obj.rel = "stylesheet";
-          obj.media = "screen,print";
-        }else{
-          if ("textContent" in obj){
-              obj.textContent = str;
-          }else if(obj.styleSheet){
-            obj.styleSheet.cssText =str
-          }else{
-              obj.innerText = str;
-          }
+        var ext=str.substr(str.lastIndexOf('.') + 1);
+        var tag=mimeToTag[mime]||mimeToTag[(mime='plain')]
+        var obj=document.createElement(tag)
+        obj.setAttribute('type', (mime.indexOf('/')<0)?'text/'+mime:mime);
+        switch(mime){
+            case "javascript":
+                if(callback){
+                    obj.setAttribute('src',str);
+                    obj.setAttribute('crossorigin', "anonymous");
+                    obj.onerror = callback;
+                }else{
+                    try {
+                      obj.appendChild(document.createTextNode(str));
+                    } catch (err) { //silent error fallback for shitty browsers
+                      obj.text = str;
+                    }
+                }
+            break;
+            case "css":
+                if(callback){ //https://stackoverflow.com/questions/574944/how-to-load-up-css-files-using-javascript
+                    obj = document.createElement( "link" );
+                    obj.href = str
+                    obj.rel = "stylesheet";
+                    obj.media = "screen,print";
+                }else{
+                    if ("textContent" in obj){
+                        obj.textContent = str;
+                    }else if(obj.styleSheet){
+                        obj.styleSheet.cssText =str
+                    }else{
+                        obj.innerText = str;
+                    }
+                }
+            break;
+            default:
+            throw Error('unknown mime injection',mime)
         }
-      break;
-      default:
-        throw Error('unknown mime injection',mime)
-    }
 
-      document.getElementsByTagName('head')[0].appendChild(obj);
+        document.getElementsByTagName('head')[0].appendChild(obj);
         if(typeof callback == 'function'){
             obj.onload=function(err){
-        var args=Array.prototype.slice.call(arguments);
-        args.unshift(null);
-        callback.apply(callback, args)}
-          }
-  }
+                var args=Array.prototype.slice.call(arguments);
+                args.unshift(null);
+                callback.apply(callback, args)
+            };
+        }
+    }
 
 
 
@@ -725,9 +721,9 @@
      
 
 
-    function isShown(){ //idk if i need this?
-      return modalBackdropDiv.style.display == "block";
-    }
+    //function isShown(){ //idk if i need this?
+    //  return modalBackdropDiv.style.display == "block";
+    //}
 
     function getFocusedElement(){
         var focused = document.activeElement;
@@ -932,18 +928,15 @@
     }
 
 
- var nestedThread 
-
- var rogueSchema
-
-    var emptyRef={};
-
-    var RunnerOptions={
-        skipAlerts:true,
-        autoConfirmAnswer:true,
-        autoConfirm:true,
-        blocking:false //TODO implement blocking currently async only
-    }
+    var nestedThread
+        ,rogueSchema
+        ,emptyRef={}
+        ,RunnerOptions={
+            skipAlerts:true,
+            autoConfirmAnswer:true,
+            autoConfirm:true,
+            blocking:false //TODO implement blocking currently async only
+        }
     //http://nodeca.github.io/js-yaml/#yaml=LS0tCi0gR3JheXNjYWxlOgogIC0gfAogICAgYXNkZmFmZHMKICAgIGFzZGYKICAgIGFzCiAgICBkZmFmZAogICAgYXNkCiAgLSAgc2RmYQogIC0gIHNhZHNmCi0gQVNDSUk6CiAgLSBsamthc2RramYKICAtIHNkZmFzZGYKICAtIGFzZGZhc2Zk
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
     function run(rogueYML,callback){ //Interperate input/yaml
@@ -1106,48 +1099,43 @@
     //  };
     // self['RogueBM']['xDLStorage'].getData('name',onMessage);
 
-   function toggleMultiline(){
-      
-   }
-     
-     
-     
+          
 
 
-function allProperties(obj,callback){
-    //https://stackoverflow.com/questions/17776830/looping-through-all-of-the-items-in-the-window-object#comment25928156_17776830
-    var props;
-    if(!callback){
-        props=[];
-        callback=function(name){props.push(name)}
-    }
-    do{
-        Object.getOwnPropertyNames(obj).forEach(function(name) {
-            callback(name);
-        });
-        console.log("=============================");
-    }while(obj = Object.getPrototypeOf(obj));
-    return props;
-}
-
-function mock(obj,skip){
-    skip=skip||[]
-
-    var Mock = function Mock() {};
-
-    var props=allProperties(obj,function(name){
-        console.log(name)
-        //if(skip.indexOf(name)>=0){return;}
-        if(obj[name] && obj[name].bind && typeof obj[name] == 'function'){ //if it is a bindable function
-            Mock.prototype[name] = obj[name].bind(obj);
-        }else{
-            Mock.prototype[name] = obj[name];
+    function allProperties(obj,callback){
+        //https://stackoverflow.com/questions/17776830/looping-through-all-of-the-items-in-the-window-object#comment25928156_17776830
+        var props;
+        if(!callback){
+            props=[];
+            callback=function(name){props.push(name)}
         }
-    });
-    var mock = new Mock();
-    Mock.prototype=null
-    return mock
-}
+        do{
+            Object.getOwnPropertyNames(obj).forEach(function(name) {
+                callback(name);
+            });
+            console.log("=============================");
+        }while(obj = Object.getPrototypeOf(obj));
+        return props;
+    }
+
+    function mock(obj,skip){
+        skip=skip||[]
+
+        var Mock = function Mock() {};
+
+        var props=allProperties(obj,function(name){
+            console.log(name)
+            //if(skip.indexOf(name)>=0){return;}
+            if(obj[name] && obj[name].bind && typeof obj[name] == 'function'){ //if it is a bindable function
+                Mock.prototype[name] = obj[name].bind(obj);
+            }else{
+                Mock.prototype[name] = obj[name];
+            }
+        });
+        var mock = new Mock();
+        Mock.prototype=null
+        return mock
+    }
 
      
      
@@ -1538,4 +1526,4 @@ function mock(obj,skip){
     //send loaded signal
     window['RogueBM']['loaded']('RogueRunner.js')
 //usersessions
-})("")
+})(window,document,location,alert,prompt,confirm)
