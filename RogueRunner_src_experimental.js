@@ -567,30 +567,43 @@
     //attach the above text as a style tag to the document head
     inject(cssText,'css')
 
+    function createElement(element, attrs, style, parent){
+        if(typeof element=='string'){
+            element=document.createElement(element);
+        }
+        
+        var keys=Object.keys(attrs)
+        for(var i=0,l=keys.length;i<l;i++) { //iter options
+            element[keys[i]]=attrs[keys[i]];
+        }
+        keys=Object.keys(style)
+        for(var i=0,l=keys.length;i<l;i++) { //iter options
+            element.style[keys[i]]=attrs[keys[i]];
+        }
+        parent && parent.appendChild(element);
+
+        return element
+    }
+    
     ///////////////////////
+    var modalBackdropDiv = createElement('div',{id:'RogueRunner'}); //this will be appended to body when document is finished loading
     // Create modal; 
-    var modalBackdropDiv = document.createElement('div');
-    modalBackdropDiv.id = 'RogueRunner';
-
-    var modalPane = document.createElement('div');
-    modalPane.className = 'modal-content';
-    modalBackdropDiv.appendChild(modalPane);
-
-
-    ///////////////////////
+    var modalPane = createElement('div',{className:'modal-content'},null,modalBackdropDiv);
     // input for rogue runner
-    var runnerWrapper = document.createElement('div');
-    runnerWrapper.id = 'RogueRunner_div';
-    modalPane.appendChild(runnerWrapper);
+    var runnerWrapper = createElement('div',{id:'RogueRunner_div'},null,modalPane);
+    ///////////////////////
+
     
     /* multiLine svg icon
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.09668 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z" fill="currentColor" /><path d="M22.8412 7H8.84119V5H22.8412V7Z" fill="currentColor" /><path d="M22.8412 11H8.84119V9H22.8412V11Z" fill="currentColor" /><path d="M8.84119 15H22.8412V13H8.84119V15Z" fill="currentColor" /><path d="M22.8412 19H8.84119V17H22.8412V19Z" fill="currentColor" /></svg>
     */
     
     var inputs={
-        multiLine:document.createElement('textarea'),
-        singleLine:document.createElement('input')
+        multiLine:createElement('textarea',{name:'text',id:'multiLine-input',className:'rogue-input'},{width:'100%':display:'none'},runnerWrapper),
+        singleLine:createElement('input',{id:'input',type:'text',className:'rogue-input',autocomplete:'off'},{display:'block'},runnerWrapper)
     }
+
+
     inputs.current=inputs.singleLine;
     inputs.multiLineMode=false;
     inputs.toggleMultiline=function(bool){
@@ -606,23 +619,16 @@
     }
     var multiLine=inputs.multiLine;
     var singleLine=inputs.singleLine;
-    multiLine.name="text";
+
     var setTextAreaHeight=function(){
         inputs.singleLine.value='';
         multiLine.style.height = "";
         multiLine.style.height = Math.max(multiLine.scrollHeight +3,12) + "px";
     }
     multiLine.oninput=setTextAreaHeight;
-    multiLine.id="multiLine-input";
-    multiLine.style.display='none';
-    multiLine.style.width='100%';
-    multiLine.className='rogue-input';
 
-    singleLine.id = "input";
-    singleLine.type = 'text';
-    singleLine.className='rogue-input';
-    singleLine.autocomplete="off";
-    singleLine.style.display='block';
+
+
     singleLine.oninput=function(){
         inputs.multiLine.value=inputs.singleLine.value;
     };
@@ -658,28 +664,14 @@
     }
     singleLine.onkeyup = keyUP
     
-    runnerWrapper.appendChild(singleLine);
-    runnerWrapper.appendChild(multiLine);
+
+    var statusBar = createElement('span',{className:'status_bar'},null,runnerWrapper}); //id: 'statusBar'
 
     var statusBar_isLink=true;
-    var rogueLink= document.createElement('a');
+    var rogueLink=createElement('a',{title:RogueRunner,href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},null,statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
         rogueLink.appendChild(document.createTextNode('RogueRunner'));
-        rogueLink.title = 'RogueRunner';
-        //a.className = 'Rogue_suggestion_link RogueRunner_animate'
-        rogueLink.href = "https://ktsuttlemyre.github.io/RogueBookmarklets/";
-        rogueLink.tabIndex=-1;
 
-    var statusBar = document.createElement('span');
-    //statusBar.id = 'statusBar'
-    statusBar.className = 'status_bar';
-    statusBar.appendChild(rogueLink);
-    //statusBar.appendChild(document.createTextNode('RogueRunner'));
-    runnerWrapper.appendChild(statusBar);
-
-    var resultPane = document.createElement('p');
-    resultPane.id="result_pane";
-    resultPane.className='RogueRunner_collapsed RogueRunner_animate'
-    runnerWrapper.appendChild(resultPane);
+    var resultPane = createElement('p',{id:'result_pane',className:'RogueRunner_collapsed RogueRunner_animate'},null,runnerWrapper);
 
     //  Use this micro framework to see if the dom is ready
     // some modifications to make it init faster
@@ -763,16 +755,11 @@
         if(linkCache[key]){
             return linkCache[key]
         }
-        var a = document.createElement('a');
+        var a = createElement('a',{title:key,className:'Rogue_suggestion_link RogueRunner_animate',href:'#',onclick:runLink,tabIndex:0});
         a.appendChild(document.createTextNode(key.replace(/^.|-./gi,function(match,group){
-   return (' '+match.charAt(match.length-1)).toUpperCase()
-}).trim()));
-        a.title = key;
-        a.className = 'Rogue_suggestion_link RogueRunner_animate'
-        a.href="#";
-        a.onclick=runLink;
+               return (' '+match.charAt(match.length-1)).toUpperCase()
+            }).trim()));
         //a.href = "javascript:void(RogueBM.run(\'"+key+"\'));";
-        a.tabIndex=0;
         //a.onfocus = "RogueBM.setSelection(\'"+key+"\')";
         return linkCache[key]=a;
     }
@@ -937,7 +924,11 @@
         return scriptEntry
     }
 
-
+    function inheritProperties(target,source,defaults){
+        Object.keys(source).forEach(function(key){
+            target=(source.hasOwnProperty(key)?source[key]:defaults;
+        })
+    }
 
 
  var nestedThread 
@@ -946,6 +937,12 @@
 
     var emptyRef={};
 
+    var RunnerOptions={
+        skipAlerts:true,
+        autoConfirmAnswer:true,
+        autoConfirm:true,
+        blocking:false //TODO implement blocking currently async only
+    }
     //http://nodeca.github.io/js-yaml/#yaml=LS0tCi0gR3JheXNjYWxlOgogIC0gfAogICAgYXNkZmFmZHMKICAgIGFzZGYKICAgIGFzCiAgICBkZmFmZAogICAgYXNkCiAgLSAgc2RmYQogIC0gIHNhZHNmCi0gQVNDSUk6CiAgLSBsamthc2RramYKICAtIHNkZmFzZGYKICAtIGFzZGZhc2Zk
     // http://nodeca.github.io/js-yaml/#yaml=Um9ndWVSdW5uZXI6CiAgLSBnZXRMb2NhdGlvbjoKICAgICAgLSB8CiAgICAgICAgYXNkZgogICAgICAgIHNzCiAgICAgICAgCiAgICAgICAgYWRzZmEKICAgICAgLSAxMS8yNy8yMDE1CiAgICAgIC0KICAgICAgLSBhbm90aGVyIGFyZwogICAgICAtIGZpbmFsIGFyZwogICAgICAtIFsxLDIsMyw0XQogICAgICAtIHsgJ3NheSc6J2phdnNjcmlwdCBvYmonIH0KICAtIHRvV2luZG93OgogICAgICB1bm9yZGVyZCBsaXN0OiBzb21ldGhpbmcgbGlrZSB0aGlzCiAgICAgIG11bHRpbGluZTogfAogICAgICAgIHNkZmEgYQogICAgICAgIGFzZGYKICAgICAgICBhYWRmCiAgICAgICAgYWEKICAgICAgYXJnczogMTEvMjYvMjAxNQ==
     function run(rogueYML,callback){ //Interperate input/yaml
@@ -982,7 +979,7 @@
         
         var thread={processes:[],stdout:[],callback:callback}
 
-        
+        var options={}
         for(var index=0,l=commands.length;index<l;index++){
             var command=commands[index];
             var commandVarType= typeof command
@@ -997,15 +994,23 @@
                 return
             }else if(commandVarType=='object'){
                 var keys=Object.keys(command)
+                var key=keys[0];
                 if(keys.length!=1){
                     alert('Currently not accepting unordered commands');
                     alert('Schema Error see console. For issues')
                     console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
                     return
                 }
-                rawCMD=keys[0]
+
+                //allow changin default options through the yml via a RogueRunner command
+                if(normalizeCommandToScriptName(key).replace('-','')=='roguerunner'){
+                    options=command[key]
+                    continue
+                }
+
+                rawCMD=key
                 scriptEntry=queryScriptEntry(rawCMD)
-                args=command[keys[0]];
+                args=command[key];
             }else{
                 alert('Schema Error see console. For issues')
                 console.error('Schema structure looks like this and RogueRunner doesn\'t know how to handle it',index,command,keys,commands);
@@ -1022,6 +1027,7 @@
             }
 
             thread.processes.push({scriptEntry:scriptEntry,rawCMD:rawCMD,args:args,processID:processIndex++})
+            inheritProperties(thread,options,RogueRunner)
 
             //go ahead and asyncget/cache the script (even if there is a syntax error it is likely the person will fix it and need this soon)
             //if command is already cached then use it
@@ -1193,7 +1199,7 @@ function mock(obj,skip){
          var refs=RogueBM['envRefs'];
          var alert=mocks.window.alert=function alert(message){
              var skipAlerts=activity.threadID['skipAlerts'];
-             if(skipAlerts){return autoConfirmAnswer;}
+             if(skipAlerts){return undefined;}
              return refs.window.alert(message);
          }
          var confirm=mocks.window.confirm=function confirm(){
@@ -1291,6 +1297,22 @@ function mock(obj,skip){
         }
     }
 
+    function garbageCollect(thread){
+        if(thread.error||thread.killed||thread.complete){ //garbage collection
+            //using a thread getter so that we wont have a circular reference if I want to jsonify it later
+            thread.callback&&thread.callback((thread.error&&{threadID:thread.threadID,error:thread.error,threadGetter:function(){return thread}}),thread.stdout[thread.stdout.length-1])
+            inactiveThreads.push(thread)
+            activity[threadID]=null
+            delete activity[threadID]
+            
+            if(inactiveThreads.length>processHistoryMaxLength){
+                inactiveThreads.shift()
+                //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
+                
+            }
+        continue
+        }
+    }
 
     var processHistoryMaxLength=10;
     var inactiveThreads=[]
@@ -1305,20 +1327,7 @@ function mock(obj,skip){
                 thread.complete=Date.now();
             }
 
-            if(thread.error||thread.killed||thread.complete){ //garbage collection
-                //using a thread getter so that we wont have a circular reference if I want to jsonify it later
-                thread.callback&&thread.callback((thread.error&&{threadID:thread.threadID,error:thread.error,threadGetter:function(){return thread}}),thread.stdout[thread.stdout.length-1])
-                inactiveThreads.push(thread)
-                activity[threadID]=null
-                delete activity[threadID]
-                
-                if(inactiveThreads.length>processHistoryMaxLength){
-                    inactiveThreads.shift()
-                //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
-                    
-                }
-                continue
-            }
+            garbageCollect(thread)
 
 
 
@@ -1336,6 +1345,7 @@ function mock(obj,skip){
                         if(arg.hasOwnProperty('error')){
                             thread.error=arg.error
                             thread.killed=Date.now()
+                            return true
                         }
                         if(!arg.hasOwnProperty('value')){
                             thread.pending=arg.childThreadID;
