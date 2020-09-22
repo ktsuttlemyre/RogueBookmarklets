@@ -599,7 +599,7 @@
     */
     
     var inputs={
-        multiLine:createElement('textarea',{name:'text',id:'multiLine-input',className:'rogue-input'},{width:'100%':display:'none'},runnerWrapper),
+        multiLine:createElement('textarea',{name:'text',id:'multiLine-input',className:'rogue-input'},{width:'100%',display:'none'},runnerWrapper),
         singleLine:createElement('input',{id:'input',type:'text',className:'rogue-input',autocomplete:'off'},{display:'block'},runnerWrapper)
     }
 
