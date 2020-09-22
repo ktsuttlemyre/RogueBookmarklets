@@ -669,7 +669,7 @@
     var statusBar = createElement('span',{className:'status_bar'},runnerWrapper); //id: 'statusBar'
 
     var statusBar_isLink=true;
-    var rogueLink=createElement('a',{title:RogueRunner,href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
+    var rogueLink=createElement('a',{title:'RogueRunner',href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
         rogueLink.appendChild(document.createTextNode('RogueRunner'));
 
     var resultPane = createElement('p',{id:'result_pane',className:'RogueRunner_collapsed RogueRunner_animate'},runnerWrapper);
