@@ -14,6 +14,7 @@
 //var match, properties={};
 //while(match=regex.exec(cssText)) properties[match[1]] = match[2].trim();
 @@@@@@@
+ 
     var setAttributesFor=['style']
     function createElement(element, attrs, parent){
         if(typeof element=='string'){
@@ -46,9 +47,9 @@ function getInput(callback){
     */
     var form=createElement('form',{role:'form'})
     var id='prompt'+Math.random()
-    var ta=createElement('textarea',{id:id,className:'form-control',style:'position:relative;width:100%;height:100%'},form)
+    var ta=createElement('textarea',{id:id,className:'form-control',style:'position:absolute;top:0;left:0;width:100%;height:100%;'},form)
     var button=createElement('button',{'innerText':'Submit','type':'submit','className':'btn btn-default',style:'position:absolute;bottom:1em;right:1em'},form)
-    var cancel=createElement('button',{'innerText':'X','className':'btn btn-default',style:'position:absolute,top:1em,right:1em'},form)
+    var cancel=createElement('button',{'innerText':'X','className':'btn btn-default',style:'position:absolute;top:1em;right:1em'},form)
 
     var remove=function(e,q){
         form.parentNode.removeChild(form)
@@ -61,8 +62,9 @@ function getInput(callback){
             callback(null,value)
             return false;
         })
-    createElement(form,{style:'position:absolute,top:'+height-(height*.8)+'px;right:0;height:'+height*.8+'px;width:'+width*.8+'px;padding:1em'})
-    document.body.appendChild(form)
+    var div=createElement('div',{style:'position:absolute;top:'+(height-(height*.8)-15)+'px;right:1em;height:'+(height*.8)+'px;width:'+(width*.8)+'px;'})
+    createElement(form,{style:'position:relative;padding:0;margin:0;width:100%;height:100%'},div)
+    document.body.appendChild(div)
     ta.focus()
 }
 //getInput(function(e,str){window.str=str;console.log(str)})
