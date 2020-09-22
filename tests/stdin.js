@@ -14,21 +14,24 @@
 //var match, properties={};
 //while(match=regex.exec(cssText)) properties[match[1]] = match[2].trim();
 @@@@@@@
-function setElement(element, attrs, style){
-    if(typeof element=='string'){
-        element=document.createElement(element);
+    var setAttributesFor=['style']
+    function createElement(element, attrs, parent){
+        if(typeof element=='string'){
+            element=document.createElement(element);
+        }
+        
+        var keys=Object.keys(attrs)
+        for(var i=0,l=keys.length;i<l;i++) { //iter options
+            if(setAttributesFor.indexOf(keys[i])>=0){
+                element.setAttribute(keys[i],attrs[keys[i]])
+                continue
+            }
+            element[keys[i]]=attrs[keys[i]];
+        }
+        parent && parent.appendChild(element);
+
+        return element
     }
-    
-    var keys=Object.keys(attrs)
-    for(var i=0,l=keys.length;i<l;i++) { //iter options
-        element[keys[i]]=attrs[keys[i]];
-    }
-    keys=Object.keys(style)
-    for(var i=0,l=keys.length;i<l;i++) { //iter options
-        element.style[keys[i]]=attrs[keys[i]];
-    }
-    return element
-}
 function getInput(callback){
     var width = window.innerWidth
     || document.documentElement.clientWidth
@@ -41,14 +44,12 @@ function getInput(callback){
     callback signature
     (error,string)
     */
+    var form=createElement('form',{role:'form'})
     var id='prompt'+Math.random()
-    var ta=setElement('textarea',{id:id,className:'form-control'},{position:'relative',width:'100%',height:'100%'})
-    var button=setElement('button',{'innerText':'Submit','type':'submit','className':'btn btn-default'},{position:'absolute',bottom:'1em',right:'1em'})
-    var cancel=setElement('button',{'innerText':'X','className':'btn btn-default'},{position:'absolute',top:'1em',right:'1em'})
-    var form=setElement('form',{role:'form'},{padding:'1em'})
-    form.appendChild(ta)
-    form.appendChild(button)
-    form.appendChild(cancel)
+    var ta=createElement('textarea',{id:id,className:'form-control',style:'position:relative;width:100%;height:100%'},form)
+    var button=createElement('button',{'innerText':'Submit','type':'submit','className':'btn btn-default',style:'position:absolute;bottom:1em;right:1em'},form)
+    var cancel=createElement('button',{'innerText':'X','className':'btn btn-default',style:'position:absolute,top:1em,right:1em'},form)
+
     var remove=function(e,q){
         form.parentNode.removeChild(form)
     }
@@ -60,7 +61,7 @@ function getInput(callback){
             callback(null,value)
             return false;
         })
-    setElement(form,null,{position:'absolute',top:height-(height*.8)+'px',right:'0',height:height*.8+'px',width:width*.8+'px'})
+    createElement(form,{style:'position:absolute,top:'+height-(height*.8)+'px;right:0;height:'+height*.8+'px;width:'+width*.8+'px;padding:1em'})
     document.body.appendChild(form)
     ta.focus()
 }
