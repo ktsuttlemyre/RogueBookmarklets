@@ -1310,7 +1310,6 @@ function mock(obj,skip){
                 //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
                 
             }
-        continue
         }
     }
 
@@ -1345,6 +1344,7 @@ function mock(obj,skip){
                         if(arg.hasOwnProperty('error')){
                             thread.error=arg.error
                             thread.killed=Date.now()
+                            garbageCollect(thread)
                             return true
                         }
                         if(!arg.hasOwnProperty('value')){
