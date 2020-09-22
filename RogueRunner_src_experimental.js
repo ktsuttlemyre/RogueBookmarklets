@@ -581,10 +581,6 @@
             }
             element[keys[i]]=attrs[keys[i]];
         }
-        keys=Object.keys(style)
-        for(var i=0,l=keys.length;i<l;i++) { //iter options
-            element.style[keys[i]]=attrs[keys[i]];
-        }
         parent && parent.appendChild(element);
 
         return element
