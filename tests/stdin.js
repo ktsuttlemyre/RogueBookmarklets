@@ -19,13 +19,13 @@ function setElement(element, attrs, style){
         element=document.createElement(element);
     }
     
-    for(var key in attrs) { //iter options
-        var value=attrs[key]
-        element[key]=value
+    var keys=Object.keys(attrs)
+    for(var i=0,l=keys.length;i<l;i++) { //iter options
+        element[keys[i]]=attrs[keys[i]];
     }
-     for(var key in style) { //iter options
-        var value=style[key]
-        element.style[key] = value;
+    keys=Object.keys(style)
+    for(var i=0,l=keys.length;i<l;i++) { //iter options
+        element.style[keys[i]]=attrs[keys[i]];
     }
     return element
 }
