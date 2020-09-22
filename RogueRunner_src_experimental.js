@@ -1371,12 +1371,15 @@ function mock(obj,skip){
                     }
                       
                 }
+                //constants
+                kwargs.RogueBM=window['RogueBM'];
                 kwargs.next=function(returnValue){
                     thread.stdout.push(returnValue)
                     RogueBM['processTick']()
                 }
+                kwargs.stdin=thread.stdout[thread.stdout.length-1]
          
-                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,next'.split(','),kwargs));
+                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next'.split(','),kwargs));
 
                 //call tick again since we did a call
                 RogueBM['processTick']()
