@@ -575,7 +575,7 @@
         
         var keys=Object.keys(attrs)
         for(var i=0,l=keys.length;i<l;i++) { //iter options
-            if(setAttributesFor.indexOf(keys[i]))>=0{
+            if(setAttributesFor.indexOf(keys[i])>=0){
                 element.setAttribute(keys[i],attrs[keys[i]])
                 continue
             }
