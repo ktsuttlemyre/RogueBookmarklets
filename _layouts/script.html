@@ -84,8 +84,7 @@ open = similar to window.open but will open modal, window,
   
     var package = function package(window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next){
       return function bookmarkletClosure({{ args | join: ',' }}){
-  
-          var selection = (stdout!=null)?stdout:(getSelection.call(window)||'');
+ 
           var serverSecret='{{ site.github.build_revision }}'; //MAKE SURE THIS STATEMENT IS ENDED SO THAT ANY SELFCALLING CLOSURES DON'T GET MISTAKEN FOR A CALL SYNTAX
           //Their code
           {{ page.content }}
