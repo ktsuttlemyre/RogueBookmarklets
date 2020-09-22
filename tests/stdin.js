@@ -119,7 +119,7 @@ var walkDOM = (function(){
 })()
 
 getInput(function(e,str){
-    var div=setElement('div',{innerHTML:str})
+    var div=createElement('div',{innerHTML:str})
     walkDOM(div,function(node,path){
         console.warn(node.tagName,node,node.attributes)
         for(var i=0,l=node.attributes.length;i<l;i++){
