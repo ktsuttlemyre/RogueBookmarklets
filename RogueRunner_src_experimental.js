@@ -665,7 +665,7 @@
     singleLine.onkeyup = keyUP
     
 
-    var statusBar = createElement('span',{className:'status_bar'},null,runnerWrapper}); //id: 'statusBar'
+    var statusBar = createElement('span',{className:'status_bar'},null,runnerWrapper); //id: 'statusBar'
 
     var statusBar_isLink=true;
     var rogueLink=createElement('a',{title:RogueRunner,href:'https://ktsuttlemyre.github.io/RogueBookmarklets/',tabIndex:-1},null,statusBar); //className :'Rogue_suggestion_link RogueRunner_animate'
