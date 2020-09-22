@@ -926,7 +926,7 @@
 
     function inheritProperties(target,source,defaults){
         Object.keys(source).forEach(function(key){
-            target=(source.hasOwnProperty(key)?source[key]:defaults;
+            target=(source.hasOwnProperty(key))?source[key]:defaults;
         })
     }
 
