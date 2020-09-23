@@ -72,6 +72,24 @@
 
      
      
+    function ajax(url,callback){
+        var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4){
+                if(xhr.status==200||xhr.status==0){
+                    callback(null,xhr.responseText);
+                }else{
+                    callback(xhr.status); //error
+                }
+            }
+        };
+        try{
+          xhr.open("GET",url,true);
+          xhr.send();
+        }catch(e){
+            callback(e); //error
+        }  
+    }
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
     //limitation: urls must end with an extention otherwise it will be assumed to be inline source
@@ -882,24 +900,6 @@
 
 
 
-function ajax(url,callback){
-    var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
-    xhr.onreadystatechange=function(){
-        if(xhr.readyState==4){
-            if(xhr.status==200||xhr.status==0){
-                callback(null,xhr.responseText);
-            }else{
-                callback(xhr.status); //error
-            }
-        }
-    };
-    try{
-      xhr.open("GET",url,true);
-      xhr.send();
-    }catch(e){
-        callback(e); //error
-    }  
-}
 
     function normalizeCommandToScriptName(name){
         //Because commands can be in camelcase, pascal case, snake case, underscore case, URI encoded or even have spaces
