@@ -1466,13 +1466,12 @@
     var loadedScripts=[]
     window['RogueBM']['loaded']=function(name,secret){
         console.log('loaded',name)
-        var split=name.split('/');
-        name=split[split.length-1];
+        var name=name.split('/').pop()
         loadedScripts.push(name)
         
         var startInit=(!init && loadedScripts.filter(function (elem) {
             return initScripts.indexOf(elem) > -1;
-        }).length == initScripts.length)
+        }).length == 0)
         if(startInit){ //init once
             console.info('init RogueRunner');
             init=true;
