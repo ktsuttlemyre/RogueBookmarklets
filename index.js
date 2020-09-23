@@ -199,16 +199,8 @@ RogueBM.scriptCDNs={
   "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
 }
 
-//encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
-RogueBM.stringFormat=function(format, args1, args2){
-  return format.replace(/{(\w+)}/g, function(match, word) {
-    var sub = args1[word];
-
-      return sub != null? sub: match;//( args2[word] != null? args2[word]: match );
-    });
-};
-
-
+   
+   
 //jsonp callback
 function readySignal(){
   var callback=window.RogueBM.loaded;
