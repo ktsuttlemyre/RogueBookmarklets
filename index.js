@@ -197,7 +197,7 @@ RogueBM.scriptCDNs={
   "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
   "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
   "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
-}
+};
    
 (function(){
   //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
@@ -219,7 +219,7 @@ RogueBM.scriptCDNs={
   }
   RogueBM.stringFormat=format("\\{","\\}")
   RogueBM.stringHandlebarFormat=format("\\{\\{","\\}\\}")
-})()
+})();
 
 
    
