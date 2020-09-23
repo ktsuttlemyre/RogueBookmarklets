@@ -80,7 +80,7 @@ Allows [iframe insertion] [popups]
         showError("Error loading script from xDLStorage",error);
       }
 
-      appendToHead(ScriptOBJ(null,payload.data));
+      ScriptOBJ(null,payload.data);
       var limit=500; //5 seconds roughtly
       var failedCount=0;
       var to=10;
@@ -447,7 +447,7 @@ Allows [iframe insertion] [popups]
       // use this to test script injection failures to load
       setTimeout(callback,1);
     }else{
-      appendToHead(ScriptOBJ(src,null,callback));
+      ScriptOBJ(src,null,callback);
     }
     return 0;
   }
