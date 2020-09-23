@@ -1468,10 +1468,12 @@
         console.log('loaded',name)
         var name=name.split('/').pop()
         loadedScripts.push(name)
+        initScripts.filter(function (elem) {
+            return elem!=name;
+        })
         
-        var startInit=(!init && loadedScripts.filter(function (elem) {
-            return initScripts.indexOf(elem) > -1;
-        }).length == 0)
+        
+        var startInit=(!init && !initScripts.length)
         if(startInit){ //init once
             console.info('init RogueRunner');
             init=true;
