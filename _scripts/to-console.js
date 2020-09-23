@@ -10,7 +10,7 @@ authors: |
 layout: script
 ---
 console.log('arguments',Array.prototype.slice.call(arguments))
-console.log('RogueBM["stdin"]',RogueBM['stdin'])
+console.log('stdin',stdin)
 console.log('window.getSelection()',window.getSelection())
 console.log('RogueBM["stdout"]',RogueBM["stdout"])
 
