@@ -51,19 +51,20 @@ Allows [iframe insertion] [popups]
       //statusBar.innerHTML=arguments[0]
   }
   var scriptIndex=0;
-  function ScriptOBJ(src,code,callback) { //callback might not work
+  function ScriptOBJ(str,callback) { //callback might not work
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
-    if(src){
-      script.setAttribute('src',src);
+    if(callback){
+      callback=(callback.call)?callback:function(err){if(err){showError(err)}};
+      script.setAttribute('src',str);
       script.setAttribute('crossorigin', "anonymous");
       script.onerror = callback;
       script.onload = callback
     }else{
       try {
-        script.appendChild(document.createTextNode(code));
+        script.appendChild(document.createTextNode(str));
       } catch (e) { //silent error fallback for shitty browsers
-        script.text = code;
+        script.text = str;
       }
     }
     script.id='injected_'+UUID()+'_'+scriptIndex++;
@@ -79,7 +80,7 @@ Allows [iframe insertion] [popups]
       //finally if you are roguerunner.js we will try to use the xDLStorage iframe OR an external popup to display roguerunner
 
 
-      ScriptOBJ(null,data);
+      ScriptOBJ(data);
       var limit=500; //5 seconds roughtly
       var failedCount=0;
       var to=10;
@@ -488,23 +489,23 @@ Allows [iframe insertion] [popups]
     var success=false;
     var callback=function(err){
       if(err){
-        getScriptFromLocalStorageIframe(src,test);
-        return
+        setTimeout(function(){getScriptFromLocalStorageIframe(src,test)},1);
+        return true
       }
-      //else
-      if(!success&&test()){
+      if(success){
+        return true
+      }
+      if(test()){
         success=true
         window['RogueBM']['loaded']&&window['RogueBM']['loaded'](src);
-        return
+        return true
       }
       setTimeout(callback,10);
+      return false
     }
-    callback();
-    if(options['forceIframeInject']){
-      // use this to test script injection failures to load
-      setTimeout(function(){getScriptFromLocalStorageIframe(src,test);},1);
-    }else{
-      ScriptOBJ(src,null,callback);
+    // use this to test script injection failures to load force an error
+    if(!callback(options['forceIframeInject'])){
+      ScriptOBJ(src,callback);
     }
     return 0;
   }
