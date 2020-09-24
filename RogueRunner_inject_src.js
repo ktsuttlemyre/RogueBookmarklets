@@ -51,9 +51,7 @@ Allows [iframe insertion] [popups]
       script.setAttribute('src',src);
       script.setAttribute('crossorigin', "anonymous");
       script.onerror = callback;
-      script.onload = function(){
-         window['RogueBM']['loaded']&&window['RogueBM']['loaded'](src);
-      };
+      script.onload = callback
     }else{
       try {
         script.appendChild(document.createTextNode(code));
@@ -66,21 +64,15 @@ Allows [iframe insertion] [popups]
     return script;
   }
 
-  function getScriptFromLocalStorageIframe(url,test){
-    //start the injection
-    var xDLStorage=window['RogueBM']['xDLStorage'];
 
-    xDLStorage['getScript'](url,function(err,payload){
-      //use xiframe to get script.
+    function inline(data,test,callback){
       //if injection via script.src has already failed. this is an inline attempt
       //next we try a new Function()
       //next we try eval
       //finally if you are roguerunner.js we will try to use the xDLStorage iframe OR an external popup to display roguerunner
-      if(err){
-        showError("Error loading script from xDLStorage",error);
-      }
 
-      ScriptOBJ(null,payload.data);
+
+      ScriptOBJ(null,data);
       var limit=500; //5 seconds roughtly
       var failedCount=0;
       var to=10;
@@ -97,7 +89,7 @@ Allows [iframe insertion] [popups]
         //test to see if it executed. if not then try new Function
         setTimeout(function(){
           if(!test()){
-            new Function(payload.data)();
+            new Function(data)();
           }
         },to); //need to do this because the whole tick is cancled when CSP blocks javascript execution
         
@@ -105,22 +97,71 @@ Allows [iframe insertion] [popups]
         //test to see if it executed. if not then try eval and end
         setTimeout(function(){
           if(!test()){
-            eval(payload.data);
+            eval(data);
           }
         },to); //need to do this because the whole tick is cancled when CSP blocks javascript execution
 
-        //actually, if you are roguerunner lets try to open in iframe or external window
-        if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
-           setTimeout(function(){
-            console.log('doin external probably');
-            if(!test()){
-              console.log('using iframe embed');
-              xDLStorage['convertToInterface']();
-            }
-           },to);
-        }    
+        setTimeout(function(){
+          if(!test()){
+            console.log('all attemptes at inlining failed. calling callback');
+            callback && callback();
+          }
+        },to);
       }
       check();
+    }
+
+    function ajax(url,callback){
+        var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4){
+                if(xhr.status==200||xhr.status==0){
+                    callback(null,xhr.responseText);
+                }else{
+                    callback(xhr.status); //error
+                }
+            }
+        };
+        try{
+          xhr.open("GET",url,true);
+          xhr.send();
+        }catch(e){
+            callback(e); //error
+        }  
+    }
+
+
+
+  function getScriptFromLocalStorageIframe(url,test){
+    //start the injection
+    var xDLStorage=window['RogueBM']['xDLStorage'];
+
+
+    var getAjax=function(){
+      ajax(url,function(err,data,test){
+        if(err){
+          showError("Error loading script via ajax");
+          return
+        }
+        inline(data,test,function(){
+          //actually, if you are roguerunner lets try to open in iframe or external window
+          if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
+            console.log('using iframe embed');
+            xDLStorage['convertToInterface']();
+          } 
+        });
+
+      });
+    }
+
+    xDLStorage['getScript'](url,function(err,payload){
+      if(err){
+        showError("Error loading script from xDLStorage",error);
+        getAjax();
+        return
+      }
+      //use xiframe to get script.
+      inline(payload.data,test,getAjax);
     });
   }
 
@@ -442,10 +483,24 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    var callback=function(){getScriptFromLocalStorageIframe(src,test);}
+    var success=false;
+    var callback=function(err){
+      if(err){
+        getScriptFromLocalStorageIframe(src,test);
+        return
+      }
+      //else
+      if(!success&&test()){
+        success=true
+        window['RogueBM']['loaded']&&window['RogueBM']['loaded'](src);
+        return
+      }
+      setTimeout(callback,10);
+    }
+    callback();
     if(options['forceIframeInject']){
       // use this to test script injection failures to load
-      setTimeout(callback,1);
+      setTimeout(function(){getScriptFromLocalStorageIframe(src,test);},1);
     }else{
       ScriptOBJ(src,null,callback);
     }
