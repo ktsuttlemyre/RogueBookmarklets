@@ -23,6 +23,13 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,console,vers,options,cmd,undefined) {
+    // pollyfill for date.now
+  if (!Date.now) {
+    Date.now = function now() {
+      return new Date().getTime();
+    };
+  }
+
   //options include
   //forceIframeInject = defaults false will force iframe injection only
   //options['forcePopOut'] = forces popout
@@ -33,7 +40,7 @@ Allows [iframe insertion] [popups]
       cmd=''; //if %s comes through then remove it
     }
     function UUID(){
-      return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now();
+      return Math.floor(Math.random()*9.0e10 ) + 9.0e10+'-'+Date.now();
     }
 
   // show err
@@ -442,12 +449,7 @@ Allows [iframe insertion] [popups]
 
   var NotLoadedRogueBM=!window['RogueBM'];
 
-  // pollyfill for date.now
-  if (!Date.now) {
-    Date.now = function now() {
-      return new Date().getTime();
-    };
-  }
+
 
   // set the RogueBM object
   var RogueBM=window['RogueBM']=(window['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
@@ -509,12 +511,12 @@ Allows [iframe insertion] [popups]
 
     //a bit of security 
     var sessionID=UUID();
+    loadCrossOriginLocalStorage();
   
     injectScript(baseURL+'libs/js-yaml.min.js',sessionID,function(){return window['jsyaml'];});
     injectScript(baseURL+'index.js'/*?user='+options['user']*/,sessionID,function(){return window['RogueBM']['scripts'];});
     injectScript(rogueRunnerSrc,sessionID,function(){return window['RogueBM']['loaded'];});
    
-    loadCrossOriginLocalStorage();
 
 
     //expose helper functions
