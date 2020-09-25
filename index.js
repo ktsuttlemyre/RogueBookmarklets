@@ -207,7 +207,7 @@ RogueBM.scriptCDNs={
        // this is the stringFormat function used at stackoverflow
        // orignal https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
        var t = typeof arguments[1];
-       var args = (t === "object" || (t.length!=null && t!=="string")) ?
+       var args = (t === "object" || (arguments[1].length!=null && t!=="string")) ?
             arguments[1]
            : Array.prototype.slice.call(arguments,1);
        var keys=Object.keys(args)
