@@ -195,6 +195,25 @@ border: 1px solid #a7a7a7;
 		<script type="text/javascript">
 			console.log('RogueBM[xDLStorageiFrame]: initializing')
 			
+			    function ajax(url,callback){
+				var xhr=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+				xhr.onreadystatechange=function(){
+				    if(xhr.readyState==4){
+					if(xhr.status==200||xhr.status==0){
+					    callback(null,xhr.responseText);
+					}else{
+					    callback(xhr.status); //error
+					}
+				    }
+				};
+				try{
+				  xhr.open("GET",url,true);
+				  xhr.send();
+				}catch(e){
+				    callback(e); //error
+				}  
+			    }
+			
 			//This is for roguerunner injection if you want to do that? Might remove in the future
 			function ScriptOBJ(src) { //callback might not work
 				var script = document.createElement('script');
@@ -292,7 +311,7 @@ border: 1px solid #a7a7a7;
 									showError('refused to load ',payload.url,'it is not considered a safe domain/path combo as listed here',allowedScriptSources)
 									return
 								}
-								load(payload.url,function(e,data){
+								ajax(payload.url,function(e,data){
 									//console.log('load returned something',e,data)
 									returnPayload.data=data
 									//console.log('iframe got data',data)
