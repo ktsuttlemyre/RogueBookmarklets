@@ -1463,7 +1463,7 @@
 
     var init=false;
     window['RogueBM']['init']=function init(){
-        if(startInit){ //init once
+        if(!init){ //init once
             console.info('init RogueRunner');
             init=true;
 
