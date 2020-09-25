@@ -101,13 +101,13 @@ Allows [iframe insertion] [popups]
       var limit=100,
         to=100, //100*100=10 seconds
         failedCount=0,
-        success=false
+        success=false;
       function check(err,data){
         if(success){
           return;
         }
         if(test()){
-          success=true
+          success=true;
           window['RogueBM']['loaded'](url);
           callback && callback.call && callback();
           return;
@@ -119,7 +119,7 @@ Allows [iframe insertion] [popups]
               //return (data)?fb(null,data):fb();
             },1);
           }
-          return callback && setTimeout(function(){callback('error:inlining failed')},1);
+          return callback && setTimeout(function(){callback('error:inlining failed');},1);
         }
         
   
@@ -145,16 +145,16 @@ Allows [iframe insertion] [popups]
               eval(data);
             }
           },1); //need to do this because the whole tick is cancled when CSP blocks javascript execution
-        };
+        }
         setTimeout(check,to);
       }
-     return check
-  };
+     return check;
+  }
 
   var scriptIndex=0;
   function ScriptOBJ(url,inline,callback) { //callback might not work
 
-    callback=(callback && callback.call)?callback:function(err){showError(err)};
+    callback=(callback && callback.call)?callback:function(err){showError(err);};
 
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
@@ -191,8 +191,8 @@ Allows [iframe insertion] [popups]
             }
         };
         try{
-          xhr.open("GET",url,true);
-          xhr.send();
+          xhr.open("GET",url,true);
+          xhr.send();
         }catch(e){
             callback(e); //error
         }  
@@ -408,7 +408,7 @@ Allows [iframe insertion] [popups]
               }, false);
             }
             if(popup){
-              alert('not implemented yet')
+              alert('not implemented yet');
             }
           }
         });
@@ -442,7 +442,7 @@ Allows [iframe insertion] [popups]
         //toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, copyhistory=no, 
 
         // Puts focus on the rogueRunnerPopup
-        if (rogueRunnerPopup.focus){rogueRunnerPopup.focus()};
+        if (rogueRunnerPopup.focus){rogueRunnerPopup.focus();}
         return rogueRunnerPopup;
     }
 
@@ -515,7 +515,7 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    var tester=Tester(src,test,function(){console.log('####complete#####')},'localstorage');
+    var tester=Tester(src,test,function(){console.log('####complete#####');},'localstorage');
 
     if(options['forceIframeInject']){
       // use this to test script injection failures to load force an error
