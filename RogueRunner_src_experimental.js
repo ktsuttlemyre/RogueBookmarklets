@@ -1462,18 +1462,7 @@
 
 
     var init=false;
-    var initScripts=['RogueRunner.js','index.js','js-yaml.min.js']
-    var loadedScripts=[]
-    window['RogueBM']['loaded']=function(name,secret){
-        console.log('loaded',name)
-        var name=name.split('/').pop()
-        loadedScripts.push(name)
-        initScripts=initScripts.filter(function (elem) {
-            return elem!=name;
-        })
-        
-        
-        var startInit=(!init && !initScripts.length)
+    window['RogueBM']['init']=function init(){
         if(startInit){ //init once
             console.info('init RogueRunner');
             init=true;
@@ -1514,7 +1503,7 @@
                 RogueBM.run(lastCMD);
             }
         }
-    }
+      }
     
     
     //set up hotkey to show/hide
