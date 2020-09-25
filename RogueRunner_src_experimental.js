@@ -1461,11 +1461,11 @@
     };
 
 
-    var init=false;
-    window['RogueBM']['init']=function init(){
-        if(!init){ //init once
+    var isInit=false;
+    window['RogueBM']['init']=function(){
+        if(!isInit){ //init once
             console.info('init RogueRunner');
-            init=true;
+            isInit=true;
 
             nestedThread = new jsyaml.Type('!subRun', {
                kind: 'sequence',
