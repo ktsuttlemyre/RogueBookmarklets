@@ -61,7 +61,7 @@ Allows [iframe insertion] [popups]
     },
     iframe:function(url,test,callback){
       //actually, if you are roguerunner lets try to open in iframe or external window
-      if(str===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
+      if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
         console.log('using iframe embed for RogueRunner only');
         var tester=Tester(url,test,callback,'popup');
         xDLStorage['convertToInterface'](tester);
@@ -77,7 +77,9 @@ Allows [iframe insertion] [popups]
       //start the injection
       var tester = Tester(url,test,callback,'ajax');
       window['RogueBM']['xDLStorage']['getScript'](url,function(err,payload){
-        showError("Error loading script from xDLStorage",error);
+        if(err){
+          showError("Error loading script from xDLStorage",err);
+        }
         tester(err,payload && payload.data);
         // if(err){
         //   Fallback['ajax'](url,test,callback);
@@ -96,9 +98,9 @@ Allows [iframe insertion] [popups]
       //next we try a new Function()
       //next we try eval
       //finally if you are roguerunner.js we will try to use the xDLStorage iframe OR an external popup to display roguerunner
-      var limit=10,
+      var limit=100,
+        to=100, //100*100=10 seconds
         failedCount=0,
-        to=10,
         success=false
       function check(err,data){
         if(success){
