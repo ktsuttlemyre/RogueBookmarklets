@@ -53,6 +53,25 @@ Allows [iframe insertion] [popups]
     }
   }
 
+    var setAttributesFor=['style'];
+    function createElement(element, attrs, parent){
+        if(typeof element=='string'){
+            element=document.createElement(element);
+        }
+        
+        var keys=Object.keys(attrs);
+        for(var i=0,l=keys.length;i<l;i++) { //iter options
+            if(setAttributesFor.indexOf(keys[i])>=0){
+                element.setAttribute(keys[i],attrs[keys[i]]);
+                continue;
+            }
+            element[keys[i]]=attrs[keys[i]];
+        }
+        parent && parent.appendChild(element);
+
+        return element;
+    }
+
 
   var Fallback={
     popup:function(url,data,test,callback){
@@ -156,14 +175,10 @@ Allows [iframe insertion] [popups]
 
     callback=(callback && callback.call)?callback:function(err){showError(err);};
 
-    var script = document.createElement('script');
-    script.setAttribute('type', 'text/javascript');
-    script.id='injected_'+UUID()+'_'+scriptIndex++;
+    var script = createElement('script',{type:'text/javascript',id:'injected_'+UUID()+'_'+scriptIndex++});
     if(!inline){
-      script.setAttribute('src',url);
-      script.setAttribute('crossorigin', "anonymous");
-      script.onerror = callback;
-      script.onload = callback;
+      createElement(script,{src:url,crossorigin:"anonymous"});
+      script.onerror=script.onload=callback;
       setTimeout(callback,1);
     }else{
       try {
@@ -249,29 +264,16 @@ Allows [iframe insertion] [popups]
       window.domready(function(){
 
         if(!options['forcePopOut']){
-          iframe = document.createElement('iframe');
+          iframe = createElement('iframe',{onerror:function(){self.status='blocked';},frameBorder:0,allowTransparency:"true",src:url,style:"background-color:transparent;display:none;position:absolute"},document.body);
           iframe.addEventListener("load",doPreloadHandlers);
-          iframe.onerror=function(){self.status='blocked';};
-           
-          //make transparent
-          iframe.style.backgroundColor = "transparent";
-          iframe.frameBorder = "0";
-          iframe.allowTransparency="true"; 
-           
-          iframe.src = url;
-          iframeStyle=iframe.style;
-          iframeStyle.display = "none";
-              iframeStyle.position = 'absolute'; //ensure no reflow
-              document.body.appendChild(iframe);
-
-              //some browser (don't remember which one) throw exception when you try to access
-              //contentWindow for the first time, it works when you do that second time
-              try {
-                xOriginElement = iframe.contentWindow;
-              } catch(e) { //silent error, fallback for browsers
-                xOriginElement = iframe.contentWindow;
-              }
+            //some browser (don't remember which one) throw exception when you try to access
+            //contentWindow for the first time, it works when you do that second time
+            try {
+              xOriginElement = iframe.contentWindow;
+            } catch(e) { //silent error, fallback for browsers
+              xOriginElement = iframe.contentWindow;
             }
+          }
           //TODO
           //use a webworker?
           //https://stackoverflow.com/questions/20410119/cross-domain-web-worker
@@ -533,11 +535,11 @@ Allows [iframe insertion] [popups]
     var loadedScripts=[];
     window['RogueBM']['loaded']=function(name,secret){
         console.log('loaded',name);
-        var name=name.split('/').pop();
+        name=name.split('/').pop();
         loadedScripts.push(name);
         initScripts=initScripts.filter(function (elem) {
             return elem!=name;
-        })
+        });
         
         !initScripts.length && window['RogueBM']['init']();
     }
