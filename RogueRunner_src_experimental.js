@@ -153,9 +153,9 @@
 
   
 
-
-    function UUID(){return Math.floor(Math.random()*9000000000) + 1000000000+'-'+Date.now()}
-
+    function UUID(){
+      return (Math.floor(Math.random()*9.0e15 )+1).toString(36)+'-'+(new Date().getTime()).toString(36);
+    }
     var selector={
         backdrop:UUID(),
         window:UUID(),
@@ -565,24 +565,26 @@
     //attach the above text as a style tag to the document head
     inject(cssText,'css')
 
-    var setAttributesFor=['style']
+
+    var setAttributesFor=['style'];
     function createElement(element, attrs, parent){
         if(typeof element=='string'){
             element=document.createElement(element);
         }
         
-        var keys=Object.keys(attrs)
+        var keys=Object.keys(attrs);
         for(var i=0,l=keys.length;i<l;i++) { //iter options
             if(setAttributesFor.indexOf(keys[i])>=0){
-                element.setAttribute(keys[i],attrs[keys[i]])
-                continue
+                element.setAttribute(keys[i],attrs[keys[i]]);
+                continue;
             }
             element[keys[i]]=attrs[keys[i]];
         }
         parent && parent.appendChild(element);
 
-        return element
+        return element;
     }
+
     
     ///////////////////////
     var modalBackdropDiv = createElement('div',{id:'RogueRunner'}); //this will be appended to body when document is finished loading
