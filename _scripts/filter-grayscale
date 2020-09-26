@@ -10,7 +10,7 @@ authors: |
 originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
 
 ####### function signature #######
-specs: async textselect stdin stdout
+specs: stdout
 layout: script
 
 # for syntax see: https://jsdoc.app/tags-type.html
