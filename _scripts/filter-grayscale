@@ -1,6 +1,9 @@
 ---
 description: |
-    This is a set of toCommands. It will take selected text, RogueBM.stdin or prompt the user for input to act on
+  Converts the entire page to grayscale.
+  <i class="gray">Toggles the page color on and off.</i>
+
+####### Other Metadata #######
 params: |
     {string} input - value to act upon
 returns: |
