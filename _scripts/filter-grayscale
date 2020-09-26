@@ -13,11 +13,11 @@ originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
 specs: async textselect stdin stdout
 layout: script
 
-params: |
-    {string} input - value to act upon
-returns: |
-    {undefined} Should do an action
-
+# for syntax see: https://jsdoc.app/tags-type.html
+params:
+- {bool} on - turn on or off. If null or undefined it will toggle
+returns:
+- {bool} isGrayscale
 ---
 (function(on) {
   function i(i) {
