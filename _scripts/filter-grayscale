@@ -9,11 +9,15 @@ authors:
 - Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
 
+####### function signature #######
+specs: async textselect stdin stdout
+layout: script
+
 params: |
     {string} input - value to act upon
 returns: |
     {undefined} Should do an action
-layout: script
+
 ---
 (function(on) {
   function i(i) {
