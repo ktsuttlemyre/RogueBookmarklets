@@ -24,7 +24,9 @@ Allows [iframe insertion] [popups]
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
   // set the RogueBM object
-  var RogueBM=window['RogueBM']=(window['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
+  var debug=options['debug'],
+    postMessage='postMessage',
+    RogueBM=window['RogueBM']=(window['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
   // // pollyfill for date.now
   // if (!Date.now) {
   //   Date.now = function now() {
@@ -75,34 +77,34 @@ Allows [iframe insertion] [popups]
 
   var Fallback={
     popup:function(url,data,test,callback){
-      console.info('using popup last resort')
+      debug && console.info('using popup last resort');
       loadInExternalWindow();
       callback && callback.call && callback();
     },
     iframe:function(url,test,callback){
-      console.info('using iframe to show')
+      debug && console.info('using iframe to show');
       //actually, if you are roguerunner lets try to open in iframe or external window
       if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
-        console.log('using iframe embed for RogueRunner only',window===parent,rogueRunnerSrc);
+        debug && console.log('using iframe embed for RogueRunner only',window===parent,rogueRunnerSrc);
         //var tester=Tester(url,test,callback,'popup');
         RogueBM['xDLStorage']['convertToInterface'](); //(tester);
         //setTimeout(tester,1);
       }
     },
     ajax:function(url,test,callback){
-        console.info('using ajax to inline')
+        debug && console.info('using ajax to inline');
         var tester=Tester(url,test,callback,'xdomainiframe');
         ajax(url,tester);
         setTimeout(tester,1);
       },
     xdomainiframe:function(url,test,callback){
-      console.info('using xDiframe to inline')
+      debug && console.info('using xDiframe to inline');
       //start the injection
       var tester = Tester(url,test,callback,'iframe'); //pageBlocksInlineing?'iframe':'ajax'
       RogueBM['xDLStorage']['getScript'](url,function(err,payload){
         if(err){
           showError("Error loading script from xDiframe",err);
-          return
+          return;
         }
         tester(err,payload && payload.data);
         // if(err){
@@ -130,18 +132,18 @@ Allows [iframe insertion] [popups]
       var blocked=0;
       function check(err,data){
         if(blocked){
-          console('call after BLOCKED')
-          return
+          console('call after BLOCKED');
+          return;
         }
         if(finished){
-          console.log('call after finish!!!',fallback)
-          return
+          debug && console.log('call after finish!!!',fallback);
+          return;
         }
         blocked=1;
 
         if(test()){
           //debugger
-          console.log('test',test)
+          debug && console.log('test',test);
           finished=true;
           RogueBM['loaded'](url);
           callback && callback.call && callback();
@@ -159,7 +161,7 @@ Allows [iframe insertion] [popups]
               if(pageBlocksInlineing && ['ajax','xdomainiframe'].indexOf(fallback)>=0){
                 fallback='iframe';
               }
-              console.log('fallback is going to ',fallback,url)
+              debug && console.log('fallback is going to ',fallback,url);
               var fb=Fallback[fallback](url,test,callback);
               //return (data)?fb(null,data):fb();
             },1);
@@ -267,6 +269,8 @@ Allows [iframe insertion] [popups]
      * @constructor
      */
     var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
+      postMessage=postMessage;
+      var messageID='messageID';
       var self=this;
       var timeout=0; //setTimeout(function(){self.status='blocked';alert('failed to load CrossOriginLocalStorage')},20000);
       var xOriginElement; //could be an iframe or a window
@@ -279,7 +283,7 @@ Allows [iframe insertion] [popups]
           return;
         }
         for(var i=0;i<preloadQueue.length;i++){
-              xOriginElement.postMessage(JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
+              xOriginElement[postMessage](JSON.stringify(preloadQueue[i]), '*'); //TODO fix this security risk
             }
             preloadQueue=null;
           };
@@ -331,7 +335,7 @@ Allows [iframe insertion] [popups]
         return allowedOrigins.includes(origin);
       };
       var _listener = function (event) {
-        console.log('got message',event);
+        debug && console.log('got message',event);
         if (!isAllowedOrigin(event.origin)) {
           console.warn('rejected post message from',event.origin,'Allowed origins are',allowedOrigins, 'you attempted', event);
           return;
@@ -352,22 +356,22 @@ Allows [iframe insertion] [popups]
         delete data.error;
         if(err){
           showError(err,data,event);
-          return
+          return;
         }
           //debugger
           if(data.ready){
-            console.log('doing preload handlers');
+            debug && console.log('doing preload handlers');
             doPreloadHandlers();
             return;
           }
 
-          if(data['messageID']==null){
-            console.error('need data.messageID for callbacks to function',event);
+          if(data[messageID]==null){
+            console.error('need data.'+messageID+' for callbacks to function',event);
             return;
           }
 
 
-          var handler=messageQueue[data['messageID']];
+          var handler=messageQueue[data[messageID]];
           if(handler){
             if(handler.method!=handler.method){
               showError('methods do not match. Possible security risk');
@@ -376,10 +380,10 @@ Allows [iframe insertion] [popups]
             if(handler.fn){
               handler.fn(err, data, event);
             }
-            messageQueue[data['messageID']]=null;
-            delete messageQueue[data['messageID']];
+            messageQueue[data[messageID]]=null;
+            delete messageQueue[data[messageID]];
           }else{
-            showError('no handler found for ',event['messageID'],event);
+            showError('no handler found for ',event[messageID],event);
           }
         };
 
@@ -395,10 +399,10 @@ Allows [iframe insertion] [popups]
           method: 'getScript',
           url:url,
         };
-        this['postMessage'](messageData,handler);
+        this[postMessage](messageData,handler);
       };
 
-      this['postMessage'] = function(messageData,handler) {
+      this[postMessage] = function(messageData,handler) {
         // var str=new Array(17);
         // for(var i=0;i<15;i++){
         //  var r = Math.random() * 16 | 0;
@@ -409,18 +413,18 @@ Allows [iframe insertion] [popups]
         //var id=str.join('')
 
         
-        messageQueue[messageData['messageID']=UUID()]={fn:handler,method:messageData.method};
+        messageQueue[messageData[messageID]=UUID()]={fn:handler,method:messageData.method};
         if(preloadQueue != null){
           preloadQueue.push(messageData);
           return;
         }
-        xOriginElement.postMessage(JSON.stringify(messageData), '*'); //TODO fix this security risk
+        xOriginElement[postMessage](JSON.stringify(messageData), '*'); //TODO fix this security risk
       };
       this['convertToInterface']=function(){
         var messageData = {
           method: 'convertToInterface'
         };
-        this['postMessage'](messageData,function(err,payload){
+        this[postMessage](messageData,function(err,payload){
           if(payload.data){
             if(iframe){
               iframeStyle.width=iframeStyle.height="100%";
@@ -526,7 +530,7 @@ Allows [iframe insertion] [popups]
   var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/';
 
   var skin=options['skin'];
-  skin=( (("all" in documentElement.style) || ("cssall" in documentElement.style)) && ( !!skin != false) )?'_'+skin:'';
+  skin=( (("all" in documentElement.style) || ("cssall" in documentElement.style)) && ( skin != false) )?'_'+skin:'';
   var rogueRunnerSrc=baseURL+'RogueRunner_src'+skin+'.js?user='+encodeURIComponent(options['user']);
   if(cmd){
     rogueRunnerSrc+='&cmd='+encodeURIComponent(cmd);
@@ -542,7 +546,7 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    var tester=Tester(src,test,function(){console.log('####complete#####');},'ajax');
+    var tester=Tester(src,test,function(){debug && console.log('####complete#####');},'ajax');
 
     // if(options['forceIframeInject']){
     //   // use this to test script injection failures to load force an error
@@ -567,7 +571,7 @@ Allows [iframe insertion] [popups]
         });
 
         !initScripts.length && RogueBM['init']();
-    }
+    };
 
 
 
@@ -593,4 +597,4 @@ Allows [iframe insertion] [popups]
     RogueBM.open=function(url){
         var win = window.open(url, '_blank', externalWindowString);
     };
-})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.5',{'user':'anonymous','skin':'experimental'},'%s');
+})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.5',{'user':'anonymous','skin':'experimental','debug':false},'%s');
