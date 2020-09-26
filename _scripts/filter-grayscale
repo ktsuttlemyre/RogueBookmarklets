@@ -4,12 +4,15 @@ description: |
   <i class="gray">Toggles the page color on and off.</i>
 
 ####### Other Metadata #######
+authors:
+- Bookmarklets <https://codepen.io/bookmarklets>
+- Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
+
 params: |
     {string} input - value to act upon
 returns: |
     {undefined} Should do an action
-authors: |
-    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 layout: script
 ---
 (function(on) {
