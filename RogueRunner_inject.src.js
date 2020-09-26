@@ -75,29 +75,33 @@ Allows [iframe insertion] [popups]
 
   var Fallback={
     popup:function(url,data,test,callback){
+      console.info('using popup last resort')
       loadInExternalWindow();
       callback && callback.call && callback();
     },
     iframe:function(url,test,callback){
+      console.info('using iframe to show')
       //actually, if you are roguerunner lets try to open in iframe or external window
       if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
-        console.log('using iframe embed for RogueRunner only');
-        var tester=Tester(url,test,callback,'popup');
-        RogueBM['xDLStorage']['convertToInterface'](tester);
-        setTimeout(tester,1);
+        console.log('using iframe embed for RogueRunner only',window===parent,rogueRunnerSrc);
+        //var tester=Tester(url,test,callback,'popup');
+        RogueBM['xDLStorage']['convertToInterface'](); //(tester);
+        //setTimeout(tester,1);
       }
     },
     ajax:function(url,test,callback){
-        var tester=Tester(url,test,callback,'iframe');
+        console.info('using ajax to inline')
+        var tester=Tester(url,test,callback,'xdomainiframe');
         ajax(url,tester);
         setTimeout(tester,1);
       },
-    localstorage:function(url,test,callback){
+    xdomainiframe:function(url,test,callback){
+      console.info('using xDiframe to inline')
       //start the injection
-      var tester = Tester(url,test,callback,'ajax');
+      var tester = Tester(url,test,callback,'iframe'); //pageBlocksInlineing?'iframe':'ajax'
       RogueBM['xDLStorage']['getScript'](url,function(err,payload){
         if(err){
-          showError("Error loading script from xDLStorage",err);
+          showError("Error loading script from xDiframe",err);
           return
         }
         tester(err,payload && payload.data);
@@ -112,7 +116,7 @@ Allows [iframe insertion] [popups]
     }
   };
 
-
+  var pageBlocksInlineing;
   function Tester(url,test,callback,fallback){
       //if injection via script.src has already failed. this is an inline attempt
       //next we try a new Function()
@@ -121,29 +125,53 @@ Allows [iframe insertion] [popups]
       var limit=100,
         to=100, //100*100=10 seconds
         failedCount=0,
-        success=false;
+        finished=false,
+        inline;
+      var blocked=0;
       function check(err,data){
-        if(success){
-          return;
+        if(blocked){
+          console('call after BLOCKED')
+          return
         }
+        if(finished){
+          console.log('call after finish!!!',fallback)
+          return
+        }
+        blocked=1;
+
         if(test()){
-          success=true;
+          //debugger
+          console.log('test',test)
+          finished=true;
           RogueBM['loaded'](url);
           callback && callback.call && callback();
+          blocked=0;
           return;
+        }else if(inline===true){
+          pageBlocksInlineing=inline;
+          failedCount=limit;
         }
         if(err || failedCount++>=limit){
+          finished=1;
           if(fallback){
+            blocked=0;
             return setTimeout(function(){
+              if(pageBlocksInlineing && ['ajax','xdomainiframe'].indexOf(fallback)>=0){
+                fallback='iframe';
+              }
+              console.log('fallback is going to ',fallback,url)
               var fb=Fallback[fallback](url,test,callback);
               //return (data)?fb(null,data):fb();
             },1);
           }
+          blocked=0;
           return callback && setTimeout(function(){callback('error:inlining failed');},1);
         }
+        inline=null;
 
 
-        if(data){
+        if(data && !pageBlocksInlineing){
+          inline=true;
           failedCount=limit;
           setTimeout(function(){
             if(!test()){
@@ -166,6 +194,7 @@ Allows [iframe insertion] [popups]
             }
           },1); //need to do this because the whole tick is cancled when CSP blocks javascript execution
         }
+        blocked=0;
         setTimeout(check,to);
       }
      return check;
@@ -265,7 +294,7 @@ Allows [iframe insertion] [popups]
       window.domready(function(){
 
         if(!options['forcePopOut']){
-          iframe = createElement('iframe',{onerror:function(){self.status='blocked';},frameBorder:0,allowTransparency:"true",src:url,style:"background-color:transparent;display:none;position:absolute"},document.body);
+          iframe = createElement('iframe',{onerror:function(){self.status='blocked';},frameBorder:"0",allowTransparency:"true",src:url,style:"background-color:transparent;display:none;position:absolute"},document.body);
           iframe.addEventListener("load",doPreloadHandlers);
           iframeStyle=iframe.style;
             //some browser (don't remember which one) throw exception when you try to access
@@ -379,8 +408,8 @@ Allows [iframe insertion] [popups]
         // str[15]='-'+Date.now() //put the date on the end to speed up
         //var id=str.join('')
 
-        messageData['messageID']=UUID();
-        messageQueue[id]={fn:handler,method:messageData.method};
+        
+        messageQueue[messageData['messageID']=UUID()]={fn:handler,method:messageData.method};
         if(preloadQueue != null){
           preloadQueue.push(messageData);
           return;
@@ -513,15 +542,15 @@ Allows [iframe insertion] [popups]
       return 1;
     }
 
-    var tester=Tester(src,test,function(){console.log('####complete#####');},'localstorage');
+    var tester=Tester(src,test,function(){console.log('####complete#####');},'ajax');
 
-    if(options['forceIframeInject']){
-      // use this to test script injection failures to load force an error
-      setTimeout(function(){tester('forced error');},1);
-    }else{
+    // if(options['forceIframeInject']){
+    //   // use this to test script injection failures to load force an error
+    //   setTimeout(function(){tester('forced error');},1);
+    // }else{
       ScriptOBJ(src,false,tester);
-    }
-
+    //}
+    setTimeout(tester,1);
 
     return 0;
   }
@@ -549,7 +578,7 @@ Allows [iframe insertion] [popups]
 
     injectScript(baseURL+'libs/js-yaml.min.js',sessionID,function(){return window['jsyaml'];});
     injectScript(baseURL+'index.js'/*?user='+options['user']*/,sessionID,function(){return RogueBM['scripts'];});
-    injectScript(rogueRunnerSrc,sessionID,function(){return RogueBM['loaded'];});
+    injectScript(rogueRunnerSrc,sessionID,function(){return RogueBM['show'];});
 
 
 
