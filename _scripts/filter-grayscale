@@ -9,7 +9,6 @@ authors: |
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 layout: script
 ---
-//Touch
 (function(on) {
   function i(i) {
     document.body.style.filter = i, document.body.style.webkitFilter = i;
