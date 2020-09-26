@@ -1,4 +1,22 @@
-//https://github.com/ejucovy/readability
+description: |
+  Converts the page to a readablility website then will read the page to you
+   ejucovy created readablity and Kyle added the text to speech capablitlties for HTML5 browsers
+
+####### Other Metadata #######
+authors: |
+  ejucovy <https://github.com/ejucovy/readability>
+  Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+originalsource: https://github.com/ktsuttlemyre/RogueBookmarklets/scripts/read-aloud.js
+
+####### function signature #######
+specs: async
+layout: script
+
+# for syntax see: https://jsdoc.app/tags-type.html
+#params: |
+#  {bool} on - turn on or off. If null or undefined it will toggle
+#returns: |
+#  {bool} isGrayscale
 
 (function() {
 
