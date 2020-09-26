@@ -213,7 +213,25 @@ border: 1px solid #a7a7a7;
 				    callback(e); //error
 				}  
 			    }
-			
+			function forFrames(target,resursive,callback){
+				if(typeof recursive == 'function'){
+					callback=resursive;
+					recursive=false;
+				}
+				if(target!==window){
+					callback(target);
+				}
+				var frames = target.frames;
+				for (var i = 0,l=frames.length; i < l; i++) {
+					var frame=frames[i];
+					if(frame!==target||frame!==window){
+						callback(frame);
+					}
+					if(recursive && target.frames.length){
+						forFrames(target,resursive,callback);
+					}
+				} 
+			}
 			//This is for roguerunner injection if you want to do that? Might remove in the future
 			function ScriptOBJ(src) { //callback might not work
 				var script = document.createElement('script');
@@ -254,12 +272,21 @@ border: 1px solid #a7a7a7;
 					if(typeof json == 'object'){
 						json = JSON.stringify(json)
 					}
-					if(window.opener && window.opener !== window){
-						window.opener.postMessage(json,domain)
-					}
-					if(parent && parent !== window){
-						parent.postMessage(json,domain);
-					}
+// 					if(window.opener && window.opener !== window){
+// 						window.opener.postMessage(json,domain)
+// 					}
+					
+					forFrames(window.top,true,function(frame){
+						if(frame.opener && frame.opener !== window){
+							frame.opener.postMessage(json,domain)
+						}
+						frame.postMessage(json,domain);
+					});
+					
+					
+					//if(parent && parent !== window){
+					//	parent.postMessage(json,domain);
+					//}
 				}
 
 				var _listener = function (e) {
