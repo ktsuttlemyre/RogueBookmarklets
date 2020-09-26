@@ -2,22 +2,6 @@
 description: |
   Converts the entire page to grayscale.
   <i class="gray">Toggles the page color on and off.</i>
-
-####### Other Metadata #######
-authors:
-- Bookmarklets <https://codepen.io/bookmarklets>
-- Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-originalsource: https://cdpn.io/bookmarklets/fullpage/NobJbq
-
-####### function signature #######
-specs: async textselect stdin stdout
-layout: script
-
-# for syntax see: https://jsdoc.app/tags-type.html
-params:
-- {bool} on - turn on or off. If null or undefined it will toggle
-returns:
-- {bool} isGrayscale
 ---
 //Touch
 (function(on) {
