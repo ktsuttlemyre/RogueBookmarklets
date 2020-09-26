@@ -272,21 +272,21 @@ border: 1px solid #a7a7a7;
 					if(typeof json == 'object'){
 						json = JSON.stringify(json)
 					}
-// 					if(window.opener && window.opener !== window){
-// 						window.opener.postMessage(json,domain)
-// 					}
+ 					if(window.opener && window.opener !== window){
+ 						window.opener.postMessage(json,domain)
+ 					}
 					
-					forFrames(window.top,true,function(frame){
-						if(frame.opener && frame.opener !== window){
-							frame.opener.postMessage(json,domain)
-						}
-						frame.postMessage(json,domain);
-					});
+					//forFrames(window.top,true,function(frame){
+					//	if(frame.opener && frame.opener !== window){
+					//		frame.opener.postMessage(json,domain)
+					//	}
+					//	frame.postMessage(json,domain);
+					//});
 					
 					
-					//if(parent && parent !== window){
-					//	parent.postMessage(json,domain);
-					//}
+					if(parent && parent !== window){
+						parent.postMessage(json,domain);
+					}
 				}
 
 				var _listener = function (e) {
