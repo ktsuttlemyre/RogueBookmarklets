@@ -19,6 +19,7 @@ params:
 returns:
 - {bool} isGrayscale
 ---
+//Touch
 (function(on) {
   function i(i) {
     document.body.style.filter = i, document.body.style.webkitFilter = i;
