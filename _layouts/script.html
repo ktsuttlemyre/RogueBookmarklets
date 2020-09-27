@@ -36,7 +36,7 @@ Data preprocess
  {%- assign params = page.params | split: NL -%}
 {%- endif -%}
 
-{%- assign args = page.emptyArray -%}
+{%- assign args = '' | split: '' -%}
 {%- for param in params -%}
  {%- assign tmp = param | split: "} " | last -%}
  {%- assign arg = tmp | split: " -" | first -%}
