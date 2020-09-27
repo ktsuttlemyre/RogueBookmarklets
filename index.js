@@ -39,11 +39,9 @@ window.RogueBM.scripts={
      "{{ doc.name | default: doc.title }}":{
         "basename":"{{ doc.name | default: doc.title  }}",
         "path":"{{ doc.url }}",
-        "modified_time":"{{ doc.modified_time | default: doc.date }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "index":{% increment counter %},
-        "revision":"{{ revision }}",
         "jekyll_type":"collection",
           {% for entry in doc %}
             {%- if "next content output previous excerpt basename extname path url id" contains entry -%}
