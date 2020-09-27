@@ -38,7 +38,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jekyll_type":"page",
           {% for entry in marklet -%}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
@@ -64,7 +64,7 @@ window.RogueBM.scripts={
         "index":{% increment counter %},
         "modified_time":"{{ doc.modified_time | default: doc.date }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
-        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
+        //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
           {% for entry in doc %}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
@@ -91,7 +91,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jekyll_type":"static",
           {% for entry in marklet %}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
