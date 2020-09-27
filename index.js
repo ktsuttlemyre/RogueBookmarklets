@@ -42,9 +42,9 @@ window.RogueBM.scripts={
  //       Collections
  /////////////////////////////////
   {%- for coll in site.collections -%}
-    {% if coll.label == "scripts" %}
+    {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
-    {%- assign name = doc.url | split: "/" | last | split: "."| first | downcase -%}
+    {% assign name = doc.url | split: "/" | last | split: "."| first | downcase %}
      "{{ name | default: doc.title }}":{
         "name":"{{ name | default: doc.title  }}",
         "path":"{{ doc.url }}",
