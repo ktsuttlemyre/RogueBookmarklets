@@ -49,9 +49,9 @@ window.RogueBM.scripts={
         "index":{% increment counter %},
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {% if "next content output previous" contains entry %}
-              {% continue %}
-            {% endif %}
+            {%- if "next content output previous" contains entry -%}
+              {%- continue -%}
+            {%- endif -%}
             "{{ entry }}":"{{ doc[entry] }}",
           {% endfor %}
       },
@@ -79,9 +79,9 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"static",
           {% for entry in marklet %}
-            {% if "next content output previous" contains entry %}
-              {% continue %}
-            {% endif %}
+            {%- if "next content output previous" contains entry -%}
+              {%- continue -%}
+            {%- endif -%}
             "{{ entry }}":"{{ marklet[entry] }}",
           {% endfor %}
     },
@@ -108,10 +108,10 @@ window.RogueBM.scripts={
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
       "jekyll_type":"page",
-          {% for entry in marklet %}
-            {% if "next content output previous" contains entry %}
-              {% continue %}
-            {% endif %}
+          {% for entry in marklet -%}
+            {%- if "next content output previous" contains entry -%}
+              {%- continue -%}
+            {%- endif -%}
             {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
           {% endfor %}
     },
