@@ -48,9 +48,9 @@ window.RogueBM.scripts={
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "index":{% increment counter %},
         "jekyll_type":"collection",
-          {%- for entry in doc -%}
-            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
-          {%- endfor -%}
+          {% for entry in doc %}
+            "{{ entry[0] }}":"{{ entry[1] }}",
+          {% endfor %}
       },
     {%- endfor -%}
     {%- endif -%}
@@ -75,9 +75,9 @@ window.RogueBM.scripts={
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
       "jekyll_type":"static",
-          {%- for entry in marklet -%}
-            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
-          {%- endfor -%}
+          {% for entry in marklet %}
+            "{{ entry[0] }}":"{{ entry[1] }}",
+          {% endfor %}
     },
   {%- endif -%}
   {%- endfor -%}
@@ -102,9 +102,9 @@ window.RogueBM.scripts={
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
       "jekyll_type":"page",
-          {%- for entry in marklet -%}
-            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
-          {%- endfor -%}
+          {% for entry in marklet %}
+            "{{ entry[0] }}":"{{ entry[1] }}",
+          {% endfor %}
     },
       {% endif %}
   {%- endfor -%}
