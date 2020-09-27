@@ -36,20 +36,20 @@ window.RogueBM.scripts={
       {%- assign title = meta[4] -%}
       {%- assign date = meta[5] -%}
       {%- assign revision = meta[6] -%}
-     "{{ name | default: title }}":{
-        "basename":"{{ name | default: title  }}",
+     "{{ doc.name | default: doc.title }}":{
+        "basename":"{{ doc.name | default: doc.title  }}",
         "path":"{{ doc.url }}",
-        "modified_time":"{{ doc.modified_time | default: date }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
-        "href":"javascript:{{ url | url_escape }}",
-        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
-        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ url | url_escape }}",
-        "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
-        "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
+        "modified_time":"{{ doc.modified_time | default: doc.date }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ relative_path | url_escape }}",
+        "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
+        "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ doc.url | url_escape }}",
+        "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
+        "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ doc.url | url_escape }}",
         "index":{% increment counter %},
+        "revision":"{{ revision }}",
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {%- if "next content output previous excerpt basename extname name path url id" contains entry -%}
+            {%- if "next content output previous excerpt basename extname path url id" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ doc[entry] | jsonify }},
