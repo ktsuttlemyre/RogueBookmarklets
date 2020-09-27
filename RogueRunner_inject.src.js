@@ -101,12 +101,11 @@ Allows [iframe insertion] [popups]
       debug && console.info('using xDiframe to inline');
       //start the injection
       var tester = Tester(url,test,callback,'iframe'); //pageBlocksInlineing?'iframe':'ajax'
-      RogueBM['xDLStorage']['getScript'](url,function(err,payload){
+      RogueBM['xDLStorage']['getScript'](url,function(err,code,payload){
         if(err){
           showError("Error loading script from xDiframe",err);
-          return;
         }
-        tester(err,payload && payload.data);
+        tester(err,code);
         // if(err){
         //   Fallback['ajax'](url,test,callback);
         //   return
