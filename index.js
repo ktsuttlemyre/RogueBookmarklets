@@ -22,7 +22,9 @@ window.RogueBM.about.scripts={
 window.RogueBM.scripts={
   
   {{ NL }}
- {% comment %}
+ /////////////////////////////////
+ //       Collections
+ /////////////////////////////////
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
@@ -36,20 +38,24 @@ window.RogueBM.scripts={
      "{{ name | default: title }}":{
         "basename":"{{ name | default: title  }}",
         "path":"{{ url }}",
-        "modified_time":"{{ modified_time }}",
+        "modified_time":"{{ doc.modified_time }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
         "href":"javascript:{{ url | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ url | url_escape }}",
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
-        "index":{{ counter | plus: 1 }}
+        "index":{{ counter | plus: 1 }},
+        "jekyll_type:"collection"
       },
     {%- endfor -%}
     {%- endif -%}
   {%- endfor -%}
-  {% endcomment %}  
+ 
 
+ /////////////////////////////////
+ //       Static
+ /////////////////////////////////
   {%- for marklet in site.static_files -%}
   {%- assign path = marklet.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' -%}
@@ -63,12 +69,16 @@ window.RogueBM.scripts={
       "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | url_escape }}",
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-      "index":{{ counter | plus: 1 }}
+      "index":{{ counter | plus: 1 }},
+      "jekyll_type:"static"
     },
   {%- endif -%}
   {%- endfor -%}
 
 
+ /////////////////////////////////
+ //       pages
+ /////////////////////////////////
 
   {%- for marklet in site.pages -%}
     {%- assign path = marklet.path | split: "/" -%}
@@ -85,7 +95,8 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{{ counter | plus: 1 }},
-      "description":"{{ marklet.description}}"
+      "description":"{{ marklet.description}}",
+      "jekyll_type:"page"
     },
     {%- endif -%}
   {%- endfor -%}
