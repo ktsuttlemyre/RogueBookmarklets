@@ -109,7 +109,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"page",
           {% for entry in marklet -%}
-            {%- if "next content output previous excerpt basename extname name path url id" contains entry -%}
+            {%- if "next content output previous excerpt basename extname name path url id" contains entry[0] -%}
               {%- continue -%}
             {%- endif -%}
             {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
