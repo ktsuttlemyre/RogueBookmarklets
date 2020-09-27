@@ -1,3 +1,5 @@
+---
+---
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -1457,6 +1459,11 @@
     //        package(window,document,location,prompt,alert,confirm)
     //     }
     // }
+    
+ var about=RogueBM.about=RogueBM.about||{};
+ about.RogueRunner={
+         "build_revision":"{{ site.github.build_revision }}"
+        };
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
     window['RogueBM']['run']=run;
