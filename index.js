@@ -40,7 +40,7 @@ window.RogueBM.scripts={
         "basename":"{{ doc.name | default: doc.title  }}",
         "path":"{{ doc.url }}",
         "modified_time":"{{ doc.modified_time | default: doc.date }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ relative_path | url_escape }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "index":{% increment counter %},
         "revision":"{{ revision }}",
