@@ -39,7 +39,7 @@ window.RogueBM.scripts={
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {%- if "next previous output content excerpt | extname url id slug title basename | modified_time path name" contains entry -%}
+            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ doc[entry] | jsonify }},
@@ -65,7 +65,7 @@ window.RogueBM.scripts={
       "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jekyll_type":"static",
           {% for entry in marklet %}
-            {%- if "next previous output content excerpt | extname url id slug title basename | modified_time path name" contains entry -%}
+            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ marklet[entry] | jsonify }},
@@ -91,7 +91,7 @@ window.RogueBM.scripts={
       "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jekyll_type":"page",
           {% for entry in marklet -%}
-            {%- if "next previous output content excerpt | extname url id slug title basename | modified_time path name" contains entry[0] -%}
+            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
               {%- continue -%}
             {%- endif -%}
             {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
