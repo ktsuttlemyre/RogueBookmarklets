@@ -37,7 +37,7 @@ window.RogueBM.scripts={
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {%- if "next previous output excerpt basename extname path url id" contains entry -%}
+            {%- if "next previous output content excerpt extname path url" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ doc[entry] | jsonify }},
