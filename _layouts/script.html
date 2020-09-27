@@ -27,6 +27,7 @@ Data preprocess
   
 {%- assign words = page.description | split: " " -%}
 
+  
 {%- if page.params.first -%}
   {%- assign params = page.params -%}
   {%- assign args = page.params | map: 1 | join: ","  -%}
@@ -39,6 +40,8 @@ Data preprocess
  {%- assign tmp = param | split: "} " | last -%}
  {%- assign arg = tmp | split: " -" | first -%}
  {%- assign args = args | push: arg -%}
+  tmp
+ {{ tmp }}
 {%- endfor -%}
   
   
