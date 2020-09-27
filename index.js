@@ -88,7 +88,7 @@ window.RogueBM.scripts={
    "{{ basename }}":{
       "basename":"{{ basename }}",
       "path":"{{ marklet.path }}",
-      "modified_time":"{{ marklet.modified_time }}",
+      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
       "href":"javascript:{{ marklet.path | url_escape }}",
       "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
