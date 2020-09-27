@@ -32,10 +32,15 @@ Data preprocess
   {%- assign args = page.params | map: 1 | join: ","  -%}
 {%- else -%}
  {%- assign params = page.params | split: NL -%}
- {%- assign args = emptyArray -%}
-  
-
 {%- endif -%}
+
+{%- assign args = emptyArray -%}
+{%- for param in params -%}
+ {%- assign tmp = param | split: "} " | last -%}
+ {%- assign arg = tmp | split: " -" | first -%}
+ {%- assign args = args | push: arg -%}
+{%- endfor -%}
+  
   
 {%- if page.returns.first -%}
   {%- assign returns = page.returns | join: " " -%}
