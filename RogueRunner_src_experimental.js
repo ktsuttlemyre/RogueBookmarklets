@@ -919,7 +919,6 @@
             return scriptEntry
         }
 
-        //TODO have cdn fallback failures
         var cdns=cdnPreference.slice();
         var loadAScript=function(err){
             if(err){
