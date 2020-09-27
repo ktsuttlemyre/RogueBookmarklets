@@ -52,7 +52,7 @@ window.RogueBM.scripts={
             {%- if "next content output previous excerpt" contains entry -%}
               {%- continue -%}
             {%- endif -%}
-            "{{ entry }}":"{{ doc[entry] | jsonify }}",
+            "{{ entry }}":{{ doc[entry] | jsonify }},
           {% endfor %}
       },
     {%- endfor -%}
@@ -82,7 +82,7 @@ window.RogueBM.scripts={
             {%- if "next content output previous excerpt" contains entry -%}
               {%- continue -%}
             {%- endif -%}
-            "{{ entry }}":"{{ marklet[entry] | jsonify }}",
+            "{{ entry }}":{{ marklet[entry] | jsonify }},
           {% endfor %}
     },
   {%- endif -%}
