@@ -38,7 +38,7 @@ Data preprocess
 {%- assign args = '' | split: '' -%}
 {%- for param in params -%}
  {%- assign tmp = param | split: "} " | last -%}
- {%- assign arg = tmp | split: " -" | first -%}
+ {%- assign arg = tmp | split: " -" | first | strip -%}
  {%- assign args = args | push: arg -%}
 {%- endfor -%}
   
