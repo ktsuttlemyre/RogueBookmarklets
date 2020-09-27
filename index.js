@@ -29,22 +29,15 @@ window.RogueBM.scripts={
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
-      {%- assign meta = doc | split: NL | first | split: "<META>" -%}
-      {%- assign url = meta[1] -%}
-      {%- assign source_path = meta[2] -%}
-      {%- assign name = meta[3] -%}
-      {%- assign title = meta[4] -%}
-      {%- assign date = meta[5] -%}
-      {%- assign revision = meta[6] -%}
      "{{ doc.name | default: doc.title }}":{
-        "basename":"{{ doc.name | default: doc.title  }}",
+        "name":"{{ doc.name | default: doc.title  }}",
         "path":"{{ doc.url }}",
+        "index":{% increment counter %},
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
-        "index":{% increment counter %},
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {%- if "next content output previous excerpt basename extname path url id" contains entry -%}
+            {%- if "next previous content excerpt basename extname path url id" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ doc[entry] | jsonify }},
