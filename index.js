@@ -49,7 +49,7 @@ window.RogueBM.scripts={
         "index":{% increment counter %},
         "jekyll_type":"collection",
           {% for entry in doc %}
-            {% if entry contains "next content output previous" %}
+            {% if "next content output previous" contains entry %}
               {% continue %}
             {% endif %}
             "{{ entry }}":"{{ doc[entry] }}",
@@ -79,7 +79,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"static",
           {% for entry in marklet %}
-            {% if entry contains "next content output previous" %}
+            {% if "next content output previous" contains entry %}
               {% continue %}
             {% endif %}
             "{{ entry }}":"{{ marklet[entry] }}",
@@ -109,7 +109,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"page",
           {% for entry in marklet %}
-            {% if entry contains "next content output previous" %}
+            {% if "next content output previous" contains entry %}
               {% continue %}
             {% endif %}
             {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
