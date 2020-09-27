@@ -87,7 +87,7 @@ window.RogueBM.scripts={
       {%- if path[0] contains 'bookmarklets' -%}
    "{{ basename }}":{
       "basename":"{{ basename }}",
-      "path":"{{ marklet.path }}",
+      "path":"/{{ marklet.path }}",
       "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
       "href":"javascript:{{ marklet.path | url_escape }}",
