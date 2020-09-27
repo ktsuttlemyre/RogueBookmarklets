@@ -76,12 +76,12 @@ Allows [iframe insertion] [popups]
 
 
   var Fallback={
-    popup:function(url,data,test,callback){
+    'popup':function(url,data,test,callback){
       debug && console.info('using popup last resort');
       loadInExternalWindow();
       callback && callback.call && callback();
     },
-    iframe:function(url,test,callback){
+    'iframe':function(url,test,callback){
       debug && console.info('using iframe to show');
       //actually, if you are roguerunner lets try to open in iframe or external window
       if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
@@ -91,13 +91,13 @@ Allows [iframe insertion] [popups]
         //setTimeout(tester,1);
       }
     },
-    ajax:function(url,test,callback){
+    'ajax':function(url,test,callback){
         debug && console.info('using ajax to inline');
         var tester=Tester(url,test,callback,'xdomainiframe');
         ajax(url,tester);
         setTimeout(tester,1);
       },
-    xdomainiframe:function(url,test,callback){
+    'xdomainiframe':function(url,test,callback){
       debug && console.info('using xDiframe to inline');
       //start the injection
       var tester = Tester(url,test,callback,'iframe'); //pageBlocksInlineing?'iframe':'ajax'
