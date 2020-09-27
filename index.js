@@ -48,7 +48,7 @@ window.RogueBM.scripts={
     {%- endfor -%}
     {%- endif -%}
   {%- endfor -%}
-  
+  {% endcomment %}  
 
   {%- for marklet in site.static_files -%}
   {%- assign path = marklet.path | split: "/" -%}
@@ -67,13 +67,14 @@ window.RogueBM.scripts={
     },
   {%- endif -%}
   {%- endfor -%}
-{% endcomment %}  
+
 
 
   {%- for marklet in site.pages -%}
   {%- assign path = marklet.path | split: "/" -%}
-   "{{ marklet.basename | escape }}":{
-      "basename":"{{ marklet.name | default: marklet.title }}",
+  {%- assign basename = marklet.name | split: '.' | first | escape -%}
+   "{{ basename }}":{
+      "basename":"{{ basename }}",
       "path":"{{ marklet.path }}",
       "modified_time":"{{ marklet.modified_time }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
