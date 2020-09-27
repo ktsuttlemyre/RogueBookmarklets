@@ -20,6 +20,7 @@ window.RogueBM.about.scripts={
 //         "build_revision":"{{ site.github.build_revision }}"
 //        }
 window.RogueBM.scripts={
+    
   
   {{ NL }}
  /////////////////////////////////
@@ -46,8 +47,10 @@ window.RogueBM.scripts={
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "index":{% increment counter %},
-        "description":{{ doc.description | jsonify }},
-        "jekyll_type":"collection"
+        "jekyll_type":"collection",
+          {%- for entry in doc -%}
+            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
+          {%- endfor -%}
       },
     {%- endfor -%}
     {%- endif -%}
@@ -71,8 +74,10 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
-      "description":{{ marklet.description | jsonify}},
-      "jekyll_type":"static"
+      "jekyll_type":"static",
+          {%- for entry in marklet -%}
+            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
+          {%- endfor -%}
     },
   {%- endif -%}
   {%- endfor -%}
@@ -96,8 +101,10 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
-      "description":{{ marklet.description | jsonify}},
-      "jekyll_type":"page"
+      "jekyll_type":"page",
+          {%- for entry in marklet -%}
+            {{ entry[1] | jsonify }}:{{ entry[0] | jsonify }},
+          {%- endfor -%}
     },
       {% endif %}
   {%- endfor -%}
