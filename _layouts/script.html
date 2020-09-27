@@ -41,7 +41,10 @@ Data preprocess
  {%- assign arg = tmp | split: " -" | first -%}
  {%- assign args = args | push: arg -%}
   tmp
- {{ tmp }}
+ {{ arg }}
+ {{ args }}
+ {{ args | join "," }}
+  {{ args | jsonify }}
 {%- endfor -%}
   
   
