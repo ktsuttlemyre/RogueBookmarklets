@@ -49,7 +49,7 @@ window.RogueBM.scripts={
         "index":{% increment counter %},
         "jekyll_type":"collection",
           {% for entry in doc %}
-            "{{ entry }}":"",
+            "{{ entry }}":"{{ doc[entry] }}",
           {% endfor %}
       },
     {%- endfor -%}
@@ -76,7 +76,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"static",
           {% for entry in marklet %}
-            "{{ entry[0] }}":"",
+            "{{ entry }}":"{{ marklet[entry] }}",
           {% endfor %}
     },
   {%- endif -%}
