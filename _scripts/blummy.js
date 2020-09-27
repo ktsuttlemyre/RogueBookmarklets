@@ -29,7 +29,7 @@ if(user){
     next();
     return
 }
-RogueBM.getData(key,function(user){
+RogueBM.getData(key,function(err,user){
     blummy(user)
     next();
 });
