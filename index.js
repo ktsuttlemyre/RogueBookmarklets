@@ -1,9 +1,8 @@
 ---
 ---
-{% capture NL %}
-{% endcapture %}
-{% assign counter = -1 %}
-//touch
+{%- capture NL -%}
+{%- endcapture -%}
+{%- assign counter = -1 -%}
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
 window.RogueBM.about.scripts={
@@ -12,22 +11,11 @@ window.RogueBM.about.scripts={
   "build_revision":"{{ site.github.build_revision }}",
   "version":"0.0.5"
 }
-// window.RogueBM.about.RogueRunner={
-//         "latest":"{{ site.github.owner_name }}",
-//         "current":"",
-//         "modified_time":"{{ marklet.modified_time }}",
-//         "src":"{{ marklet.modified_time }}",
-//         "build_revision":"{{ site.github.build_revision }}"
-//        }
+
 window.RogueBM.scripts={
-    
-  
-  {{ NL }}
- 
-  /////////////////////////////////
- //       pages
  /////////////////////////////////
- 
+ //       Pages
+ /////////////////////////////////
   {% for marklet in site.pages %}
     {%- assign path = marklet.path | split: "/" -%}
     {%- assign basename = marklet.name | split: "." | first | escape  -%}
@@ -53,7 +41,6 @@ window.RogueBM.scripts={
  /////////////////////////////////
  //       Collections
  /////////////////////////////////
-  
   {% for coll in site.collections %}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
@@ -81,7 +68,6 @@ window.RogueBM.scripts={
  /////////////////////////////////
  //       Static
  /////////////////////////////////
-  
   {% for marklet in site.static_files %}
   {%- assign path = marklet.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' -%}
@@ -103,9 +89,6 @@ window.RogueBM.scripts={
   {%- endif -%}
   {% endfor %}
 
-
-
-  
   {% comment %}
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
