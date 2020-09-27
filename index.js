@@ -102,7 +102,7 @@ window.RogueBM.scripts={
 
   {%- endfor -%}
   
-
+  {% comment %}
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
 //   "Google Translate [Afrikaans]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=af&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=af';wt=window.open(lw);if(window.focus){wt.focus()};})()",
@@ -209,7 +209,7 @@ window.RogueBM.scripts={
 //   "Google Translate [ייִדיש]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=yi&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=yi';wt=window.open(lw);if(window.focus){wt.focus()};})()",
 //   "Google Translate [Yorùbá]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=yo&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=yo';wt=window.open(lw);if(window.focus){wt.focus()};})()",
 //   "Google Translate [IsiZulu]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=zu&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=zu';wt=window.open(lw);if(window.focus){wt.focus()};})()",
-
+  {% endcomment %}
    //TODO link bookmarks https://www.squarefree.com/bookmarklets/pagelinks.html
 
   //https://www.online-tech-tips.com/cool-websites/the-12-best-bookmarklets-every-browser-should-have/
