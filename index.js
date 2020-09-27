@@ -84,7 +84,7 @@ window.RogueBM.scripts={
 
   {%- for marklet in site.pages -%}
     {%- assign path = marklet.path | split: "/" -%}
-    {%- assign basename = marklet.name | split: "." | first | escape -%}
+    {%- assign basename = marklet.name | split: "." | first  -%}
     {%- if path[1] contains "bookmarklets" -%}
    "{{ basename }}":{
       "basename":"{{ basename }}",
