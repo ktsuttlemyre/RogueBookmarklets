@@ -49,7 +49,7 @@ window.RogueBM.scripts={
         "index":{% increment counter %},
         "jekyll_type":"collection",
           {% for entry in doc %}
-            "{{ entry[0] }}":"{{ entry[1] }}",
+            "{{ entry[0] | inspect }}":"{{ entry[1] | inspect }}",
           {% endfor %}
       },
     {%- endfor -%}
@@ -76,7 +76,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"static",
           {% for entry in marklet %}
-            "{{ entry[0] }}":"{{ entry[1] }}",
+            "{{ entry[0] | inspect }}":"{{ entry[1] | inspect }}",
           {% endfor %}
     },
   {%- endif -%}
@@ -103,7 +103,7 @@ window.RogueBM.scripts={
       "index":{% increment counter %},
       "jekyll_type":"page",
           {% for entry in marklet %}
-            "{{ entry[0] }}":"{{ entry[1] }}",
+            "{{ entry[0] | inspect }}":"{{ entry[1] | inspect }}",
           {% endfor %}
     },
       {% endif %}
