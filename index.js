@@ -73,7 +73,7 @@ window.RogueBM.scripts={
   {%- for marklet in site.pages -%}
   {%- assign path = marklet.path | split: "/" -%}
    "{{ marklet.basename | escape }}":{
-      "basename":"{{ marklet.basename }}",
+      "basename":"{{ marklet.name | default: marklet.title }}",
       "path":"{{ marklet.path }}",
       "modified_time":"{{ marklet.modified_time }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
