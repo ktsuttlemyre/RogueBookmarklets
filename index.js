@@ -47,7 +47,7 @@ window.RogueBM.scripts={
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "index":{{ counter | plus: 1 }},
         "description":"{{ doc.description}}",
-        "jekyll_type:"collection"
+        "jekyll_type":"collection"
       },
     {%- endfor -%}
     {%- endif -%}
@@ -72,7 +72,7 @@ window.RogueBM.scripts={
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{{ counter | plus: 1 }},
       "description":"{{ marklet.description}}",
-      "jekyll_type:"static"
+      "jekyll_type":"static"
     },
   {%- endif -%}
   {%- endfor -%}
@@ -98,7 +98,7 @@ window.RogueBM.scripts={
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{{ counter | plus: 1 }},
       "description":"{{ marklet.description}}",
-      "jekyll_type:"page"
+      "jekyll_type":"page"
     },
     {%- endif -%}
   {%- endfor -%}
