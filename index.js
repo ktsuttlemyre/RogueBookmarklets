@@ -82,7 +82,8 @@ window.RogueBM.scripts={
       "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | url_escape }}",
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
-      "index":{{ counter | plus: 1 }}
+      "index":{{ counter | plus: 1 }},
+      "description":"{{ marklet.description}}"
     },
   {%- endfor -%}
   
