@@ -1098,6 +1098,8 @@
             }
             this.postMessage(messageData,handler);
         }
+        RogueBM.getData=RogueBM.xDLStorage.getData.bind(RogueBM.xDLStorage);
+        RogueBM.setData=RogueBM.xDLStorage.setData.bind(RogueBM.xDLStorage);
     }
 
     //Playground
