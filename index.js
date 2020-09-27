@@ -29,8 +29,9 @@ window.RogueBM.scripts={
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
-     "{{ doc.name | default: doc.title }}":{
-        "name":"{{ doc.name | default: doc.title  }}",
+    {%- assign name = doc.url | split: "/" | last | split: "."| first -%}
+     "{{ name | default: doc.title }}":{
+        "name":"{{ name | default: doc.title  }}",
         "path":"{{ doc.url }}",
         "index":{% increment counter %},
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
