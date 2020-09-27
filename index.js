@@ -22,7 +22,7 @@ window.RogueBM.about.scripts={
 window.RogueBM.scripts={
   
   {{ NL }}
-
+ {% comment %}
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
@@ -67,7 +67,24 @@ window.RogueBM.scripts={
     },
   {%- endif -%}
   {%- endfor -%}
-  
+{% endcomment %}  
+
+
+  {%- for marklet in site.pages -%}
+  {%- assign path = marklet.path | split: "/" -%}
+   "{{ marklet.basename | escape }}":{
+      "basename":"{{ marklet.basename }}",
+      "path":"{{ marklet.path }}",
+      "modified_time":"{{ marklet.modified_time }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
+      "href":"javascript:{{ marklet.path | url_escape }}",
+      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | url_escape }}",
+      "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "index":{{ counter | plus: 1 }}
+    },
+  {%- endfor -%}
   
 
 //   //http://7is7.com/software/bookmarklets/translate.html
