@@ -23,6 +23,32 @@ window.RogueBM.scripts={
     
   
   {{ NL }}
+ 
+  /////////////////////////////////
+ //       pages
+ /////////////////////////////////
+  {%- for marklet in site.pages -%}
+    {%- assign path = marklet.path | split: "/" -%}
+    {%- assign basename = marklet.name | split: "." | first | escape  -%}
+      {%- if path[0] contains 'bookmarklets' -%}
+   "{{ basename }}":{
+      "name":"{{ basename }}",
+      "path":"/{{ marklet.path }}",
+      "index":{% increment counter %},
+      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
+      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "jekyll_type":"page",
+          {% for entry in marklet -%}
+            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
+              {%- continue -%}
+            {%- endif -%}
+            {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
+          {% endfor %}
+    },
+      {% endif %}
+  {%- endfor -%}
+  
  /////////////////////////////////
  //       Collections
  /////////////////////////////////
@@ -75,30 +101,7 @@ window.RogueBM.scripts={
   {%- endfor -%}
 
 
- /////////////////////////////////
- //       pages
- /////////////////////////////////
-  {%- for marklet in site.pages -%}
-    {%- assign path = marklet.path | split: "/" -%}
-    {%- assign basename = marklet.name | split: "." | first | escape  -%}
-      {%- if path[0] contains 'bookmarklets' -%}
-   "{{ basename }}":{
-      "name":"{{ basename }}",
-      "path":"/{{ marklet.path }}",
-      "index":{% increment counter %},
-      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
-      "jekyll_type":"page",
-          {% for entry in marklet -%}
-            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
-              {%- continue -%}
-            {%- endif -%}
-            {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
-          {% endfor %}
-    },
-      {% endif %}
-  {%- endfor -%}
+
   
   {% comment %}
 //   //http://7is7.com/software/bookmarklets/translate.html
