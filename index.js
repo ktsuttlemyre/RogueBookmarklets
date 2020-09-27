@@ -38,7 +38,8 @@ window.RogueBM.scripts={
       {%- assign revision = meta[6] -%}
      "{{ name | default: title }}":{
         "basename":"{{ name | default: title  }}",
-        "path":"{{ url }}",
+        "path":"{{ doc.url }}",
+        "source":"{{ doc.path }}",
         "modified_time":"{{ doc.modified_time | default: date }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ source_path | url_escape }}",
         "href":"javascript:{{ url | url_escape }}",
