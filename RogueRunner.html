@@ -313,7 +313,11 @@ border: 1px solid #a7a7a7;
 								returnPayload.data= data;
 								break;
 							case 'set':
-								returnPayload.data=localStorage.setItem(payload.key, JSON.stringify(payload.data));
+								if(typeof payload.data != 'string'){
+									returnPayload.data=localStorage.setItem(payload.key, JSON.stringify(payload.data));
+								}else{
+									returnPayload.data=localStorage.setItem(payload.key, payload.data);
+								}
 								//TODO send success/fail
 								break;
 							case 'getScript': //TODO force allowed origins
