@@ -46,7 +46,7 @@ window.RogueBM.scripts={
         "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ url | url_escape }}",
         "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ url | url_escape }}",
         "index":{% increment counter %},
-        "description":"{{ doc.description | jsonify }}",
+        "description":{{ doc.description | jsonify }},
         "jekyll_type":"collection"
       },
     {%- endfor -%}
@@ -71,7 +71,7 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
-      "description":"{{ marklet.description | jsonify}}",
+      "description":{{ marklet.description | jsonify}},
       "jekyll_type":"static"
     },
   {%- endif -%}
@@ -96,7 +96,7 @@ window.RogueBM.scripts={
       "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
-      "description":"{{ marklet.description | jsonify}}",
+      "description":{{ marklet.description | jsonify}},
       "jekyll_type":"page"
     },
       {% endif %}
