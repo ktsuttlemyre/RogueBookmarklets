@@ -34,6 +34,7 @@ window.RogueBM.scripts={
         "name":"{{ name | default: doc.title  }}",
         "path":"{{ doc.url }}",
         "index":{% increment counter %},
+        "modified_time":"{{ doc.modified_time | default: doc.date }}",
         "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
         "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
@@ -56,13 +57,12 @@ window.RogueBM.scripts={
   {%- assign path = marklet.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' -%}
    "{{ marklet.basename | escape }}":{
-      "basename":"{{ marklet.basename }}",
+      "name":"{{ marklet.basename }}",
       "path":"{{ marklet.path }}",
-      "modified_time":"{{ marklet.modified_time }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      "href":"javascript:{{ marklet.path | url_escape }}",
-      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "index":{% increment counter %},
+      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
+      "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
       "jekyll_type":"static",
           {% for entry in marklet %}
             {%- if "next previous output content excerpt | extname url id slug title | path name" contains entry -%}
@@ -83,13 +83,12 @@ window.RogueBM.scripts={
     {%- assign basename = marklet.name | split: "." | first | escape  -%}
       {%- if path[0] contains 'bookmarklets' -%}
    "{{ basename }}":{
-      "basename":"{{ basename }}",
+      "name":"{{ basename }}",
       "path":"/{{ marklet.path }}",
+      "index":{% increment counter %},
       "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      "href":"javascript:{{ marklet.path | url_escape }}",
       "src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
-      "index":{% increment counter %},
       "jekyll_type":"page",
           {% for entry in marklet -%}
             {%- if "next previous output content excerpt | extname url id slug title | path name" contains entry[0] -%}
