@@ -1462,7 +1462,10 @@
     
  var about=RogueBM.about=RogueBM.about||{};
  about.RogueRunner={
-         "build_revision":"{{ site.github.build_revision }}"
+  "owner_name":"{{ site.github.owner_name }}",
+  "owner_url":"{{ site.github.owner_url }}",
+  "build_revision":"{{ site.github.build_revision }}",
+  "version":"0.0.5"
         };
     window['RogueBM']['show']=show;
     window['RogueBM']['hide']=hide;
