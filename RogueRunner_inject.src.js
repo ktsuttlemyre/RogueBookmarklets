@@ -269,7 +269,7 @@ Allows [iframe insertion] [popups]
      * @constructor
      */
     var CrossOriginLocalStorage = function(currentWindow, url, allowedOrigins) {
-      postMessage=postMessage;
+      var postMessage='postMessage';
       var messageID='messageID';
       var self=this;
       var timeout=0; //setTimeout(function(){self.status='blocked';alert('failed to load CrossOriginLocalStorage')},20000);
