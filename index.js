@@ -84,7 +84,7 @@ window.RogueBM.scripts={
   {%- for marklet in site.pages -%}
     {%- assign path = marklet.path | split: "/" -%}
     {%- assign basename = marklet.name | split: "." | first | escape  -%}
-
+      {%- if path[0] contains 'bookmarklets' -%}
    "{{ basename }}":{
       "basename":"{{ basename }}",
       "path":"{{ marklet.path }}",
@@ -99,7 +99,7 @@ window.RogueBM.scripts={
       "description":"{{ marklet.description}}",
       "jekyll_type":"page"
     },
-
+      {% endif %}
   {%- endfor -%}
   
   {% comment %}
