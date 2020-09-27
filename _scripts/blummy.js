@@ -24,12 +24,12 @@ returns: |
 {{ raw }}
 var key='blumy-user';
 if(user){
-    RogueBM.setValue(key,user);
+    RogueBM.setData(key,user);
     blumy(user);
     next();
     return
 }
-RogueBM.getValue(key,function(user){
+RogueBM.getData(key,function(user){
     blummy(user)
     next();
 });
