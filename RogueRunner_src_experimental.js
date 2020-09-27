@@ -925,7 +925,7 @@
             if(err){
                 var cdn=cdns.shift();
                 if(cdn){
-                    inject(RogueBM.stringFormat(RogueBM.scriptCDN[cdn], scriptEntry.path),'javascript',loadAScript);
+                    inject(RogueBM.stringFormat(RogueBM.scriptCDNs[cdn], scriptEntry.path),'javascript',loadAScript);
                 }else{
                    console.error('couldn\'t load requested script');
                 }
