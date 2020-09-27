@@ -927,7 +927,7 @@
                 if(cdn){
                     inject(RogueBM.stringFormat(RogueBM.scriptCDNs[cdn], scriptEntry.path),'javascript',loadAScript);
                 }else{
-                   console.error('couldn\'t load requested script');
+                   console.error('couldn\'t load requested script',scriptEntry.path,scriptEntry);
                 }
             }
         }
