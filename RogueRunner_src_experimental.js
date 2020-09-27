@@ -920,8 +920,19 @@
         }
 
         //TODO have cdn fallback failures
+        var cdns=cdnPreference.slice();
+        var loadAScript=function(err){
+            if(err){
+                var cdn=cdns.shift();
+                if(cdn){
+                    inject(RogueBM.stringFormat(RogueBM.scriptCDN[cdn], scriptEntry.path),'javascript',loadAScript);
+                }else{
+                   console.error('couldn\'t load requested script');
+                }
+            }
+        }
         
-        inject(RogueBM.stringFormat(cdnPreference[0], scriptEntry.path),'javascript',true)
+        loadAScript(true);
         return scriptEntry
     }
 
