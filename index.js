@@ -3,16 +3,16 @@
 {%- capture NL -%}
 {%- endcapture -%}
 {%- assign counter = -1 -%}
-this.RogueBM=this.RogueBM||{};
-this.RogueBM.about=this.RogueBM.about||{}; //injector should have already created an obj
-this.RogueBM.about.scripts={
+window.RogueBM=window.RogueBM||{};
+window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
+window.RogueBM.about.scripts={
   "owner_name":"{{ site.github.owner_name }}",
   "owner_url":"{{ site.github.owner_url }}",
   "build_revision":"{{ site.github.build_revision }}",
   "version":"0.0.5"
 }
 
-this.RogueBM.scripts={
+window.RogueBM.scripts={
  /////////////////////////////////
  //       Pages
  /////////////////////////////////
@@ -247,13 +247,14 @@ RogueBM.scriptCDNs={
    
    
 // //jsonp callback
-// function readySignal(){
-//   var callback=window.RogueBM.loaded;
-//   if (!callback) {//what function to look for
-//     return setTimeout(readySignal, 10); 
-//   }
-//   //call that function we were looking for
-//   callback('index.js');
-// }
-// this.RogueBM.keys=Object.keys(this.RogueBM.scripts)
-this.RogueBM['loaded']('index.js');
+function readySignal(){
+  var callback=window.RogueBM.loaded;
+  if (!callback) {//what function to look for
+    return setTimeout(readySignal, 10); 
+  }
+  //call that function we were looking for
+  callback('index.js');
+}
+window.RogueBM.keys=Object.keys(window.RogueBM.scripts);
+readySignal()
+//window.RogueBM['loaded']('index.js');
