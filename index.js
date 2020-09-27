@@ -27,6 +27,7 @@ window.RogueBM.scripts={
   /////////////////////////////////
  //       pages
  /////////////////////////////////
+ 
   {%- for marklet in site.pages -%}
     {%- assign path = marklet.path | split: "/" -%}
     {%- assign basename = marklet.name | split: "." | first | escape  -%}
@@ -52,6 +53,7 @@ window.RogueBM.scripts={
  /////////////////////////////////
  //       Collections
  /////////////////////////////////
+  
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
     {%- for doc in coll.docs -%}
@@ -79,6 +81,7 @@ window.RogueBM.scripts={
  /////////////////////////////////
  //       Static
  /////////////////////////////////
+  
   {%- for marklet in site.static_files -%}
   {%- assign path = marklet.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' -%}
