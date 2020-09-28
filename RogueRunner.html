@@ -295,6 +295,7 @@ border: 1px solid #a7a7a7;
 					//}
 					//console.log('iframe got message',e)
 					var payload = JSON.parse(e.data);
+					var namespace=(payload.prefix||'publicNamespace')+'.';
 					var parent = window.parent;
 					var returnPayload={
 						method:payload.method,
@@ -309,15 +310,31 @@ border: 1px solid #a7a7a7;
 								returnPayload.data=true //TODO make this async so I can tell the interface is installed properly
 								break;
 							case 'get':
-								var data = localStorage.getItem(payload.key);
-								returnPayload.data= data;
+
+							    var data;
+							    if(Array.isArray(payload.key)){
+							    	data=[];
+							    	for(var i=0,l=payload.key.length;i<l;i++){
+							    		data.push(localStorage.getItem(namespace+payload.key[i])||undefined);
+							    	}
+							    }else if(typeof payload.key == 'object'){
+							    	data={}
+							    	var keys = Object.keys(payload.key);
+							    	for(var i=0,l=keys.length;i<l;i++){
+							    		var key=keys[i];
+							    		data[key]=localStorage.getItem(namespace+key)||undefined;
+							    	}
+							    }else{
+									data = localStorage.getItem(namespace+payload.key)||undefined;
+							    }
+							    returnPayload.data=data;
+
 								break;
 							case 'set':
 								if(typeof payload.data != 'string'){
-									returnPayload.data=localStorage.setItem(payload.key, JSON.stringify(payload.data));
-								}else{
-									returnPayload.data=localStorage.setItem(payload.key, payload.data);
+									payload.data=JSON.stringify(payload.data);
 								}
+								returnPayload.data=localStorage.setItem(namespace+payload.key, payload.data);
 								//TODO send success/fail
 								break;
 							case 'getScript': //TODO force allowed origins
