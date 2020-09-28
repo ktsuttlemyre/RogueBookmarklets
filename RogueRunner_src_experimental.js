@@ -1,5 +1,6 @@
 ---
 ---
+
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -702,10 +703,7 @@
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
         setTextAreaHeight(); //make multiLine have some height
-        var about=window['RogueBM']['about']
-        if(!about || !about['injector'] ){
-            showError('RogueRunner wasn\'t injected with the injector script!');
-        }
+
         //if there is a cmd passed from the injector
         //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
         var lastCMD=RogueBM.lastCMD;
@@ -893,32 +891,48 @@
     }
 
     var cachedCommands={};
+    var cachePersonalArgs={};
     function fullURLtoPath(url){ //cant use this because RogueBM.processTick is called with relateive path or filename only
         var prefix='/RogueBookmarklets/';
         var restOfPath=url.split(prefix)[1];
         if(!restOfPath){
-            return null
+            return null;
         }
-        return prefix + restOfPath
+        return prefix + restOfPath;
     }
     var cdnPreference='github_pages,github_raw,jsdelivr'.split(',')
     function getScript(scriptEntry){
-        var cached=cachedCommands[scriptEntry.path||scriptEntry];
-        if(cached){
-            return scriptEntry
+        var path=scriptEntry.path||scriptEntry;
+        var cachedCommand=cachedCommands[path];
+        if(cachedCommand){
+            return cachedCommand;
+        }
+
+        //TODO make sure default arguments are taken from xdomain localstorage and presented to package
+        var args=getArgumentDetails(scriptEntry).args;
+        if(!cachePersonalArgs[path]){
+            RogueBM.getData(args,function(err,defaults){
+                if(err){
+                    return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
+                }
+                
+                cachePersonalArgs[path]=defaults;
+
+                window['RogueBM']['processTick']();
+            });
         }
 
         if(typeof scriptEntry == 'string'){ //assume its code
             //if it is a string assume its code
             //TODO handle https:// http:// and javascript:
-            inject(script,'javascript')
-            return scriptEntry
+            inject(script,'javascript');
+            return scriptEntry;
         }
 
         //src takes priority
         if(scriptEntry.src){//if we get a script obj use the src attribute
-            inject(scriptEntry.src,'javascript',true)
-            return scriptEntry
+            inject(scriptEntry.src,'javascript',true);
+            return scriptEntry;
         }
 
         var cdns=cdnPreference.slice();
@@ -926,7 +940,7 @@
             if(err){
                 var cdn=cdns.shift();
                 if(cdn){
-                    inject(RogueBM.stringFormat(RogueBM.scriptCDNs[cdn], scriptEntry),'javascript',loadAScript);
+                    inject(RogueBM.stringFormat(RogueBM.scriptCDNs[cdn], {path:path}),'javascript',loadAScript);
                 }else{
                    console.error('couldn\'t load requested script',scriptEntry);
                 }
@@ -934,7 +948,7 @@
         }
         
         loadAScript(true);
-        return scriptEntry
+        return scriptEntry;
     }
 
     function inheritProperties(target,source,defaults){
@@ -1041,7 +1055,7 @@
 
             //go ahead and asyncget/cache the script (even if there is a syntax error it is likely the person will fix it and need this soon)
             //if command is already cached then use it
-            getScript(scriptEntry)
+            getScript(scriptEntry);
         }
         var threadID=(threadIndex++).toString(36)
         activity[thread.threadID=threadID]=thread;
@@ -1049,6 +1063,26 @@
         hide();
         RogueBM['processTick']();
         return threadID;
+    }
+    function getArgumentDetails(scriptEntry){
+        var doc=scriptEntry.params;
+        if(typeof scriptEntry.params =='string'){
+            doc=doc.split('\n');
+        }
+        var params=[];
+        var args=[]
+        for(var i=0,l=doc.length;i<l;i++){
+            var paramObj={};
+            doc.replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,type,name,description){
+                paramObj['type']=paramObj['type']||type;
+                paramObj['name']=paramObj['name']||name;
+                paramObj['description']=paramObj['description']||description;
+                console.log('type',type,'name',name,'description',description)
+            })
+            args.push(paramObj['name']);
+            params.push(paramObj);
+        }
+        return {args:args,params:params};
     }
 
     var threads={}; //hash of threads(arrays)
@@ -1082,10 +1116,15 @@
     }
 
     function extendCrossOriginLocalStorage(CrossOriginLocalStorage){
-        CrossOriginLocalStorage.prototype.getData = function (key,handler) {
+        CrossOriginLocalStorage.prototype.getData = function (key,namespace,handler) {
+            if(namespace && namespace.call){
+                handler=namespace;
+                namespace='';
+            }
             var messageData = {
                 key: key,
                 method: 'get',
+                prefix: namespace,
             }
             this.postMessage(messageData,handler);
         }
@@ -1260,15 +1299,15 @@
              //     }
              // }
          }
-         mocks.window.getSelection=getSelection.bind(mocks.window)
-         mocks.document.getSelection=getSelection.bind(mocks.document)
+         mocks.window.getSelection=getSelection.bind(mocks.window);
+         mocks.document.getSelection=getSelection.bind(mocks.document);
 
          mocks.document.selection={
              'createRange':function(){
                  return {'text': mocks.window.getSelection()}
              }
          }
-          return mocks
+          return mocks;
      ///////////END MOCKS CODE //////
     }
      
@@ -1276,23 +1315,22 @@
      
     //pakage first needs to be extracte from container
     window['RogueBM']['cacheCommand']=function(path,container,paramNames,options){
-
         if(!cachedCommands[path]){
            cachedCommands[path]={container:container,path:path,options:options,paramNames:paramNames};//function(){window['RogueBM']['processTick'](package,options,args,filename)}
         }
 
-        window['RogueBM']['processTick']()
+        window['RogueBM']['processTick']();
     }
 
-    function argMap(paramNames, kwargs){
+    function argMap(paramNames, kwargs, defaults){
         if(!paramNames){
             throw 'no array of paramNames to map';
-            return
+            return;
         }
         var args=[]
         for(var i=0,l=paramNames.length;i<l;i++){
            var key = paramNames[i];
-           args[i]=kwargs[key];
+           args[i]=(kwargs[key]!==undefined)?kwargs[key]:defaults[i];
         }
         return args
     }
@@ -1308,13 +1346,13 @@
         if(thread.error||thread.killed||thread.complete){ //garbage collection
             //using a thread getter so that we wont have a circular reference if I want to jsonify it later
             thread.callback&&thread.callback((thread.error&&{threadID:thread.threadID,error:thread.error,threadGetter:function(){return thread}}),thread.stdout[thread.stdout.length-1])
-            inactiveThreads.push(thread)
-            activity[threadID]=null
-            delete activity[threadID]
+            inactiveThreads.push(thread);
+            activity[threadID]=null;
+            delete activity[threadID];
 
             
             if(inactiveThreads.length>processHistoryMaxLength){
-                inactiveThreads.shift()
+                inactiveThreads.shift();
                 //if(Date.now()-thread.killed>(60*60*1000)){ //garbage collect every ho
                 
             }
@@ -1323,9 +1361,9 @@
     }
 
     var processHistoryMaxLength=10;
-    var inactiveThreads=[]
+    var inactiveThreads=[];
     function tick(){
-        blocked=0
+        blocked=0;
         var activeThreadIDs=Object.keys(activity).sort()
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
             var threadID=activeThreadIDs[i]
@@ -1376,6 +1414,10 @@
                 if(!cache){
                     continue
                 }
+                var cacheDefaults=cachePersonalArgs[proc.scriptEntry.path];
+                if(!cacheDefaults){
+                    continue
+                }
 
                 var mocksModeDisabled=true
                 var kwargs=null
@@ -1399,6 +1441,7 @@
                     RogueBM['processTick']()
                 }
                 kwargs.stdin=thread.stdout[thread.stdout.length-1]
+
          
                 var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next'.split(','),kwargs));
 
@@ -1408,9 +1451,13 @@
                 thread.currentProcessIndex=thread.stdout.length
                 var returnValue;
                 if(Array.isArray(proc.args)){
+                    var args=proc.args
+                    for(var i=0,l=args.length;i<l;i++){
+                        args[i]=args[i]!==undefined?args[i]:cacheDefaults[i];
+                    }
                     returnValue=package.apply(package,proc.args);
                 }else{
-                    returnValue=package.apply(package,argMap(cache.paramNames,proc.args));
+                    returnValue=package.apply(package,argMap(cache.paramNames,proc.args,cacheDefaults));
                 }
 
                 if(!cache.options.isAsync){
@@ -1539,7 +1586,13 @@
         }
     }, false);
 
-    //send loaded signal
-    window['RogueBM']['loaded']('RogueRunner.js')
+
+    var about=window['RogueBM']['about']
+    if(!about || !about['injector'] ){
+        showError('RogueRunner wasn\'t injected with the injector script!');
+    }else{
+        //send loaded signal
+        window['RogueBM']['loaded']('RogueRunner.js')
+    }
 //usersessions
 })(window,document,location,alert,prompt,confirm)
