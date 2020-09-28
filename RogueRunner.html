@@ -334,7 +334,24 @@ border: 1px solid #a7a7a7;
 								if(typeof payload.data != 'string'){
 									payload.data=JSON.stringify(payload.data);
 								}
-								returnPayload.data=localStorage.setItem(namespace+payload.key, payload.data);
+								var data;
+							    if(Array.isArray(payload.key)){
+							    	throw "we don't accept arrays for set currently"
+							    	// data=[];
+							    	// for(var i=0,l=payload.key.length;i<l;i++){
+							    	// 	data.push(localStorage.setItem(namespace+i,payload.key[i]));
+							    	// }
+							    }else if(typeof payload.key == 'object'){
+							    	data={}
+							    	var keys = Object.keys(payload.key);
+							    	for(var i=0,l=keys.length;i<l;i++){
+							    		var key=keys[i];
+							    		data[key]=localStorage.setItem(namespace+key,payload.key[key]);
+							    	}
+							    }else{
+									data=localStorage.setItem(namespace+payload.key, payload.data);
+								}
+								returnPayload.data=data;
 								//TODO send success/fail
 								break;
 							case 'getScript': //TODO force allowed origins
