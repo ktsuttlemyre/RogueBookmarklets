@@ -8,4 +8,4 @@ setTimeout(function(){
 //  arg[1]()
 //}
 next();
-},args[0]);
+},arguments[0]);
