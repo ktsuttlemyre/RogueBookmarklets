@@ -17,11 +17,12 @@ layout: script
 
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
-  {string} user - your blumy user name. This will become your default user name for each time you call this function
+  {string} user=user - your blumy user name. This will become your default user name for each time you call this function
 returns: |
   {undefined}
 ---
 {{ raw }}
+debugger
 var key='blumy-user';
 if(user){
     RogueBM.setData(key,user);
