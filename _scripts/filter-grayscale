@@ -19,14 +19,14 @@ params: |
 returns: |
   {bool} isGrayscale
 ---
-(function(on) {
-  function i(i) {
-    document.body.style.filter = i, document.body.style.webkitFilter = i;
-  }
-  if(on!=null){
-    window.isGrayscale=!!on
-  }
-  window.isGrayscale ? (i("none"), window.isGrayscale = !1) : (i("grayscale(1)"), window.isGrayscale = !0);
-  return window.isGrayscale;
-})();
+function i(i) {
+  document.body.style.filter = i, document.body.style.webkitFilter = i;
+}
+if(on!=null){
+  window.isGrayscale=!!on
+}
+window.isGrayscale ? (i("none"), window.isGrayscale = !1) : (i("grayscale(1)"), window.isGrayscale = !0);
+
+return window.isGrayscale;
+
 
