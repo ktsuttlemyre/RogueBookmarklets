@@ -1,7 +1,5 @@
 ---
 ---
----
----
 
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
