@@ -12,7 +12,7 @@ originalsource: https://github.com/ktsuttlemyre/RogueBookmarklets
 
 
 ####### function signature #######
-specs: [async]
+specs: []
 layout: script
 
 # for syntax see: https://jsdoc.app/tags-type.html
@@ -22,18 +22,10 @@ returns: |
   {undefined}
 ---
 {{ raw }}
-debugger
-var key='blumy-user';
 if(user){
-    RogueBM.setData(key,user);
-    blummy(user);
-    next();
-    return
+    setData('user',user);
 }
-RogueBM.getData(key,function(err,user){
-    blummy(user)
-    next();
-});
+blummy(user);
 
 function blummy(user){
     (function(){var l,s,d=document,i,a=function(o){d.body.appendChild(o)};if(d.getElementById('blummy'))return Blummy.close();l=d.createElement('div');l.innerHTML='Loading..';i=l.style;i.position='absolute';i.top='0';i.left='9px';i.backgroundColor='#f00';i.color='#fff';i.font='normal 14px sans-serif';i.padding='2px';i.zIndex='999';l.id='l_blm';a(l);s=d.createElement('script');s.type='text/javascript';s.src='https://blummy.com/blummy.js?user='+user;a(s)})();
