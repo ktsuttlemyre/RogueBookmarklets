@@ -778,16 +778,23 @@
     //search logic and interactivity
     var defaultSuggestions=[];
     var lastSearch=''
+    var lastList=[];
     function searchScripts(input) {
         input=input||''
         //https://stackoverflow.com/questions/11404855/javascript-autocomplete-without-external-library
         if(input == lastSearch){
-            return
+            return 
         }
         lastSearch=input
-        var reg = new RegExp(input.replace(/\B/g,'\\S*?'), 'i');
+        var reg;
+        try{
+            reg = new RegExp(input.replace(/\B/g,'\\S*?'), 'i');
+        }catch(err){
+            return lastList
+        }
         console.log(reg.toString())
         var list = [] //new list each time
+        lastList=list;
         
         var numberOfSuggestions=window['RogueBM']['keys'].length
         if(!input.length){
