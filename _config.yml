@@ -2,7 +2,7 @@ theme: jekyll-theme-minimal
 collections:
   scripts:
     output: true
-    permalink: /scripts/:path.js
+    permalink: /bookmarklets/:path.js
 liquid:
   error_mode: lax
 emptyArray: []
