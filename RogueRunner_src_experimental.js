@@ -12,6 +12,7 @@
             return new Date().getTime();
         };
     }
+    var dummy=[];
      
      
     if(!Function.prototype.bind){
@@ -1338,7 +1339,7 @@
     }
 
     function argMap(paramNames, kwargs, defaults){
-        defaults=defaults||[];
+        defaults=defaults||dummy;
         if(!paramNames){
             throw 'no array of paramNames to map';
             return;
