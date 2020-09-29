@@ -916,8 +916,8 @@
                 if(err){
                     return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
                 }
-                
-                cachePersonalArgs[path]=defaults;
+                //TODO figure out why defaults.data is coming through instead of this function getting the signature (err,defults,payload)
+                cachePersonalArgs[path]=defaults.data||defaults;
 
                 window['RogueBM']['processTick']();
             });
