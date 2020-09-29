@@ -17,19 +17,19 @@ window.RogueBM.scripts={
  //       Pages
  /////////////////////////////////
   {{ NL }}
-  {%- for marklet in site.pages -%}
-    {%- assign path = marklet.path | split: "/" -%}
-    {%- assign basename = marklet.name | split: "." | first | escape  -%}
+  {%- for script in site.pages -%}
+    {%- assign path = script.path | split: "/" -%}
+    {%- assign name = script.name | split: "." | first | escape  -%}
       {%- if path[0] contains 'bookmarklets' -%}
-   "{{ basename }}":{
-      "name":"{{ basename }}",
-      "path":"/{{ marklet.path }}",
+   "{{ name }}":{
+      "name":"{{ name }}",
+      "path":"/{{ script.path }}",
       "index":{% increment counter %},
-      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "modified_time":"{{ script.modified_time | default: script.date }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
+      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
       "jekyll_type":"page",
-          {% for entry in marklet -%}
+          {% for entry in script -%}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
               {%- continue -%}
             {%- endif -%}
@@ -45,21 +45,21 @@ window.RogueBM.scripts={
    {{ NL }}
   {%- for coll in site.collections -%}
     {%- if coll.label == "scripts" -%}
-    {%- for doc in coll.docs -%}
-    {%- assign name = doc.url | split: "/" | last | split: "."| first | downcase -%}
-     "{{ name | default: doc.title }}":{
-        "name":"{{ name | default: doc.title  }}",
-        "path":"{{ doc.url }}",
+    {%- for script in coll.docs -%}
+    {%- assign name = script.url | split: "/" | last | split: "."| first | downcase -%}
+     "{{ name | default: script.title }}":{
+        "name":"{{ name | default: script.title  }}",
+        "path":"{{ script.url }}",
         "index":{% increment counter %},
-        "modified_time":"{{ doc.modified_time | default: doc.date }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ doc.relative_path | url_escape }}",
+        "modified_time":"{{ script.modified_time | default: script.date }}",
+        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ script.relative_path | url_escape }}",
         //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
-          {% for entry in doc %}
+          {% for entry in script %}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
-            "{{ entry }}":{{ doc[entry] | jsonify }},
+            "{{ entry }}":{{ script[entry] | jsonify }},
           {% endfor %}
       },
     {%- endfor -%}
@@ -70,22 +70,22 @@ window.RogueBM.scripts={
  //       Static
  /////////////////////////////////
   {{ NL }}
-  {%- for marklet in site.static_files -%}
-  {%- assign path = marklet.path | split: "/" -%}
+  {%- for script in site.static_files -%}
+  {%- assign path = script.path | split: "/" -%}
   {%- if path[1] contains 'bookmarklets' -%}
-   "{{ marklet.basename | escape }}":{
-      "name":"{{ marklet.basename }}",
-      "path":"{{ marklet.path }}",
+   "{{ script.basename | escape }}":{
+      "name":"{{ script.basename }}",
+      "path":"{{ script.path }}",
       "index":{% increment counter %},
-      "modified_time":"{{ marklet.modified_time | default: marklet.date }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | url_escape }}",
-      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ marklet.path | url_escape }}",
+      "modified_time":"{{ script.modified_time | default: script.date }}",
+      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
+      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
       "jekyll_type":"static",
-          {% for entry in marklet %}
+          {% for entry in script %}
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
-            "{{ entry }}":{{ marklet[entry] | jsonify }},
+            "{{ entry }}":{{ script[entry] | jsonify }},
           {% endfor %}
     },
   {%- endif -%}
