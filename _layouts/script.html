@@ -73,6 +73,7 @@ TEMPLATE
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
     {%- endfor -%}
  *  
+{%- if page.specs contains "async" -%}  *  @async{% endif %}
  *  @param {{ params | join: PARAM_NL }} 
  *  @returns {{ returns }}
  *
@@ -81,6 +82,7 @@ TEMPLATE
  *  @see This is part of a collection of bookmarklets https://ktsuttlemyre.github.io/RogueBookmarklets/
  *  @see Hosted at https://ktsuttlemyre.github.io/RogueBookmarklets{{ page.url }}
  *  @file LastModified: {{ page.date }}
+ *  @version {{ site.github.build_revision }}
  */
 
 {%- comment -%}
