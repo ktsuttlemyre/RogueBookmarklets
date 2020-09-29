@@ -88,7 +88,7 @@ open = similar to window.open but will open modal, window,
 (function container(window,document,location,alert,prompt,confirm,open,RogueBM,undefined){
   
   
-    var package = function package(window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next){
+    var package = function package(window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,setData){
       return function bookmarkletClosure({{ args | join: ',' }}){
  
           //var selection = (stdin!=null)?stdin:(getSelection.call(window)||'');
