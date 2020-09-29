@@ -1455,10 +1455,10 @@
                 kwargs.RogueBM=window['RogueBM'];
                 kwargs.next=function(returnValue){
                     thread.stdout.push(returnValue)
-                    RogueBM['processTick']()
+                    RogueBM['processTick']();
                 }
                 kwargs.setData=function(key,data,callback){
-                    return RogueBM.setData(proc.scriptEntry.path+'.'key,data,callback);
+                    return RogueBM.setData(proc.scriptEntry.name+'.'+key,data,callback);
                 }
                 kwargs.stdin=thread.stdout[thread.stdout.length-1]
 
