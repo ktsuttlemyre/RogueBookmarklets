@@ -1,6 +1,5 @@
 ---
 ---
-
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -1468,11 +1467,13 @@
                 thread.currentProcessIndex=thread.stdout.length
                 var returnValue;
                 if(Array.isArray(proc.args)){
-                    var args=proc.args
+                    var args=cacheDefaults.slice(); // proc.args
                     for(var i=0,l=args.length;i<l;i++){
-                        args[i]=args[i]!==undefined?args[i]:cacheDefaults[i];
+                        if(proc.args[i]!==undefined){
+                            args[i]=proc.args[i]
+                        }
                     }
-                    returnValue=package.apply(package,proc.args);
+                    returnValue=package.apply(package,args);
                 }else{
                     returnValue=package.apply(package,argMap(cache.paramNames,proc.args,cacheDefaults));
                 }
