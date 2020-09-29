@@ -16,6 +16,5 @@ originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better
 layout: script
 ---
 {{ raw }}
-
-void window.open("http://del.icio.us/url?url=" + document.location.href);
+window.open("http://del.icio.us/url?url=" + encodeURIComponent(document.location.href));
 {{ endraw }}
