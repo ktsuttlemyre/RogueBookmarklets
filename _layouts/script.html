@@ -73,7 +73,7 @@ TEMPLATE
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
     {%- endfor -%}
  *  
-{%- if page.specs contains "async" -%}  *  @async{% endif %}
+{%- if page.specs and page.specs contains "async" -%}  *  @async{% endif %}
  *  @param {{ params | join: PARAM_NL }} 
  *  @returns {{ returns }}
  *
