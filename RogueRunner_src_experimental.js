@@ -1149,6 +1149,7 @@
             var messageData = {
                 key: key,
                 method: 'set',
+                prefix: namespace,
                 data: data,
             }
             this.postMessage(messageData,handler);
