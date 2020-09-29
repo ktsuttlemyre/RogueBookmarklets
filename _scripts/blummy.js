@@ -26,7 +26,7 @@ debugger
 var key='blumy-user';
 if(user){
     RogueBM.setData(key,user);
-    blumy(user);
+    blummy(user);
     next();
     return
 }
