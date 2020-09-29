@@ -5,7 +5,7 @@
 //Jekyll metadata
 build_revision<META>{{ site.github.build_revision }}<META>
 {% for entry in page -%}
-  {{ entry[0] | jsonify }}<META>{{ entry[1] | jsonify }}<META>
+  {{ entry | jsonify }}<META>{{ page[entry] | jsonify }}<META>
 {% endfor %}
 
 {%- comment -%}
