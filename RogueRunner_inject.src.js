@@ -16,6 +16,8 @@
 
 
 /*test websites
+//this is good for learning integrity checks
+https://www.zotero.org/download/bookmarklet
 
 https://glebbahmutov.com/disable-inline-javascript-tutorial/index-secure.html
 Blocks [script injection] [script inlining] [eval]
