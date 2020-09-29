@@ -1,6 +1,6 @@
 ---
 ---
-    
+
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -1072,11 +1072,11 @@
         var params=[];
         var args=[]
         for(var i=0,l=doc.length;i<l;i++){
-            var type=name=description=value='',optional;
+            var type,name,description,value,optional;
             doc[i].replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,t,n,d){
-                type=(type||t).trim();
-                name=(name||n).trim();
-                description=(description||d).trim();
+                type=(type||t||'').trim();
+                name=(name||n||'').trim();
+                description=(description||d||'').trim();
                 console.log('type',type,'name',name,'description',description)
             })
             var nameval=name.split('=');
