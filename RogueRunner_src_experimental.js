@@ -1,5 +1,8 @@
 ---
 ---
+---
+---
+
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -915,8 +918,8 @@
                 if(err){
                     return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
                 }
-                debugger
-                cachePersonalArgs[path]=defaults.data||defaults; //TODO find out why defaults is returning an object instead of the defaults array
+                
+                cachePersonalArgs[path]=defaults;
 
                 window['RogueBM']['processTick']();
             });
@@ -1346,7 +1349,7 @@
         var args=[]
         for(var i=0,l=paramNames.length;i<l;i++){
            var key = paramNames[i];
-           args[i]=(kwargs[key]!==undefined)?kwargs[key]:defaults[i];
+           args[i]=kwargs[key]||defaults[i]||undefined;
         }
         return args
     }
@@ -1469,9 +1472,7 @@
                 if(Array.isArray(proc.args)){
                     var args=cacheDefaults.slice(); // proc.args
                     for(var i=0,l=args.length;i<l;i++){
-                        if(proc.args[i]!==undefined){
-                            args[i]=proc.args[i]
-                        }
+                        args[i]=proc.args[i]||args[i]||undefined;
                     }
                     returnValue=package.apply(package,args);
                 }else{
