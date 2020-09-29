@@ -1,5 +1,6 @@
 ---
 ---
+
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -1072,7 +1073,7 @@
         var args=[]
         for(var i=0,l=doc.length;i<l;i++){
             var type,name,description,value,optional;
-            doc.replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,t,n,d){
+            doc[i].replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,t,n,d){
                 type=type||t.trim();
                 name=name||n.trim();
                 description=description||d.trim();
@@ -1085,13 +1086,13 @@
             }
             
             if(name.charAt(0)=='[' && name.charAt(name.length-1)==']'){
-                optional=true
-                name=name.substring(1,name.length-1).trim()
+                optional=true;
+                name=name.substring(1,name.length-1).trim();
             }
 
             if(description.indexOf('=')>=0){
                 description=description.replace('=','');
-                optional=true
+                optional=true;
             }
             args.push(name);
             params.push({optional:optional,type:type,name:name,default:value,description:description});
