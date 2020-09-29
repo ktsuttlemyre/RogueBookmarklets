@@ -1338,6 +1338,7 @@
     }
 
     function argMap(paramNames, kwargs, defaults){
+        defaults=defaults||[];
         if(!paramNames){
             throw 'no array of paramNames to map';
             return;
