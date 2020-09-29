@@ -911,7 +911,7 @@
         //TODO make sure default arguments are taken from xdomain localstorage and presented to package
         var args=getArgumentDetails(scriptEntry).args;
         if(!cachePersonalArgs[path]){
-            RogueBM.getData(args,function(err,defaults){
+            RogueBM.getData(args,scriptEntry.name,function(err,defaults){
                 if(err){
                     return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
                 }
