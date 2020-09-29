@@ -1132,7 +1132,7 @@
     }
 
     function extendCrossOriginLocalStorage(CrossOriginLocalStorage){
-        CrossOriginLocalStorage.prototype.getData = function (key,namespace,handler) {
+        CrossOriginLocalStorage.prototype.getData = function (key, namespace, handler) {
             if(namespace && namespace.call){
                 handler=namespace;
                 namespace='';
@@ -1145,7 +1145,11 @@
             this.postMessage(messageData,handler);
         }
 
-        CrossOriginLocalStorage.prototype.setData = function(key, data, handler) {
+        CrossOriginLocalStorage.prototype.setData = function(key, data, namespace, handler) {
+            if(namespace && namespace.call){
+                handler=namespace;
+                namespace='';
+            }
             var messageData = {
                 key: key,
                 method: 'set',
@@ -1459,7 +1463,7 @@
                     RogueBM['processTick']();
                 }
                 kwargs.setData=function(key,data,callback){
-                    return RogueBM.setData(proc.scriptEntry.name+'.'+key,data,callback);
+                    return RogueBM.setData(key,data,proc.scriptEntry.name,callback);
                 }
                 kwargs.stdin=thread.stdout[thread.stdout.length-1]
 
