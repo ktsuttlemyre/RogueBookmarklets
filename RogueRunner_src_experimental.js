@@ -915,8 +915,8 @@
                 if(err){
                     return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
                 }
-                
-                cachePersonalArgs[path]=defaults;
+                debugger
+                cachePersonalArgs[path]=defaults.data||defaults; //TODO find out why defaults is returning an object instead of the defaults array
 
                 window['RogueBM']['processTick']();
             });
