@@ -1364,8 +1364,8 @@
             //using a thread getter so that we wont have a circular reference if I want to jsonify it later
             thread.callback&&thread.callback((thread.error&&{threadID:thread.threadID,error:thread.error,threadGetter:function(){return thread}}),thread.stdout[thread.stdout.length-1])
             inactiveThreads.push(thread);
-            activity[threadID]=null;
-            delete activity[threadID];
+            activity[thread.threadID]=null;
+            delete activity[thread.threadID];
 
             
             if(inactiveThreads.length>processHistoryMaxLength){
