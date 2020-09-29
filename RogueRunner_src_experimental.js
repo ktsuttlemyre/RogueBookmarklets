@@ -1067,7 +1067,7 @@
     function getArgumentDetails(scriptEntry){
         var doc=scriptEntry.params;
         if(typeof scriptEntry.params =='string'){
-            doc=doc.split('\n');
+            doc=doc.trim().split('\n');
         }
         var params=[];
         var args=[]
