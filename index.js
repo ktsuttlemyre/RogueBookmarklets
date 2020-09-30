@@ -1,6 +1,5 @@
 ---
 ---
-  //before list generation
 {%- capture NL -%}
 {%- endcapture -%}
 {%- assign keyword_filter = "next previous output content excerpt | extname url title basename dir | modified_time path name" -%}
