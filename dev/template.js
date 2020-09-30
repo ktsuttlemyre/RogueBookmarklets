@@ -16,6 +16,7 @@ originalsource: codepen.com/something/something
 ####### function signature #######
 specs: [async, textselect, stdin, stdout]
 layout: script
+data-privacy: [local-only, third-party, single-party]
 
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
