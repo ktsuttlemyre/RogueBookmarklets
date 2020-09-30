@@ -1,5 +1,11 @@
 ---
 ---
+{%- capture NL -%}
+{%- endcapture -%}
+{%- comment -%} Filter reason:           big data strings                 repetitive data            normalized content {%- endcomment -%}
+{%- assign keyword_filter = "next previous output content excerpt | extname url title basename dir | modified_time path name" -%}
+{%- assign counter = -1 -%}
+
 
 <head>
   <!--trigger github pages build-->
@@ -132,46 +138,80 @@ function getCommentBlock(text) {
     
     
   <h1 class="my-5">RogueBookmarklets </h1>
-  
-  
-  <div class="accordion" id="bookmarklets">
-    {% assign bookmarkletIndex = -1 %}
-    {% for marklet in site.static_files %}
-      {% assign path = marklet.path | split: "/" %}
-      {% if path[1] contains 'bookmarklets' or path[1] contains 'scripts' %}
-        {% assign bookmarkletIndex = bookmarkletIndex | plus:1 %}
-        
-        <div class="card my-1" id="bookmarklet_card{{ bookmarkletIndex }}">
-          <div class="card-header">
-            
-            <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ bookmarkletIndex }}" aria-controls="collapse{{ bookmarkletIndex }}" aria-expanded="false">
-              <h3 class="mb-0 float-left">
-                <a href="#" id="bookmarklet{{ bookmarkletIndex }}" class="btn btn-primary bookmark">{{ marklet.basename }}</a>
-              </h3>
-              <span class="float-right">
-                <span id="script_code_{{ marklet.basename | escape }}">
-                  <a title="{{ marklet.path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ marklet.path | escape }}"><i class="fas fa-code"></i></a>
-                </span> 
-                <span>
-                  <a title="{{ marklet.path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ marklet.path | escape }}"><i class="fas fa-edit"></i></a>
-                </span>
-                <span class='script_marklet_json'>
-                </span>
-              </span>
-            </button>
-          </div>
 
-          <div id="collapse{{ bookmarkletIndex }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
-            <div class="card-body">
-              <div class="description"></div>
+  
+  
+  {%- assign collection = "" | split: "" -%}
+  {%- for coll in site.collections -%}
+    {%- if coll.label == "scripts" -%}
+      {%- for script in coll.docs -%}
+      {%- assign collection = collection | push: script -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%} 
+  {% assign scripts = site.pages | concat: collection | concat: site.static_files | uniq %}
+    
+  <div class="accordion" id="bookmarklets">
+    {%- for script in scripts -%}
+      {%- assign path = script.url | default: script.path -%}
+      {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
+      {%- assign name = path | split: "/" | last | split: "."| first | slugify -%}
+      {%- assign modified_time = script.modified_time | default: script.date -%}
+      {%- if script.slug and script.tags and script.title and script.relative_path and script.categories -%}
+        {%- assign jekyll_type = "collection" -%}
+      {%- elsif script.extname and script.basename and script.modified_time -%}
+        {%- assign jekyll_type = "static" -%}
+      {%- elsif script.url and script.dir -%}
+        {%- assign jekyll_type = "page" -%}
+      {%- else -%}
+        {%- assign jekyll_type = "unidentified" -%}
+      {%- endif -%}  
+
+      {%- assign check = path | split: "/bookmarklets/"  -%}
+
+        {%- if check[0] == '' -%}
+          <div class="card my-1" id="bookmarklet_card{% increment counter %}">
+            <div class="card-header">
+
+              <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
+                <h3 class="mb-0 float-left">
+                  <a href="#" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark">{{ name }}</a>
+                </h3>
+                <span class="float-right">
+                  <span id="script_code_{{ name | escape }}">
+                    <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
+                  </span> 
+                  <span>
+                    <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
+                  </span>
+                  <span class='script_marklet_json'>
+                  </span>
+                </span>
+              </button>
+            </div>
+
+            <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
+              <div class="card-body">
+                <div class="description">
+                  "jekyll_type":"{{ jekyll_type }}",
+                  
+                  {% for entry in script -%}
+                    {%- if entry.first -%}
+                      {%- assign key = entry[0] -%}
+                      {%- assign value = entry[1] -%}
+                    {%- else -%}
+                      {%- assign key = entry -%}
+                      {%- assign value = script[entry] -%}
+                    {%- endif -%}
+                    {%- if keyword_filter contains key -%}
+                      {%- continue -%}
+                    {%- endif -%}
+                    {{ key | jsonify }}:{{ value | jsonify }},
+                  {% endfor %}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-       
-      
-      {% endif %}
-    {% endfor %}
-
   </div>
 
     
@@ -275,7 +315,8 @@ function download(filename, data) {
     
     
   //iterate
-   Object.keys(scripts).forEach(function(key){
+//    Object.keys(scripts).forEach(
+    function(key){
      var script = scripts[key]
      var index= script.index;
      var card=cards.find('#bookmarklet_card'+index)
