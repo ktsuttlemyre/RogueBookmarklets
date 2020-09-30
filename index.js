@@ -2,6 +2,7 @@
 ---
 {%- capture NL -%}
 {%- endcapture -%}
+{%- comment -%} Filter reason:           big data strings                 repetitive data            normalized content {%- endcomment -%}
 {%- assign keyword_filter = "next previous output content excerpt | extname url title basename dir | modified_time path name" -%}
 {%- assign counter = -1 -%}
 window.RogueBM=window.RogueBM||{};
@@ -12,10 +13,12 @@ window.RogueBM.about.scripts={
   "build_revision":"{{ site.github.build_revision }}",
   "version":"0.0.5"
 }
-window.RogueBM.scripts={
+
+ 
  /////////////////////////////////
  //  Pages / Collections / Static
  /////////////////////////////////
+window.RogueBM.scripts={
   {{ NL }}
   {%- assign collection = "" | split: "" -%}
   {%- for coll in site.collections -%}
