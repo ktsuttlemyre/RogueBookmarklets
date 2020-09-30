@@ -14,13 +14,13 @@ window.RogueBM.about.scripts={
 }
 
 {%- assign scripts = '' | split: '' -%}
-  {%- for script in site.pages -%}
-    {%- assign path = script.path | split: "/" -%}
-    {%- assign name = script.name | split: "." | first | escape  -%}
-      {%- if path[0] contains 'bookmarklets' -%}
-      {%- assign script.path =  "/" | append: script.path -%}
-      {%- assign scripts = scripts | push: script -%}
-   {% endif %}
+{%- for script in site.pages -%}
+  {%- assign path = script.path | split: "/" -%}
+  {%- assign name = script.name | split: "." | first | escape  -%}
+  {%- if path[0] contains 'bookmarklets' -%}
+    {%- assign script.path =  "/" | append: script.path -%}
+    {%- assign scripts = scripts | push: script -%}
+  {% endif %}
 {%- endfor -%}
  
  
