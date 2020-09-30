@@ -15,7 +15,7 @@ window.RogueBM.about.scripts={
 }
 window.RogueBM.scripts={
  /////////////////////////////////
- //       Pages
+ //  Pages / Collections / Static
  /////////////////////////////////
   {{ NL }}
   {%- assign collection = "" | split: "" -%}
@@ -72,59 +72,7 @@ window.RogueBM.scripts={
       {% endif %}
   {%- endfor -%}
   {{ NL }}
- /////////////////////////////////
- //       Collections
- /////////////////////////////////
-   {{ NL }}
-  {%- for coll in site.collections -%}
-    {%- if coll.label == "scripts" -%}
-    {%- for script in coll.docs -%}
-    {%- assign name = script.url | split: "/" | last | split: "."| first | downcase -%}
-     "{{ name | default: script.title }}":{
-        "name":"{{ name | default: script.title  }}",
-        "path":"{{ script.url }}",
-        "index":{% increment counter %},
-        "modified_time":"{{ script.modified_time | default: script.date }}",
-        "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{{ script.relative_path | url_escape }}",
-        //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
-        "jekyll_type":"collection",
-          {% for entry in script %}
-            {%- if "next previous output content excerpt |" contains entry -%}
-              {%- continue -%}
-            {%- endif -%}
-            "{{ entry }}":{{ script[entry] | jsonify }},
-          {% endfor %}
-      },
-    {%- endfor -%}
-    {%- endif -%}
-  {%- endfor -%}
- {{ NL }}
-   
-     {% comment %}
- /////////////////////////////////
- //       Static
- /////////////////////////////////
-  {{ NL }}
-  {%- for script in site.static_files -%}
-  {%- assign path = script.path | split: "/" -%}
-  {%- if path[1] contains 'bookmarklets' -%}
-   "{{ script.basename | escape }}":{
-      "name":"{{ script.basename }}",
-      "path":"{{ script.path }}",
-      "index":{% increment counter %},
-      "modified_time":"{{ script.modified_time | default: script.date }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
-      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
-      "jekyll_type":"static",
-          {% for entry in script %}
-            {%- if "next previous output content excerpt |" contains entry -%}
-              {%- continue -%}
-            {%- endif -%}
-            "{{ entry }}":{{ script[entry] | jsonify }},
-          {% endfor %}
-    },
-  {%- endif -%}
-  {%- endfor -%}
+
 
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
