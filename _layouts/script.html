@@ -5,6 +5,9 @@
 //Jekyll metadata
 build_revision<META>{{ site.github.build_revision }}<META>
 {%- for entry in page -%}
+  {%- if "next previous output content excerpt" contains entry -%}
+    {%- continue -%}
+  {%- endif -%}
   {{ entry | jsonify }}<META>{{ page[entry] | jsonify }}<META>
 {% endfor %}
 
@@ -73,6 +76,7 @@ TEMPLATE
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
     {%- endfor -%}
  *  
+{%- if page.specs and page.specs contains "async" -%}  *  @async{% endif %}
  *  @param {{ params | join: PARAM_NL }} 
  *  @returns {{ returns }}
  *
