@@ -75,7 +75,7 @@ TEMPLATE
 /**{{ COMMENT_NL }}{% for word in words %}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
-    {%- endfor -%}
+    {% endfor %}
  *  
 {%- if page.specs and page.specs contains "async" -%}  *  @async{% endif %}
  *  @param {{ params | join: PARAM_NL }} 
