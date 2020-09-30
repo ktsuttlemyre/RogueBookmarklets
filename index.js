@@ -21,8 +21,9 @@ window.RogueBM.scripts={
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = path | split: "/" | compact | join: "/" -%}
     {%- assign name = script.name | split: "." | first | escape  -%}
-      {%- if path contains "bookmarklets" -%}
+      {%- if path | split: "/bookmarklets" | first == blank -%}
        "{{ name }}":{
+                  test {{ path | split: "/bookmarklets" | first  }}
           "name":"{{ name }}",
           "path":"{{ path }}",
           "index":{% increment counter %},
