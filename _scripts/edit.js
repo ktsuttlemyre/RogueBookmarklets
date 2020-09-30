@@ -1,12 +1,9 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
-
-    you can use multiple lines. Its totally cool here
+    Puts the page into edit mode. Enables you to add/remove text, remove ads, remove images, or format the page as a parody 
 params: |
-    {string} element describe what you expect to see as input
-    {type} describe what you expect to see as input
+    {string} element - a query string to select specific objects to be editable. If undefined the current window document will be used
+    {boolean} on - toggle edit mode on or off
 returns: |
     {bool} The state that the document is in now
 authors: |
