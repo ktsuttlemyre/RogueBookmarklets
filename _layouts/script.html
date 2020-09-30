@@ -27,9 +27,9 @@ Predefined special characters
 {%- capture SPACE -%} {%- endcapture -%}
 {% capture NL %}
 {% endcapture %}
-{% assign COMMENT_NL = NL | append: " *  " %}
-{% assign PARAM_NL = COMMENT_NL | append: "@param " %}
-{% assign AUTHOR_NL = COMMENT_NL | append: "@author Contributor: " %}
+{%- assign COMMENT_NL = NL | append: " *  " -%}
+{%- assign PARAM_NL = COMMENT_NL | append: "@param " -%}
+{%- assign AUTHOR_NL = COMMENT_NL | append: "@author Contributor: " -%}
   
 {%- comment -%}
 END Predefined Special Charaters
