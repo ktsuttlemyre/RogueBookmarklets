@@ -22,6 +22,16 @@ window.RogueBM.scripts={
     {%- assign path = path | split: "/" | compact | join: "/" -%}
     {%- assign name = script.name | split: "." | first | slugify  -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
+    {%- if script.slug and script.tags and script.title and script.relative_path and script.categories and script.draft -%}
+      {%- assign jekyll_type = "collection" -%}
+    {%- else if script.extname and script.basename and script.modified_time -%}
+      {%- assign jekyll_type = "static" -%}
+    {%- else if script.url and script.dir -%}
+      {%- assign jekyll_type = "page" -%}
+    {%- else -%}
+      {%- assign jekyll_type = "unidentified" -%}
+    {%- endif -%}  
+        
     {%- assign check = path | split: "/bookmarklets/"  -%}
     
       {%- if check[0] == '' -%}
@@ -32,7 +42,7 @@ window.RogueBM.scripts={
           "modified_time":"{{ modified_time }}",
           "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | url_escape }}",
           //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
-          "jekyll_type":"page",
+          "jekyll_type":"{{ jekyll_type }}",
               {% for entry in script -%}
                 {%- if "next previous output content excerpt |" contains entry[0] -%}
                   {%- continue -%}
