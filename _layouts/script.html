@@ -2,14 +2,16 @@
 #layout: default
 ---
 {%- assign pageName = page.path | split: "/" | last | split: "." | first -%}
+{%- comment -%}
 //Jekyll metadata
 build_revision<META>{{ site.github.build_revision }}<META>
 {% for entry in page %}
   {%- if "next previous output content excerpt" contains entry -%}
     {%- continue -%}
   {%- endif -%}
-  {{ entry | jsonify }}<META>{{ page[entry] | jsonify }}<META>
+  {{ entry | inspect }}<META>{{ page[entry] | inspect }}<META>
 {% endfor %}
+{%- endcomment -%}
 
 {%- comment -%}
 Options 
