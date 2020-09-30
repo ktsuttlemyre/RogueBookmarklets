@@ -104,13 +104,13 @@ open = similar to window.open but will open modal, window,
           //var selection = (stdin!=null)?stdin:(getSelection.call(window)||'');
           var serverSecret='{{ site.github.build_revision }}'; //MAKE SURE THIS STATEMENT IS ENDED SO THAT ANY SELFCALLING CLOSURES DON'T GET MISTAKEN FOR A CALL SYNTAX
 
-       /**********************/
-       /      Guest Code      /
-       /**********************/
+       //**********************//
+       //      Guest Code      //
+       //**********************//
           {{ page.content }}
-       /**********************/
-       /    End Guest Code    /
-       /**********************/
+       //**********************//
+       //    End Guest Code    //
+       //**********************//
         };
     }
 
