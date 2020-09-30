@@ -19,7 +19,7 @@ window.RogueBM.scripts={
   {{ NL }}
   {%- for script in site.pages -%}
     {%- assign path =  script.path -%}
-    {%- assign path = path | split: "/" | compact | join: "/" -%}
+ 
     
     {{ path }}
     {%- assign name = script.name | split: "." | first | escape  -%}
