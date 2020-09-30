@@ -18,7 +18,7 @@ window.RogueBM.scripts={
  /////////////////////////////////
   {{ NL }}
   {%- for script in site.pages -%}
-    {%- assign path = script.url | default: '/' | append: script.path | replace "//", "/"-%} 
+    {%- assign path = script.url | default: '/' | append: script.path | replace: "//", "/"-%} 
     {%- assign name = script.name | split: "." | first | slugify  -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
     {%- if script.slug and script.tags and script.title and script.relative_path and script.categories and script.draft -%}
