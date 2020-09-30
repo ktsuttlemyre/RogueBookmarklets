@@ -17,7 +17,8 @@ window.RogueBM.scripts={
  //       Pages
  /////////////////////////////////
   {{ NL }}
-  {%- for script in site.pages -%}
+  {% assign scripts = site.pages | concat: site.static_files %}
+  {%- for script in scripts -%}
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
     {%- assign name = script.name | split: "." | first | slugify  -%}
@@ -84,6 +85,8 @@ window.RogueBM.scripts={
     {%- endif -%}
   {%- endfor -%}
  {{ NL }}
+   
+     {% comment %}
  /////////////////////////////////
  //       Static
  /////////////////////////////////
@@ -108,7 +111,7 @@ window.RogueBM.scripts={
     },
   {%- endif -%}
   {%- endfor -%}
-  {% comment %}
+
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
 //   "Google Translate [Afrikaans]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=af&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=af';wt=window.open(lw);if(window.focus){wt.focus()};})()",
