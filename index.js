@@ -18,8 +18,7 @@ window.RogueBM.scripts={
  /////////////////////////////////
   {{ NL }}
   {%- for script in site.pages -%}
-    {%- assign path = script.url | default: script.path -%}
-    {%- assign path = path | split: "/" | compact | join: "/" -%}
+    {%- assign path = script.path | split: "/" | compact | join: "/" -%}
     {%- assign name = script.name | split: "." | first | slugify  -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
     {%- if script.slug and script.tags and script.title and script.relative_path and script.categories and script.draft -%}
@@ -44,7 +43,7 @@ window.RogueBM.scripts={
           //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
           "jekyll_type":"{{ jekyll_type }}",
               {% for entry in script -%}
-                {%- if "next previous output content excerpt |" contains entry[0] -%}
+                {%- if "next previous output content excerpt |" contains entry[0] -%} //extname url title basename dir | modified_time path name
                   {%- continue -%}
                 {%- endif -%}
                 {%- if entry.first -%}
