@@ -72,7 +72,7 @@ window.RogueBM.scripts={
       {% endif %}
   {%- endfor -%}
   {{ NL }}
-
+   {%- comment -%}
 
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
