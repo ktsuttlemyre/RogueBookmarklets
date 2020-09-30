@@ -31,7 +31,7 @@ window.RogueBM.scripts={
   {%- for script in scripts -%}
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
-    {%- assign name = script.name | split: "." | first | slugify  -%}
+    {%- assign name = path | split: "/" | last | split: "."| first | slugify -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
     {%- if script.slug and script.tags and script.title and script.relative_path and script.categories -%}
       {%- assign jekyll_type = "collection" -%}
