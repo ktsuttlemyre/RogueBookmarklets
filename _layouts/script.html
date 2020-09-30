@@ -4,7 +4,7 @@
 {%- assign pageName = page.path | split: "/" | last | split: "." | first -%}
 //Jekyll metadata
 build_revision<META>{{ site.github.build_revision }}<META>
-{%- for entry in page -%}
+{% for entry in page %}
   {%- if "next previous output content excerpt" contains entry -%}
     {%- continue -%}
   {%- endif -%}
