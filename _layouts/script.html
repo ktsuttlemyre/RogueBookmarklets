@@ -73,7 +73,7 @@ Data preprocess
 TEMPLATE
 {%- endcomment -%}
 /**
- *{{ SPACE }}{{ SPACE }}
+ *{{ COMMENT_NL }}
     {% for word in words %}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
