@@ -18,28 +18,29 @@ window.RogueBM.scripts={
  /////////////////////////////////
   {{ NL }}
   {%- for script in site.pages -%}
-    {%- assign path = script.path | split: "/" -%}
+    {%- assign path = script.url | default: script.path -%}
+    {%- assign path = path | split: "/" | compact | join: "/" -%}
     {%- assign name = script.name | split: "." | first | escape  -%}
       {%- if path[0] == 'bookmarklets' -%}
-   "{{ name }}":{
-      "name":"{{ name }}",
-      "path":"/{{ script.path }}",
-      "index":{% increment counter %},
-      "modified_time":"{{ script.modified_time | default: script.date | default: "nan" }}",
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
-      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
-      "jekyll_type":"page",
-          {% for entry in script -%}
-            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
-              {%- continue -%}
-            {%- endif -%}
-            {%- if entry.first -%}
-              {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
-            {%- else -%}
-              {{ entry | jsonify }}:{{ script[entry] | jsonify }},
-            {%- endif %}
-          {% endfor %}
-    },
+       "{{ name }}":{
+          "name":"{{ name }}",
+          "path":"/{{ path }}",
+          "index":{% increment counter %},
+          "modified_time":"{{ script.modified_time | default: script.date | default: "nan" }}",
+          "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
+          //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
+          "jekyll_type":"page",
+              {% for entry in script -%}
+                {%- if "next previous output content excerpt | extname url  title basename dir | modified_time path name" contains entry[0] -%}
+                  {%- continue -%}
+                {%- endif -%}
+                {%- if entry.first -%}
+                  {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
+                {%- else -%}
+                  {{ entry | jsonify }}:{{ script[entry] | jsonify }},
+                {%- endif %}
+              {% endfor %}
+        },
       {% endif %}
   {%- endfor -%}
   {{ NL }}
@@ -60,7 +61,7 @@ window.RogueBM.scripts={
         //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ doc.url | url_escape }}",
         "jekyll_type":"collection",
           {% for entry in script %}
-            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
+            {%- if "next previous output content excerpt | extname url title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ script[entry] | jsonify }},
@@ -86,7 +87,7 @@ window.RogueBM.scripts={
       //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
       "jekyll_type":"static",
           {% for entry in script %}
-            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry -%}
+            {%- if "next previous output content excerpt | extname url title basename dir | modified_time path name" contains entry -%}
               {%- continue -%}
             {%- endif -%}
             "{{ entry }}":{{ script[entry] | jsonify }},
