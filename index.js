@@ -21,7 +21,7 @@ window.RogueBM.scripts={
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = path | split: "/" | compact | join: "/" -%}
     {%- assign name = script.name | split: "." | first | escape  -%}
-      {%- if path | split "/" | shift | first == 'bookmarklets' -%}
+      {%- if path contains 'bookmarklets' -%}
        "{{ name }}":{
          test {{path | split "/" | shift | first}}
           "name":"{{ name }}",
