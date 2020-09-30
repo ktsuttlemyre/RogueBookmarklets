@@ -33,7 +33,7 @@ window.RogueBM.scripts={
     {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
     {%- assign name = script.name | split: "." | first | slugify  -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
-    {%- if script.slug and script.tags and script.title and script.relative_path and script.categories and script.draft -%}
+    {%- if script.slug and script.tags and script.title and script.relative_path and script.categories -%}
       {%- assign jekyll_type = "collection" -%}
     {%- elsif script.extname and script.basename and script.modified_time -%}
       {%- assign jekyll_type = "static" -%}
