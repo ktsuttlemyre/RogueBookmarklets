@@ -17,7 +17,17 @@ window.RogueBM.scripts={
  //       Pages
  /////////////////////////////////
   {{ NL }}
-  {% assign scripts = site.pages | concat: site.static_files %}
+  {%- assign collection = "" | split: "" -%}
+  {%- for coll in site.collections -%}
+    {%- if coll.label == "scripts" -%}
+      {%- for script in coll.docs -%}
+      {%- assign collection = collection | push: script -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%} 
+ 
+ 
+  {% assign scripts = site.pages | concat: collection | concat: site.static_files %}
   {%- for script in scripts -%}
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
