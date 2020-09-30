@@ -23,7 +23,8 @@ Options
 END OPTIONS
 Predefined special characters 
 {%- endcomment -%}
-  
+
+{%- capture SPACE -%} {%- endcapture -%}
 {% capture NL %}
 {% endcapture %}
 {% assign COMMENT_NL = NL | append: " *  " %}
