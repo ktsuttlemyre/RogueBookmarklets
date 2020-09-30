@@ -195,7 +195,7 @@ function getCommentBlock(text) {
               <div class="card-body">
                 <div class="description">
                   "jekyll_type":"{{ jekyll_type }}",
-                  
+                  <ul>
                   {% for entry in script -%}
                     {%- if entry.first -%}
                       {%- assign key = entry[0] -%}
@@ -207,8 +207,9 @@ function getCommentBlock(text) {
                     {%- if keyword_filter contains key -%}
                       {%- continue -%}
                     {%- endif -%}
-                    {{ key | jsonify }}:{{ value | jsonify }},
+                    <li>{{ key }}:{{ value }}</li>
                   {% endfor %}
+                  </ul>
                 </div>
               </div>
             </div>
