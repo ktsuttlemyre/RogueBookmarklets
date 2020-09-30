@@ -33,7 +33,7 @@ window.RogueBM.scripts={
             {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time path name" contains entry[0] -%}
               {%- continue -%}
             {%- endif -%}
-            {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
+            {{ entry | jsonify }}:{{ script[entry] | jsonify }},
           {% endfor %}
     },
       {% endif %}
