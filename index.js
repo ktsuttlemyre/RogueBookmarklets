@@ -3,6 +3,7 @@
   //before list generation
 {%- capture NL -%}
 {%- endcapture -%}
+{%- assign keyword_filter = "next previous output content excerpt | extname url title basename dir | modified_time path name" -%}
 {%- assign counter = -1 -%}
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
@@ -62,7 +63,7 @@ window.RogueBM.scripts={
                   {%- assign key = entry -%}
                   {%- assign value = script[entry] -%}
                 {%- endif -%}
-                {%- if "next previous output content excerpt |" contains key -%} //extname url title basename dir | modified_time path name
+                {%- if keyword_filter contains key -%}
                   {%- continue -%}
                 {%- endif -%}
                 {{ key | jsonify }}:{{ value | jsonify }},
