@@ -55,14 +55,17 @@ window.RogueBM.scripts={
           //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
           "jekyll_type":"{{ jekyll_type }}",
               {% for entry in script -%}
-                {%- if "next previous output content excerpt |" contains entry[0] -%} //extname url title basename dir | modified_time path name
+                {%- if entry.first -%}
+                  {%- assign key = entry[0] -%}
+                  {%- assign value = entry[1] -%}
+                {%- else -%}
+                  {%- assign key = entry -%}
+                  {%- assign value = script[entry] -%}
+                {%- endif -%}
+                {%- if "next previous output content excerpt |" contains key -%} //extname url title basename dir | modified_time path name
                   {%- continue -%}
                 {%- endif -%}
-                {%- if entry.first -%}
-                  {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
-                {%- else -%}
-                  {{ entry | jsonify }}:{{ script[entry] | jsonify }},
-                {%- endif %}
+                {{ key | jsonify }}:{{ value | jsonify }},
               {% endfor %}
         },
       {% endif %}
