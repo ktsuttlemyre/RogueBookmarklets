@@ -24,9 +24,9 @@ window.RogueBM.scripts={
     {%- assign modified_time = script.modified_time | default: script.date -%}
     {%- if script.slug and script.tags and script.title and script.relative_path and script.categories and script.draft -%}
       {%- assign jekyll_type = "collection" -%}
-    {%- elseif script.extname and script.basename and script.modified_time -%}
+    {%- elsif script.extname and script.basename and script.modified_time -%}
       {%- assign jekyll_type = "static" -%}
-    {%- elseif script.url and script.dir -%}
+    {%- elsif script.url and script.dir -%}
       {%- assign jekyll_type = "page" -%}
     {%- else -%}
       {%- assign jekyll_type = "unidentified" -%}
