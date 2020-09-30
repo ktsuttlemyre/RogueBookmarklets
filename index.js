@@ -25,7 +25,7 @@ window.RogueBM.scripts={
       "name":"{{ name }}",
       "path":"/{{ script.path }}",
       "index":{% increment counter %},
-      "modified_time":"{{ script.modified_time | default: script.date }}",
+      "modified_time":"{{ script.modified_time | default: script.date | default: "nan" }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
       //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
       "jekyll_type":"page",
