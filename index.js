@@ -12,44 +12,6 @@ window.RogueBM.about.scripts={
   "build_revision":"{{ site.github.build_revision }}",
   "version":"0.0.5"
 }
-
-{%- assign scripts = '' | split: '' -%}
-{%- for script in site.pages -%}
-  {%- assign path = script.path | split: "/" -%}
-  {%- if path[0] contains 'bookmarklets' -%}
-    {%- assign script.name = script.name | split: "." | first | escape  -%}
-    {%- assign script.path =  "/" | append: script.path -%}
-    {%- assign script.modified_time = script.modified_time | default: script.date -%}
-    
-    {%- assign scripts = scripts | push: script -%}
-  {% endif %}
-{%- endfor -%}
- 
- 
-
-////////OUTPUT////////
-  {%- for script in scripts -%}
-   "{{ script.name }}":{
-      "name":"{{ name }}",
-      "path":"{{ script.path }}",
-      "index":{% increment counter %},
-      "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
-      //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
-      "jekyll_type":"page",
-          {% for entry in script -%}
-            {%- if "next previous output content excerpt | extname url id slug title basename dir | modified_time" contains entry[0] -%}
-              {%- continue -%}
-            {%- endif -%}
-            {%- if entry.first -%}
-              {{ entry[0] | jsonify }}:{{ entry[1] | jsonify }},
-            {%- else -%}
-              {{ entry | jsonify }}:{{ script[entry] | jsonify }},
-            {%- endif %}
-          {% endfor %}
-    },
-  {%- endfor -%}
-
- 
 window.RogueBM.scripts={
  /////////////////////////////////
  //       Pages
@@ -132,7 +94,6 @@ window.RogueBM.scripts={
     },
   {%- endif -%}
   {%- endfor -%}
-
   {% comment %}
 //   //http://7is7.com/software/bookmarklets/translate.html
 //   "GoogleunTranslate": "(function(){l=location.href;if(l.indexOf('translate')){location.href=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};})()",
@@ -242,20 +203,14 @@ window.RogueBM.scripts={
 //   "Google Translate [IsiZulu]": "(function(){l=location.href;if(l.indexOf('translate')>=0){l=decodeURIComponent(l.replace(/^.*[&?](trurl|url|u)=/,'').replace(/[&?].*$/,''))};s=document.selection?document.selection.createRange().text:window.getSelection?window.getSelection().toString():document.getSelection?document.getSelection():'';lw=(s=='')?'http://translate.google.com/translate?u='+encodeURIComponent(l)+'&sl=auto&tl=zu&anno=0':'http://translate.google.com/translate_t?text='+s+'&sl=auto&tl=zu';wt=window.open(lw);if(window.focus){wt.focus()};})()",
   {% endcomment %}
    //TODO link bookmarks https://www.squarefree.com/bookmarklets/pagelinks.html
-
   //https://www.online-tech-tips.com/cool-websites/the-12-best-bookmarklets-every-browser-should-have/
   "bugmenot":"(function() { var url = ('http://www.bugmenot.com/view/' + escape(location.hostname)); w = open(url, 'w', 'location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=500,height=400,modal=yes,dependent=yes'); if (w) { setTimeout('w.focus()', 1000) } else { location = url } })();",
-
-
   "instantgram": {"Author":"theus",
   "website":"https://theus.github.io/instantgram/",
   "src":"https://cdn.jsdelivr.net/gh/theus/instantgram/dist/main.js",
   }
-
 //https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
-
 }
-
 RogueBM.scriptCDNs={
   "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{path}",
   "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
@@ -284,8 +239,6 @@ RogueBM.scriptCDNs={
   RogueBM.stringFormat=format("\\{","\\}")
   RogueBM.stringHandlebarFormat=format("\\{\\{","\\}\\}")
 })();
-
-
    
    
 // //jsonp callback
