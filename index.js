@@ -16,9 +16,11 @@ window.RogueBM.about.scripts={
 {%- assign scripts = '' | split: '' -%}
 {%- for script in site.pages -%}
   {%- assign path = script.path | split: "/" -%}
-  {%- assign name = script.name | split: "." | first | escape  -%}
   {%- if path[0] contains 'bookmarklets' -%}
+    {%- assign script.name = script.name | split: "." | first | escape  -%}
     {%- assign script.path =  "/" | append: script.path -%}
+    {%- assign script.modified_time = script.modified_time | default: script.date -%}
+    
     {%- assign scripts = scripts | push: script -%}
   {% endif %}
 {%- endfor -%}
@@ -27,11 +29,10 @@ window.RogueBM.about.scripts={
 
 ////////OUTPUT////////
   {%- for script in scripts -%}
-   "{{ name }}":{
+   "{{ script.name }}":{
       "name":"{{ name }}",
-      "path":"/{{ script.path }}",
+      "path":"{{ script.path }}",
       "index":{% increment counter %},
-      "modified_time":"{{ script.modified_time | default: script.date }}",
       "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
       //"src":"https://ktsuttlemyre.github.io/RogueBookmarklets{{ script.path | url_escape }}",
       "jekyll_type":"page",
