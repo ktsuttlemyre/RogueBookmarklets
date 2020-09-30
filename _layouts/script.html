@@ -57,7 +57,7 @@ Data preprocess
 {%- if page.returns.first -%}
   {%- assign returns = page.returns | join: " " -%}
 {%- else -%}
- {%- assign returns = page.returns | split: NL | join: COMMENT_NL -%} 
+ {%- assign returns = page.returns | strip | split: NL | join: COMMENT_NL -%} 
 {%- endif -%}
 
 {%- if page.authors.first -%}
