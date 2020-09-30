@@ -23,7 +23,7 @@ window.RogueBM.scripts={
     {{ path }}
     {%- assign name = script.name | split: "." | first | escape  -%}
     {%- assign check = path | split: "/bookmarklets/"  -%}
-      {%- if check[0] == blank -%}
+      {%- if check[0] == '' -%}
        "{{ name }}":{
                   test {{ check | first  }}
          test {{ check.first  }}
