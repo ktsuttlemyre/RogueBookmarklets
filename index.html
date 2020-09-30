@@ -316,7 +316,7 @@ function download(filename, data) {
     
   //iterate
 //    Object.keys(scripts).forEach(
-    function(key){
+    (function(key){
      var script = scripts[key]
      var index= script.index;
      var card=cards.find('#bookmarklet_card'+index)
