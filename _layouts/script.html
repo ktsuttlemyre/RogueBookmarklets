@@ -74,7 +74,7 @@ TEMPLATE
 {%- endcomment -%}
 /**
  *{{ SPACE }}{{ SPACE }}
-    {%- for word in words -%}
+    {% for word in words %}
       {%- assign remainder = forloop.index | modulo: desciptionWordWrapLength -%}
       {%- if remainder == 0 -%}{{ COMMENT_NL }}{%- endif -%}{{ word | append: " " }}
     {%- endfor -%}
@@ -97,7 +97,9 @@ selection = if there was text selected it is now accessable via this variable
 open = similar to window.open but will open modal, window, 
 {%- endcomment -%}
 
-
+{{ NL }}
+{{ NL }}
+{{ NL }}
 (function container(window,document,location,alert,prompt,confirm,open,RogueBM,undefined){
   
   
