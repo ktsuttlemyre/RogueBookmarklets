@@ -170,7 +170,8 @@ function getCommentBlock(text) {
       {%- assign check = path | split: "/bookmarklets/"  -%}
 
         {%- if check[0] == '' -%}
-          <div class="card my-1" id="bookmarklet_card{% increment counter %}">
+        {%- assign counter = counter | plus: 1 -%}
+          <div class="card my-1" id="bookmarklet_card{{ counter }}">
             <div class="card-header">
 
               <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
