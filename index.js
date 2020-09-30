@@ -23,8 +23,9 @@ window.RogueBM.scripts={
     {%- assign name = script.name | split: "." | first | escape  -%}
       {%- if path | split "/" | shift | first == 'bookmarklets' -%}
        "{{ name }}":{
+         test {{path | split "/" | shift | first}}
           "name":"{{ name }}",
-          "path":"/{{ path }}",
+          "path":"{{ path }}",
           "index":{% increment counter %},
           "modified_time":"{{ script.modified_time | default: script.date | default: "nan" }}",
           "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ script.path | url_escape }}",
