@@ -1,5 +1,6 @@
 ---
 ---
+  //before list generation
 {%- capture NL -%}
 {%- endcapture -%}
 {%- assign counter = -1 -%}
