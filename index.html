@@ -216,11 +216,13 @@ function getCommentBlock(text) {
                       </ul>
                       <ul class="pr-2" style="background:white; border-radius: .3rem;">
                         <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
-                        <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
                       </ul>
                     </div> <!-- end 2nd col -->
-                  </div> <!-- end row jumbotron -->  
-                </div> <!-- end container-->
+                  </div> <!-- end row -->  
+                  <div class="row">
+                    <div class="col pr-2" style="background:white; border-radius: .3rem;">Originalsource: {{ script.originalsource }}</div>
+                  </div> <!-- end 2nd row -->
+                </div> <!-- end container jumbotron-->
               </div> 
             </div>
           </div>
