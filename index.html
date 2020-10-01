@@ -195,8 +195,8 @@ function getCommentBlock(text) {
 
         {%- if check[0] == '' -%}
           {%- assign counter = counter | plus: 1 -%}
-          {% assign words = name | split: '-' %}
-          {% capture titlecase %}{% for word in words %}{{ word | capitalize }} {% endfor %}{% endcapture %}
+          {%- assign words = name | split: '-' -%}
+          {%- capture titlecase -%}{% for word in words %}{{ word | capitalize }} {% endfor %}{%- endcapture -%}
           <div class="card my-1" id="bookmarklet_card{{ counter }}">
             <div class="card-header">
 
