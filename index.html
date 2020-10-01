@@ -202,7 +202,7 @@ function getCommentBlock(text) {
 
               <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                 <h3 class="mb-0 float-left">
-                  <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+                  <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
                 </h3>
                 <span class="float-right">
                   <span id="script_code_{{ name | escape }}">
