@@ -226,11 +226,13 @@ function getCommentBlock(text) {
                     </div> <!-- end 1st col -->
                     <div class="col">
                       <ul rel="Specs" class="group pr-2" >
-                        <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
-                        <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
+                        <li>{{ script.specs }}</li>
+                      </ul>
+                      <ul rel="Libraries" class="group pr-2" >
+                        <li>{{ script.libraries }}</li>
                       </ul>
                       <ul rel="Privacy" class="group pr-2" >
-                        <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
+                        <li>{{ script.data-privacy }}</li>
                       </ul>
                       <ul rel="Authors" class="group pr-2" >
                         <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
