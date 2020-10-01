@@ -25,8 +25,8 @@
   <style>
     ul { list-style:none; padding-left:1em; background:white; border-radius: .3rem; position:relative}
     
-    ul:before {
-      font-size: .5rem;
+    group:before {
+      font-size: .75rem;
       content: attr(rel);
       position: absolute;
       top: -.2rem;
@@ -218,20 +218,20 @@ function getCommentBlock(text) {
                 <div class="container jumbotron py-3">
                   <div class="row">
                     <div class="col">
-                       <ul rel="Signature" class="pr-2" >
+                       <ul rel="Signature" class="group pr-2" >
                           <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
                           <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
                        </ul>
                     </div> <!-- end 1st col -->
                     <div class="col">
-                      <ul rel="Specs" class="pr-2" >
+                      <ul rel="Specs" class="group pr-2" >
                         <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
                         <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
                       </ul>
-                      <ul rel="Privacy" class="pr-2" >
+                      <ul rel="Privacy" class="group pr-2" >
                         <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
                       </ul>
-                      <ul rel="Authors" class="pr-2" >
+                      <ul rel="Authors" class="group pr-2" >
                         <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
                       </ul>
                     </div> <!-- end 2nd col -->
