@@ -198,27 +198,29 @@ function getCommentBlock(text) {
                 <div class="description">
                   <div class="lead mx-5 mb-4">{{ script.description }}</div>
                 </div>
-                <div class="row jumbotron py-3 mx-5">
-                  <div class="col">
-                     <ul class="pr-2" style="background:white; border-radius: .3rem;">
-                        <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
+                <div class="container">
+                  <div class="row jumbotron py-3 mx-5">
+                    <div class="col">
+                       <ul class="pr-2" style="background:white; border-radius: .3rem;">
+                          <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
 
-                        <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
-                        <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
-                        <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
-                     </ul>
-                  </div>
-                  <div class="col">
-                    <ul class="pr-2" style="background:white; border-radius: .3rem;">
-                      <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
-                    </ul>
-                    <ul class="pr-2" style="background:white; border-radius: .3rem;">
-                      <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
-                      <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
-                    </ul>
-                  </div>
-                </div>            
-              </div>
+                          <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
+                          <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
+                          <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
+                       </ul>
+                    </div> <!-- end 1st col -->
+                    <div class="col">
+                      <ul class="pr-2" style="background:white; border-radius: .3rem;">
+                        <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
+                      </ul>
+                      <ul class="pr-2" style="background:white; border-radius: .3rem;">
+                        <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
+                        <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
+                      </ul>
+                    </div> <!-- end 2nd col -->
+                  </div> <!-- end row jumbotron -->  
+                </div> <!-- end container-->
+              </div> 
             </div>
           </div>
         {%- endif -%}
