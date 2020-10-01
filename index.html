@@ -193,18 +193,20 @@ function getCommentBlock(text) {
 
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body">
-                <div class="description container">
-                  {{ script.description }}
-                  <hr>
-                  <ul>
-                    <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
-                    <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
-                    <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
-                    <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
-                    <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
-                    <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
-                    <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
-                  </ul>
+                <div class="description jumbotron">
+                  <p class="lead">{{ script.description }}</p>
+                  <hr class="my-4">
+                  <p>
+                     <ul>
+                        <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
+                        <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
+                        <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
+                        <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
+                        <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
+                        <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
+                        <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
+                     </ul>
+                  </p>
                 </div>
               </div>
             </div>
@@ -213,6 +215,11 @@ function getCommentBlock(text) {
     {%- endfor -%}
   </div>
    
+    
+
+    
+    
+    
     
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
