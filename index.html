@@ -196,7 +196,7 @@ function getCommentBlock(text) {
 
               <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                 <h3 class="mb-0 float-left">
-                  <a href="#" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark">{{ name }}</a>
+                  <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark">{{ name }}</a>
                 </h3>
                 <span class="float-right">
                   <span id="script_code_{{ name | escape }}">
@@ -220,24 +220,24 @@ function getCommentBlock(text) {
                   <div class="row">
                     <div class="col">
                        <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.params }}</li>
+                          <li>{{ script.params | default: "&nbsp;"}}</li>
                       </ul>
                       <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.returns }}</li>
+                          <li>{{ script.returnsn | default: "&nbsp;" }}</li>
                        </ul>
                     </div> <!-- end 1st col -->
                     <div class="col">
                       <ul rel="Specs" class="group pr-2" >
-                        <li>{{ script.specs | default: "None" }}</li>
+                        <li>{{ script.specs | default: "&nbsp;" }}</li>
                       </ul>
                       <ul rel="Libraries" class="group pr-2" >
-                        <li>{{ script.libraries | default: "None" }}</li>
+                        <li>{{ script.libraries | default: "&nbsp;" }}</li>
                       </ul>
                       <ul rel="Privacy" class="group pr-2" >
-                        <li>{{ script.data-privacy | default: "None" }}</li>
+                        <li>{{ script.data-privacy | default: "Undetermined" }}</li>
                       </ul>
                       <ul rel="Authors" class="group pr-2" >
-                        <li>{{ script.authors | default: "None" }}</li>
+                        <li>{{ script.authors | default: "Unknown" }}</li>
                       </ul>
                     </div> <!-- end 2nd col -->
                   </div> <!-- end row -->  
