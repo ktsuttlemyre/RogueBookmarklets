@@ -196,19 +196,15 @@ function getCommentBlock(text) {
                 <div class="description">
                   "jekyll_type":"{{ jekyll_type }}",
                   <ul>
-                  {% for entry in script -%}
-                    {%- if entry.first -%}
-                      {%- assign key = entry[0] -%}
-                      {%- assign value = entry[1] -%}
-                    {%- else -%}
-                      {%- assign key = entry -%}
-                      {%- assign value = script[entry] -%}
-                    {%- endif -%}
-                    {%- if keyword_filter contains key -%}
-                      {%- continue -%}
-                    {%- endif -%}
-                    <li>{{ key }}:{{ value }}</li>
-                  {% endfor %}
+                    <li>Description:{{ script.description }}</li>
+                    <li>Authors:{{ script.authors }}</li>
+                    <li>Originalsource:{{ script.originalsource }}</li>
+                    <li>Specs:{{ script.specs }}</li>
+                    <li>Data-privacy:{{ script.data-privacy }}</li>
+                    <li>Libraries:{{ script.libraries }}</li>
+                    <li>Params:{{ script.params }}</li>
+                    <li>Returns:{{ script.params }}</li>
+                    
                   </ul>
                 </div>
               </div>
@@ -217,7 +213,7 @@ function getCommentBlock(text) {
         {%- endif -%}
     {%- endfor -%}
   </div>
-
+   
     
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
