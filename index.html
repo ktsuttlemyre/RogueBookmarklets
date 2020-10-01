@@ -226,30 +226,30 @@ function getCommentBlock(text) {
                   <div class="row">
                     <div class="col">
                        <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.params | default: "&nbsp; | strip_html "}}</li>
+                          <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
                       </ul>
                       <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.returnsn | default: "&nbsp;" | strip_html }}</li>
+                          <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
                        </ul>
                     </div> <!-- end 1st col -->
                     <div class="col">
                       <ul rel="Specs" class="group pr-2" >
-                        <li>{{ script.specs | default: "&nbsp;" | strip_html }}</li>
+                        <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
                       </ul>
                       <ul rel="Libraries" class="group pr-2" >
-                        <li>{{ script.libraries | default: "&nbsp;" | strip_html }}</li>
+                        <li>{{ script.libraries | default: "&nbsp;" | strip_html | markdownify}}</li>
                       </ul>
                       <ul rel="Privacy" class="group pr-2" >
-                        <li>{{ script.data-privacy | default: "Undetermined" | strip_html }}</li>
+                        <li>{{ script.data-privacy | default: "Undetermined" | strip_html | markdownify}}</li>
                       </ul>
                       <ul rel="Authors" class="group pr-2" >
-                        <li>{{ script.authors | default: "Unknown" | strip_html }}</li>
+                        <li>{{ script.authors | default: "Unknown" | strip_html | markdownify}}</li>
                       </ul>
                     </div> <!-- end 2nd col -->
                   </div> <!-- end row -->  
                   <div class="row">
                     <div class="col">
-                      <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html }}</div>
+                      <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
                     </div>
                   </div> <!-- end 2nd row -->
                 </div> <!-- end container jumbotron-->
