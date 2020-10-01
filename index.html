@@ -194,15 +194,15 @@ function getCommentBlock(text) {
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body">
                 <div class="description">
+                  {{ script.description }}
                   <ul>
-                    <li>Description: {{ script.description }}</li>
-                    <li>Authors: {{ script.authors }}</li>
-                    <li>Originalsource: {{ script.originalsource }}</li>
-                    <li>Specs: {{ script.specs }}</li>
-                    <li>Data-privacy: {{ script.data-privacy }}</li>
-                    <li>Libraries: {{ script.libraries }}</li>
-                    <li>Params: {{ script.params }}</li>
-                    <li>Returns: {{ script.params }}</li>
+                    <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
+                    <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
+                    <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
+                    <li>Data-privacy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
+                    <li>Libraries:<ul style="list-style: none;"><li>{{ script.libraries }}</li></ul></li>
+                    <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
+                    <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
                   </ul>
                 </div>
               </div>
