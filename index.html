@@ -195,17 +195,9 @@ function getCommentBlock(text) {
               <div class="card-body">
                 <div class="description jumbotron py-2">
                   <div class="lead">{{ script.description }}</div>
-                  <hr class="my-4">
-                  <ul class="float-right">
-                    <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
-                    <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
-                  </ul>
                 </div>
-                   <p>
-                     <hr class="my-4">
-                     <ul>
-                         <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
-                     </ul>
+                <div class="row">
+                  <div class="col">
                      <ul>
                         <li>Specs:<ul style="list-style: none;"><li>{{ script.specs }}</li></ul></li>
 
@@ -213,7 +205,17 @@ function getCommentBlock(text) {
                         <li>Params:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
                         <li>Returns:<ul style="list-style: none;"><li>{{ script.params }}</li></ul></li>
                      </ul>
-                  </p>
+                  </div>
+                  <div class="col">
+                    <ul>
+                      <li>Privacy Policy:<ul style="list-style: none;"><li>{{ script.data-privacy }}</li></ul></li>
+                    </ul>
+                    <ul>
+                      <li>Authors:<ul style="list-style: none;"><li>{{ script.authors }}</li></ul></li>
+                      <li>Originalsource:<ul style="list-style: none;"><li>{{ script.originalsource }}</li></ul></li>
+                    </ul>
+                  </div>
+                </div>            
               </div>
             </div>
           </div>
