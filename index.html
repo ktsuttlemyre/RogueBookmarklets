@@ -239,7 +239,7 @@ function getCommentBlock(text) {
   </li>
 </ul>
 
-<a style="position:absolute; top:1em;right1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+<a style="position:absolute; top:1em;right:1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
 
     
 <div class="tab-content" id="tabContent-{{ counter }}">
