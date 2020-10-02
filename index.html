@@ -144,7 +144,7 @@ function getCommentBlock(text) {
       <div class="card-body">
        
         <p class="card-text">The RogueRunner is a interactive input that helps find and run RogueBookmarklets right in the browser.</p><p class="card-text">You can run it right here on this page by clicking below!</p>
-        <a href="#" class="btn btn-primary" onclick="injectRogueRunner()"><i class="fas fa-play-circle"></i> RogueRunner</a>
+        <a href="#" class="btn btn-light" onclick="injectRogueRunner()"><i class="fas fa-play-circle"></i> RogueRunner</a>
       </div>
     </div>
   </div>
@@ -221,7 +221,7 @@ function getCommentBlock(text) {
               <div class="card-body">
                   
                   
-<div>
+<div class="navbar-collapse">
 <ul class="nav nav-pills mb-3 mr-auto" id="pills-tab-{{ counter }}" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-desciption-tab-{{ counter }}" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption-{{ counter }}" aria-selected="true">Desciption</a>
@@ -357,7 +357,7 @@ function download(filename, data) {
     async: true,
     dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
     success: function (data){
-      $('#roguerunner_bookmarklet').attr('href','javascript:'+data).addClass('btn-primary').text('RogueRunner').on('click', function(ev){
+      $('#roguerunner_bookmarklet').attr('href','javascript:'+data).addClass('btn-info').text('RogueRunner').on('click', function(ev){
         ev.preventDefault();
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
         return false;
