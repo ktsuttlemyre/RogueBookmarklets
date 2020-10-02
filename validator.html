@@ -131,13 +131,32 @@ Object.keys(RogueBM.scripts).forEach(function(key){
    Object.keys(scriptEntry).forEach(function(key){
     var li=createElement('li',null,root);
     createElement('span',{className:'node-key','text':key},li);  
-    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>'},li);
+    createElement('span',{className:'node-type-valid',innerHTML:'type:'+test(scriptEntry[key],template[key])},li);
+    createElement('span',{className:'node-raw-value',style:'display:none','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>'},li);
    })
    
    
    
    
 })
+    
+    
+    function test(scriptEntry,template){
+        if(template['type']=='array){
+           if(Array.isArray(scriptEntry)){
+                return '<span class="badge badge-success">Success</span>';
+            }else{
+                return '<span class="badge badge-danger">Danger</span>'
+            }
+        }
+        if(typeof scriptEntry == template['type']){
+            return '<span class="badge badge-success">Success</span>';
+        }else{
+            return '<span class="badge badge-danger">Danger</span>'
+        }
+        //return '<span class="badge badge-warning">Warning</span>'
+    }
+        
 
 </script>
 
