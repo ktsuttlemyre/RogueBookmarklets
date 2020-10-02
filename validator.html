@@ -80,12 +80,13 @@ function getCommentBlock(text) {
             element=document.createElement(element);
         }
        
-        if(attrs['text']){
-            element.appendChild(document.createTextNode(attrs['text']));
-            attrs['text']=null;
-            delete attrs['text'];
-        }
         if(attrs){
+            if(attrs['text']){
+                element.appendChild(document.createTextNode(attrs['text']));
+                attrs['text']=null;
+                delete attrs['text'];
+            }
+
             var keys=Object.keys(attrs);
             for(var i=0,l=keys.length;i<l;i++) { //iter options
                 if(setAttributesFor.indexOf(keys[i])>=0){
