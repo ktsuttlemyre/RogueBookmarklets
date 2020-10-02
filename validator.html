@@ -102,7 +102,7 @@ function getCommentBlock(text) {
 Object.keys(RogueBM.scripts).forEach(function(key){
    var scriptEntry=RogueBM.scripts[key];
    var node=createElement('div',{className:'node'},document.body)
-   node.innerHTML='<p>'+JSON.stringify(scriptEntry)+'</p>'
+   node.innerHTML='<pre>'+JSON.stringify(scriptEntry)+'</pre>'
 })
 
 </script>
