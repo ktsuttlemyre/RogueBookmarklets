@@ -109,13 +109,13 @@ function getCommentBlock(text) {
 
 Object.keys(RogueBM.scripts).forEach(function(key){
    var scriptEntry=RogueBM.scripts[key];
-   var root=createElement('div',{className:'root'},document.body)
+   var root=createElement('ul',{className:'root'},document.body)
    
    
    Object.keys(scriptEntry).forEach(function(key){
-    createElement('span',{className:'node-key','text':key},root);  
-    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>},root);
-    createElement('br',null,root);
+    var li=createElement('li',null,root);
+    createElement('span',{className:'node-key','text':key},li);  
+    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>},li);
    })
    
    
