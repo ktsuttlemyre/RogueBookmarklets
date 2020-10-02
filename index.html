@@ -222,21 +222,21 @@ function getCommentBlock(text) {
                   
                   
 <div class="navbar-collapse">
-<ul class="nav nav-pills mb-3 mr-auto" id="pills-tab-{{ counter }}" role="tablist">
+<ul class="nav nav-tabs mb-3 mr-auto" id="tab-{{ counter }}" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="pills-desciption-tab-{{ counter }}" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption-{{ counter }}" aria-selected="true">Desciption</a>
+    <a class="nav-link active" id="desciption-tab-{{ counter }}" data-toggle="pill" href="#desciption-tab-{{ counter }}" role="tab" aria-controls="desciption-{{ counter }}" aria-selected="true">Desciption</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-about-tab-{{ counter }}" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about-{{ counter }}" aria-selected="false">About</a>
+    <a class="nav-link" id="about-tab-{{ counter }}" data-toggle="pill" href="#pills-about" role="tab" aria-controls="about-{{ counter }}" aria-selected="false">About</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-syntax-tab-{{ counter }}" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="pills-syntax-{{ counter }}" aria-selected="false">Syntax</a>
+    <a class="nav-link" id="syntax-tab-{{ counter }}" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="syntax-{{ counter }}" aria-selected="false">Syntax</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-demo-tab-{{ counter }}" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="pills-demo-{{ counter }}" aria-selected="false">Demo</a>
+    <a class="nav-link" id="demo-tab-{{ counter }}" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="demo-{{ counter }}" aria-selected="false">Demo</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code-{{ counter }}" aria-selected="false">Code</a>
+    <a class="nav-link" id="code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="code-{{ counter }}" aria-selected="false">Code</a>
   </li>
 </ul>
 <ul class="nav nav-pills mb-3">
@@ -245,11 +245,11 @@ function getCommentBlock(text) {
   </li>
 </ul>
                   </div>
-<div class="tab-content" id="pills-tabContent-{{ counter }}">
-  <div class="description tab-pane fade show active" id="pills-desciption-{{ counter }}" role="tabpanel" aria-labelledby="pills-desciption-tab-{{ counter }}">
+<div class="tab-content" id="tabContent-{{ counter }}">
+  <div class="description tab-pane fade show active" id="desciption-{{ counter }}" role="tabpanel" aria-labelledby="desciption-tab-{{ counter }}">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
   </div>
-  <div class="container jumbotron py-3 tab-pane fade" id="pills-about-{{ counter }}" role="tabpanel" aria-labelledby="pills-about-tab-{{ counter }}">
+  <div class="container jumbotron py-3 tab-pane fade" id="about-{{ counter }}" role="tabpanel" aria-labelledby="about-tab-{{ counter }}">
       <div class="row">
                     <div class="col">
                        <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
@@ -280,9 +280,9 @@ function getCommentBlock(text) {
                     </div>
                   </div> <!-- end 2nd row -->
                 </div> <!-- end container jumbotron-->
-  <div class="tab-pane fade" id="pills-syntax-{{ counter }}" role="tabpanel" aria-labelledby="pills-syntax-tab-{{ counter }}">...</div>
-  <div class="tab-pane fade" id="pills-demo-{{ counter }}" role="tabpanel" aria-labelledby="pills-demo-tab-{{ counter }}">...</div>
-  <div class="tab-pane fade" id="pills-code-{{ counter }}" role="tabpanel" aria-labelledby="pills-code-tab-{{ counter }}">...</div>
+  <div class="tab-pane fade" id="syntax-{{ counter }}" role="tabpanel" aria-labelledby="syntax-tab-{{ counter }}">...</div>
+  <div class="tab-pane fade" id="demo-{{ counter }}" role="tabpanel" aria-labelledby="demo-tab-{{ counter }}">...</div>
+  <div class="tab-pane fade" id="code-{{ counter }}" role="tabpanel" aria-labelledby="code-tab-{{ counter }}">...</div>
 </div>
            
               </div>  <!-- end card body -->
