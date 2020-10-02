@@ -98,9 +98,10 @@ function getCommentBlock(text) {
 
 
 <script>
+
 Object.keys(RogueBM.scripts).forEach(function(key){
-   var scripEntry=RogueBM.scripts[key];
-   var node=createElement('div',{className:node},document.body)
+   var scriptEntry=RogueBM.scripts[key];
+   var node=createElement('div',{className:'node'},document.body)
    node.innerHTML='<p>'+JSON.stringify(scriptEntry)+'</p>'
 })
 
