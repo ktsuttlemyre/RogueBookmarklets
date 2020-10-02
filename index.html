@@ -218,7 +218,7 @@ function getCommentBlock(text) {
                 <button class="btn btn-link text-left collapsed p-0 my-2 mr-3" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <span style="font-size:1.25em;font-weight: 500;line-height: 1.2;">{{ titlecase }}</span>
                 </button>
-                <a class="btn btn-primary bookmark p-0 my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+                <a class="btn btn-primary bookmark my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
                 <nav style="display:inline-block;vertical-align:bottom;" class="">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
