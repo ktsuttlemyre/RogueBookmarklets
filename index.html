@@ -202,7 +202,7 @@ function getCommentBlock(text) {
 
               <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                 <h3 class="mb-0 float-left">
-                  <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+                  {{ titlecase }}
                 </h3>
                 <span class="float-right">
                   <span id="script_code_{{ name | escape }}">
@@ -235,6 +235,12 @@ function getCommentBlock(text) {
   <li class="nav-item">
     <a class="nav-link" id="pills-demo-tab" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="pills-demo" aria-selected="false">Demo</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code" aria-selected="false">Code</a>
+  </li>
+  <li class="nav-item float-right">
+    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+  <li>      
 </ul>
 <div class="tab-content" id="pills-tabContent">
   <div class="description tab-pane fade show active" id="pills-desciption" role="tabpanel" aria-labelledby="pills-desciption-tab">
@@ -273,6 +279,7 @@ function getCommentBlock(text) {
                 </div> <!-- end container jumbotron-->
   <div class="tab-pane fade" id="pills-syntax" role="tabpanel" aria-labelledby="pills-syntax-tab">...</div>
   <div class="tab-pane fade" id="pills-demo" role="tabpanel" aria-labelledby="pills-demo-tab">...</div>
+  <div class="tab-pane fade" id="pills-code" role="tabpanel" aria-labelledby="pills-code-tab">...</div>
 </div>
            
               </div>  <!-- end card body -->
