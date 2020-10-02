@@ -137,6 +137,9 @@ function getCommentBlock(text) {
       display:none;
       width:auto;
    }
+   .bookmarklet_object>.card-header>button.collapsed + nav {
+      display: inline-block !important;
+   }
       
   </style>
 </head>
@@ -209,14 +212,12 @@ function getCommentBlock(text) {
           {%- assign words = name | split: '-' -%}
           {%- capture titlecase -%}{% for word in words %}{{ word | capitalize }} {% endfor %}{%- endcapture -%}
           <div class="card my-1 bookmarklet_object" id="bookmarklet_card{{ counter }}" >
-            <div class="card-header">
+            <div class="card-header pb-0">
 
-              <button class="btn btn-link text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
-                <h5 class="mb-0 float-left">
-                  {{ titlecase }}
-                </h5>
-
-                <nav class="">
+                <button class="btn btn-link text-left collapsed p-0 mb-1" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
+                    <h5 class="mb-0 float-left">{{ titlecase }}</h5>
+                </button>
+                <nav style="display:none;" class="">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
                     <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
@@ -225,7 +226,6 @@ function getCommentBlock(text) {
                     <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
                   </div>
                 </nav>
-              </button>
 
             </div>
 
