@@ -253,7 +253,7 @@ function getCommentBlock(text) {
   <div class="tab-pane fade" id="nav-about-{{ name }}" role="tabpanel" aria-labelledby="nav-about-{{ name }}-tab">
       <div class="container jumbotron py-3">
           <div class="row">
-            <div class="col-md">
+            <div class="col-lg">
                <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
                   <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
               </ul>
@@ -261,7 +261,7 @@ function getCommentBlock(text) {
                   <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
                </ul>
             </div> <!-- end 1st col -->
-            <div class="col-md">
+            <div class="col-lg">
               <ul rel="Specs" class="group pr-2" >
                 <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
               </ul>
@@ -277,7 +277,7 @@ function getCommentBlock(text) {
             </div> <!-- end 2nd col -->
           </div> <!-- end row -->  
           <div class="row">
-            <div class="col-md">
+            <div class="col-lg">
               <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
             </div>
           </div> <!-- end 2nd row -->
