@@ -235,7 +235,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     
     
     var valid, tagElem;
-    try{
+   
         valid = validate(data);
     if(!valid){
         tagElem.innerHTML='<span class="badge badge-danger">Danger</span>'+(validate.errors);
