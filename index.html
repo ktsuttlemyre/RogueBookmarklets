@@ -221,7 +221,7 @@ function getCommentBlock(text) {
               <div class="card-body">
                   
                   
-                  
+<div>
 <ul class="nav nav-pills mb-3 mr-auto" id="pills-tab-{{ counter }}" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-desciption-tab-{{ counter }}" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption-{{ counter }}" aria-selected="true">Desciption</a>
@@ -239,11 +239,12 @@ function getCommentBlock(text) {
     <a class="nav-link" id="pills-code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code-{{ counter }}" aria-selected="false">Code</a>
   </li>
 </ul>
-<ul class="nav nav-pills mb-3 role="tablist">
+<ul class="nav nav-pills mb-3">
   <li class="nav-item">
     <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
   </li>
 </ul>
+                  </div>
 <div class="tab-content" id="pills-tabContent-{{ counter }}">
   <div class="description tab-pane fade show active" id="pills-desciption-{{ counter }}" role="tabpanel" aria-labelledby="pills-desciption-tab">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
