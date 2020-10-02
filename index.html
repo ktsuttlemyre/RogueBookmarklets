@@ -218,10 +218,9 @@ function getCommentBlock(text) {
             </div>
 
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
-              <div class="card-body">
+              <div class="card-body" style="postion:relative;">
                   
                   
-<div class="navbar-collapse">
 <ul class="nav nav-tabs mb-3 mr-auto" id="tab-{{ counter }}" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="desciption-tab-{{ counter }}" data-toggle="pill" href="#desciption-tab-{{ counter }}" role="tab" aria-controls="desciption-{{ counter }}" aria-selected="true">Desciption</a>
@@ -239,12 +238,10 @@ function getCommentBlock(text) {
     <a class="nav-link" id="code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="code-{{ counter }}" aria-selected="false">Code</a>
   </li>
 </ul>
-<ul class="nav nav-pills mb-3">
-  <li class="nav-item">
-    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
-  </li>
-</ul>
-                  </div>
+
+<a style="position:absolute; top:1em;right1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+
+    
 <div class="tab-content" id="tabContent-{{ counter }}">
   <div class="description tab-pane fade show active" id="desciption-{{ counter }}" role="tabpanel" aria-labelledby="desciption-tab-{{ counter }}">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
