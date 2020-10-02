@@ -137,8 +137,8 @@ function getCommentBlock(text) {
       display:inline-block;
       width:auto;
    }
-   .bookmarklet_object>.card-header>button + nav {
-      display: inline-block !important;
+   .bookmarklet_object>.card-header>button.collapsed + nav {
+      display: none !important;
    }
       
   </style>
@@ -217,7 +217,7 @@ function getCommentBlock(text) {
                 <button class="btn btn-link text-left collapsed p-0 mb-1" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <h5 class="my-1 float-left">{{ titlecase }}</h5>
                 </button>
-                <nav style="display:none;" class="">
+                <nav style="display:inline-block;" class="">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
                     <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
