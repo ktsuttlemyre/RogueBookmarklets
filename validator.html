@@ -231,6 +231,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     var scriptEntry=RogueBM.scripts[key];
     var li=createElement('li',null,root);
     var keyElem=createElement('span',{className:'node-key m-2','text':key},li);
+    var pathElem=createElement('span',{className:'node-key m-2 badge badge-info', style:'font-size:.4em','text':scriptEntry['path']},keyElem);
     var tagElem=createElement('span',{className:'node-type-valid m-2'},li);
     
     
