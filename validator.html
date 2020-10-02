@@ -115,7 +115,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
    Object.keys(scriptEntry).forEach(function(key){
     var li=createElement('li',null,root);
     createElement('span',{className:'node-key','text':key},li);  
-    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>},li);
+    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>'},li);
    })
    
    
