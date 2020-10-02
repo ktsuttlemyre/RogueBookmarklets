@@ -205,16 +205,7 @@ function getCommentBlock(text) {
                   {{ titlecase }}
                 </h5>
 
-                <span class="float-right">
-                  <span id="script_code_{{ name | escape }}">
-                    <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
-                  </span> 
-                  <span>
-                    <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
-                  </span>
-                  <span class='script_marklet_json'>
-                  </span>
-                </span>
+
               </button>
             </div>
 
@@ -223,11 +214,11 @@ function getCommentBlock(text) {
 <!-- tabs -->
 <nav class="mb-3">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">description</a>
-    <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">about</a>
-    <a class="nav-item nav-link" id="nav-syntax-{{ name }}-tab" data-toggle="tab" href="#nav-syntax-{{ name }}" role="tab" aria-controls="nav-syntax-{{ name }}" aria-selected="false">syntax</a>
-    <a class="nav-item nav-link" id="nav-demo-{{ name }}-tab" data-toggle="tab" href="#nav-demo-{{ name }}" role="tab" aria-controls="nav-demo-{{ name }}" aria-selected="false">demo</a>
-    <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">code</a>
+    <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
+    <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
+    <a class="nav-item nav-link" id="nav-syntax-{{ name }}-tab" data-toggle="tab" href="#nav-syntax-{{ name }}" role="tab" aria-controls="nav-syntax-{{ name }}" aria-selected="false">Syntax</a>
+    <a class="nav-item nav-link" id="nav-demo-{{ name }}-tab" data-toggle="tab" href="#nav-demo-{{ name }}" role="tab" aria-controls="nav-demo-{{ name }}" aria-selected="false">Demo</a>
+    <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
   </div>
 </nav>
 <a style="position:absolute; top:1em;right:1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
@@ -270,7 +261,18 @@ function getCommentBlock(text) {
   </div>
   <div class="tab-pane fade" id="nav-syntax-{{ name }}" role="tabpanel" aria-labelledby="nav-syntax-{{ name }}-tab">...</div>
   <div class="tab-pane fade" id="nav-demo-{{ name }}" role="tabpanel" aria-labelledby="nav-demo-{{ name }}-tab">...</div>
-  <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">...</div>
+  <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
+    <span class="float-right">
+      <span id="script_code_{{ name | escape }}">
+        <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
+      </span> 
+      <span>
+        <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
+      </span>
+      <span class='script_marklet_json'>
+      </span>
+    </span>
+  </div>
 </div>    
                   
 <!-- end tabs -->
