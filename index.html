@@ -134,10 +134,10 @@ function getCommentBlock(text) {
    }
       
    .bookmarklet_object>.card-header>button{
-      display:inline-block;
+      display:hidden;
       width:auto;
    }
-   .bookmarklet_object>.card-header>button.collapsed + nav {
+   .bookmarklet_object>.card-header>button.collapsed ~ * {
       display: none !important;
    }
       
@@ -214,9 +214,11 @@ function getCommentBlock(text) {
           <div class="card my-1 bookmarklet_object" id="bookmarklet_card{{ counter }}" >
             <div class="card-header py-0" style="border-bottom:0;">
 
+                <a style="display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
                 <button class="btn btn-link text-left collapsed p-0 my-2 mr-3" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <h5 class="my-1 float-left">{{ titlecase }}</h5>
                 </button>
+                
                 <nav style="display:inline-block;vertical-align:bottom;" class="">
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
@@ -234,7 +236,7 @@ function getCommentBlock(text) {
 <!-- tabs -->
 
 
-<a style="position:absolute; top:-2.75em;right:1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-description-{{ name }}" role="tabpanel" aria-labelledby="nav-description-{{ name }}-tab">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
