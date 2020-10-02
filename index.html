@@ -219,11 +219,29 @@ function getCommentBlock(text) {
 
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body">
-                <div class="description">
-                  <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
-                </div>
-                <div class="container jumbotron py-3">
-                  <div class="row">
+                  
+                  
+                  
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-desciption-tab" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption" aria-selected="true">Desciption</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about" aria-selected="false">About</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-syntax-tab" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="pills-syntax" aria-selected="false">Syntax</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-demo-tab" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="pills-demo" aria-selected="false">Demo</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="description tab-pane fade show active" id="pills-desciption" role="tabpanel" aria-labelledby="pills-desciption-tab">
+    <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
+  </div>
+  <div class="container jumbotron py-3 tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+      <div class="row">
                     <div class="col">
                        <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
                           <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
@@ -253,9 +271,13 @@ function getCommentBlock(text) {
                     </div>
                   </div> <!-- end 2nd row -->
                 </div> <!-- end container jumbotron-->
-              </div> 
-            </div>
-          </div>
+  <div class="tab-pane fade" id="pills-syntax" role="tabpanel" aria-labelledby="pills-syntax-tab">...</div>
+  <div class="tab-pane fade" id="pills-demo" role="tabpanel" aria-labelledby="pills-demo-tab">...</div>
+</div>
+           
+              </div>  <!-- end card body -->
+            </div> <!-- end collapse -->
+          </div> <!-- end card -->
         {%- endif -%}
     {%- endfor -%}
   </div>
