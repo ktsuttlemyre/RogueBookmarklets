@@ -222,28 +222,30 @@ function getCommentBlock(text) {
                   
                   
                   
-<ul class="nav nav-pills mb-3 mr-auto" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3 mr-auto" id="pills-tab-{{ counter }}" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="pills-desciption-tab" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption" aria-selected="true">Desciption</a>
+    <a class="nav-link active" id="pills-desciption-tab-{{ counter }}" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption-{{ counter }}" aria-selected="true">Desciption</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about" aria-selected="false">About</a>
+    <a class="nav-link" id="pills-about-tab-{{ counter }}" data-toggle="pill" href="#pills-about" role="tab" aria-controls="pills-about-{{ counter }}" aria-selected="false">About</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-syntax-tab" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="pills-syntax" aria-selected="false">Syntax</a>
+    <a class="nav-link" id="pills-syntax-tab-{{ counter }}" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="pills-syntax-{{ counter }}" aria-selected="false">Syntax</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-demo-tab" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="pills-demo" aria-selected="false">Demo</a>
+    <a class="nav-link" id="pills-demo-tab-{{ counter }}" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="pills-demo-{{ counter }}" aria-selected="false">Demo</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code" aria-selected="false">Code</a>
+    <a class="nav-link" id="pills-code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code-{{ counter }}" aria-selected="false">Code</a>
   </li>
 </ul>
-
+<ul class="nav nav-pills mb-3 role="tablist">
+  <li class="nav-item">
     <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
-
-<div class="tab-content" id="pills-tabContent">
-  <div class="description tab-pane fade show active" id="pills-desciption" role="tabpanel" aria-labelledby="pills-desciption-tab">
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent-{{ counter }}">
+  <div class="description tab-pane fade show active" id="pills-desciption-{{ counter }}" role="tabpanel" aria-labelledby="pills-desciption-tab">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
   </div>
   <div class="container jumbotron py-3 tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
@@ -277,9 +279,9 @@ function getCommentBlock(text) {
                     </div>
                   </div> <!-- end 2nd row -->
                 </div> <!-- end container jumbotron-->
-  <div class="tab-pane fade" id="pills-syntax" role="tabpanel" aria-labelledby="pills-syntax-tab">...</div>
-  <div class="tab-pane fade" id="pills-demo" role="tabpanel" aria-labelledby="pills-demo-tab">...</div>
-  <div class="tab-pane fade" id="pills-code" role="tabpanel" aria-labelledby="pills-code-tab">...</div>
+  <div class="tab-pane fade" id="pills-syntax-{{ counter }}" role="tabpanel" aria-labelledby="pills-syntax-tab">...</div>
+  <div class="tab-pane fade" id="pills-demo-{{ counter }}" role="tabpanel" aria-labelledby="pills-demo-tab">...</div>
+  <div class="tab-pane fade" id="pills-code-{{ counter }}" role="tabpanel" aria-labelledby="pills-code-tab">...</div>
 </div>
            
               </div>  <!-- end card body -->
