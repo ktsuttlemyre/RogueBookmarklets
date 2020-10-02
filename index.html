@@ -204,15 +204,7 @@ function getCommentBlock(text) {
                 <h5 class="mb-0 float-left">
                   {{ titlecase }}
                 </h5>
-                <nav class="mb-3">
-                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="true">description</a>
-                    <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">about</a>
-                    <a class="nav-item nav-link" id="nav-syntax-tab" data-toggle="tab" href="#nav-syntax" role="tab" aria-controls="nav-syntax" aria-selected="false">syntax</a>
-                    <a class="nav-item nav-link" id="nav-demo-tab" data-toggle="tab" href="#nav-demo" role="tab" aria-controls="nav-demo" aria-selected="false">demo</a>
-                    <a class="nav-item nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false">code</a>
-                  </div>
-                </nav>
+
                 <span class="float-right">
                   <span id="script_code_{{ name | escape }}">
                     <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
@@ -229,7 +221,15 @@ function getCommentBlock(text) {
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body" style="position:relative;">
 <!-- tabs -->
-
+<nav class="mb-3">
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="true">description</a>
+    <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">about</a>
+    <a class="nav-item nav-link" id="nav-syntax-tab" data-toggle="tab" href="#nav-syntax" role="tab" aria-controls="nav-syntax" aria-selected="false">syntax</a>
+    <a class="nav-item nav-link" id="nav-demo-tab" data-toggle="tab" href="#nav-demo" role="tab" aria-controls="nav-demo" aria-selected="false">demo</a>
+    <a class="nav-item nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false">code</a>
+  </div>
+</nav>
 <a style="position:absolute; top:1em;right:1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
