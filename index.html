@@ -246,10 +246,10 @@ function getCommentBlock(text) {
 </ul>
                   </div>
 <div class="tab-content" id="pills-tabContent-{{ counter }}">
-  <div class="description tab-pane fade show active" id="pills-desciption-{{ counter }}" role="tabpanel" aria-labelledby="pills-desciption-tab">
+  <div class="description tab-pane fade show active" id="pills-desciption-{{ counter }}" role="tabpanel" aria-labelledby="pills-desciption-tab-{{ counter }}">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
   </div>
-  <div class="container jumbotron py-3 tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+  <div class="container jumbotron py-3 tab-pane fade" id="pills-about-{{ counter }}" role="tabpanel" aria-labelledby="pills-about-tab-{{ counter }}">
       <div class="row">
                     <div class="col">
                        <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
@@ -280,9 +280,9 @@ function getCommentBlock(text) {
                     </div>
                   </div> <!-- end 2nd row -->
                 </div> <!-- end container jumbotron-->
-  <div class="tab-pane fade" id="pills-syntax-{{ counter }}" role="tabpanel" aria-labelledby="pills-syntax-tab">...</div>
-  <div class="tab-pane fade" id="pills-demo-{{ counter }}" role="tabpanel" aria-labelledby="pills-demo-tab">...</div>
-  <div class="tab-pane fade" id="pills-code-{{ counter }}" role="tabpanel" aria-labelledby="pills-code-tab">...</div>
+  <div class="tab-pane fade" id="pills-syntax-{{ counter }}" role="tabpanel" aria-labelledby="pills-syntax-tab-{{ counter }}">...</div>
+  <div class="tab-pane fade" id="pills-demo-{{ counter }}" role="tabpanel" aria-labelledby="pills-demo-tab-{{ counter }}">...</div>
+  <div class="tab-pane fade" id="pills-code-{{ counter }}" role="tabpanel" aria-labelledby="pills-code-tab-{{ counter }}">...</div>
 </div>
            
               </div>  <!-- end card body -->
