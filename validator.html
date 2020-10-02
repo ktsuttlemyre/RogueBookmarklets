@@ -79,6 +79,12 @@ function getCommentBlock(text) {
         if(typeof element=='string'){
             element=document.createElement(element);
         }
+       
+        if(attrs['text']){
+            element.appendChild(document.createTextNode(attrs['text']));
+            attrs['text']=null;
+            delete attrs['text'];
+        }
         
         var keys=Object.keys(attrs);
         for(var i=0,l=keys.length;i<l;i++) { //iter options
@@ -101,8 +107,16 @@ function getCommentBlock(text) {
 
 Object.keys(RogueBM.scripts).forEach(function(key){
    var scriptEntry=RogueBM.scripts[key];
-   var node=createElement('div',{className:'node'},document.body)
-   node.innerHTML='<pre>'+JSON.stringify(scriptEntry)+'</pre>'
+   var root=createElement('div',{className:'root'},document.body)
+   
+   
+   Object.keys(scriptEntry).forEach(function(key){
+    createElement('div',{className:'node-group','text':key},node);                     
+   })
+   
+   
+   
+   JSON.stringify(scriptEntry)
 })
 
 </script>
