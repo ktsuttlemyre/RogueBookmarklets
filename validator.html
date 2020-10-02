@@ -85,14 +85,15 @@ function getCommentBlock(text) {
             attrs['text']=null;
             delete attrs['text'];
         }
-        
-        var keys=Object.keys(attrs);
-        for(var i=0,l=keys.length;i<l;i++) { //iter options
-            if(setAttributesFor.indexOf(keys[i])>=0){
-                element.setAttribute(keys[i],attrs[keys[i]]);
-                continue;
+        if(attrs){
+            var keys=Object.keys(attrs);
+            for(var i=0,l=keys.length;i<l;i++) { //iter options
+                if(setAttributesFor.indexOf(keys[i])>=0){
+                    element.setAttribute(keys[i],attrs[keys[i]]);
+                    continue;
+                }
+                element[keys[i]]=attrs[keys[i]];
             }
-            element[keys[i]]=attrs[keys[i]];
         }
         parent && parent.appendChild(element);
 
@@ -111,7 +112,9 @@ Object.keys(RogueBM.scripts).forEach(function(key){
    
    
    Object.keys(scriptEntry).forEach(function(key){
-    createElement('div',{className:'node-group','text':key},node);                     
+    createElement('span',{className:'node-key','text':key},root);  
+    createElement('span',{className:'node-value','text':scriptEntry[key]},root);
+    createElement('br',null,root);
    })
    
    
