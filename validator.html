@@ -114,13 +114,13 @@ Object.keys(RogueBM.scripts).forEach(function(key){
    
    Object.keys(scriptEntry).forEach(function(key){
     createElement('span',{className:'node-key','text':key},root);  
-    createElement('span',{className:'node-value','text':scriptEntry[key]},root);
+    createElement('span',{className:'node-value','innerHTML':'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>},root);
     createElement('br',null,root);
    })
    
    
    
-   JSON.stringify(scriptEntry)
+   
 })
 
 </script>
