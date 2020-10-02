@@ -201,9 +201,9 @@ function getCommentBlock(text) {
             <div class="card-header">
 
               <button class="btn btn-link btn-block text-left collapsed p-0" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
-                <h3 class="mb-0 float-left">
+                <h5 class="mb-0 float-left">
                   {{ titlecase }}
-                </h3>
+                </h5>
                 <span class="float-right">
                   <span id="script_code_{{ name | escape }}">
                     <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
@@ -222,7 +222,7 @@ function getCommentBlock(text) {
                   
                   
                   
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3 mr-auto" id="pills-tab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-desciption-tab" data-toggle="pill" href="#pills-desciption" role="tab" aria-controls="pills-desciption" aria-selected="true">Desciption</a>
   </li>
@@ -238,10 +238,10 @@ function getCommentBlock(text) {
   <li class="nav-item">
     <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code" aria-selected="false">Code</a>
   </li>
-  <li class="nav-item float-right">
-    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
-  <li>      
 </ul>
+
+    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+
 <div class="tab-content" id="pills-tabContent">
   <div class="description tab-pane fade show active" id="pills-desciption" role="tabpanel" aria-labelledby="pills-desciption-tab">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
