@@ -229,15 +229,25 @@ const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 const validate = ajv.compile(inferedSchema)
 var root=createElement('ul',{className:'root'},document.body)
 Object.keys(RogueBM.scripts).forEach(function(key){
+    
     var scriptEntry=RogueBM.scripts[key];
-    var valid = validate(data)
-    var li=createElement('li',null,root);
     var keyElem=createElement('span',{className:'node-key','text':key},li);
+    var li=createElement('li',null,root);
     var tagElem=createElement('span',{className:'node-type-valid'},li);
-    if (!valid){
-        tagElem.innerHTML='<span class="badge badge-danger">Danger</span>'+validate.errors;
-        console.log(validate.errors)
+    
+    
+    var valid, tagElem;
+    try{
+        valid = validate(data);
+    }catch(e){
+        vaild=e
     }
+    
+        tagElem.innerHTML='<span class="badge badge-danger">Danger</span>'+(validate.errors||validate);
+        console.log(validate.errors||validate)
+    
+    
+
 })
     
 //     var template={ 
