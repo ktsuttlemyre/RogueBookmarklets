@@ -212,7 +212,7 @@ function getCommentBlock(text) {
           {%- assign words = name | split: '-' -%}
           {%- capture titlecase -%}{% for word in words %}{{ word | capitalize }} {% endfor %}{%- endcapture -%}
           <div class="card my-1 bookmarklet_object" id="bookmarklet_card{{ counter }}" >
-            <div class="card-header py-0">
+            <div class="card-header py-0" style="border-bottom:0;>
 
                 <button class="btn btn-link text-left collapsed p-0 mb-1" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <h5 class="my-1 float-left">{{ titlecase }}</h5>
