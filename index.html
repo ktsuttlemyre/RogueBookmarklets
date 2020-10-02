@@ -239,7 +239,7 @@ function getCommentBlock(text) {
     <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab" aria-controls="pills-code" aria-selected="false">Code</a>
   </li>
   <li class="nav-item float-right">
-    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-primary bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+    <a href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
   <li>      
 </ul>
 <div class="tab-content" id="pills-tabContent">
