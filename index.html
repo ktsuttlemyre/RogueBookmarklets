@@ -229,6 +229,9 @@ function getCommentBlock(text) {
                     <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
                   </div>
                 </nav>
+                {%- if script.deprecated -%}<span class="badge badge-pill badge-warning">Depricated</span>{%- endif -%}
+                {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning">3rd party</span>{%- endif -%}
+                
 
             </div>
 
