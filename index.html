@@ -364,7 +364,7 @@ function download(filename, data) {
     async: true,
     dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
     success: function (data){
-      $('#roguerunner_bookmarklet').attr('href','javascript:'+data).addClass('btn-info').text('RogueRunner').on('click', function(ev){
+      $('#roguerunner_bookmarklet').attr('href','javascript:'+data).addClass('btn-primary').text('RogueRunner').on('click', function(ev){
         ev.preventDefault();
         alert('You must click and drag this bookmark to your bookmarks bar to install to the current browser')
         return false;
