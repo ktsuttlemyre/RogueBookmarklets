@@ -219,69 +219,61 @@ function getCommentBlock(text) {
 
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body" style="position:relative;">
-                  
-                  
-<ul class="nav nav-tabs mb-3 mr-auto" id="tab-{{ counter }}" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="description-tab-{{ counter }}" data-toggle="pill" href="#description-tab-{{ counter }}" role="tab" aria-controls="description-{{ counter }}" aria-selected="true">Desciption</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="about-tab-{{ counter }}" data-toggle="pill" href="#pills-about" role="tab" aria-controls="about-{{ counter }}" aria-selected="false">About</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="syntax-tab-{{ counter }}" data-toggle="pill" href="#pills-syntax" role="tab" aria-controls="syntax-{{ counter }}" aria-selected="false">Syntax</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="demo-tab-{{ counter }}" data-toggle="pill" href="#pills-demo" role="tab" aria-controls="demo-{{ counter }}" aria-selected="false">Demo</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="code-tab-{{ counter }}" data-toggle="pill" href="#pills-code" role="tab" aria-controls="code-{{ counter }}" aria-selected="false">Code</a>
-  </li>
-</ul>
-
+<!-- tabs -->
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="true">description</a>
+    <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">about</a>
+    <a class="nav-item nav-link" id="nav-syntax-tab" data-toggle="tab" href="#nav-syntax" role="tab" aria-controls="nav-syntax" aria-selected="false">syntax</a>
+    <a class="nav-item nav-link" id="nav-demo-tab" data-toggle="tab" href="#nav-demo" role="tab" aria-controls="nav-demo" aria-selected="false">demo</a>
+    <a class="nav-item nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false">code</a>
+  </div>
+</nav>
 <a style="position:absolute; top:1em;right:1em;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" class="btn btn-info bookmark" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
-
-    
-<div class="tab-content" id="tabContent-{{ counter }}">
-  <div class="description tab-pane fade show active" id="description-{{ counter }}" role="tabpanel" aria-labelledby="description-tab-{{ counter }}">
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
     <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
   </div>
-  <div class="container jumbotron py-3 tab-pane fade" id="about-{{ counter }}" role="tabpanel" aria-labelledby="about-tab-{{ counter }}">
-      <div class="row">
-                    <div class="col">
-                       <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
-                      </ul>
-                      <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                          <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
-                       </ul>
-                    </div> <!-- end 1st col -->
-                    <div class="col">
-                      <ul rel="Specs" class="group pr-2" >
-                        <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
-                      </ul>
-                      <ul rel="Libraries" class="group pr-2" >
-                        <li>{{ script.libraries | default: "&nbsp;" | strip_html | markdownify}}</li>
-                      </ul>
-                      <ul rel="Privacy" class="group pr-2" >
-                        <li>{{ script.data-privacy | default: "Undetermined" | strip_html | markdownify}}</li>
-                      </ul>
-                      <ul rel="Authors" class="group pr-2" >
-                        <li>{{ script.authors | default: "Unknown" | strip_html | markdownify}}</li>
-                      </ul>
-                    </div> <!-- end 2nd col -->
-                  </div> <!-- end row -->  
-                  <div class="row">
-                    <div class="col">
-                      <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
-                    </div>
-                  </div> <!-- end 2nd row -->
-                </div> <!-- end container jumbotron-->
-  <div class="tab-pane fade" id="syntax-{{ counter }}" role="tabpanel" aria-labelledby="syntax-tab-{{ counter }}">...</div>
-  <div class="tab-pane fade" id="demo-{{ counter }}" role="tabpanel" aria-labelledby="demo-tab-{{ counter }}">...</div>
-  <div class="tab-pane fade" id="code-{{ counter }}" role="tabpanel" aria-labelledby="code-tab-{{ counter }}">...</div>
-</div>
-           
+  <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+      <div class="container jumbotron py-3 tab-pane fade" id="about-{{ counter }}" role="tabpanel" aria-labelledby="about-tab-{{ counter }}">
+          <div class="row">
+            <div class="col">
+               <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
+                  <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
+              </ul>
+              <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
+                  <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
+               </ul>
+            </div> <!-- end 1st col -->
+            <div class="col">
+              <ul rel="Specs" class="group pr-2" >
+                <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
+              </ul>
+              <ul rel="Libraries" class="group pr-2" >
+                <li>{{ script.libraries | default: "&nbsp;" | strip_html | markdownify}}</li>
+              </ul>
+              <ul rel="Privacy" class="group pr-2" >
+                <li>{{ script.data-privacy | default: "Undetermined" | strip_html | markdownify}}</li>
+              </ul>
+              <ul rel="Authors" class="group pr-2" >
+                <li>{{ script.authors | default: "Unknown" | strip_html | markdownify}}</li>
+              </ul>
+            </div> <!-- end 2nd col -->
+          </div> <!-- end row -->  
+          <div class="row">
+            <div class="col">
+              <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
+            </div>
+          </div> <!-- end 2nd row -->
+        </div> <!-- end container jumbotron-->
+  </div>
+  <div class="tab-pane fade" id="nav-syntax" role="tabpanel" aria-labelledby="nav-syntax-tab">...</div>
+  <div class="tab-pane fade" id="nav-demo" role="tabpanel" aria-labelledby="nav-demo-tab">...</div>
+  <div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">...</div>
+</div>    
+                  
+<!-- end tabs -->
+              
               </div>  <!-- end card body -->
             </div> <!-- end collapse -->
           </div> <!-- end card -->
