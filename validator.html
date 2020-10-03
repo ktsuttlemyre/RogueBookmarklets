@@ -102,13 +102,21 @@ function getCommentBlock(text) {
                 }
             }
             if(parent){
-                if(typeof parent =='string'){
-                    parent = cache[parent];
-                    if(!parent){
+                var candidate;
+                if(typeof parent == 'string'){
+                    candidate=cache[candidate];
+                    if(candidate}{
+                        if(candidate.id==parent){
+                            parent = candidate
+                        }else{
+                            cache[parent]=candidate=null
+                        }
+                    }
+                    if(!candidate){   
                         parent = document.getElementById(parent);
                     }
                 }
-                parent.appendChild(element);
+                parent && parent.appendChild(element);
             }
 
             return element;
