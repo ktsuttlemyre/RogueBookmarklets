@@ -164,20 +164,9 @@ var inferedSchema={
     },
     "specs": {
       "type": "array",
-      "items": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
+      "items": {
           "type": "string"
         }
-      ]
     },
     "layout": {
       "type": "string"
@@ -187,23 +176,9 @@ var inferedSchema={
     },
     "data privacy": {
       "type": "array",
-      "items": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
+      "items": {
           "type": "string"
         }
-      ]
     },
     "libraries": {
       "type": "array",
@@ -245,7 +220,7 @@ var inferedSchema={
     
 
     
-const ajv = new Ajv({allErrors:true}) // options can be passed, e.g. {allErrors: true}
+const ajv = new Ajv({allErrors:true,uniqueItems:true}) // options can be passed, e.g. {allErrors: true}
 const validate = ajv.compile(inferedSchema)
 var root=createElement('ul',{className:'root'},document.body)
 Object.keys(RogueBM.scripts).forEach(function(key){
