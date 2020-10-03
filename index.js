@@ -200,44 +200,10 @@ RogueBM.scriptCDNs={
   "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
   "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
 };
-RogueBM['getArgumentDetails] = function (scriptEntry){
-        var doc=scriptEntry.params;
-        if(typeof scriptEntry.params =='string'){
-            doc=doc.trim().split('\n');
-        }
-        var params=[];
-        var args=[]
-        for(var i=0,l=doc.length;i<l;i++){
-            var type,name,description,value,optional;
-            doc[i].replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,t,n,d){
-                type=(type||t||'').trim();
-                name=(name||n||'').trim();
-                description=(description||d||'').trim();
-                console.log('type',type,'name',name,'description',description)
-            })
-            var nameval=name.split('=');
-            if(nameval.length==2){
-                name=nameval[0].trim();
-                value=nameval[1].trim();
-            }
-            
-            if(name.charAt(0)=='[' && name.charAt(name.length-1)==']'){
-                optional=true;
-                name=name.substring(1,name.length-1).trim();
-            }
 
-            if(description.indexOf('=')>=0){
-                description=description.replace('=','');
-                optional=true;
-            }
-            args.push(name);
-            params.push({optional:optional,type:type,name:name,default:value,description:description});
-        }
-        return {args:args,params:params};
-    }
 
-    {%- assign commonLibs = site.collections | where: "label","common" -%}
-    {%- assign commons = commonLibs.files | concat: comonLibs.docs  -%}
+    {%- assign commoncollection = site.collections | where:"label","common" -%}
+    {%- assign commons = commoncollection.files | concat: commoncollection.docs  -%}
     {%- for common in commons -%}
         {{ common.content }}
     {%- endfor -%}
