@@ -1472,7 +1472,13 @@
                 kwargs.setData=function(key,data,callback){
                     return RogueBM.setData(key,data,proc.scriptEntry.name,callback);
                 }
-                kwargs.stdin=thread.stdout[thread.stdout.length-1]
+                
+                kwargs.stdin=(function(){
+                    if(thread.stdout.length-1==0){
+                        return getSelection();
+                    }
+                    return thread.stdout[thread.stdout.length-1];
+                })()
 
          
                 var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,setData'.split(','),kwargs));
