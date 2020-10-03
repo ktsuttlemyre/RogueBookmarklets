@@ -3,6 +3,9 @@ collections:
   scripts:
     output: true
     permalink: /bookmarklets/:path.js
+  common:
+    output: true
+    permalink: /libs/:path.js
 liquid:
   error_mode: lax
 emptyArray: []
