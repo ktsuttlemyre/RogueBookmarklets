@@ -74,32 +74,46 @@ function getCommentBlock(text) {
     return commentObj;
 }
 
-        var setAttributesFor=['style'];
-    function createElement(element, attrs, parent){
-        if(typeof element=='string'){
-            element=document.createElement(element);
-        }
-       
-        if(attrs){
-            if(attrs['text']){
-                element.appendChild(document.createTextNode(attrs['text']));
-                attrs['text']=null;
-                delete attrs['text'];
+    var createElement=(function(){
+        var cache={}, setAttributesFor=['style'];
+        return function (element, attrs, parent){
+            if(typeof element=='string'){
+                element=document.createElement(element);
+            }
+            var id=attrs.id||element.id;
+            if(!cachedItem[id]){
+                cache[id]=element;
             }
 
-            var keys=Object.keys(attrs);
-            for(var i=0,l=keys.length;i<l;i++) { //iter options
-                if(setAttributesFor.indexOf(keys[i])>=0){
-                    element.setAttribute(keys[i],attrs[keys[i]]);
-                    continue;
+            if(attrs){
+                if(attrs['text']){
+                    element.appendChild(document.createTextNode(attrs['text']));
+                    attrs['text']=null;
+                    delete attrs['text'];
                 }
-                element[keys[i]]=attrs[keys[i]];
-            }
-        }
-        parent && parent.appendChild(element);
 
-        return element;
-    }
+                var keys=Object.keys(attrs);
+                for(var i=0,l=keys.length;i<l;i++) { //iter options
+                    if(setAttributesFor.indexOf(keys[i])>=0){
+                        element.setAttribute(keys[i],attrs[keys[i]]);
+                        continue;
+                    }
+                    element[keys[i]]=attrs[keys[i]];
+                }
+            }
+            if(parent){
+                if(typeof parent =='string'){
+                    parent = cache[parent];
+                    if(!parent){
+                        parent = document.getElementById(parent);
+                    }
+                }
+                parent.appendChild(element);
+            }
+
+            return element;
+        }
+    })()
   </script>
 </head>
 <body>
