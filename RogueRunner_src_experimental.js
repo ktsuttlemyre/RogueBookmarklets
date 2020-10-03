@@ -80,10 +80,14 @@
 
 
    //commons
-  {%- assign commoncollection = site.collections | where:"label","common" -%}
-  {%- assign commons = commoncollection.docs | concat: commoncollection.files -%}
-  {%- for common in commons -%}
-    {{ common.content }}
+  {%- for coll in site.collections -%}
+    {%- if coll.label != "common" -%}
+        {%- continue -%}
+    {%- endif -%}
+    {%- assign commons = coll.docs | concat: coll.files -%}
+    {%- for common in commons -%}
+        {{ common.content }}
+    {%- endfor -%}
   {%- endfor -%}
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
