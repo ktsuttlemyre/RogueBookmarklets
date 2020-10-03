@@ -231,7 +231,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     var scriptEntry=RogueBM.scripts[key];
     var li=createElement('li',null,root);
 
-    var keyElem=createElement('span',{className:'node-key m-2','innerHTML':'<a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master'+scriptEntry.relative_path||scriptEntry.path+'" target="_blank" class="btn btn-primary">'+key+'</a>'},li);
+    var keyElem=createElement('span',{className:'node-key m-2','innerHTML':'<a href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master'+(scriptEntry.relative_path||scriptEntry.path)+'" target="_blank" class="btn btn-primary">'+key+'</a>'},li);
     var keyStatus=createElement('span',{className:'node-key mr-2'},li);
     var pathElem=createElement('span',{className:'node-key mr-2 badge badge-secondary', style:'font-size:.7em','text':scriptEntry['path']},li);
     createElement('br',null,li)
