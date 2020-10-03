@@ -89,6 +89,11 @@ var inferedSchema={
       "type": "array",
       "items": {}
     },
+//     "specs": {
+//         "not": {
+//             type: ["number", "integer", "string", "boolean", "array", "object", "null"]
+//         }
+//     },
     "async": {
       "type": "boolean"
     },
@@ -127,6 +132,7 @@ var inferedSchema={
       "type": "string"
     }
   },
+    
   "required": [
     "description",
     "authors",
@@ -139,7 +145,8 @@ var inferedSchema={
 //    "libraries",
     "params",
     "returns"
-  ]
+  ],
+   "additionalProperties": false
 }
     
 
