@@ -81,7 +81,7 @@ function getCommentBlock(text) {
                 element=document.createElement(element);
             }
             var id=attrs.id||element.id;
-            if(!cachedItem[id]){
+            if(!cache[id]){
                 cache[id]=element;
             }
 
