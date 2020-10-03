@@ -79,7 +79,12 @@
 
 
 
-     
+   //commons
+  {%- assign commoncollection = site.collections | where:"label","common" -%}
+  {%- assign commons = commoncollection.docs | concat: commoncollection.files -%}
+  {%- for common in commons -%}
+    {{ common.content }}
+  {%- endfor -%}
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
     //limitation: urls must end with an extention otherwise it will be assumed to be inline source
