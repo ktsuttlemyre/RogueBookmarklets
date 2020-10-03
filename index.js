@@ -201,12 +201,16 @@ RogueBM.scriptCDNs={
   "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
 };
    
-  //commons
-  {%- assign commoncollection = site.collections | where:"label","common" -%}
-  {%- assign commons = commoncollection.docs | concat: commoncollection.files -%}
-  {%- for common in commons -%}
-    {{ common.content }}
-  {%- endfor -%}  
+   //commons
+  {%- for coll in site.collections -%}
+    {%- if coll.label != "common" -%}
+        {%- continue -%}
+    {%- endif -%}
+    {%- assign commons = coll.docs | concat: coll.files -%}
+    {%- for common in commons -%}
+        {{ common.content }}
+    {%- endfor -%}
+  {%- endfor -%}
 
 // //jsonp callback
 function readySignal(){
