@@ -241,12 +241,13 @@ Object.keys(RogueBM.scripts).forEach(function(key){
    
     var valid = validate(scriptEntry);
     if(!valid){
-        keyStatus.innerHTML='<span class="badge badge-danger">Error</span>'
-        tagElem.innerHTML=validate.errors.map(function(obj){
+        keyStatus.innerHTML=''
+        var errorElem='<span class="badge badge-danger">Error</span>'
+        tagElem.innerHTML=errorElem+validate.errors.map(function(obj){
             return obj.message.replace(/(["'])[^]*?\1/g,function(match){
                 return '<span class="badge badge-info">'+match+'</span>'
             })
-        }).join("<br>");
+        }).join("<br>"+errorElem);
         console.log(validate.errors)
     }else{
         keyStatus.innerHTML='<span class="badge badge-success">Success</span>';
