@@ -15,7 +15,7 @@ originalsource: codepen.com/something/something
 
 ####### function signature #######
 qualified urls: []
-specs: [async, textselect, stdin, stdout]
+async: true|false
 layout: script
 type: tool, web-app, toy, service
 data privacy: [local, server, third-party-request, third-party-inline, third-party-visit]
