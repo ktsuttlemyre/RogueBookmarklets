@@ -1,6 +1,8 @@
 ---
 ---
-
+    
+    
+    
 (function(window,document,location,alert,prompt,confirm) {
     window['RogueBM']=window['RogueBM'] || {}; //in block notation so closure compiler will 'export' the vairable
     if(window['RogueBM']['show']){
@@ -14,6 +16,7 @@
     }
     var dummy=[];
      
+
      
     if(!Function.prototype.bind){
         //implementatino from https://github.com/Raynos/function-bind
@@ -75,7 +78,11 @@
     };
 
      
-
+    {%- assign commonLibs = site.collections | where: "label","common" -%}
+    {%- assign commons = commonLibs.files | concat: comonLibs.docs  -%}
+    {%- for common in commons -%}
+        {{ common.content }}
+    {%- endfor -%}
 
      
 
@@ -570,24 +577,7 @@
     inject(cssText,'css')
 
 
-    var setAttributesFor=['style'];
-    function createElement(element, attrs, parent){
-        if(typeof element=='string'){
-            element=document.createElement(element);
-        }
-        
-        var keys=Object.keys(attrs);
-        for(var i=0,l=keys.length;i<l;i++) { //iter options
-            if(setAttributesFor.indexOf(keys[i])>=0){
-                element.setAttribute(keys[i],attrs[keys[i]]);
-                continue;
-            }
-            element[keys[i]]=attrs[keys[i]];
-        }
-        parent && parent.appendChild(element);
 
-        return element;
-    }
 
     
     ///////////////////////
