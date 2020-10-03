@@ -1,9 +1,10 @@
 ---
 description: |
-  <h1>This is some markdown content in YAML that will be output as a header </h1>.
-  describe the code here
+  <h1>This is some markdown content in YAML.</h1>
+  Note that description should always be followed by a pipe character "|" 
+  so you can use multiple lines.
 
-  you can use multiple lines. Its totally cool here
+  It's totally cool here
   
 deprecated: Originally created in 2005 it doesn't seem to work as well at it once did as browsers have evovled a lot since then.
 ####### Other Metadata #######
