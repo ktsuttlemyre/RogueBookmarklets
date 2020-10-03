@@ -34,6 +34,7 @@ window.RogueBM.scripts={
   {%- for script in scripts -%}
     {%- assign path = script.url | default: script.path -%}
     {%- assign path = '/' | append: path | replace_first: "//", "/" -%}
+    {%- assign file_path = '/' | append: script.relative_path | replace_first: "//", "/" -%}
     {%- assign name = path | split: "/" | last | split: "."| first | slugify -%}
     {%- assign modified_time = script.modified_time | default: script.date -%}
     {%- if script.slug and script.tags and script.title and script.relative_path and script.categories -%}
@@ -52,6 +53,7 @@ window.RogueBM.scripts={
        "{{ name }}":{
           "name":"{{ name }}",
           "path":"{{ path }}",
+          "file_path":"{{ file_path }}",
           "index":{% increment counter %},
           "modified_time":"{{ modified_time }}",
           "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | url_escape }}",
