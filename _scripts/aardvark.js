@@ -21,8 +21,10 @@ libraries:
   - ["http://www.karmatics.com/aardvark/loader.js", "sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" ]
 
 # for syntax see: https://jsdoc.app/tags-type.html
-params: 
-returns:
+params: |
+    
+returns: |
+    
 ---
 {{ raw }}
 
