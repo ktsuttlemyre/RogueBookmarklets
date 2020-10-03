@@ -202,11 +202,7 @@ RogueBM.scriptCDNs={
 };
 
 
-    {%- assign commoncollection = site.collections | where:"label","common" -%}
-    {%- assign commons = commoncollection.files | concat: commoncollection.docs  -%}
-    {%- for common in commons -%}
-        {{ common.content }}
-    {%- endfor -%}
+//commons
     
    
    
