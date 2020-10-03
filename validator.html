@@ -80,7 +80,7 @@ function getCommentBlock(text) {
             if(typeof element=='string'){
                 element=document.createElement(element);
             }
-            var id=attrs.id||element.id;
+            var id=(attrs && attrs.id)||element.id;
             if(!cache[id]){
                 cache[id]=element;
             }
