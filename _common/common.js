@@ -1,6 +1,6 @@
 ---
 ---
-
+//Common functions that I don't want to load async but have them compiled into js files
   
   
 
