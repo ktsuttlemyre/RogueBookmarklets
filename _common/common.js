@@ -38,7 +38,7 @@ function getCommentBlock(text) {
    
   
     return commentObj;
-}
+};
 
 function getArgumentDetails (scriptEntry){
         var doc=scriptEntry.params;
@@ -74,7 +74,7 @@ function getArgumentDetails (scriptEntry){
             params.push({optional:optional,type:type,name:name,default:value,description:description});
         }
         return {args:args,params:params};
-    }
+    };
 
     var createElement=(function(){
         var cache={}, setAttributesFor=['style'];
@@ -123,7 +123,7 @@ function getArgumentDetails (scriptEntry){
 
             return element;
         }
-    })()
+    })();
 
     
     (function(){
