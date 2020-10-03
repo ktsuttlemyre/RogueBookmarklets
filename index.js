@@ -200,13 +200,14 @@ RogueBM.scriptCDNs={
   "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
   "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
 };
+   
+  //commons
+  {%- assign commoncollection = site.collections | where:"label","common" -%}
+  {%- assign commons = commoncollection.docs | concat: commoncollection.files -%}
+  {%- for common in commons -%}
+    {{ common.content }}
+  {%- endfor -%}  
 
-
-//commons
-    
-   
-   
-   
 // //jsonp callback
 function readySignal(){
   var callback=window.RogueBM.loaded;
