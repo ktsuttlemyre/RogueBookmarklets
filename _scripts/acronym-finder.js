@@ -16,7 +16,7 @@ data privacy: [third-party-visit]
 
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
-  {string} word=getSelection - word to find the acronym for
+  {string} word=getSelection|stdin - word to find the acronym for
 returns: |
   {undefined} 
 ---
