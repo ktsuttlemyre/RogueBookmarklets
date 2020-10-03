@@ -77,7 +77,7 @@
         })()
     };
 
-     
+     //touch
     {%- assign commonLibs = site.collections | where: "label","common" -%}
     {%- assign commons = commonLibs.files | concat: comonLibs.docs  -%}
     {%- for common in commons -%}
