@@ -1,3 +1,5 @@
+---
+---
 function getCommentBlock(text) {
   //https://stackoverflow.com/questions/27113509/how-to-extract-block-comments-from-a-string-using-regular-expressions
     var comments,
