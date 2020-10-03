@@ -234,13 +234,13 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     var keyElem=createElement('span',{className:'node-key mr-2','text':key},li);
     var pathElem=createElement('span',{className:'node-key mr-2 badge badge-secondary', style:'font-size:.7em','text':scriptEntry['path']},keyElem);
     var tagElem=createElement('span',{className:'node-type-valid mr-2'},li);
+    var jsonElem=createElement('span',{className:'node-type-valid mr-2', style:'display:none',innerHTML:'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>'},li);
     
-    
-    var valid, tagElem;
    
-    valid = validate(scriptEntry);
+    var valid = validate(scriptEntry);
     if(!valid){
-        keyStatus.innerHTML='<span class="badge badge-danger">Error</span><br>'+validate.errors.map(function(obj){
+        keyStatus.innerHTML='<span class="badge badge-danger">Error</span>'
+        tagElem.innerHTML=validate.errors.map(function(obj){
             return obj.message.replace(/(["'])[^]*?\1/g,function(match){
                 return '<span class="badge badge-info">'+match+'</span>'
             })
@@ -249,6 +249,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     }else{
         keyStatus.innerHTML='<span class="badge badge-success">Success</span>';
     }
+    
     
     
 
