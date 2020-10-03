@@ -72,6 +72,15 @@
 //     }
     
     
+    function paramsToMessage(params){
+        var keys=Object.keys(params);
+        var message='';
+        for(var i=0,l=keys.length;i<l;i++){
+            message+=key+' '+params[key]
+        }
+        return message
+    }
+    
     
 var inferedSchema={
   "type": "object",
@@ -172,7 +181,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         keyStatus.innerHTML=''
         var errorElem='<span class="badge badge-danger mx-3">Error</span>'
         tagElem.innerHTML=errorElem+validate.errors.map(function(obj){
-            return '<span class="badge badge-secondary mx-2">'+obj.schemaPath+'</span>'+obj.message.replace(/(["'])[^]*?\1/g,function(match){
+            return '<span class="badge badge-secondary mx-2">'+obj.schemaPath+'</span>'+paramsToMessage(obj.params)+obj.message.replace(/(["'])[^]*?\1/g,function(match){
                 return '<span class="badge badge-info">'+match+'</span>'
             })
         }).join("<br>"+errorElem);
