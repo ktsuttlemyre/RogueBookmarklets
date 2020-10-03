@@ -76,7 +76,8 @@
         var keys=Object.keys(params);
         var message='';
         for(var i=0,l=keys.length;i<l;i++){
-            message+=key+' '+params[key]
+            var key=keys[i];
+            message+=key+' '+params[key];
         }
         return message
     }
