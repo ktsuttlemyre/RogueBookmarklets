@@ -38,8 +38,13 @@
   <title>RogueBookmarklets</title>
   <script>
 
-     //commons
-    
+   //commons
+  {%- assign commoncollection = site.collections | where:"label","common" -%}
+  {%- assign commons = commoncollection.docs | concat: commoncollection.files -%}
+  {%- for common in commons -%}
+    {{ common.content }}
+  {%- endfor -%}
+  
   </script>
 </head>
 <body>
