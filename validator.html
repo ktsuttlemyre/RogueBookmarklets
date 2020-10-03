@@ -266,7 +266,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         keyStatus.innerHTML=''
         var errorElem='<span class="badge badge-danger mx-3">Error</span>'
         tagElem.innerHTML=errorElem+validate.errors.map(function(obj){
-            return obj.message.replace(/(["'])[^]*?\1/g,function(match){
+            return obj.dataPath+' '+obj.keyword+' '+obj.message.replace(/(["'])[^]*?\1/g,function(match){
                 return '<span class="badge badge-info">'+match+'</span>'
             })
         }).join("<br>"+errorElem);
