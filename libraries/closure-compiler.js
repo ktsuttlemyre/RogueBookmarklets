@@ -1,44 +1,47 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
+  Closure compiler api which exposes a function with the signature
+  code = string (can be 'clear_cache' to clear cache)
+  opts[optional] = options object
+  callback function expecting to recive (err,Compiled) where Compiled is an object with the methods 'compiled','oneLine',closure','bookmarklet'
 
-    you can use multiple lines. Its totally cool here
-params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
-returns: |
-    {bool} something something
+
+  All options the compiler accepts are aviable but here are a few
+  compilation_level 'WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS' or 0,1,2 or pretty_print
+  output_file_name default.js
+  formatting pretty_print,print_input_delimiter
+
+  //more flags can be found here https://developers.google.com/closure/compiler/docs/api-ref
+
+  This will also accept compilation_level strings as opts. This also includes "pretty_print"
+  which will auto set formatting to pretty_print and compliation_level to WHITESPACE_ONLY
+
+  calls are asyncryonus locally but blocked so that the service only gets one at a time. A pause time of 5 seconds is default between calls
+
+  calls are cached in order to reduce calls to the compiler
+  cache can be cleared by calling closureCompiler('cache_clear') or disabled by closureCompiler('cache_off')
+
+  //Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
+  //pretty print example: closureCompiler('(function(){/*yeet*/alert("big mood")})()',{'compilation_level':'pretty_print'},function(e,obj){console.log(obj.closure())})
+####### Other Metadata #######
 authors: |
-    Hong Kiat collection <hongkiat.com>
-    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
-originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+  Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+
+####### function signature #######
+qualified urls: []
+async: true
 layout: script
+type: library
+data privacy: [third-party-request]
+
+
+# for syntax see: https://jsdoc.app/tags-type.html
+params: |
+  {string} code - the code to change
+  {type} VarName - //TODO
+returns: |
+  {object} the compile object?
 ---
-/*
-Closure compiler api which exposes a function with the signature
-code = string (can be 'clear_cache' to clear cache)
-opts[optional] = options object
-callback function expecting to recive (err,Compiled) where Compiled is an object with the methods 'compiled','oneLine',closure','bookmarklet'
-
-
-All options the compiler accepts are aviable but here are a few
-compilation_level 'WHITESPACE_ONLY','SIMPLE_OPTIMIZATIONS','ADVANCED_OPTIMIZATIONS' or 0,1,2 or pretty_print
-output_file_name default.js
-formatting pretty_print,print_input_delimiter
-
-//more flags can be found here https://developers.google.com/closure/compiler/docs/api-ref
-
-This will also accept compilation_level strings as opts. This also includes "pretty_print"
-which will auto set formatting to pretty_print and compliation_level to WHITESPACE_ONLY
-
-calls are asyncryonus locally but blocked so that the service only gets one at a time. A pause time of 5 seconds is default between calls
-
-calls are cached in order to reduce calls to the compiler
-cache can be cleared by calling closureCompiler('cache_clear') or disabled by closureCompiler('cache_off')
-*/
-//Example closureCompiler('(function(){/*yeet*/alert("big mood")})()',function(e,obj){console.log(obj.closure())})
-//pretty print example: closureCompiler('(function(){/*yeet*/alert("big mood")})()',{'compilation_level':'pretty_print'},function(e,obj){console.log(obj.closure())})
 var closureCompiler=(function(){
 	var cache={},queue=[],blocked=0,timeout=5000;//milliseconds;
 	function Compiled(compiled){
