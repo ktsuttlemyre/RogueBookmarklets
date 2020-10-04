@@ -1,19 +1,26 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
-
-    you can use multiple lines. Its totally cool here
-params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
-returns: |
-    {bool} something something
+  Takes a screenshot of the current webpage in diffrent browsers
+ 
+####### Other Metadata #######
 authors: |
     Hong Kiat collection <hongkiat.com>
-    Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+
+####### function signature #######
+qualified urls: []
+async: false
 layout: script
+type: tool
+data privacy: [third-party-request]
+
+# for syntax see: https://jsdoc.app/tags-type.html
+params: |
+  {type} location=location - Location of current webpage
+returns: |
+  {undefined} 
+  
+  
 ---
 {{ raw }}
 void(location.href='http://browsershots.org/?url='+encodeURIComponent(location))
