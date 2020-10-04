@@ -13,10 +13,10 @@ qualified urls: []
 type: tool, web-app, toy, service
 data privacy: [local]
 
-
+layout: script
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
-
+  {undefined}
 returns: |
   {undefined} 
 ---
