@@ -9,7 +9,6 @@ originalsource: https://www.acronymfinder.com/
 
 ####### function signature #######
 qualified urls: []
-specs: []
 layout: script
 type: tool
 data privacy: [third-party-visit]
