@@ -1,3 +1,5 @@
+---
+---
 (function(window, document, undefined) {
 	var selectedText = document.getSelection().toString();
 	if (selectedText === '') {
