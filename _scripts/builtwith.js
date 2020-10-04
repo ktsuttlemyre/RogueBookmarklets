@@ -1,21 +1,26 @@
 ---
 description: |
-    <h1>This is some markdown content in YAML that will be output as an </h1>.
-    describe the code here
+  Redirects to builtwith.com to show stats on what the current web page is build with
 
-    you can use multiple lines. Its totally cool here
-params: |
-    {type} describe what you expect to see as input
-    {type} describe what you expect to see as input
-returns: |
-    {bool} something something
+####### Other Metadata #######
 authors: |
-    Hong Kiat collection <hongkiat.com>
     Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/
+
+####### function signature #######
+qualified urls: []
+async: false
 layout: script
+type: service
+data privacy: [local, server, third-party-request, third-party-inline, third-party-visit]
+
+# for syntax see: https://jsdoc.app/tags-type.html
+params: |
+  {string} host|location.host - host to analize 
+
+returns: |
+  {undefined}
 ---
 {{ raw }}
-
 void window.open("http://builtwith.com/?" + location.host);
 {{ endraw }}
