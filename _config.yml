@@ -2,12 +2,12 @@ theme: jekyll-theme-minimal
 defaults:
   -
     scope:
-      path: "bookmarklets"
+      path: "bookmarklets/*"
     values:
       layout: "script"
   -
     scope:
-      path: "_script"
+      path: "_script/*"
     values:
       layout: "script"
 collections:
