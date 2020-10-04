@@ -11,7 +11,6 @@ originalsource: codepen.com/something/something
 
 ####### function signature #######
 qualified urls: []
-specs: []
 layout: script
 type: tool
 data privacy: [third-party-visit]
