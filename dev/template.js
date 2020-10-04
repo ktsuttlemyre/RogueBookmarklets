@@ -16,13 +16,13 @@ originalsource: codepen.com/something/something
 ####### function signature #######
 qualified urls: []
 async: true|false
-layout: script
 type: tool, web-app, toy, service
 data privacy: [local, server, third-party-request, third-party-inline, third-party-visit]
 libraries:
   src: "https://code.jquery.com/jquery-3.5.1.min.js"
   integrity: "sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   test: "window.jQuery"
+  callback: "aFunction"
 
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
