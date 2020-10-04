@@ -13,7 +13,7 @@ originalsource: https://www.karmatics.com/aardvark/
 
 ####### function signature #######
 qualified urls: []
-specs: [async]
+async: true
 layout: script
 type: tool
 data privacy: [ third-party-inline]
