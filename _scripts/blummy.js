@@ -9,11 +9,14 @@ authors: |
   Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: https://github.com/ktsuttlemyre/RogueBookmarklets
 
-
-
 ####### function signature #######
-specs: []
+qualified urls: []
+async: true
 layout: script
+type: tool
+data privacy: [third-party-inline]
+libraries:
+  - ["https://code.jquery.com/jquery-3.5.1.min.js", "sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" ]
 
 # for syntax see: https://jsdoc.app/tags-type.html
 params: |
