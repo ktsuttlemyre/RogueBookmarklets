@@ -21,11 +21,11 @@ returns: |
   {undefined} 
 ---
 # Assignment:
-number   = 420
+number   = 4200
 opposite = true
 
 # Conditions:
-number = -420 if opposite
+number = -4200 if opposite
 
 # Functions:
 square = (x) -> x * x
