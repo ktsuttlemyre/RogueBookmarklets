@@ -99,11 +99,21 @@ var inferedSchema={
       "type": "array",
       "items": {}
     },
-//     "specs": {
-//         "not": {
-//             type: ["number", "integer", "string", "boolean", "array", "object", "null"]
-//         }
-//     },
+    "specs": {
+        "not": {
+            type: ["number", "integer", "string", "boolean", "array", "object", "null"]
+        }
+    },
+    "qualified-urls": {
+        "not": {
+            type: ["number", "integer", "string", "boolean", "array", "object", "null"]
+        }
+    },
+    "data-privancy": {
+        "not": {
+            type: ["number", "integer", "string", "boolean", "array", "object", "null"]
+        }
+    },
     "async": {
       "type": "boolean"
     },
@@ -126,6 +136,7 @@ var inferedSchema={
       "type": "array",
       "items": [
         {
+          "additionalProperties": false
           "type": "array",
           "items": [
             {
@@ -159,7 +170,7 @@ var inferedSchema={
     "params",
     "returns"
   ],
-   "additionalProperties": false
+//   "additionalProperties": false
 }
     
 
