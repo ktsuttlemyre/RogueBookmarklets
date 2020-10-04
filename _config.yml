@@ -7,7 +7,7 @@ defaults:
       layout: "script"
   -
     scope:
-      path: "_script/*"
+      path: "_scripts/*"
     values:
       layout: "script"
 collections:
