@@ -149,15 +149,18 @@ var inferedSchema={
       "items": [
         {
           "additionalProperties": false,
-          "type": "array",
-          "items": [
-            {
+          "type": "object",
+          "properties": {
+            "src":{
               "type": "string"
             },
-            {
+            "integrity":{
+              "type": "string"
+            },
+            "test":{
               "type": "string"
             }
-          ]
+          }
         }
       ]
     },
