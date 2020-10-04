@@ -1,4 +1,15 @@
 theme: jekyll-theme-minimal
+defaults:
+  -
+    scope:
+      path: "bookmarklets"
+    values:
+      layout: "script"
+  -
+    scope:
+      path: "_script"
+    values:
+      layout: "script"
 collections:
   scripts:
     output: true
