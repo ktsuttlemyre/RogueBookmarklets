@@ -52,9 +52,17 @@
   </script>
 </head>
 <body>
-
+<iframe width="100%" style="overflow:hidden;" border="0" onload="iframeLoaded();" src="https://ktsuttlemyre.github.io/RogueBookmarklets/dev/template.js"></iframe>
 
 <script>
+      function iframeLoaded() {
+      var iFrameID = document.getElementById('idIframe');
+      if(iFrameID) {
+            // here you can make the height, I delete it first, then I make it again
+            iFrameID.height = "";
+            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+      }   
+  }
 //     var template={ 
 //           description: {type:'string'},
 //           authors: {type:'string',postitiveTest:/.*?\<.*?\>/}, //Jane Doe <another url>
@@ -263,5 +271,5 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         
 
 </script>
-
+    
 </body>
