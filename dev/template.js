@@ -29,7 +29,7 @@ params: |
   {type} VarName - describe what you expect to see as input
   {type} VarName - describe what you expect to see as input
 returns: |
-  {bool} Something something
+  {undefined} Some Description if needed
 
 ---
 var aLiquidVariable = {{ site.github.build_revision }}
