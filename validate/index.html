@@ -252,7 +252,9 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         async: true,
         dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
         success: function (data){
-            frontMatterElem.innerHTML='<textarea style="width:100%;height:300px">'+RogueBM.stringHandlebarFormat(template,getCommentBlock(data))+'</textarea>'
+            var comments=getCommentBlock(data)
+            frontMatterElem.innerHTML='<textarea style="width:100%;height:300px">'+RogueBM.stringHandlebarFormat(template,comments))+'</textarea>'+
+            '<pre>'+comments+'</pre>'
         },
         error: function(jqXHR,textStatus,errorThrown ){
           console.error(textStatus,errorThrown,jqXHR)
