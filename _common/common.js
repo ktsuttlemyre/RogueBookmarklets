@@ -128,9 +128,13 @@ function getArgumentDetails (scriptEntry){
     
  var generateStringFormatter=(function(){
   //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
+   var last={};
   var format=function(prefix,suffix){
     return  function(str){
       "use strict";
+       if(last===str){
+         return str = str.replace(new RegExp(prefix + ".*?" + suffix, "gi"), '');
+       }
        // this is the stringFormat function used at stackoverflow
        // orignal https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
        var t = typeof arguments[1];
@@ -141,6 +145,7 @@ function getArgumentDetails (scriptEntry){
        for (var i=0,l=keys.length;i<l;i++) {
            str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
        }
+       last=str;
        return str;
     };
   }
