@@ -229,7 +229,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
     createElement('br',null,li)
     var tagElem=createElement('span',{className:'node-type-valid mr-2'},li);
     var jsonElem=createElement('span',{className:'node-type-valid mr-2', style:'display:none',innerHTML:'<pre>'+JSON.stringify(scriptEntry[key],null,2)+'</pre>'},li);
-    var frontMatterElem=createElement('span',{className:'node-type-frontmatter mr-2', style:''},li);
+    var frontMatterElem=createElement('div',{className:'node-type-frontmatter mr-2', style:''},li);
     
    
     var valid = validate(scriptEntry);
@@ -253,7 +253,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         async: true,
         dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
         success: function (data){
-            frontMatterElem.innerHTML='<pre>'+RogueBM.stringHandlebarFormat(template,getCommentBlock(data))+'</pre>'
+            frontMatterElem.innerHTML='<textarea>'+RogueBM.stringHandlebarFormat(template,getCommentBlock(data))+'</textarea>'
         },
         error: function(jqXHR,textStatus,errorThrown ){
           console.error(textStatus,errorThrown,jqXHR)
