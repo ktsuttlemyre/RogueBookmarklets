@@ -139,7 +139,7 @@ function getArgumentDetails (scriptEntry){
            : Array.prototype.slice.call(arguments,1);
        var keys=Object.keys(args)
        for (var i=0,l=keys.length;i<l;i++) {
-           str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]]);
+           str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
        }
        return str;
     };
