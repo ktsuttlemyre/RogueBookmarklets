@@ -126,7 +126,7 @@ function getArgumentDetails (scriptEntry){
     })();
 
     
-    (function(){
+ var generateStringFormatter=(function(){
   //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
   var format=function(prefix,suffix){
     return  function(str){
@@ -146,4 +146,5 @@ function getArgumentDetails (scriptEntry){
   }
   RogueBM.stringFormat=format("\\{","\\}")
   RogueBM.stringHandlebarFormat=format("\\{\\{","\\}\\}")
+  return format
 })();
