@@ -129,20 +129,28 @@ function getArgumentDetails (scriptEntry){
  var generateStringFormatter=(function(){
   //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
   var format=function(prefix,suffix){
-    return  function(str){
-      "use strict";
-       if(arguments.length==1){
-         return str = str.replace(new RegExp(prefix + ".*?" + suffix, "gi"), '');
-       }
-       // this is the stringFormat function used at stackoverflow
+    "use strict";
+    return  function(str/*obj,clean*/){
+      // this is modeled off the stringFormat function used at stackoverflow
        // orignal https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
-       var t = typeof arguments[1];
-       var args = (t === "object" || (arguments[1].length!=null && t!=="string")) ?
-            arguments[1]
-           : Array.prototype.slice.call(arguments,1);
-       var keys=Object.keys(args)
-       for (var i=0,l=keys.length;i<l;i++) {
-           str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
+       var t = typeof arguments[1], args, clean;
+       if(t === "object" || (arguments[1].length!=null && t!=="string")){
+          args=arguments[1];
+          clean = arguments[2];
+       }else{
+         args=Array.prototype.slice.call(arguments,1);
+         if(!args.length){
+           clean=true
+         }
+       }
+       if(args.length){
+         var keys=Object.keys(args)
+         for (var i=0,l=keys.length;i<l;i++) {
+             str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
+         }
+       }
+       if(clean===true){
+         str = str.replace(new RegExp(prefix + ".*?" + suffix, "gi"), '');
        }
        return str;
     };
