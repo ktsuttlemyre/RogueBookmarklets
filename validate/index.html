@@ -94,13 +94,13 @@
         return message
     }
  var template= '   description: |  \n'  + 
- '     {{description}}  \n'  + 
+ '     <replace>description</replace>  \n'  + 
  '       \n'  + 
- '   deprecated: {{deprecated}}\n'  + 
+ '   deprecated: <replace>deprecated</replace>\n'  + 
  '   ####### Other Metadata #######  \n'  + 
  '   authors: |  \n'  + 
- '     {{author}} \n'  + 
- '   originalsource: {{link}}  \n'  + 
+ '     <replace>author</replace> \n'  + 
+ '   originalsource: <replace>link</replace>  \n'  + 
  '     '  + 
  '   ####### function signature #######  \n'  + 
  '   qualified urls: []  \n'  + 
@@ -212,7 +212,7 @@ var inferedSchema={
 //   "additionalProperties": false
 }
     
-
+var customFormatter = generateStringFormatter('<replace>','</replace>')
     
 const ajv = new Ajv({allErrors:true,uniqueItems:true}) // options can be passed, e.g. {allErrors: true}
 const validate = ajv.compile(inferedSchema)
@@ -253,7 +253,7 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
         success: function (data){
             var comments=getCommentBlock(data)
-            frontMatterElem.innerHTML='<textarea style="width:100%;height:300px">'+RogueBM.stringHandlebarFormat(template,comments)+'</textarea>'+
+            frontMatterElem.innerHTML='<textarea style="width:100%;height:300px">'+customFormatter(template,comments)+'</textarea>'+
             '<pre>'+JSON.stringify(comments)+'</pre>'
         },
         error: function(jqXHR,textStatus,errorThrown ){
