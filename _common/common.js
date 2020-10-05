@@ -128,11 +128,10 @@ function getArgumentDetails (scriptEntry){
     
  var generateStringFormatter=(function(){
   //encodeURI(RogueBM.stringFormat(RogueBM.scriptEndpoints.edit,RogueBM.scripts['to_qr']))
-   var last={};
   var format=function(prefix,suffix){
     return  function(str){
       "use strict";
-       if(last===str){
+       if(arguments.length==1){
          return str = str.replace(new RegExp(prefix + ".*?" + suffix, "gi"), '');
        }
        // this is the stringFormat function used at stackoverflow
@@ -145,7 +144,6 @@ function getArgumentDetails (scriptEntry){
        for (var i=0,l=keys.length;i<l;i++) {
            str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
        }
-       last=str;
        return str;
     };
   }
