@@ -2,8 +2,8 @@
 ---
 {%- capture NL -%}
 {%- endcapture -%}
-{%- comment -%} Filter reason:           big data strings                 repetitive data            normalized content {%- endcomment -%}
-{%- assign keyword_filter = "next previous  excerpt | extname url title basename dir | modified_time path name" -%} //output content
+{%- comment -%} Filter reason: big data strings     repetitive data     can be derrived from path         normalized content {%- endcomment -%}
+{%- assign keyword_filter = "output content | next previous excerpt | extname url title basename dir | modified_time path name" -%} //
 {%- assign counter = -1 -%}
 window.RogueBM=window.RogueBM||{};
 window.RogueBM.about=window.RogueBM.about||{}; //injector should have already created an obj
