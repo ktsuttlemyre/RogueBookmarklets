@@ -146,7 +146,7 @@ function getArgumentDetails (scriptEntry){
        if(args){
          var keys=Object.keys(args)
          for (var i=0,l=keys.length;i<l;i++) {
-             str = str.replace(new RegExp(prefix + '.*?:' + keys[i] + suffix, "gi"), function(match,group){
+             str = str.replace(new RegExp(prefix + '.*?:?' + keys[i] + suffix, "gi"), function(match,group){
                //var split=group.split(':');
                //var value = args[keys[i]].toString();    
                //var fn=null
