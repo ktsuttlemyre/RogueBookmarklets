@@ -143,10 +143,21 @@ function getArgumentDetails (scriptEntry){
            clean=true
          }
        }
-       if(args.length){
+       if(args){
          var keys=Object.keys(args)
          for (var i=0,l=keys.length;i<l;i++) {
-             str = str.replace(new RegExp(prefix + keys[i] + suffix, "gi"), args[keys[i]].toString());
+             str = str.replace(new RegExp(prefix + '.*?:' + keys[i] + suffix, "gi"), function(match,group){
+               //var split=group.split(':');
+               //var value = args[keys[i]].toString();    
+               //var fn=null
+               //while(var fn=split.pop()){
+               //   fn=this[split[j]]||window[split[j]]
+                //  if(fn){
+               //     value=fn(value);
+               //   }
+               //}
+               return args[keys[i]].toString();                                                                    
+             });
          }
        }
        if(clean===true){
