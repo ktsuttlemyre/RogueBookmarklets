@@ -23,7 +23,7 @@ returns: |
 ---
 (function() {
     var s = document.createElement('link');
-    s.setAttribute('href', '//https://ktsuttlemyre.github.io/RogueBookmarklets/libs/css/opendyslexic.css');
+    s.setAttribute('href', '//ktsuttlemyre.github.io/RogueBookmarklets/libs/css/opendyslexic.css');
     s.setAttribute('rel', 'stylesheet');
     s.setAttribute('type', 'text/css');
     document.getElementsByTagName('head')[0].appendChild(s);
