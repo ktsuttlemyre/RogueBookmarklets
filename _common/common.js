@@ -134,7 +134,7 @@ function getArgumentDetails (scriptEntry){
       // this is modeled off the stringFormat function used at stackoverflow
        // orignal https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
        var t = typeof arguments[1], args, clean;
-       if(t === "object" || (arguments[1].length!=null && t!=="string")){
+       if(t === "object" || (arguments[1]!=null && arguments[1].length!=null && t!=="string")){
           args=arguments[1];
           clean = arguments[2];
        }else{
