@@ -197,10 +197,10 @@ window.RogueBM.scripts={
 //https://github.com/theus/instantgram/blob/gh-pages/dist/main.js
 }
 RogueBM.scriptCDNs={
-  "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master/{path}",
-  "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets/{path}",
-  "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets/{path}",
-  "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets/{path}"
+  "edit":"https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{path}",
+  "jsdelivr":"https://cdn.jsdelivr.net/gh/ktsuttlemyre/RogueBookmarklets{path}",
+  "github_raw":"https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master/bookmarklets{path}",
+  "github_pages":"https://ktsuttlemyre.github.io/RogueBookmarklets{path}"
 };
    
    //commons
