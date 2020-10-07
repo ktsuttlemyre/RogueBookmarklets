@@ -703,6 +703,7 @@
         //then dont show the prompt and wait for the event to trigger from downlaoding the index.js
         var lastCMD=RogueBM.lastCMD;
         if(!lastCMD && RogueBM['about']['injector']['option']('autoShow')!==false){
+            alert('UPPPPPPPP')
            show();
         }
     });
