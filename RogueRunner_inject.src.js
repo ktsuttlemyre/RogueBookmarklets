@@ -25,19 +25,21 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
-   if(window!==top){
+   var RogueBM=window['RogueBM']||{},scripts = document.getElementsByTagName( 'script' ),params,debug=options['debug'],postMessage='postMessage';
+   if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
    }
-  // set the RogueBM object
-  var debug=options['debug'],
-    postMessage='postMessage',
-    RogueBM=window['RogueBM']=(window['RogueBM'] || {}); //in block notation so closure compiler will 'export' the vairable
-  // // pollyfill for date.now
-  // if (!Date.now) {
-  //   Date.now = function now() {
-  //     return
-  //   };
-  // }
+   for (var i = scripts.length - 1; i >= 0; i--){ //search backward because its probably the last injected script
+      params=(scripts[i].src||'').split('/RogueBookmarklets/RogueRunner_inject.js?')[1]||'';
+      if(params){
+         break;
+      }
+   }
+   var forceRun=params.indexOf('forceRun')>=0;
+   //var autoShow=params.indexOf('autoShow=false')>=0
+   if(window!==top||!forceRun){ //TODO fix this for RogueRunner.html
+      return;
+   }
 
   //options include
   //forceIframeInject = defaults false will force iframe injection only
@@ -595,7 +597,8 @@ Allows [iframe insertion] [popups]
     RogueBM['getSessionID']=function(){
       prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID);
     };
-    RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers,'option':function(str){return options[str];}}};
+    RogueBM['revision'='{{ site.github.build_revision }}';
+    RogueBM['about']={'injector':{'version':vers,'option':function(str){return options[str];}}};
    
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
