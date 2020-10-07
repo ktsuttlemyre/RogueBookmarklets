@@ -532,7 +532,7 @@ Allows [iframe insertion] [popups]
 
   var skin=options['skin'];
   skin=( (("all" in documentElement.style) || ("cssall" in documentElement.style)) && ( skin != false) )?'_'+skin:'';
-  var rogueRunnerSrc=baseURL+'RogueRunner_src'+skin+'.js; //?user='+encodeURIComponent(options['user']);
+  var rogueRunnerSrc=baseURL+'RogueRunner_src'+skin+'.js'; //?user='+encodeURIComponent(options['user']);
   if(cmd){
     rogueRunnerSrc+='&cmd='+encodeURIComponent(cmd);
   }
