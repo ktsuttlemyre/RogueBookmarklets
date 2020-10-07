@@ -598,4 +598,4 @@ Allows [iframe insertion] [popups]
     RogueBM.open=function(url){
         var win = window.open(url, '_blank', externalWindowString);
     };
-})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':'false'},'%s');
+})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':false},'%s');
