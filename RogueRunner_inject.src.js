@@ -25,6 +25,9 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
+   if(window!==top){
+      return;
+   }
   // set the RogueBM object
   var debug=options['debug'],
     postMessage='postMessage',
