@@ -532,7 +532,7 @@ Allows [iframe insertion] [popups]
 
   var skin=options['skin'];
   skin=( (("all" in documentElement.style) || ("cssall" in documentElement.style)) && ( skin != false) )?'_'+skin:'';
-  var rogueRunnerSrc=baseURL+'RogueRunner_src'+skin+'.js?user='+encodeURIComponent(options['user']);
+  var rogueRunnerSrc=baseURL+'RogueRunner_src'+skin+'.js; //?user='+encodeURIComponent(options['user']);
   if(cmd){
     rogueRunnerSrc+='&cmd='+encodeURIComponent(cmd);
   }
@@ -574,7 +574,7 @@ Allows [iframe insertion] [popups]
         !initScripts.length && RogueBM['init']();
     };
 
-
+    
 
 
     //a bit of security
@@ -592,10 +592,10 @@ Allows [iframe insertion] [popups]
     RogueBM['getSessionID']=function(){
       prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID);
     };
-    RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers}};
-
+    RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers,option:function(str){return options[str];}}};
+   
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
         var win = window.open(url, '_blank', externalWindowString);
     };
-})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.5',{'user':'anonymous','skin':'experimental','debug':false},'%s');
+})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false},'%s');
