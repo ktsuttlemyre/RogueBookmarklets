@@ -585,7 +585,7 @@
 
     
     ///////////////////////
-    var modalBackdropDiv = createElement('div',{id:'RogueRunner'}); //this will be appended to body when document is finished loading
+    var modalBackdropDiv = createElement('div',{id:'RogueRunner',style:'display:none;'}); //this will be appended to body when document is finished loading
     // Create modal; 
     var modalPane = createElement('div',{className:'modal-content'},modalBackdropDiv);
     // input for rogue runner
@@ -710,7 +710,7 @@
 
     function show(){
         debugger
-        console.log('')
+        console.log('autoshow',RogueBM['about']['injector']['option']('autoShow'))
         console.error('something')
         console.trace()
         
