@@ -592,7 +592,7 @@ Allows [iframe insertion] [popups]
     RogueBM['getSessionID']=function(){
       prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID);
     };
-    RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers,option:function(str){return options[str];}}};
+    RogueBM['about']={'injector':{'revision':'{{ site.github.build_revision }}','version':vers,'option':function(str){return options[str];}}};
    
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
     RogueBM.open=function(url){
