@@ -25,16 +25,16 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
-   var RogueBM=window['RogueBM']||{},scripts = document.getElementsByTagName( 'script' ),params,debug=options['debug'],postMessage='postMessage';
+   var RogueBM=window['RogueBM']||{},script,scripts = Array.protoype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
+   var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
    if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
    }
-   for (var i = scripts.length - 1; i >= 0; i--){ //search backward because its probably the last injected script
-      params=(scripts[i].src||'').split('/RogueBookmarklets/RogueRunner_inject.js?')[1]||'';
-      if(params){
-         break;
-      }
+   while(params[0] && (script=scripts.shift())){ //search backward because its probably the last injected script
+      params=(script.src||postMessage).split(reg);
    }
+   params=params[1]||'';
+   document.body.remove(script);
    var forceRun=params.indexOf('forceRun')>=0;
    //var autoShow=params.indexOf('autoShow=false')>=0
    if(window!==top||!forceRun){ //TODO fix this for RogueRunner.html
@@ -532,8 +532,6 @@ Allows [iframe insertion] [popups]
     return;
   }
 
-  //inject the rogue runner dialog
-  var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/';
 
   var skin=options['skin'];
   skin=( (("all" in documentElement.style) || ("cssall" in documentElement.style)) && ( skin != false) )?'_'+skin:'';
