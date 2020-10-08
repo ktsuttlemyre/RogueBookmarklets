@@ -586,9 +586,9 @@ Allows [iframe insertion] [popups]
     var sessionID=UUID();
     loadCrossOriginLocalStorage();
     var messageData = {
-       key: '.',
+       key: '@',
        method: 'get',
-       prefix: 'bind.@',
+       prefix: 'bind',
     };
     RogueBM['xDLStorage'].postMessage(messageData,function(data){
       var toID=setInterval(function(){
