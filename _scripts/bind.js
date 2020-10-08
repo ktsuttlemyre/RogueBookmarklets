@@ -32,29 +32,29 @@ method=method.toLowerCase();
 switch(method){
     case 'push':
     case 'shift':
-            getData(ns,function(err,data){
+            getData(ns,function(data){
                 data=data||{};
                 var array=data[profile]||[];
                 array[method](script);
-                setData(data,next);
+                setData(ns,data,next);
             });
         break;
     case 'set':
-            getData(ns,function(err,data){
+            getData(ns,function(data){
                 data=data||{};
                 data[profile]=script;
-                setData(data,next);
+                setData(ns,data,next);
             });
         break;
     case 'get':
             getData(ns,next);
         break;
     case 'remove':
-            getData(ns,function(err,data){
+            getData(ns,function(data){
                 data=data||{};
                 data[profile]=null;
                 delete data[profile];
-                setData(data,next);
+                setData(ns,data,next);
             });
         break;
     default:
