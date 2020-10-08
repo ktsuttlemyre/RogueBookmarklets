@@ -246,20 +246,38 @@ Object.keys(RogueBM.scripts).forEach(function(key){
         li.className+=' success'
     }
     
+    var code;
     
     $.ajax({
         url: 'https://ktsuttlemyre.github.io/RogueBookmarklets'+scriptEntry['path'],
         async: true,
         dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
         success: function (data){
+            code=data
             var comments=getCommentBlock(data)
             frontMatterElem.innerHTML='<textarea style="width:100%;height:300px">'+customFormatter(customFormatter(template,comments))+'</textarea>'+
             '<pre>'+JSON.stringify(comments)+'</pre>'
+            var compile=createElement('button',{className:'btn btn-primary'},jsonElem)
+            compile.onclick(function(){
+                if(!code){
+                    alert('no code loaded to compile')
+                    return
+                }
+                closureCompiler(code,function(err,compile){
+                    if(err){
+                        alert('error,see console)
+                        console.error(err)
+                    }
+                    compile.parentNode.addChild(createElement('div',{text:compile.getCode()}))
+                })
+            });
         },
         error: function(jqXHR,textStatus,errorThrown ){
           console.error(textStatus,errorThrown,jqXHR)
         }
     })
+    
+    
 
 })
     
