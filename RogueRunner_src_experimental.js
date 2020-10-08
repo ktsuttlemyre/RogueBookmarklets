@@ -710,10 +710,10 @@
 
 
     function show(){
-        debugger
-        console.log('autoshow',RogueBM['about']['injector']['option']('autoShow'))
-        console.error('something')
-        console.trace()
+//         debugger
+//         console.log('autoshow',RogueBM['about']['injector']['option']('autoShow'))
+//         console.error('something')
+//         console.trace()
         
         singleLine.value=''
         multiLine.value=''
