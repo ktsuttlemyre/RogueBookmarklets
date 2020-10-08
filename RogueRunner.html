@@ -288,6 +288,13 @@ border: 1px solid #a7a7a7;
 						parent.postMessage(json,domain);
 					}
 				}
+				var jsonParse=function(str){
+					try{
+						return JSON.parse(str);
+					}catch(err){
+						return str
+					}
+				}
 
 				var _listener = function (e) {
 					//if (!allowedOrigins.includes(e.origin)) {
@@ -315,17 +322,17 @@ border: 1px solid #a7a7a7;
 							    if(Array.isArray(payload.key)){
 							    	data=[];
 							    	for(var i=0,l=payload.key.length;i<l;i++){
-							    		data.push(localStorage.getItem(namespace+payload.key[i])||undefined);
+							    		data.push(jsonParse(localStorage.getItem(namespace+payload.key[i]))||undefined);
 							    	}
 							    }else if(typeof payload.key == 'object'){
 							    	data={}
 							    	var keys = Object.keys(payload.key);
 							    	for(var i=0,l=keys.length;i<l;i++){
 							    		var key=keys[i];
-							    		data[key]=localStorage.getItem(namespace+key)||undefined;
+							    		data[key]=jsonParse(localStorage.getItem(namespace+key))||undefined;
 							    	}
 							    }else{
-									data = localStorage.getItem(namespace+payload.key)||undefined;
+									data = jsonParse(localStorage.getItem(namespace+payload.key))||undefined;
 							    }
 							    returnPayload.data=data;
 
