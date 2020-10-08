@@ -25,7 +25,7 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
-   var RogueBM=window['RogueBM']||{},script,scripts = Array.prototype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
+   var RogueBM=window['RogueBM']=window['RogueBM']||{},script,scripts = Array.prototype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
    var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
    if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
