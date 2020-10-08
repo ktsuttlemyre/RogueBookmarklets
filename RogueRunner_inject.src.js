@@ -564,6 +564,8 @@ Allows [iframe insertion] [popups]
   }
 
 
+
+
     var initScripts=['RogueRunner.js','index.js','js-yaml.min.js'];
     var loadedScripts=[];
     RogueBM['loaded']=function(name,secret){
@@ -583,11 +585,17 @@ Allows [iframe insertion] [popups]
     //a bit of security
     var sessionID=UUID();
     loadCrossOriginLocalStorage();
+    var messageData = {
+       key: '.',
+       method: 'get',
+       prefix: 'bind',
+    }
+    RogueBM['xDLStorage'].postMessage(messageData,function(data){RogueBM.autorun=data;RogueBM['processTick']();});
 
     injectScript(baseURL+'libs/js-yaml.min.js',sessionID,function(){return window['jsyaml'];});
     injectScript(baseURL+'index.js'/*?user='+options['user']*/,sessionID,function(){return RogueBM['scripts'];});
     injectScript(rogueRunnerSrc,sessionID,function(){return RogueBM['show'];});
-
+   
 
 
     //expose helper functions
