@@ -903,7 +903,7 @@
            clearInterval(toID);
            var keys = Object.keys(obj);
            for(var i=0,l=keys.length;i<l;i++){
-               if(location.href.match(new RegExp(obj[keys[i], 'i'))){
+               if(location.href.match(new RegExp(obj[keys[i]], 'i'))){
                     RogueBM.run(obj[keys[i]])
                }
            }
