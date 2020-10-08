@@ -25,7 +25,7 @@ Allows [iframe insertion] [popups]
 */
 
 (function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
-   var RogueBM=window['RogueBM']||{},script,scripts = Array.protoype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
+   var RogueBM=window['RogueBM']||{},script,scripts = Array.prototype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
    var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
    if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
@@ -589,8 +589,12 @@ Allows [iframe insertion] [popups]
        key: '.',
        method: 'get',
        prefix: 'bind',
-    }
-    RogueBM['xDLStorage'].postMessage(messageData,function(data){var toID=setInterval(function(){RogueBM['autoRun']&&RogueBM['autoRun'](data,toID);},1});
+    };
+    RogueBM['xDLStorage'].postMessage(messageData,function(data){
+      var toID=setInterval(function(){
+        RogueBM['autoRun']&&RogueBM['autoRun'](data,toID);
+      },1);
+    });
 
     injectScript(baseURL+'libs/js-yaml.min.js',sessionID,function(){return window['jsyaml'];});
     injectScript(baseURL+'index.js'/*?user='+options['user']*/,sessionID,function(){return RogueBM['scripts'];});
@@ -603,7 +607,7 @@ Allows [iframe insertion] [popups]
     RogueBM['getSessionID']=function(){
       prompt('Copy the session id below to use in protected RogueBM[injector] calls',sessionID);
     };
-    RogueBM['revision'='{{ site.github.build_revision }}';
+    RogueBM['revision']='{{ site.github.build_revision }}';
     RogueBM['about']={'injector':{'version':vers,'option':function(str){return options[str];}}};
    
     var externalWindowString="toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=300,top="+(screen.height-800)+",left="+(screen.width-300);
