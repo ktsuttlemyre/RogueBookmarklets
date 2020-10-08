@@ -28,7 +28,7 @@ if(!script){
     profile='.*';
 }
 var ns='.';
-var method=args[0].toLowerCase();
+method=method.toLowerCase();
 switch(method){
     case 'push':
     case 'shift':
