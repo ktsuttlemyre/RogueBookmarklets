@@ -588,7 +588,7 @@ Allows [iframe insertion] [popups]
     var messageData = {
        key: '.',
        method: 'get',
-       prefix: 'bind',
+       prefix: 'bind.all',
     };
     RogueBM['xDLStorage'].postMessage(messageData,function(data){
       var toID=setInterval(function(){
