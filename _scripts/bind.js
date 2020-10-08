@@ -27,7 +27,7 @@ if(!script){
     script=profile;
     profile='.*';
 }
-var key='script';
+var key='@';
 method=method.toLowerCase();
 switch(method){
     case 'push':
