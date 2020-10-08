@@ -384,7 +384,7 @@ Allows [iframe insertion] [popups]
               return;
             }
             if(handler.fn){
-              handler.fn(err, data, event);
+              handler.fn(err, data.data, event);
             }
             messageQueue[data[messageID]]=null;
             delete messageQueue[data[messageID]];
@@ -590,7 +590,7 @@ Allows [iframe insertion] [popups]
        method: 'get',
        prefix: 'bind',
     };
-    RogueBM['xDLStorage'].postMessage(messageData,function(data){
+    RogueBM['xDLStorage'].postMessage(messageData,function(err,data){
       var toID=setInterval(function(){
         RogueBM['autoRun']&&RogueBM['autoRun'](data,toID);
       },1);
