@@ -590,7 +590,7 @@ Allows [iframe insertion] [popups]
        method: 'get',
        prefix: 'bind',
     }
-    RogueBM['xDLStorage'].postMessage(messageData,function(data){var toID=setInterval(function(){RogueBM['Autorun'](data,toID);},1});
+    RogueBM['xDLStorage'].postMessage(messageData,function(data){var toID=setInterval(function(){RogueBM['autoRun']&&RogueBM['autoRun'](data,toID);},1});
 
     injectScript(baseURL+'libs/js-yaml.min.js',sessionID,function(){return window['jsyaml'];});
     injectScript(baseURL+'index.js'/*?user='+options['user']*/,sessionID,function(){return RogueBM['scripts'];});
