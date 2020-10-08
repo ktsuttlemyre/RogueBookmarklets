@@ -1,0 +1,59 @@
+---
+description: |
+  Internal command for RogueRunner to set a command to run every time you go to a website
+  
+####### Other Metadata #######
+authors: |
+  Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
+originalsource: https://github.com/ktsuttlemyre/RogueBookmarklets
+
+####### function signature #######
+qualified urls: []
+async: true
+type: tool
+data privacy: [local]
+
+# for syntax see: https://jsdoc.app/tags-type.html
+params: |
+  {string} method - push,shift,set,get,remove
+  {string} profile - Regex that matches the urls you want the comand to run on
+  {string} script - The command with arguments you want to run
+returns: |
+  {string|object} Returns the string if you use get otherwise returns 
+
+---
+/*method,profile,script*/
+if(!script){
+    script=profile;
+    profile='.*';
+}
+var ns='.';
+var method=args[0].toLowerCase();
+switch(method){
+    case 'push':
+    case 'shift':
+            getData(ns,function(data){
+                var array=data[profile]||[];
+                array[method](script);
+                setData(data,next);
+            });
+        break;
+    case 'set':
+            getData(ns,function(data){
+                data[profile]=script;
+                setData(data,next);
+            });
+        break;
+    case 'get':
+            getData(ns,next);
+        break;
+    case 'remove':
+            getData(ns,function(data){
+                data[profile]=null;
+                delete data[profile];
+                setData(data,next);
+            });
+        break;
+    default:
+        throw 'error'   
+}
