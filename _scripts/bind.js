@@ -27,30 +27,30 @@ if(!script){
     script=profile;
     profile='.*';
 }
-var ns='.';
+var key='.';
 method=method.toLowerCase();
 switch(method){
     case 'push':
     case 'shift':
-            getData(ns,function(data){
+            getData(key,function(data){
                 data=data||{};
                 var array=data[profile]||[];
                 array[method](script);
-                setData(ns,data,next);
+                setData(key,data,next);
             });
         break;
     case 'set':
-            getData(ns,function(data){
+            getData(key,function(data){
                 data=data||{};
                 data[profile]=script;
-                setData(ns,data,next);
+                setData(key,data,next);
             });
         break;
     case 'get':
-            getData(ns,next);
+            getData(key,next);
         break;
     case 'remove':
-            getData(ns,function(data){
+            getData(key,function(data){
                 data=data||{};
                 data[profile]=null;
                 delete data[profile];
@@ -58,5 +58,6 @@ switch(method){
             });
         break;
     default:
-        throw 'error'   
+        throw 'error'
+        next(); //idk if i need this
 }
