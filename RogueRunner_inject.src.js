@@ -37,7 +37,7 @@ Allows [iframe insertion] [popups]
    script && document.body.removeChild(script);
    var forceRun=params.indexOf('forceRun')>=0;
    //var autoShow=params.indexOf('autoShow=false')>=0
-   if(window!==top||!forceRun){ //TODO fix this for RogueRunner.html
+   if(window!==top||forceRun){ //TODO fix this for RogueRunner.html
       return;
    }
 
