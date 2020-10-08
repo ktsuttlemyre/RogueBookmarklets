@@ -1451,6 +1451,9 @@
                 kwargs.setData=function(key,data,callback){
                     return RogueBM.setData(key,data,proc.scriptEntry.name,callback);
                 }
+                kwargs.getData=function(key,callback){
+                    return RogueBM.getData(key,proc.scriptEntry.name,callback);
+                }
                 
                 kwargs.stdin=(function(){
                     if(thread.stdout.length-1==0){
@@ -1460,7 +1463,7 @@
                 })()
 
          
-                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,setData'.split(','),kwargs));
+                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,getData,setData'.split(','),kwargs));
 
                 //call tick again since we did a call
                 RogueBM['processTick']()
