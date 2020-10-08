@@ -1369,8 +1369,11 @@
     var inactiveThreads=[];
     function tick(){
         blocked=0;
-        if(RogueBM.autorun){
+        if(RogueBM.autorun==null){
+            setTimeout(function(){RogueBM.processTick()},1);
+        }else if(RogueBM.autorun){
             RogueBM.conditionalRun(autorun)
+            RogueBM.autorun=false;
         }
         var activeThreadIDs=Object.keys(activity).sort()
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
