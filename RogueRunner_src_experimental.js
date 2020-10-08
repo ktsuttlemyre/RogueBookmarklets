@@ -695,6 +695,7 @@
     // are nested and after dom is ready this prevents unnessisisary redraws
     ///////////////////////
     domready(function(){
+        RogueBM.processTick();
         //add interface to dom
         document.body.appendChild(modalBackdropDiv);
         setTextAreaHeight(); //make multiLine have some height
@@ -896,6 +897,16 @@
         //this will take a command name and convert it to the hyphanated script name in the repository
         return decodeURIComponent(name).replace(/[\u0000-\u0030\u003A-\u0040\u005B-\u0060\u007B-\u00A0]/gi,' ').replace(/(?:^|\.?)([A-Z])/g, function (x,y){return " " + y}).trim().replace(/\s+/gi,'-').toLowerCase()
     }
+   
+   RogueBM.conditionalRun=function(obj){
+       var keys = Object.keys(obj);
+       for(var i=0,l=keys.length;i<l;i++){
+           if(location.href.match(new RegExp(obj[keys[i], 'i'))){
+                RogueBM.run(obj[keys[i]])
+           }
+       }
+   }
+   
 
     var cachedCommands={};
     var cachePersonalArgs={};
@@ -1358,6 +1369,9 @@
     var inactiveThreads=[];
     function tick(){
         blocked=0;
+        if(RogueBM.autorun){
+            RogueBM.conditionalRun(autorun)
+        }
         var activeThreadIDs=Object.keys(activity).sort()
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
             var threadID=activeThreadIDs[i]
@@ -1540,7 +1554,11 @@
         if(!isInit){ //init once
             console.info('init RogueRunner');
             isInit=true;
-
+            
+            // handle any auto execute stuff or threads already loaded
+            RogueBM.processTick();
+            
+            //schema setup
             nestedThread = new jsyaml.Type('!subRun', {
                kind: 'sequence',
                construct: function (data) {
