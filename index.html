@@ -514,6 +514,10 @@ function download(filename, data) {
       });   //end scripts foreach
   
   
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      console.log(e.target,e) // newly activated tab
+    })
+    
   </script>
   </div>
 </body>
