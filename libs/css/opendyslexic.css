@@ -73,12 +73,6 @@ li:nth-child(even) {
 	background-color: rgba(0, 0, 0, .03)!important;
 }
 
-*,
-p {
-	font-family: opendyslexic!important;
-	/*font-size: 24px !important;
-	line-height: 1.5 !important;*/
-}
 
 span#contentbox {
 	font-family: opendyslexic!important;
@@ -89,7 +83,3 @@ textarea {
 	font-family: opendyslexic!important;
 }
 
-p {
-	/*font-size: 24px !important;
-	line-height: 1.5 !important;*/
-}
