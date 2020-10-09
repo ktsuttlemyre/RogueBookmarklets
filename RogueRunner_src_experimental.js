@@ -899,9 +899,11 @@
     }
    
    RogueBM.autoRun=function(obj,toID){
+       if(!isInit){
+         return
+       }
        clearInterval(toID);
        if(obj){
-           
            var keys = Object.keys(obj);
            for(var i=0,l=keys.length;i<l;i++){
                if(location.href.match(new RegExp(keys[i], 'i'))){
@@ -1551,7 +1553,6 @@
     var ArgPromiseRef = function ArgPromiseRef(childThreadID){
         this.childThreadID=childThreadID;
     };
-
 
     var isInit=false;
     window['RogueBM']['init']=function(){
