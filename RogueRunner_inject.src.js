@@ -24,9 +24,9 @@ Blocks [script injection] [script inlining] [eval]
 Allows [iframe insertion] [popups]
 */
 
-(function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
+(function (window,document,location,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
    var RogueBM=window['RogueBM']=window['RogueBM']||{},script,scripts = Array.prototype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
-   var baseURL='https://ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
+   var baseURL=location.protocol+'//ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
    if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
    }
@@ -338,7 +338,7 @@ Allows [iframe insertion] [popups]
 
       var messageQueue={};
       var isAllowedOrigin = function (origin) {
-        return allowedOrigins.includes(origin);
+        return origin.match(allowedOrigins);
       };
       var _listener = function (event) {
         debug && console.log('got message',event);
@@ -458,8 +458,8 @@ Allows [iframe insertion] [popups]
     };//end CrossOriginLocalStorage
     RogueBM['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
-    var allowedOrigins = ['https://ktsuttlemyre.github.io'];
-    RogueBM['xDLStorage'] = new CrossOriginLocalStorage(window, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
+    var allowedOrigins = /:\/\/ktsuttlemyre.github.io\//i
+    RogueBM['xDLStorage'] = new CrossOriginLocalStorage(window, location.protocol+'//ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
   }
 
    ///////FROM ROGUE RUNNER index.js backup loading
@@ -614,4 +614,4 @@ Allows [iframe insertion] [popups]
     RogueBM.open=function(url){
         var win = window.open(url, '_blank', externalWindowString);
     };
-})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':false},'%s');
+})(this,document,location,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':false},'%s');
