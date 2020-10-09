@@ -5,7 +5,7 @@
 
 @font-face {
 	font-family: 'opendyslexic';
-	src: url('http://opendyslexic.org/fonts/opendyslexic-italic.eot');
+	src: url('//opendyslexic.org/fonts/opendyslexic-italic.eot');
 	/*font-weight: normal;
 	font-style: italic;
 	font-size: 24px !important;
@@ -23,7 +23,7 @@
 
 @font-face {
 	font-family: 'opendyslexic';
-	src: url('http://opendyslexic.org/fonts/opendyslexic-bolditalic.eot');
+	src: url('//opendyslexic.org/fonts/opendyslexic-bolditalic.eot');
 	/*font-weight: bold;
 	font-style: italic;*/
 }
@@ -39,7 +39,7 @@
 
 @font-face {
 	font-family: 'opendyslexic';
-	src: url('http://opendyslexic.org/fonts/opendyslexic-bold.eot');
+	src: url('//opendyslexic.org/fonts/opendyslexic-bold.eot');
 	/*font-weight: bold;
 	font-style: normal;*/
 }
@@ -55,7 +55,7 @@
 
 @font-face {
 	font-family: 'opendyslexicmonoregular';
-	src: url('http://opendyslexic.org/fonts/opendyslexicmono-regular.eot');
+	src: url('//opendyslexic.org/fonts/opendyslexicmono-regular.eot');
 }
 
 @font-face {
@@ -69,7 +69,7 @@
 
 @font-face {
 	font-family: 'opendyslexic';
-	src: url('http://opendyslexic.org/fonts/opendyslexic-regular.eot');
+	src: url('//opendyslexic.org/fonts/opendyslexic-regular.eot');
 }
 
 @font-face {
