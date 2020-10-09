@@ -55,17 +55,6 @@
              url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.otf') format("opentype");
 }
 
-/*.dyslexia {
-  background-color: #FFF!important;
-  color: #000;
-  font-family: opendyslexic!important;
-}*/
-
-body {
-  /*background-color: #FFF!important;
-  color: #000;*/
-  font-family: opendyslexic!important;
-}
 
 p:nth-child(even),
 li:nth-child(even) {
@@ -73,13 +62,28 @@ li:nth-child(even) {
 }
 
 
-span#contentbox {
-  font-family: opendyslexic!important;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	 font-family: opendyslexic!important;
 }
-
-input,
-textarea {
-  font-family: opendyslexic!important;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	 font-family: opendyslexic!important;
+}
+*:not(i) {
+	 font-family: opendyslexic!important;
 }
 
 
