@@ -37,10 +37,7 @@
 
 @font-face {
 	font-family: 'opendyslexicmonoregular';
-        src: url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.woff2') format("woff2"),
-             url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.woff') format("woff"),
-             url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.eot') format("embedded-opentype"),
-             url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.otf') format("opentype");
+        src: url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexicMono-Regular.otf') format("opentype");
 }
 
 
