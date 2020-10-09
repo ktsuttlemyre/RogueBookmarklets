@@ -228,6 +228,7 @@ function getCommentBlock(text) {
                     <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
                     <a class="nav-item nav-link" id="nav-syntax-{{ name }}-tab" data-toggle="tab" href="#nav-syntax-{{ name }}" role="tab" aria-controls="nav-syntax-{{ name }}" aria-selected="false">Syntax</a>
                     <a class="nav-item nav-link" id="nav-demo-{{ name }}-tab" data-toggle="tab" href="#nav-demo-{{ name }}" role="tab" aria-controls="nav-demo-{{ name }}" aria-selected="false">Demo</a>
+                    <a class="nav-item nav-link" id="nav-settings-{{ name }}-tab" data-toggle="tab" href="#nav-settings-{{ name }}" role="tab" aria-controls="nav-settings-{{ name }}" aria-selected="false">Settings</a>
                     <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
                   </div>
                 </nav>
@@ -282,6 +283,7 @@ function getCommentBlock(text) {
   </div>
   <div class="tab-pane fade" id="nav-syntax-{{ name }}" role="tabpanel" aria-labelledby="nav-syntax-{{ name }}-tab">...</div>
   <div class="tab-pane fade" id="nav-demo-{{ name }}" role="tabpanel" aria-labelledby="nav-demo-{{ name }}-tab">...</div>
+    <div class="tab-pane fade" id="nav-settings-{{ name }}" role="tabpanel" aria-labelledby="nav-settings-{{ name }}-tab">...</div>
   <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
     <span class="float-right">
       <span id="script_code_{{ name | escape }}">
