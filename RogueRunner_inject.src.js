@@ -24,9 +24,9 @@ Blocks [script injection] [script inlining] [eval]
 Allows [iframe insertion] [popups]
 */
 
-(function (window,document,location,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
+(function (window,document,documentElement,encodeURIComponent,console,setTimeout,JSON,alert,vers,options,cmd,undefined) {
    var RogueBM=window['RogueBM']=window['RogueBM']||{},script,scripts = Array.prototype.slice.call(document.getElementsByTagName( 'script' )),debug=options['debug'],postMessage='postMessage';
-   var baseURL=location.protocol+'//ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
+   var baseURL="https://ktsuttlemyre.github.io/RogueBookmarklets/',reg=new RegExp(baseURL+'RogueRunner_inject.*\\.js\\?'),params=[1];
    if(RogueBM['revision']=='{{ site.github.build_revision }}'){
       return;
    }
@@ -459,7 +459,7 @@ Allows [iframe insertion] [popups]
     RogueBM['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
     var allowedOrigins = /:\/\/ktsuttlemyre.github.io/i
-    RogueBM['xDLStorage'] = new CrossOriginLocalStorage(window, location.protocol+'//ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
+    RogueBM['xDLStorage'] = new CrossOriginLocalStorage(window, 'https://ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
   }
 
    ///////FROM ROGUE RUNNER index.js backup loading
@@ -614,4 +614,4 @@ Allows [iframe insertion] [popups]
     RogueBM.open=function(url){
         var win = window.open(url, '_blank', externalWindowString);
     };
-})(this,document,location,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':false},'%s');
+})(this,document,document.documentElement,encodeURIComponent,console,setTimeout,JSON,alert,'0.0.51',{'skin':'experimental','debug':false,'autoShow':false},'%s');
