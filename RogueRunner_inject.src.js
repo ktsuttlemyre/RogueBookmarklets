@@ -458,7 +458,7 @@ Allows [iframe insertion] [popups]
     };//end CrossOriginLocalStorage
     RogueBM['CrossOriginLocalStorage']=CrossOriginLocalStorage;
 
-    var allowedOrigins = /:\/\/ktsuttlemyre.github.io\//i
+    var allowedOrigins = /:\/\/ktsuttlemyre.github.io/i
     RogueBM['xDLStorage'] = new CrossOriginLocalStorage(window, location.protocol+'//ktsuttlemyre.github.io/RogueBookmarklets/RogueRunner.html#localstorage' , allowedOrigins);
   }
 
