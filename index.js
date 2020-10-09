@@ -224,5 +224,7 @@ function readySignal(){
   callback('index.js');
 }
 window.RogueBM.keys=Object.keys(window.RogueBM.scripts);
-readySignal()
+if(window===top){
+  readySignal();
+}
 //window.RogueBM['loaded']('index.js');
