@@ -62,7 +62,7 @@
 	font-family: opendyslexic!important;
 }*/
 
-html, body {
+html, body, *:not(i), p  {
 	/*background-color: #FFF!important;
 	color: #000;*/
 	font-family: opendyslexic!important;
@@ -73,7 +73,4 @@ li:nth-child(even) {
 	background-color: rgba(0, 0, 0, .03)!important;
 }
 
-*:not(i)  {
-	font-family: opendyslexic!important;
-}
 
