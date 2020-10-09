@@ -55,22 +55,31 @@
              url('https://ktsuttlemyre.github.io/RogueBookmarklets/libs/fonts/opendyslexic/OpenDyslexic-Regular.otf') format("opentype");
 }
 
-
 /*.dyslexia {
-	background-color: #FFF!important;
-	color: #000;
-	font-family: opendyslexic!important;
+  background-color: #FFF!important;
+  color: #000;
+  font-family: opendyslexic!important;
 }*/
 
-html, body, *:not(i), p  {
-	/*background-color: #FFF!important;
-	color: #000;*/
-	font-family: opendyslexic!important;
+body {
+  /*background-color: #FFF!important;
+  color: #000;*/
+  font-family: opendyslexic!important;
 }
 
 p:nth-child(even),
 li:nth-child(even) {
-	background-color: rgba(0, 0, 0, .03)!important;
+  background-color: rgba(0, 0, 0, .03)!important;
+}
+
+
+span#contentbox {
+  font-family: opendyslexic!important;
+}
+
+input,
+textarea {
+  font-family: opendyslexic!important;
 }
 
 
