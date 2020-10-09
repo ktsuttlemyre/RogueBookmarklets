@@ -73,13 +73,7 @@ li:nth-child(even) {
 	background-color: rgba(0, 0, 0, .03)!important;
 }
 
-
-span#contentbox {
-	font-family: opendyslexic!important;
-}
-
-input,
-textarea {
+*:not(i)  {
 	font-family: opendyslexic!important;
 }
 
