@@ -1,6 +1,9 @@
 /**
  * Original Source/Author:
  * https://github.com/cazepeda/dyslexic-font
+ * @font-face css specs https://www.w3.org/TR/css-fonts-3/#src-desc
+ * why this order was chosen https://stackoverflow.com/questions/11002820/why-should-we-include-ttf-eot-woff-svg-in-a-font-face
+ * there are additional enhancements below the @font-face tags
  **/
 
 @font-face {
