@@ -514,16 +514,18 @@ function download(filename, data) {
       });   //end scripts foreach
   
     $(function(){
-        $(document).on('shown.bs.tab','a[data-toggle="tab"]',function (e) {
-            console.log('target',e.target,e) // newly activated tab
-            var tab=$(e.target)
-            var tabName=(tab.text()||'').toUpperCase();
-            var parent = tab.closest('.bookmarklet_object')
-            if(tabName=='SETTINGS'){
-                RogueBM.xDLStorage.getData(null,parent.id,function(e,data){console.log(data)})
+        setTimeout(function(){
+            $(document).on('shown.bs.tab','a[data-toggle="tab"]',function (e) {
+                console.log('target',e.target,e) // newly activated tab
+                var tab=$(e.target)
+                var tabName=(tab.text()||'').toUpperCase();
+                var parent = tab.closest('.bookmarklet_object')
+                if(tabName=='SETTINGS'){
+                    RogueBM.xDLStorage.getData(null,parent.id,function(e,data){console.log(data)})
 
-            }
-        })
+                }
+            })
+        },1);
     });
     
   </script>
