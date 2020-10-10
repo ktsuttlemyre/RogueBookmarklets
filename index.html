@@ -325,8 +325,10 @@ function getCommentBlock(text) {
 
                     <div style="width:100%" class="tab-content" id="nav-tabContent"> <!-- tabs -->
                       <div class="tab-pane fade show active" id="nav-description-{{ name }}" role="tabpanel" aria-labelledby="nav-description-{{ name }}-tab">
-                        <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
-                          <a href="#" class="btn btn-secondary float-right mr-5" onclick="alert('No demo to show')"><i class="far fa-play-circle"></i> Demo</a>
+                        <div class="lead mx-5 mb-4">
+                            {{ script.description | strip_html }}
+                        </div>
+                        <a href="#" class="btn btn-secondary float-right mr-5" onclick="alert('No demo to show')"><i class="far fa-play-circle"></i> Demo</a>
                       </div>
                       <div class="tab-pane fade" id="nav-about-{{ name }}" role="tabpanel" aria-labelledby="nav-about-{{ name }}-tab">
                           <div class="container jumbotron py-3">
