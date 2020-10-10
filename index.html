@@ -119,8 +119,9 @@ function getCommentBlock(text) {
                 if(tabName=='SETTINGS'){
                     RogueBM.xDLStorage.getData(null,name,function(e,data){
                         Object.keys(data).forEach(function(key){
-                            var div=createElement('div',{text:key.substring(key.indexOf('.')+1)},element)
-                            var input=createElement('input',{value:JSON.stringify(data[key])},div)
+                            var div=createElement('div',{},element)
+                            var keyInput=createElement('input',{value:key.substring(key.indexOf('.')+1)},div)
+                            var input=createElement('textarea',{value:JSON.stringify(data[key])},div)
                             createElement('button',{className:'btn btn-primary',text:'Set'},div).onclick=function(){
                                 RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,name,function(e,data){
                                     console.log(e,'done')
@@ -139,7 +140,7 @@ function getCommentBlock(text) {
                         async: true,
                         dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
                         success: function (data){
-                            var div=createElement('input',{text:data,style:"width:100%;height:100%"},element)
+                            var div=createElement('textarea',{text:data,style:"width:100%;height:100%"},element)
                         },error:function(){
                             alert('error loading code')
                         }
