@@ -112,27 +112,39 @@ function getCommentBlock(text) {
                 console.log('target',e.target,e) // newly activated tab
                 var tab=$(e.target)
                 var tabName=(tab.text()||'').toUpperCase();
-                var parent = tab.closest('.bookmarklet_object')
+                var bookmarkletElement = tab.closest('.bookmarklet_object')
+                var name=bookmarkletElement.attr('id');
+                var element=$('#nav-settings-'+name)[0]
+                var scriptEntry=RogueBM.scripts[name]
                 if(tabName=='SETTINGS'){
-                    RogueBM.xDLStorage.getData(null,parent.attr('id'),function(e,data){
-                        
-                        var element=$('#nav-settings-'+parent.attr('id'))[0]
+                    RogueBM.xDLStorage.getData(null,name,function(e,data){
                         Object.keys(data).forEach(function(key){
                             var div=createElement('div',{text:key.substring(key.indexOf('.')+1)},element)
                             var input=createElement('input',{value:JSON.stringify(data[key])},div)
                             createElement('button',{className:'btn btn-primary',text:'Set'},div).onclick=function(){
-                                RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,parent.attr('id'),function(e,data){
+                                RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,name,function(e,data){
                                     console.log(e,'done')
                                 })
                             } //onclick
                             createElement('button',{className:'btn btn-danger',text:'Delete'},div).onclick=function(){
-                                RogueBM.xDLStorage.deleteData(key.substring(key.indexOf('.')+1),parent.attr('id'),function(e,data){
+                                RogueBM.xDLStorage.deleteData(key.substring(key.indexOf('.')+1),name,function(e,data){
                                     console.log(e,'done')
                                 })
                             } //onclick
                         }) //forEach
                     }) //getData
-                } // if tab==
+                }else if(tab == "CODE"){
+                      $.ajax({
+                        url: 'https://ktsuttlemyre.github.io/RogueBookmarklets'+scriptEntry.path,
+                        async: true,
+                        dataType:'text', //Keeps script from being executed by jQuery before ajax callback executed
+                        success: function (data){
+                            var div=createElement('input',{text:data,style:"width:100%;height:100%"},element)
+                        },error:function(){
+                            alert('error loading code')
+                        }
+                      }); //ajax
+                }// if tab==
             }) // document.on
         },1); //setTimeout
     }); //$ ready
