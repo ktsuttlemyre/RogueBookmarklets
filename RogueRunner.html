@@ -366,10 +366,17 @@ border: 1px solid #a7a7a7;
                     var keys = Object.keys(payload.key);
                     for(var i=0,l=keys.length;i<l;i++){
                       var key=keys[i];
-                      data[key]=localStorage.setItem(namespaceDot+key,payload.key[key]);
+                      if(!payload.key[key]){
+                          data[key]=localStorage.removeItem(namespaceDot+key);
+                      }else{
+                        data[key]=localStorage.setItem(namespaceDot+key,payload.key[key]);
+                      }
                     }
                   }else{
-                  data=localStorage.setItem(namespaceDot+payload.key, payload.data);
+                      if(!payload.data){
+                          data=localStorage.removeItem(namespaceDot+payload.key);
+                      }
+                     data=localStorage.setItem(namespaceDot+payload.key, payload.data);
                 }
                 returnPayload.data=data;
                 //TODO send success/fail
