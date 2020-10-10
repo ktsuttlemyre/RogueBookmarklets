@@ -122,7 +122,7 @@ function getCommentBlock(text) {
                             var div=createElement('div',{text:key},element)
                             var input=createElement('input',{value:JSON.stringify(data[key])},div)
                             createElement('button',{text:'Set'},div).onclick=function(){
-                                RogueBM.xDLStorage.setData(key,input.value,parent.attr('id'),function(e,data){
+                                RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,parent.attr('id'),function(e,data){
                                     console.log(e,'done')
                                 })
                             }
