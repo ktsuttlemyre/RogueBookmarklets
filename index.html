@@ -115,28 +115,27 @@ function getCommentBlock(text) {
                 var parent = tab.closest('.bookmarklet_object')
                 if(tabName=='SETTINGS'){
                     RogueBM.xDLStorage.getData(null,parent.attr('id'),function(e,data){
-                        var keys=Object.keys(data)
+                        
                         var element=$('#nav-settings-'+parent.attr('id'))[0]
-                        for(var i=0,l=keys.length;i<l;i++){
-                            var key=keys[i]
+                        Object.keys(data).forEach(function(key){
                             var div=createElement('div',{text:key},element)
                             var input=createElement('input',{value:JSON.stringify(data[key])},div)
                             createElement('button',{className:'btn btn-primary',text:'Set'},div).onclick=function(){
                                 RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,parent.attr('id'),function(e,data){
                                     console.log(e,'done')
                                 })
-                            }
+                            } //onclick
                             createElement('button',{className:'btn btn-danger',text:'Delete'},div).onclick=function(){
                                 RogueBM.xDLStorage.deleteData(key.substring(key.indexOf('.')+1),parent.attr('id'),function(e,data){
                                     console.log(e,'done')
                                 })
-                            }
-                        }
-                    })
-                }
-            })
-        },1);
-    });
+                            } //onclick
+                        }) //forEach
+                    }) //getData
+                } // if tab==
+            }) // document.on
+        },1); //setTimeout
+    }); //$ ready
     
     
   </script>
