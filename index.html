@@ -108,8 +108,15 @@ function getCommentBlock(text) {
                 var tabName=(tab.text()||'').toUpperCase();
                 var parent = tab.closest('.bookmarklet_object')
                 if(tabName=='SETTINGS'){
-                    RogueBM.xDLStorage.getData(null,parent.id,function(e,data){console.log(data)})
-
+                    RogueBM.xDLStorage.getData(null,parent.attr('id'),function(e,data){
+                        var keys=Object.keys(data)
+                        var element=$('#nav-settings-'+parent.attr('id'))[0]
+                        for(var i=0,l=keys.length;i<l;i++){
+                            var div=createElement('div',{text:keys[i]},element)
+                            createElement('input',{value:data[keys[i]]},div)
+                            createElement('button',{value:'do something'},div)
+                        }
+                    })
                 }
             })
         },1);
