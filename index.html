@@ -225,7 +225,7 @@ function getCommentBlock(text) {
     {%- endif -%}
   {%- endfor -%} 
   {%- assign scripts = site.pages | concat: collection | concat: site.static_files -%}
-  {%- assign scripts = scripts | uniq | sort_natural: "name" -%}
+  {%- assign scripts = scripts | uniq | sort: "name" -%}
     
   <div class="accordion" id="bookmarklets">
     {%- for script in scripts -%}
