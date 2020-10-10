@@ -98,7 +98,13 @@ function getCommentBlock(text) {
   
     return commentObj;
 }
-
+   function jsonParse(obj){
+       try{
+           return JSON.parse(obj);
+       }catch(err){
+           return obj;
+       }
+   }
 
    $(function(){
         setTimeout(function(){
@@ -113,8 +119,8 @@ function getCommentBlock(text) {
                         var element=$('#nav-settings-'+parent.attr('id'))[0]
                         for(var i=0,l=keys.length;i<l;i++){
                             var div=createElement('div',{text:keys[i]},element)
-                            createElement('input',{value:data[keys[i]]},div)
-                            createElement('button',{value:'do something'},div)
+                            createElement('input',{value:JSON.stringify(data[keys[i]])},div)
+                            createElement('button',{text:'Set'},div)
                         }
                     })
                 }
@@ -303,7 +309,7 @@ function getCommentBlock(text) {
         </div> <!-- end container jumbotron-->
   </div>
   <div class="tab-pane fade" id="nav-syntax-{{ name }}" role="tabpanel" aria-labelledby="nav-syntax-{{ name }}-tab">...</div>
-  <div class="tab-pane fade" id="nav-settings-{{ name }}" role="tabpanel" aria-labelledby="nav-settings-{{ name }}-tab">...</div>
+  <div class="tab-pane fade" id="nav-settings-{{ name }}" role="tabpanel" aria-labelledby="nav-settings-{{ name }}-tab"></div>
   <div class="tab-pane fade" id="nav-demo-{{ name }}" role="tabpanel" aria-labelledby="nav-demo-{{ name }}-tab">...</div>
   <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
     <span class="float-right">
