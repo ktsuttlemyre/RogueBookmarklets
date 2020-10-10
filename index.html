@@ -111,15 +111,17 @@ function getCommentBlock(text) {
             $(document).on('shown.bs.tab','a[data-toggle="tab"]',function (e) {
                 console.log('target',e.target,e) // newly activated tab
                 var tab=$(e.target)
+                if(tab.hasClass('loaded-content')){
+                    return
+                }
+                tab.addClass('loaded-content');
                 var tabName=(tab.text()||'').toUpperCase();
                 var bookmarkletElement = tab.closest('.bookmarklet_object')
                 var name=bookmarkletElement.attr('id');
                 var jElement=$('#nav-'+tabName.toLowerCase()+'-'+name)
                 var element=jElement[0]
                 var scriptEntry=RogueBM.scripts[name]
-                if($.trim(jElement.html())!=''){
-                    return
-                }
+
                 if(tabName=='SETTINGS'){
                     RogueBM.xDLStorage.getData(null,name,function(e,data){
                         Object.keys(data).forEach(function(key){
