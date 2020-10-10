@@ -324,7 +324,7 @@ border: 1px solid #a7a7a7;
                   var results = {};
                   for (i = 0; i < window.localStorage.length; i++) {
                       var key = window.localStorage.key(i);
-                      if (key.slice(0,key.indexof('.')) === namespace) {
+                      if (key.slice(0,key.indexOf('.')) === namespace) {
                           results[key]=jsonParse(localStorage.getItem(key))||undefined;
                       }
                   }
