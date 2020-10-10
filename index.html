@@ -315,64 +315,67 @@ function getCommentBlock(text) {
 
             <div id="collapse{{ counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#bookmarklets">
               <div class="card-body" style="position:relative;">
-<!-- tabs -->
-                <div style="width:100%;float:left">
+
+                <div class="container">
+                    <div class="row">
                    {{- meta_data -}}
-                </div>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-description-{{ name }}" role="tabpanel" aria-labelledby="nav-description-{{ name }}-tab">
-    <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
-  </div>
-  <div class="tab-pane fade" id="nav-about-{{ name }}" role="tabpanel" aria-labelledby="nav-about-{{ name }}-tab">
-      <div class="container jumbotron py-3">
-          <div class="row">
-            <div class="col-lg">
-               <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                  <li>{{ script.params | default: "&nbsp;" | strip_html | markdownify }}</li>
-              </ul>
-              <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                  <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
-               </ul>
-            </div> <!-- end 1st col -->
-            <div class="col-lg">
-              <ul rel="Specs" class="group pr-2" >
-                <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
-              </ul>
-              <ul rel="Libraries" class="group pr-2" >
-                <li>{{ script.libraries | default: "&nbsp;" | strip_html | markdownify}}</li>
-              </ul>
-              <ul rel="Privacy" class="group pr-2" >
-                <li>{{ script.data-privacy | default: "Undetermined" | strip_html | markdownify}}</li>
-              </ul>
-              <ul rel="Authors" class="group pr-2" >
-                <li>{{ script.authors | default: "Unknown" | strip_html | markdownify}}</li>
-              </ul>
-            </div> <!-- end 2nd col -->
-          </div> <!-- end row -->  
-          <div class="row">
-            <div class="col-lg">
-              <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
-            </div>
-          </div> <!-- end 2nd row -->
-        </div> <!-- end container jumbotron-->
-  </div>
-  <div class="tab-pane fade" id="nav-settings-{{ name }}" role="tabpanel" aria-labelledby="nav-settings-{{ name }}-tab"></div>
-  <div class="tab-pane fade" id="nav-demo-{{ name }}" role="tabpanel" aria-labelledby="nav-demo-{{ name }}-tab">...</div>
-  <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
-    <span class="float-right">
-      <span id="script_code_{{ name | escape }}">
-        <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
-      </span> 
-      <span>
-        <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
-      </span>
-      <span class='script_marklet_json'>
-      </span>
-    </span>
-  </div>
-</div>    
-                  
-<!-- end tabs -->
+                    </div> <!--end row-->
+                    <div class="row">
+
+                    <div class="tab-content" id="nav-tabContent"> <!-- tabs -->
+                      <div class="tab-pane fade show active" id="nav-description-{{ name }}" role="tabpanel" aria-labelledby="nav-description-{{ name }}-tab">
+                        <div class="lead mx-5 mb-4">{{ script.description | strip_html }}</div>
+                      </div>
+                      <div class="tab-pane fade" id="nav-about-{{ name }}" role="tabpanel" aria-labelledby="nav-about-{{ name }}-tab">
+                          <div class="container jumbotron py-3">
+                              <div class="row">
+                                <div class="col-lg">
+                                   <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
+                                      <li>{{ script.params | default: "&nbsp;" | strip_html | markdownify }}</li>
+                                  </ul>
+                                  <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
+                                      <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
+                                   </ul>
+                                </div> <!-- end 1st col -->
+                                <div class="col-lg">
+                                  <ul rel="Specs" class="group pr-2" >
+                                    <li>{{ script.specs | default: "&nbsp;" | strip_html | markdownify}}</li>
+                                  </ul>
+                                  <ul rel="Libraries" class="group pr-2" >
+                                    <li>{{ script.libraries | default: "&nbsp;" | strip_html | markdownify}}</li>
+                                  </ul>
+                                  <ul rel="Privacy" class="group pr-2" >
+                                    <li>{{ script.data-privacy | default: "Undetermined" | strip_html | markdownify}}</li>
+                                  </ul>
+                                  <ul rel="Authors" class="group pr-2" >
+                                    <li>{{ script.authors | default: "Unknown" | strip_html | markdownify}}</li>
+                                  </ul>
+                                </div> <!-- end 2nd col -->
+                              </div> <!-- end row -->  
+                              <div class="row">
+                                <div class="col-lg">
+                                  <div rel="Original Source" class="group pr-2" style="text-align:center; background:white; border-radius: .3rem;">{{ script.originalsource | default: "&nbsp;" | strip_html | markdownify}}</div>
+                                </div>
+                              </div> <!-- end 2nd row -->
+                            </div> <!-- end container jumbotron-->
+                      </div>
+                      <div class="tab-pane fade" id="nav-settings-{{ name }}" role="tabpanel" aria-labelledby="nav-settings-{{ name }}-tab"></div>
+                      <div class="tab-pane fade" id="nav-demo-{{ name }}" role="tabpanel" aria-labelledby="nav-demo-{{ name }}-tab">...</div>
+                      <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
+                        <span class="float-right">
+                          <span id="script_code_{{ name | escape }}">
+                            <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
+                          </span> 
+                          <span>
+                            <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
+                          </span>
+                          <span class='script_marklet_json'>
+                          </span>
+                        </span>
+                      </div>
+                    </div><!-- end tabs -->
+                </div> <!-- end row-->
+            </div> <!-- end container-->
               
               </div>  <!-- end card body -->
             </div> <!-- end collapse -->
