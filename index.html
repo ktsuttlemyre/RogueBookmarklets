@@ -119,8 +119,12 @@ function getCommentBlock(text) {
                         var element=$('#nav-settings-'+parent.attr('id'))[0]
                         for(var i=0,l=keys.length;i<l;i++){
                             var div=createElement('div',{text:keys[i]},element)
-                            createElement('input',{value:JSON.stringify(data[keys[i]])},div)
-                            createElement('button',{text:'Set'},div)
+                            var input=createElement('input',{value:JSON.stringify(data[keys[i]])},div)
+                            createElement('button',{text:'Set'},div).onclick=function(){
+                                RogueBM.xDLStorage.setData(key[i],input.value,parent.attr('id'),function(e,data){
+                                    console.log(e,'done')
+                                })
+                            }
                         }
                     })
                 }
