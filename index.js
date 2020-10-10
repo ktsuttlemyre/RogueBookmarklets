@@ -31,7 +31,7 @@ window.RogueBM.scripts={
   {%- endfor -%} 
 
   {%- assign scripts = site.pages | concat: collection | concat: site.static_files -%}
-  {%- assign scripts = scripts | uniq | sort: "name" -%}
+  {%- assign scripts = scripts | uniq | sort_natural: "name" -%}
     
   {%- for script in scripts -%}
     {%- assign path = script.url | default: script.path | default: script.relative_path -%}
