@@ -276,6 +276,10 @@ function getCommentBlock(text) {
                 
                 <button class="btn btn-link text-left collapsed p-0 my-2 mr-3" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <span style="font-size:1.25em;font-weight: 500;line-height: 1.2;">{{ titlecase }}</span>
+                    <span style="float:right">
+                        {%- if script.deprecated -%}<span class="badge badge-pill badge-warning">Depricated</span>{%- endif -%}
+                        {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning">3rd party</span>{%- endif -%}
+                    </span>
                 </button>
                 <span class='dynamic-collapse-content' style="display:inline-block;">
                     <a class="btn btn-primary bookmark my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
@@ -289,8 +293,7 @@ function getCommentBlock(text) {
                       </div>
                     </nav>
                 </span>
-                {%- if script.deprecated -%}<span class="badge badge-pill badge-warning">Depricated</span>{%- endif -%}
-                {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning">3rd party</span>{%- endif -%}
+
                 
 
             </div>
@@ -299,7 +302,10 @@ function getCommentBlock(text) {
               <div class="card-body" style="position:relative;">
 <!-- tabs -->
 
-
+                    <span style="float:right">
+                        {%- if script.deprecated -%}<span class="badge badge-pill badge-warning">Depricated</span>{%- endif -%}
+                        {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning">3rd party</span>{%- endif -%}
+                    </span>
 
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-description-{{ name }}" role="tabpanel" aria-labelledby="nav-description-{{ name }}-tab">
