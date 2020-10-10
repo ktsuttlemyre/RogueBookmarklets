@@ -183,6 +183,15 @@ function getCommentBlock(text) {
     font-family: "Font Awesome 5 Brands"; content: "\f099\00a0\00a0";
   }
       
+  .animate-width{
+    -webkit-transition: width 500ms ease;
+    -moz-transition: width 500ms ease;
+    -ms-transition: width 500ms ease;
+    -o-transition: width 500ms ease;
+    transition: width 500ms ease;
+  }  
+      
+      
   .bookmarklet_object>.card-header>button.collapsed{
       display:block;
       width:100%;
@@ -190,9 +199,11 @@ function getCommentBlock(text) {
       
    .bookmarklet_object>.card-header>button{
       width:0;
+       height:0;
    }
    .bookmarklet_object>.card-header>button.collapsed ~ .dynamic-collapse-content {
       width:0;
+       height:0;
    }
       
 
@@ -273,7 +284,7 @@ function getCommentBlock(text) {
             <div class="card-header py-0" style="border-bottom:0;">
 
                 
-                <button class="btn btn-link text-left collapsed p-0 my-2 mr-3" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
+                <button class="btn btn-link text-left collapsed p-0 my-2 mr-3 animate-width" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <span style="font-size:1.25em;font-weight: 500;line-height: 1.2;">{{ titlecase }}</span>
                     {%- capture meta_data -%}
                     <span style="float:right; margin:.25em">
@@ -283,7 +294,7 @@ function getCommentBlock(text) {
                     {%- endcapture -%}
                     {{- meta_data -}}
                 </button>
-                <span class='dynamic-collapse-content' style="display:inline-block;">
+                <span class='dynamic-collapse-content animate-width' style="display:inline-block;">
                     <a class="btn btn-primary bookmark my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
                     <nav style="display:inline-block;vertical-align:bottom;" class="">
                       <div class="nav nav-tabs" id="nav-tab" role="tablist">
