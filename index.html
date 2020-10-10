@@ -122,12 +122,12 @@ function getCommentBlock(text) {
                             var div=createElement('div',{text:key},element)
                             var input=createElement('input',{value:JSON.stringify(data[key])},div)
                             createElement('button',{className:'btn btn-primary',text:'Set'},div).onclick=function(){
-                                RogueBM.xDLStorage.setData(key.substring(key.indexOf('.')+1),input.value,parent.attr('id'),function(e,data){
+                                RogueBM.xDLStorage.setData(key.substring(key.lastIndexOf('.')+1),input.value,parent.attr('id'),function(e,data){
                                     console.log(e,'done')
                                 })
                             }
                             createElement('button',{className:'btn btn-danger',text:'Delete'},div).onclick=function(){
-                                RogueBM.xDLStorage.deleteData(key.substring(key.indexOf('.')+1),parent.attr('id'),function(e,data){
+                                RogueBM.xDLStorage.deleteData(key.substring(key.lastIndexOf('.')+1),parent.attr('id'),function(e,data){
                                     console.log(e,'done')
                                 })
                             }
