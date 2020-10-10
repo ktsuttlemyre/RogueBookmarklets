@@ -253,7 +253,7 @@ function getCommentBlock(text) {
           <div class="row">
             <div class="col-lg">
                <ul rel="Params" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
-                  <li>{{ script.params | default: "&nbsp; | strip_html | markdownify "}}</li>
+                  <li>{{ script.params | default: "&nbsp;" | strip_html | markdownify }}</li>
               </ul>
               <ul rel="Returns" class="group pr-2" style="padding-top:.75em; padding-bottom:.75em;">
                   <li>{{ script.returnsn | default: "&nbsp;" | strip_html | markdownify }}</li>
