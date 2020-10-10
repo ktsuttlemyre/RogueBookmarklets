@@ -114,8 +114,12 @@ function getCommentBlock(text) {
                 var tabName=(tab.text()||'').toUpperCase();
                 var bookmarkletElement = tab.closest('.bookmarklet_object')
                 var name=bookmarkletElement.attr('id');
-                var element=$('#nav-'+tabName.toLowerCase()+'-'+name)[0]
+                var jElement=$('#nav-'+tabName.toLowerCase()+'-'+name)
+                var element=jElement[0]
                 var scriptEntry=RogueBM.scripts[name]
+                if($.trim(jElement.html())!=''){
+                    return
+                }
                 if(tabName=='SETTINGS'){
                     RogueBM.xDLStorage.getData(null,name,function(e,data){
                         Object.keys(data).forEach(function(key){
