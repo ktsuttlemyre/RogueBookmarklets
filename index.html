@@ -192,7 +192,7 @@ function getCommentBlock(text) {
       display:none;
       width:auto;
    }
-   .bookmarklet_object>.card-header>button.collapsed ~ * {
+   .bookmarklet_object>.card-header>button.collapsed ~ dynamic-collapse-content {
       display: none !important;
    }
       
@@ -277,16 +277,18 @@ function getCommentBlock(text) {
                 <button class="btn btn-link text-left collapsed p-0 my-2 mr-3" type="button" data-toggle="collapse" data-target="#collapse{{ counter }}" aria-controls="collapse{{ counter }}" aria-expanded="false">
                     <span style="font-size:1.25em;font-weight: 500;line-height: 1.2;">{{ titlecase }}</span>
                 </button>
-                <a class="btn btn-primary bookmark my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
-                <nav style="display:inline-block;vertical-align:bottom;" class="">
-                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
-                    <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
-                    <a class="nav-item nav-link" id="nav-settings-{{ name }}-tab" data-toggle="tab" href="#nav-settings-{{ name }}" role="tab" aria-controls="nav-settings-{{ name }}" aria-selected="false">Settings</a>
-                    <a class="nav-item nav-link" id="nav-demo-{{ name }}-tab" data-toggle="tab" href="#nav-demo-{{ name }}" role="tab" aria-controls="nav-demo-{{ name }}" aria-selected="false">Demo</a>
-                    <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
-                  </div>
-                </nav>
+                <span class='dynamic-collapse-content' style="display:inline-block;">
+                    <a class="btn btn-primary bookmark my-2 mr-3" style="font-size:1.25em;font-weight: 500;line-height: 1.2; display:inline-block;" href="{{ script.href | default: "#"}}" onclick="void(alert('Do not click on the bookmark link. Drag this link to your bookmarks bar to install this commandlett'));return false;" id="bookmarklet{{ counter }}" title="Drag this link to your bookmarks bar to install this commandlett">{{ titlecase }}</a>
+                    <nav style="display:inline-block;vertical-align:bottom;" class="">
+                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-description-{{ name }}-tab" data-toggle="tab" href="#nav-description-{{ name }}" role="tab" aria-controls="nav-description-{{ name }}" aria-selected="true">Description</a>
+                        <a class="nav-item nav-link" id="nav-about-{{ name }}-tab" data-toggle="tab" href="#nav-about-{{ name }}" role="tab" aria-controls="nav-about-{{ name }}" aria-selected="false">About</a>
+                        <a class="nav-item nav-link" id="nav-settings-{{ name }}-tab" data-toggle="tab" href="#nav-settings-{{ name }}" role="tab" aria-controls="nav-settings-{{ name }}" aria-selected="false">Settings</a>
+                        <a class="nav-item nav-link" id="nav-demo-{{ name }}-tab" data-toggle="tab" href="#nav-demo-{{ name }}" role="tab" aria-controls="nav-demo-{{ name }}" aria-selected="false">Demo</a>
+                        <a class="nav-item nav-link" id="nav-code-{{ name }}-tab" data-toggle="tab" href="#nav-code-{{ name }}" role="tab" aria-controls="nav-code-{{ name }}" aria-selected="false">Code</a>
+                      </div>
+                    </nav>
+                </span>
                 {%- if script.deprecated -%}<span class="badge badge-pill badge-warning">Depricated</span>{%- endif -%}
                 {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning">3rd party</span>{%- endif -%}
                 
