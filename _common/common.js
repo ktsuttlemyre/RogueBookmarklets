@@ -42,13 +42,16 @@ function getCommentBlock(text) {
 
 function getArgumentDetails (scriptEntry){
         var doc=scriptEntry.params;
+        var returns={args:[],params:[]};
+        if(!doc){
+          return returns
+        }
+  
         if(typeof scriptEntry.params =='string'){
             doc=doc.trim().split('\n');
         }
-        var params=[];
-        var args=[]
         for(var i=0,l=doc.length;i<l;i++){
-            var type,name,description,value,optional;
+            var type=name=description=value=optional='';
             doc[i].replace(/\s\{(\S*)\}|(?<=\}?)\s*(\S*)\s*-|(?<=-|})\s*(.*)/gm,function(match,t,n,d){
                 type=(type||t||'').trim();
                 name=(name||n||'').trim();
@@ -70,10 +73,10 @@ function getArgumentDetails (scriptEntry){
                 description=description.replace('=','');
                 optional=true;
             }
-            args.push(name);
-            params.push({optional:optional,type:type,name:name,default:value,description:description});
+            returns.args.push(name);
+            returns.params.push({optional:optional,type:type,name:name,default:value,description:description});
         }
-        return {args:args,params:params};
+        return returns
     };
 
     var createElement=(function(){
