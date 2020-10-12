@@ -1623,11 +1623,11 @@ function swipe(e) {
   }
 
   function handleTouchStart(e) {
-    if(e.button!=3 || e.button!=4){
-        return
-    }
+    //if(e.button!=3 || e.button!=4){
+     //   return
+    //}
     //e.preventDefault()
-    console.log('gesture start')
+    console.log('gesture start',e)
     startX = getValue(e,'X')
     startY = getValue(e,'Y')
   }
@@ -1642,9 +1642,9 @@ function swipe(e) {
   // }
 
   function handleTouchEnd(e) {
-    if(e.button!=3 || e.button!=4){
-        return
-    }
+    //if(e.button!=3 || e.button!=4){
+    //    return
+    //}
     //e.preventDefault()
     const endX = getValue(e,'X');
     const endY = getValue(e,'Y')
@@ -1658,7 +1658,7 @@ function swipe(e) {
     const ratioY = Math.abs(diffY) / absDiff;
 
 
-    console.log('gesture end',diffX,diffY,ratioX,ratioY,absDiff,absDistance)
+    console.log('gesture end',e,diffX,diffY,ratioX,ratioY,absDiff,absDistance)
 
     // Ignore small movements.
     if (absDistance < 100) {
