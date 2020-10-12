@@ -1650,7 +1650,7 @@ function swipe(e) {
     const ratioY = Math.abs(diffY) / absDiff;
 
 
-  console.log('gesture end',diffX,diffY,angle,ratioX,ratioY,absDiff,absDistance)
+  console.log('gesture end',diffX,diffY,ratioX,ratioY,absDiff,absDistance)
 
     // Ignore small movements.
     if (absDistance < 100) {
