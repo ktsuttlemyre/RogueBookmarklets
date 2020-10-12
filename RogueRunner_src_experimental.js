@@ -1611,6 +1611,82 @@
             show()
         }
     }, false);
+   
+     
+//Add swipe events
+function swipe(e) {
+  let startX = 0;
+  let startY = 0;
+
+  function getValue(e,XY){
+    return e['client'+XY]||e['page'+XY]||e['screen'+XY]||e.changedTouches[0]['screen'+XY];
+  }
+
+  function handleTouchStart(e) {
+    console.log('gesture start')
+    startX = getValue(e,'X')
+    startY = getValue(e,'Y')
+  }
+
+  // function getAngle(cx, cy, ex, ey) {
+  //   var dy = ey - cy;
+  //   var dx = ex - cx;
+  //   var theta = Math.atan2(dy, dx); // range (-PI, PI]
+  //   theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+  //   if (theta < 0) theta = 360 + theta; // range [0, 360)
+  //   return theta;
+  // }
+
+  function handleTouchEnd(e) {
+    const endX = getValue(e,'X');
+    const endY = getValue(e,'Y')
+    
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    //const angle = getAngle(startX,startY,endX,endY)
+    const absDistance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+    const absDiff = Math.max(Math.abs(diffX),Math.abs(diffY));
+    const ratioX = Math.abs(diffX) / absDiff;
+    const ratioY = Math.abs(diffY) / absDiff;
+
+
+  console.log('gesture end',diffX,diffY,angle,ratioX,ratioY,absDiff,absDistance)
+
+    // Ignore small movements.
+    if (absDistance < 100) {
+      return;
+    }
+    if (absDiff < 30) {
+      return;
+    }
+    if (ratioX > ratioY) {
+      if (diffX >= 0) {
+        // console.log('right swipe');
+      } else {
+        //console.log('left swipe');
+      }
+    } else {
+      if (diffY >= 0) {
+        //console.log('down swipe');
+        show()
+      } else {
+        //console.log('up swipe');
+        hide()
+      }
+    }
+    startX = 0;
+    startY = 0;
+  }
+
+
+  e.addEventListener('mousedown',handleTouchStart);
+  e.addEventListener('mouseup',handleTouchEnd)
+  e.addEventListener('touchstart', handleTouchStart, false);
+  e.addEventListener('touchend', handleTouchEnd, false);
+
+}
+swipe(document)
+   
 
 
     var about=window['RogueBM']['about']
