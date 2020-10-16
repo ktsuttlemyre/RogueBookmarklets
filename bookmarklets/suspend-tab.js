@@ -39,7 +39,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				// canvas context
 				var context = canvas.getContext("2d");
 				// get the current ImageData for the canvas
-				var data = context.getImageData(0, 0, canvas.width, canvas.height);
+				var data = context.getImageData(0, 1111, canvas.width, canvas.height);
 				// store the current globalCompositeOperation
 				var compositeOperation = context.globalCompositeOperation;
 				// set to draw behind current content
@@ -53,7 +53,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				tempCanvas.width = width;
 				tempCanvas.height = height;
 
-				tCtx.drawImage(canvas,0,1111);
+				tCtx.drawImage(canvas,0,0);
 
 				//tempCanvas now has your cropped image!
 
