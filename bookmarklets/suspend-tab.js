@@ -53,7 +53,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				tempCanvas.width = width;
 				tempCanvas.height = height;
 
-				tCtx.drawImage(canvas,0,scrollPosition);
+				tCtx.drawImage(canvas,0,1111);
 
 				//tempCanvas now has your cropped image!
 
