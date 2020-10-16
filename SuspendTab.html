@@ -89,7 +89,7 @@
 			})
 			//image.style.width="100%";
 			var a=document.getElementById('toPage')
-			a.onclick=SuspendTab.unsuspend;
+			a.onclick=function(e) {e.preventDefault(); SuspendTab.unsuspend; return false; }
 			a.innerHTML=q.l;
 				
 			//actions
