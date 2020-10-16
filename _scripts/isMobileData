@@ -1,0 +1,5 @@
+//navigator.connection.addEventListener('typechange', function(){
+   //console.log(
+   var type=navigator.connection.type
+   return  type=='cellular'||type=='mobile'||type=='data';
+//});
