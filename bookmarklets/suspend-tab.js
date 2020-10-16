@@ -21,6 +21,9 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 	|| document.documentElement.clientHeight
 	|| document.body.clientHeight;
 
+	var scrollPosition=window.scrollY|| window.scrollTop||document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset||document.getElementsByTagName("html")[0].scrollTop;
+	
+	
 	if(!storageURL.test(l)){ //if this isn't the suspend page then suspend this page
 		if(options.showPreview){
 			//hide RogueBM if it exists
@@ -50,7 +53,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 				tempCanvas.width = width;
 				tempCanvas.height = height;
 
-				tCtx.drawImage(canvas,0,0);
+				tCtx.drawImage(canvas,0,scrollPosition);
 
 				//tempCanvas now has your cropped image!
 
