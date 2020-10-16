@@ -74,27 +74,27 @@
 			document.querySelector("#page_title").textContent=q.t;
 			
 			//favicon
-			var a = document.createElement('a');
-			a.href=q.l;
+			var anchor = document.createElement('a');
+			anchor.href=q.l;
 			//load favicon
 			(function() { //https://stackoverflow.com/questions/260857/changing-website-favicon-dynamically
 			    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
 			    link.type = 'image/x-icon';
 			    link.rel = 'shortcut icon';
-			    link.href = 'https://s2.googleusercontent.com/s2/favicons?domain_url='+a.origin; //get domain_url via a element
+			    link.href = 'https://s2.googleusercontent.com/s2/favicons?domain_url='+anchor.origin; //get domain_url via a element
 			    document.getElementsByTagName('head')[0].appendChild(link);
 			})();
 			
 			var icon=new Image();
-			icon.src='https://s2.googleusercontent.com/s2/favicons?domain_url='+a.origin
+			icon.src='https://s2.googleusercontent.com/s2/favicons?domain_url='+anchor.origin
 			document.querySelector('#page_icon').appendChild(icon);
 			
 			var image = new Image();
 			image.src=q.i;
 			document.body.appendChild(image);
-			image.onclick=(function(){
-				SuspendTab.unsuspend();
-			})
+// 			image.onclick=(function(){
+// 				SuspendTab.unsuspend();
+// 			})
 			//image.style.width="100%";
 			var a=document.getElementById('toPage')
 			var close=document.getElementById('close')
