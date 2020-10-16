@@ -35,9 +35,14 @@
 			//https://johnresig.com/blog/search-and-dont-replace/
 			function queryString(data){
 			    var q = {}, ret = '';
+			    var isEmpty=true;
 			    data.replace(/([^=&]+)=([^&]*)/g, function(m, key, value){
+				isEmpty=false;
 				q[key] = (q[key] ? q[key] + ',' : '') + decodeURIComponent(value);
 			    });
+		            if(isEmpty){
+				    return null
+			    }
 			    return q;
 			}
 
