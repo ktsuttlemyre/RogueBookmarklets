@@ -99,7 +99,7 @@
 			var a=document.getElementById('toPage')
 			var close=document.getElementById('close')
 			close.onclick=a.onclick=function(e) {e.preventDefault(); SuspendTab.unsuspend(); return false; }
-			a.innerHTML=q.l;
+			a.innerHTML=q.l.substring(0,Math.min(q.t.length+10,q.l.length));
 				
 			//actions
 			if(q.onfocus){
