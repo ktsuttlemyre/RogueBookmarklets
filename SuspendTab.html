@@ -97,7 +97,8 @@
 			})
 			//image.style.width="100%";
 			var a=document.getElementById('toPage')
-			a.onclick=function(e) {e.preventDefault(); SuspendTab.unsuspend; return false; }
+			var close=document.getElementById('close')
+			close.onclick=a.onclick=function(e) {e.preventDefault(); SuspendTab.unsuspend(); return false; }
 			a.innerHTML=q.l;
 				
 			//actions
