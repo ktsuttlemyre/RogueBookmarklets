@@ -13,17 +13,7 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 	var storageURL=/^http.?:\/\/(ktsuttlemyre\.github\.io|rogueware\.com)\/RogueBookmarklets\/SuspendTab/g;
 	var l=window.location.href; //'https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab.html';
 	var redirectURL='https://ktsuttlemyre.github.io/RogueBookmarklets/SuspendTab';
-	var width = window.innerWidth
-	|| document.documentElement.clientWidth
-	|| document.body.clientWidth;
 
-	var height = window.innerHeight
-	|| document.documentElement.clientHeight
-	|| document.body.clientHeight;
-
-	var scrollPosition=window.scrollY|| window.scrollTop||document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset||document.getElementsByTagName("html")[0].scrollTop;
-	
-	
 	if(!storageURL.test(l)){ //if this isn't the suspend page then suspend this page
 		if(options.showPreview){
 			//hide RogueBM if it exists
@@ -33,6 +23,21 @@ window.RogueBM.loadScript('https://html2canvas.hertzen.com/dist/html2canvas.js',
 			html2canvas(document.body,{ignoreElements: function (node) {
 				return node.nodeName === 'IFRAME';
 			    }}).then(function(canvas) {
+				var width = window.innerWidth
+					|| document.documentElement.clientWidth
+					|| document.body.clientWidth;
+
+				var height = window.innerHeight
+					|| document.documentElement.clientHeight
+					|| document.body.clientHeight;
+
+				var scrollPosition=window.scrollY
+					|| window.scrollTop
+					||document.documentElement.scrollTop
+					|| document.body.scrollTop
+					|| window.pageYOffset
+					||document.getElementsByTagName("html")[0].scrollTop;
+				
 				//document.body.appendChild(canvas);
 				//crop html2canvas
 				//https://stackoverflow.com/questions/13073647/crop-canvas-export-html5-canvas-with-certain-width-and-height
