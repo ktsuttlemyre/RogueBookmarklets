@@ -1,3 +1,5 @@
+//https://stackoverflow.com/questions/20318822/how-to-create-a-stopwatch-using-javascript
+
 var Stopwatch = function(elem, options) {
   
   var timer       = createTimer(),
