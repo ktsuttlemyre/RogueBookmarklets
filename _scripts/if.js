@@ -1,14 +1,20 @@
 
 
-
-//for(var i=0,l=arguments.length;i<l;i++){
-  RogueBM.run(argument[0],function(data){
+var index=0
+function doIteration(){
+  RogueBM.run(arguments[index],function(data){
+    index+=1
     if(data.data){
-     RogueBM.run(argument[1],next)
+      RogueBM.run(arguments[index],next)
     }else{
-     RogueBM.run(argument[2],next)
+      index+=1
+      if(arguments.length-1<=index){
+        RogueBM.run(arguments[index],next)
+      }else{
+        doIteration();
+      }
   })
+}
+doIteration();
 
-
-//}
 
