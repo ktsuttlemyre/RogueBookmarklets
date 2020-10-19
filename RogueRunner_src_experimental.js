@@ -1623,11 +1623,10 @@ function swipe(e) {
   }
 
   function handleTouchStart(e) {
-    //if(e.button!=3 || e.button!=4){
-     //   return
-    //}
-    //e.preventDefault()
-    console.log('gesture start',e)
+    if(e.button==0||e.button==2){
+       return
+    }
+    console.log('gesture start',e.button,e)
     startX = getValue(e,'X')
     startY = getValue(e,'Y')
   }
@@ -1642,10 +1641,10 @@ function swipe(e) {
   // }
 
   function handleTouchEnd(e) {
-    //if(e.button!=3 || e.button!=4){
-    //    return
-    //}
-    //e.preventDefault()
+    if(e.button==0||e.button==2){
+       return
+    }
+    
     const endX = getValue(e,'X');
     const endY = getValue(e,'Y')
     
@@ -1658,7 +1657,7 @@ function swipe(e) {
     const ratioY = Math.abs(diffY) / absDiff;
 
 
-    console.log('gesture end',e,diffX,diffY,ratioX,ratioY,absDiff,absDistance)
+    console.log('gesture end',e.button,e,diffX,diffY,ratioX,ratioY,absDiff,absDistance)
 
     // Ignore small movements.
     if (absDistance < 100) {
@@ -1674,6 +1673,9 @@ function swipe(e) {
         //console.log('left swipe');
       }
     } else {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        e.stopPropagation()
       if (diffY >= 0) {
         //console.log('down swipe');
         show()
@@ -1687,8 +1689,8 @@ function swipe(e) {
   }
 
 
-  e.addEventListener('mousedown',handleTouchStart);
-  e.addEventListener('mouseup',handleTouchEnd)
+  e.addEventListener('mousedown',handleTouchStart,true);
+  e.addEventListener('mouseup',handleTouchEnd,true)
   e.addEventListener('touchstart', handleTouchStart, false);
   e.addEventListener('touchend', handleTouchEnd, false);
 
