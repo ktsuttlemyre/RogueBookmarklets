@@ -1470,18 +1470,19 @@
 
                 //call tick again since we did a call
                 RogueBM['processTick']()
-                thread.active=Date.now();
+                thread.active=Date.now(); //TDOD fix date.now
                 thread.currentProcessIndex=thread.stdout.length
-                var returnValue;
+                var returnValue,args;
                 if(Array.isArray(proc.args)){
-                    var args=cacheDefaults.slice(); // proc.args
+                    args=cacheDefaults.slice(); // proc.args
                     for(var i=0,l=args.length;i<l;i++){
                         args[i]=proc.args[i]||args[i]||undefined;
                     }
-                    returnValue=package.apply(package,args);
                 }else{
-                    returnValue=package.apply(package,argMap(cache.paramNames,proc.args,cacheDefaults));
+                    args=argMap(cache.paramNames,proc.args,cacheDefaults)
                 }
+                args.push(args.slice()); //push arguments object as a real array
+                returnValue=package.apply(package,args);
 
                 if(!cache.options.isAsync){
                     kwargs.next(returnValue)
