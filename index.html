@@ -367,10 +367,10 @@ function getCommentBlock(text) {
                       <div class="tab-pane fade" id="nav-code-{{ name }}" role="tabpanel" aria-labelledby="nav-code-{{ name }}-tab">
                         <span class="float-right">
                           <span id="script_code_{{ name | escape }}">
-                            <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ path | escape }}"><i class="fas fa-code"></i></a>
+                            <a title="{{ path | escape }}" onclick="externalWindow('https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ file_path | escape }}');return false;" href="https://raw.githubusercontent.com/ktsuttlemyre/RogueBookmarklets/master{{ file_path | escape }}"><i class="fas fa-code"></i></a>
                           </span> 
                           <span>
-                            <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ path | escape }}"><i class="fas fa-edit"></i></a>
+                            <a title="{{ path | escape }}" onclick="externalWindow('https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ file_path | escape }}');return false;" href="https://github.com/ktsuttlemyre/RogueBookmarklets/edit/master{{ file_path | escape }}"><i class="fas fa-edit"></i></a>
                           </span>
                           <span class='script_marklet_json'>
                           </span>
