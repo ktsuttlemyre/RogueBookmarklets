@@ -6,7 +6,6 @@ description: |
 ####### Other Metadata #######
 authors: |
   Krazete <//github.com/Krazete/bookmarklets>
-  Kyle Suttlemyre <https://github.com/ktsuttlemyre/RogueBookmarklets>
 originalsource: //github.com/Krazete/bookmarklets
 
 ####### function signature #######
