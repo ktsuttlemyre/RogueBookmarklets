@@ -14,7 +14,6 @@ originalsource: https://www.karmatics.com/aardvark/
 ####### function signature #######
 qualified urls: []
 async: true
-layout: script
 type: tool
 data privacy: [ third-party-inline]
 libraries:
