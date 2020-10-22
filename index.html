@@ -290,7 +290,7 @@ function getCommentBlock(text) {
                     <span style="font-size:1.25em;font-weight: 500;line-height: 1.2;">{{ titlecase }}</span>
                     {%- capture meta_data -%}
                     <span style="float:right; margin:.25em">
-                        {%- if script.deprecated -%}<span class="badge badge-pill badge-warning ml-1">Depricated</span>{%- endif -%}
+                        {%- if script.deprecated -%}<span class="badge badge-pill badge-warning ml-1" title="{{ script.deprecated }}">Depricated</span>{%- endif -%}
                         {%- if script.data-privacy | join: ' ' | contains 'third-party' -%}<span class="badge badge-pill badge-warning ml-1">3rd party</span>{%- endif -%}
                     </span>
                     {%- endcapture -%}
