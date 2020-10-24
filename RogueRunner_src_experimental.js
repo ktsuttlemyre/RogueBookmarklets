@@ -708,8 +708,35 @@
         }
     });
 
+    var mouse={x:-1,y:-1}
 
-    function show(){
+    document.onmousemove = function(event){
+     mouse.x = event.pageX;
+     mouse.y = event.pageY;
+
+    }
+
+
+    var eventAction=null;
+    function show(event){
+        eventAction={};
+        if(event){
+            eventAction.event=event
+
+        }
+        eventAction.activeElement=document.activeElement
+        eventAction.mouse=mouse
+        if(window.getSelection){
+            eventAction.selection = window.getSelection();
+        }else if(document.selection && document.selection.type != "Control"){
+            eventAction.selection = document.selection.createRange();
+        }
+        //eventAction.input=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
+        //eventAction.focus
+        //eventAction.caret
+        
+
+
 //         debugger
 //         console.log('autoshow',RogueBM['about']['injector']['option']('autoShow'))
 //         console.error('something')
@@ -1375,10 +1402,10 @@
     var inactiveThreads=[];
     function tick(){
         blocked=0;
-        var activeThreadIDs=Object.keys(activity).sort()
+        var activeThreadIDs=Object.keys(activity).sort();
         for(var i=0,l=activeThreadIDs.length;i<l;i++){
-            var threadID=activeThreadIDs[i]
-            var thread=activity[threadID]
+            var threadID=activeThreadIDs[i];
+            var thread=activity[threadID];
 
             if(thread.processes.length==thread.stdout.length){
                 thread.complete=Date.now();
@@ -1458,6 +1485,8 @@
                     return RogueBM.getData(key,proc.scriptEntry.name,callback);
                 }
                 
+                //TODO figure out what to do with eventAction
+                console.warn(eventAction);
                 kwargs.stdin=(function(){
                     if(thread.stdout.length-1==0){
                         return getSelection();
