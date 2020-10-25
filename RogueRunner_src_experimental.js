@@ -1636,24 +1636,24 @@
                }
             });
 
-            var stdinObj= new jsyaml.Type('!stdin', {
-                kind: 'sequence',
-                construct: function(data){
-                    var fn = function(input,types){
-                        var stdin;
-                        if(!input){
-                            input=types[0] //TODO try to match the proper type and cast it automatically
-                        }
-                        for(var i=0,l=data.length;i<l;i++){
-                            var call='to'+data[i].charAt(0).toUpperCase() + data[i].slice(1);
-                            stdin=input[call]()
-                        }
-                        return stdin
-                    }
-                    fn.stdin=stdinPointer
-                    return fn;
-                }
-            })
+//             var stdinObj= new jsyaml.Type('!stdin', {
+//                 kind: 'sequence',
+//                 construct: function(data){
+//                     var fn = function(input,types){
+//                         var stdin;
+//                         if(!input){
+//                             input=types[0] //TODO try to match the proper type and cast it automatically
+//                         }
+//                         for(var i=0,l=data.length;i<l;i++){
+//                             var call='to'+data[i].charAt(0).toUpperCase() + data[i].slice(1);
+//                             stdin=input[call]()
+//                         }
+//                         return stdin
+//                     }
+//                     fn.stdin=stdinPointer
+//                     return fn;
+//                 }
+//             })
             var stdinObjstr= new jsyaml.Type('!stdin', {
                 kind: 'string',
                 construct: function(data){
@@ -1670,7 +1670,7 @@
                 }
             })
 
-            rogueSchema = jsyaml.Schema.create([ nestedThread, stdinObj, stdinObjstr ]);
+            rogueSchema = jsyaml.Schema.create([ nestedThread, stdinObjstr ]);
 
 
 
