@@ -1655,7 +1655,7 @@
 //                 }
 //             })
             var stdinObjstr= new jsyaml.Type('!stdin', {
-                kind: 'string',
+                kind: 'scalar',
                 construct: function(data){
                     var fn = function(input,types){ //types is array of types
                         if(!input){
