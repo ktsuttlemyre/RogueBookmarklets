@@ -79,6 +79,8 @@
 
 
 
+    //{% comment %} 
+    /* {% endcomment %}
    //commons
   {%- for coll in site.collections -%}
     {%- if coll.label != "common" -%}
@@ -89,6 +91,8 @@
         {{ common.content }}
     {%- endfor -%}
   {%- endfor -%}
+   {% comment %} */ 
+   //{% endcomment %}
 
     var mimeToTag={'javascript':'script','css':'style','html':'iframe','p':'plain'}; //omit text/ Registries as it is assumed default
     //limitation: urls must end with an extention otherwise it will be assumed to be inline source
@@ -731,7 +735,7 @@
         }else if(document.selection && document.selection.type != "Control"){
             eventAction.selection = document.selection.createRange();
         }
-        //eventAction.input=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
+        eventAction.input=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
         //eventAction.focus
         //eventAction.caret
         
@@ -960,14 +964,20 @@
         }
 
         //TODO make sure default arguments are taken from xdomain localstorage and presented to package
-        var args=getArgumentDetails(scriptEntry).args;
+        var details=getArgumentDetails(scriptEntry)
+        var args=details.args
+        var types=details.types;
         if(!cachePersonalArgs[path]){
             RogueBM.getData(args,scriptEntry.name,function(err,defaults){
                 if(err){
                     return showError('Error getting xDomain Storage default vairables for '+scriptEntry.path,scriptEntry);
                 }
                 //TODO figure out why defaults.data is coming through instead of this function getting the signature (err,defults,payload)
-                cachePersonalArgs[path]=defaults.data||defaults;
+                var obj={}
+                obj.defaults=defaults.data||defaults;
+                obj.types=types;
+                cachePersonalArgs[path]=obj;
+                
 
                 window['RogueBM']['processTick']();
             });
@@ -1009,7 +1019,7 @@
     }
 
 
-    var nestedThread
+    var stdinPointer
         ,rogueSchema
         ,emptyRef={}
         ,RunnerOptions={
@@ -1456,6 +1466,8 @@
                 if(!cacheDefaults){
                     continue
                 }
+                var defaultArgs=cacheDefaults.args
+                var types=cacheDefaults.types
 
                 var mocksModeDisabled=true
                 var kwargs=null
@@ -1487,12 +1499,13 @@
                 
                 //TODO figure out what to do with eventAction
                 console.warn(eventAction);
-                kwargs.stdin=(function(){
-                    if(thread.stdout.length-1==0){
-                        return getSelection();
-                    }
-                    return thread.stdout[thread.stdout.length-1];
-                })()
+                kwargs.stdin=eventAction
+                // (function(){
+                //     if(thread.stdout.length-1==0){
+                //         return event.input; //get page selection and set it for the first parameter if its a string
+                //     }
+                //     return thread.stdout[thread.stdout.length-1];
+                // })()
 
          
                 var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,getData,setData'.split(','),kwargs));
@@ -1502,13 +1515,20 @@
                 thread.active=Date.now(); //TDOD fix date.now
                 thread.currentProcessIndex=thread.stdout.length
                 var returnValue,args;
+                //create args array (apply cacheDefaults)
                 if(Array.isArray(proc.args)){
-                    args=cacheDefaults.slice(); // proc.args
+                    args=defaultArgs.slice(); // proc.args
                     for(var i=0,l=args.length;i<l;i++){
                         args[i]=proc.args[i]||args[i]||undefined;
                     }
                 }else{
-                    args=argMap(cache.paramNames,proc.args,cacheDefaults)
+                    args=argMap(cache.paramNames,proc.args,defaultArgs)
+                }
+                //Apply stdin casting from yaml here
+                for(var i=0,l=args.length;i<l;i++){
+                    if(args[i].call && args[i].stdin===stdinPointer){
+                        args[i]=args[i](kwargs.stdin,types[i]);
+                    }
                 }
                 args.push(args.slice()); //push arguments object as a real array
                 returnValue=package.apply(package,args);
@@ -1594,7 +1614,7 @@
             //RogueBM.processTick();  handle any auto execute stuff or threads already loaded
             
             //schema setup
-            nestedThread = new jsyaml.Type('!subRun', {
+            var nestedThread = new jsyaml.Type('!subRun', {
                kind: 'sequence',
                construct: function (data) {
                 data.forEach(function (obj) {
@@ -1616,7 +1636,41 @@
                }
             });
 
-            rogueSchema = jsyaml.Schema.create([ nestedThread ]);
+            var stdinObj= new jsyaml.Type('!stdin', {
+                kind: 'sequence',
+                construct: function(data){
+                    var fn = function(input,types){
+                        var stdin;
+                        if(!input){
+                            input=types[0] //TODO try to match the proper type and cast it automatically
+                        }
+                        for(var i=0,l=data.length;i<l;i++){
+                            var call='to'+data[i].charAt(0).toUpperCase() + data[i].slice(1);
+                            stdin=input[call]()
+                        }
+                        return stdin
+                    }
+                    fn.stdin=stdinPointer
+                    return fn;
+                }
+            })
+            var stdinObjstr= new jsyaml.Type('!stdin', {
+                kind: 'string',
+                construct: function(data){
+                    var fn = function(input,types){ //types is array of types
+                        if(!input){
+                            input=types[0] //TODO try to match the proper type and cast it automatically
+                        }
+                        var call='to'+data[i].charAt(0).toUpperCase() + data[i].slice(1);
+                        var stdin=input[call]()
+                        return stdin
+                    }
+                    fn.stdin=stdinPointer
+                    return fn;
+                }
+            })
+
+            rogueSchema = jsyaml.Schema.create([ nestedThread, stdinObj, stdinObjstr ]);
 
 
 
