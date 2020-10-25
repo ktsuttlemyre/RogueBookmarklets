@@ -80,6 +80,11 @@
 
 
     //{% comment %} 
+    setTimeout(function(){
+        console.warn('=====  Commons not loaded  ====');
+        console.warn('=====  Commons not loaded  ====');
+        console.warn('=====  Commons not loaded  ====');
+    },1);
     /* {% endcomment %}
    //commons
   {%- for coll in site.collections -%}
@@ -1497,6 +1502,7 @@
                 kwargs.getData=function(key,callback){
                     return RogueBM.getData(key,proc.scriptEntry.name,callback);
                 }
+                kwargs.stdout={};
                 
                 //TODO figure out what to do with eventAction
                 console.warn(eventAction);
@@ -1507,14 +1513,13 @@
                 //     }
                 //     return thread.stdout[thread.stdout.length-1];
                 // })()
-
-         
-                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,next,getData,setData'.split(','),kwargs));
+        
+                var package = cache.container.apply(cache.container,argMap('window,document,location,alert,prompt,confirm,open,RogueBM,stdin,stdout,next,getData,setData'.split(','),kwargs));
 
                 //call tick again since we did a call
                 RogueBM['processTick']()
                 thread.active=Date.now(); //TDOD fix date.now
-                thread.currentProcessIndex=thread.stdout.length
+                thread.currentProcessIndex=thread.stdout.length;
                 var returnValue,args;
                 //create args array (apply cacheDefaults)
                 if(Array.isArray(proc.args)){
@@ -1535,7 +1540,7 @@
                 returnValue=package.apply(package,args);
 
                 if(!cache.options.isAsync){
-                    kwargs.next(returnValue)
+                    kwargs.next(returnValue);
                 }
 
             }
