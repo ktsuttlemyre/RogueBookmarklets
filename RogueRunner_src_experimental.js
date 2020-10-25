@@ -735,7 +735,8 @@
         }else if(document.selection && document.selection.type != "Control"){
             eventAction.selection = document.selection.createRange();
         }
-        eventAction.input=(win.getSelection && win.getSelection() || doc.getSelection && doc.getSelection() || doc.selection && doc.selection.createRange && doc.selection.createRange().text).toString()
+
+        eventAction.input=(window.getSelection && window.getSelection() || document.getSelection && document.getSelection() || document.selection && document.selection.createRange && document.selection.createRange().text).toString()
         //eventAction.focus
         //eventAction.caret
         
