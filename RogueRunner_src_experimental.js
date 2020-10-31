@@ -1472,8 +1472,8 @@
                 if(!cacheDefaults){
                     continue
                 }
-                var defaultArgs=cacheDefaults.args
-                var types=cacheDefaults.types
+                var defaultArgs=cacheDefaults.args||[]
+                var types=cacheDefaults.types||[]
 
                 var mocksModeDisabled=true
                 var kwargs=null
@@ -1532,7 +1532,7 @@
                 }
                 //Apply stdin casting from yaml here
                 for(var i=0,l=args.length;i<l;i++){
-                    if(args[i].call && args[i].stdin===stdinPointer){
+                    if(args[i].call && args[i].stdin===stdinPointer){ //a function with a property exactly equal to the object stdinPointer is a pointer to stdin. Set by the yml script (see: !stdin yaml type rule)
                         args[i]=args[i](kwargs.stdin,types[i]);
                     }
                 }
@@ -1663,7 +1663,7 @@
             var stdinObjstr= new jsyaml.Type('!stdin', {
                 kind: 'scalar',
                 construct: function(data){
-                    var fn = function(input,types){ //types is array of types
+                    var fn = function(input,types){ //types is array of types 
                         if(!input){
                             input=types[0] //TODO try to match the proper type and cast it automatically
                         }
