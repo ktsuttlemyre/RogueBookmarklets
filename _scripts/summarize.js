@@ -21,6 +21,8 @@ const abbExceptions= [{abb: "Dr.", fix: "Dr "},
 
 const wordReg = /\w+(?:'\w{1,2})?/g;
 const sentenceReg = /(\.+|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm;
+const sentenceRegAlt = /\w(\.|\?|!)(\s+[A-Z0-9_]|$)/gm;
+const useAlt=true;
 
 
 /**
@@ -112,7 +114,17 @@ function getKeywords(text, n) {
 
 //splits the string into substrings by sentence
 function splitStringIntoSentenceArray(text) {
-    var inputArray = text.replace(sentenceReg, "$1|").split("|");;
+    if(useAlt){
+        var array=[],index=0;
+        text.replace(sentenceRegAlt, function(match,punct,group,offset,text){
+            var i=offset+2
+            array.push(text.substring(index,i).trim())
+            index=i;
+            console.log(match,punct,group,offset,text)
+        });
+        return array;
+    }
+    var inputArray = text.replace(sentenceReg, "$1|").split("|");
     return inputArray;
 }
 
