@@ -92,7 +92,7 @@ Allows [iframe insertion] [popups]
       debug && console.info('using iframe to show');
       //actually, if you are roguerunner lets try to open in iframe or external window
       if(url===rogueRunnerSrc){ //roguerunner is a special case and gets a window attempt
-        debug && console.log('using iframe embed for RogueRunner only',window===parent,rogueRunnerSrc);
+        debug && console.log('using iframe embed for RogueRunner only',window===window.parent,rogueRunnerSrc);
         //var tester=Tester(url,test,callback,'popup');
         RogueBM['xDLStorage']['convertToInterface'](); //(tester);
         //setTimeout(tester,1);
